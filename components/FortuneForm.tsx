@@ -196,12 +196,16 @@ export default function FortuneForm({ onSubmit, isLoading }: FortuneFormProps) {
 
           {/* 하단 장식 */}
           <div className="mt-6 pt-4 border-t border-white/5 flex justify-center gap-6">
-            {['양자리', '황소자리', '쌍둥이자리', '게자리'].map((sign, i) => (
-              <span key={sign} className="text-purple-400/40 text-xs font-medium animate-twinkle"
-                style={{ animationDelay: `${i * 0.3}s` }}>
-                {sign}
-              </span>
-            ))}
+            {(() => {
+              const all = ['양자리','황소자리','쌍둥이자리','게자리','사자자리','처녀자리','천칭자리','전갈자리','사수자리','염소자리','물병자리','물고기자리'];
+              const shuffled = [...all].sort(() => Math.random() - 0.5);
+              return shuffled.slice(0, 4).map((sign, i) => (
+                <span key={sign} className="text-purple-400/40 text-xs font-medium animate-twinkle"
+                  style={{ animationDelay: `${i * 0.3}s` }}>
+                  {sign}
+                </span>
+              ));
+            })()}
           </div>
         </div>
       </div>
