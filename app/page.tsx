@@ -245,7 +245,7 @@ export default function HomePage() {
         </div>
 
         {/* 푸터 */}
-        <footer className="relative z-10 py-6 text-center">
+        <footer className="relative z-10 py-6 text-center space-y-3">
           <div
             className="inline-flex items-center gap-3 px-6 py-3 rounded-full"
             style={{
@@ -258,6 +258,11 @@ export default function HomePage() {
               오늘의 운세 © {new Date().getFullYear()}
             </p>
             <span className="text-white/20 text-xs">⭐</span>
+          </div>
+          <div className="flex justify-center gap-6 text-xs pb-16">
+            <a href="/privacy" className="text-white/30 hover:text-white/60 transition-colors">개인정보처리방침</a>
+            <a href="/terms" className="text-white/30 hover:text-white/60 transition-colors">이용약관</a>
+            <a href="/contact" className="text-white/30 hover:text-white/60 transition-colors">문의하기</a>
           </div>
         </footer>
       </main>

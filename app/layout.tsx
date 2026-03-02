@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
 import './globals.css';
 import CookieBanner from '../components/CookieBanner';
-import Link from 'next/link';
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],
@@ -39,13 +38,6 @@ export default function RootLayout({
       <body className={`${notoSansKR.className} antialiased`}>
         {children}
         <CookieBanner />
-        <footer className="fixed bottom-0 left-0 right-0 pointer-events-none">
-          <div className="flex justify-center gap-6 pb-2 text-xs pointer-events-auto">
-            <Link href="/privacy" className="text-white/20 hover:text-white/50 transition-colors">개인정보처리방침</Link>
-            <Link href="/terms" className="text-white/20 hover:text-white/50 transition-colors">이용약관</Link>
-            <Link href="/contact" className="text-white/20 hover:text-white/50 transition-colors">문의하기</Link>
-          </div>
-        </footer>
       </body>
     </html>
   );
