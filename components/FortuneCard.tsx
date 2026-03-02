@@ -124,6 +124,7 @@ function ScoreBar({ score }: { score: number }) {
 
 export default function FortuneCard({ fortune, onReset }: FortuneCardProps) {
   const [copied, setCopied] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
   const [cardVisible, setCardVisible] = useState(false);
 
   useEffect(() => {
@@ -156,6 +157,22 @@ export default function FortuneCard({ fortune, onReset }: FortuneCardProps) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     }
+  };
+
+  const handleLinkCopy = async () => {
+    const url = typeof window !== 'undefined' ? window.location.href : 'https://fortune-site-nu.vercel.app';
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      const textarea = document.createElement('textarea');
+      textarea.value = url;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+    }
+    setLinkCopied(true);
+    setTimeout(() => setLinkCopied(false), 2500);
   };
 
   const scoreLevel = fortune.score >= 80 ? '최고의 날' :
@@ -333,48 +350,59 @@ export default function FortuneCard({ fortune, onReset }: FortuneCardProps) {
           </div>
 
           {/* 버튼 영역 */}
-          <div className="px-8 pb-8 flex gap-3">
-            {/* 공유하기 버튼 */}
+          <div className="px-8 pb-8 space-y-3">
+            <div className="flex gap-3">
+              {/* 운세 텍스트 공유 버튼 */}
+              <button
+                onClick={handleShare}
+                className="flex-1 py-4 rounded-2xl font-bold text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                style={{
+                  background: copied
+                    ? 'linear-gradient(135deg, rgba(34,197,94,0.3), rgba(16,185,129,0.3))'
+                    : 'rgba(255,255,255,0.06)',
+                  border: copied
+                    ? '1px solid rgba(34,197,94,0.4)'
+                    : '1px solid rgba(255,255,255,0.1)',
+                  color: copied ? '#86efac' : 'rgba(255,255,255,0.7)',
+                }}
+              >
+                <span className="flex items-center justify-center gap-2">
+                  {copied ? <><span>✅</span><span>복사됨!</span></> : <><span>📋</span><span>운세 공유</span></>}
+                </span>
+              </button>
+
+              {/* 다시 보기 버튼 */}
+              <button
+                onClick={onReset}
+                className="flex-1 py-4 rounded-2xl font-bold text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                style={{
+                  background: 'linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #6366f1 100%)',
+                  boxShadow: '0 0 20px rgba(139, 92, 246, 0.4)',
+                }}
+              >
+                <span className="flex items-center justify-center gap-2 text-white">
+                  <span>🔮</span>
+                  <span>다시 보기</span>
+                </span>
+              </button>
+            </div>
+
+            {/* 링크 복사 버튼 */}
             <button
-              onClick={handleShare}
-              className="flex-1 py-4 rounded-2xl font-bold text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden"
+              onClick={handleLinkCopy}
+              className="w-full py-3 rounded-2xl font-semibold text-sm transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]"
               style={{
-                background: copied
-                  ? 'linear-gradient(135deg, rgba(34,197,94,0.3), rgba(16,185,129,0.3))'
-                  : 'rgba(255,255,255,0.06)',
-                border: copied
-                  ? '1px solid rgba(34,197,94,0.4)'
-                  : '1px solid rgba(255,255,255,0.1)',
-                color: copied ? '#86efac' : 'rgba(255,255,255,0.7)',
+                background: linkCopied
+                  ? 'linear-gradient(135deg, rgba(99,102,241,0.3), rgba(139,92,246,0.3))'
+                  : 'rgba(255,255,255,0.03)',
+                border: linkCopied
+                  ? '1px solid rgba(139,92,246,0.5)'
+                  : '1px solid rgba(255,255,255,0.07)',
+                color: linkCopied ? '#c4b5fd' : 'rgba(255,255,255,0.35)',
               }}
             >
               <span className="flex items-center justify-center gap-2">
-                {copied ? (
-                  <>
-                    <span>✅</span>
-                    <span>복사됨!</span>
-                  </>
-                ) : (
-                  <>
-                    <span>📋</span>
-                    <span>공유하기</span>
-                  </>
-                )}
-              </span>
-            </button>
-
-            {/* 다시 보기 버튼 */}
-            <button
-              onClick={onReset}
-              className="flex-1 py-4 rounded-2xl font-bold text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-              style={{
-                background: 'linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #6366f1 100%)',
-                boxShadow: '0 0 20px rgba(139, 92, 246, 0.4)',
-              }}
-            >
-              <span className="flex items-center justify-center gap-2 text-white">
-                <span>🔮</span>
-                <span>다시 보기</span>
+                {linkCopied ? <><span>✅</span><span>링크 복사됨!</span></> : <><span>🔗</span><span>사이트 링크 복사</span></>}
               </span>
             </button>
           </div>
