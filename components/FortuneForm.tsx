@@ -3,12 +3,13 @@
 import { useState, FormEvent } from 'react';
 
 interface FortuneFormProps {
-  onSubmit: (birthDate: string) => void;
+  onSubmit: (birthDate: string, gender: string) => void;
   isLoading: boolean;
 }
 
 export default function FortuneForm({ onSubmit, isLoading }: FortuneFormProps) {
   const [birthDate, setBirthDate] = useState('');
+  const [gender, setGender] = useState('');
   const [isFocused, setIsFocused] = useState(false);
 
   const today = new Date().toISOString().split('T')[0];
@@ -16,12 +17,12 @@ export default function FortuneForm({ onSubmit, isLoading }: FortuneFormProps) {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (birthDate && !isLoading) {
-      onSubmit(birthDate);
+    if (birthDate && gender && !isLoading) {
+      onSubmit(birthDate, gender);
     }
   };
 
-  const isValid = birthDate.length > 0;
+  const isValid = birthDate.length > 0 && gender.length > 0;
 
   return (
     <div className="w-full max-w-md mx-auto">
@@ -75,6 +76,36 @@ export default function FortuneForm({ onSubmit, isLoading }: FortuneFormProps) {
               <p className="text-purple-300/60 text-sm mt-1">
                 생년월일을 입력하면 오늘의 운세를 알려드려요
               </p>
+            </div>
+
+            {/* 성별 선택 */}
+            <div className="mb-6">
+              <label className="block text-purple-200 text-sm font-semibold mb-2 tracking-wide">
+                👤 성별
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                {[{ value: '남자', emoji: '♂️', label: '남자' }, { value: '여자', emoji: '♀️', label: '여자' }].map(({ value, emoji, label }) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => setGender(value)}
+                    disabled={isLoading}
+                    className="py-3 rounded-2xl font-semibold text-base transition-all duration-200 border"
+                    style={{
+                      background: gender === value
+                        ? 'linear-gradient(135deg, #7c3aed 0%, #6366f1 100%)'
+                        : 'rgba(255,255,255,0.03)',
+                      borderColor: gender === value
+                        ? 'rgba(139,92,246,0.8)'
+                        : 'rgba(255,255,255,0.1)',
+                      color: gender === value ? '#fff' : 'rgba(255,255,255,0.4)',
+                      boxShadow: gender === value ? '0 0 20px rgba(139,92,246,0.4)' : 'none',
+                    }}
+                  >
+                    {emoji} {label}
+                  </button>
+                ))}
+              </div>
             </div>
 
             {/* 날짜 입력 */}

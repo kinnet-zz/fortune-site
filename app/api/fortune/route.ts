@@ -27,7 +27,7 @@ function getTodayKorean(): string {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { birthDate } = body as { birthDate: string };
+    const { birthDate, gender } = body as { birthDate: string; gender: string };
 
     if (!birthDate) {
       return NextResponse.json(
@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const prompt = `오늘은 ${todayKorean}입니다.
-사용자의 별자리는 ${zodiac.korean}(${zodiac.english}, ${zodiac.dateRange})이고, 띠는 ${chineseZodiac}입니다.
+사용자는 ${gender}이고, 별자리는 ${zodiac.korean}(${zodiac.english}, ${zodiac.dateRange})이며, 띠는 ${chineseZodiac}입니다.
 
 위 정보를 바탕으로 오늘의 운세를 한국어로 작성해주세요.
 반드시 아래 JSON 형식으로만 응답하고, JSON 외의 다른 텍스트나 마크다운은 절대 포함하지 마세요.

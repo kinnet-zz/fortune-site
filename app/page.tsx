@@ -112,7 +112,7 @@ export default function HomePage() {
     }
   }, [fortune]);
 
-  const handleSubmit = async (date: string) => {
+  const handleSubmit = async (date: string, gender: string) => {
     setBirthDate(date);
     setIsLoading(true);
     setError(null);
@@ -124,7 +124,7 @@ export default function HomePage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ birthDate: date }),
+        body: JSON.stringify({ birthDate: date, gender }),
       });
 
       if (!response.ok) {
