@@ -141,36 +141,18 @@ export default function FortuneCard({ fortune, onReset }: FortuneCardProps) {
       `💼 직업운: ${fortune.work}\n\n` +
       `🍀 행운의 색: ${fortune.luckyColor}\n` +
       `🔢 행운의 숫자: ${fortune.luckyNumber}\n\n` +
-      `오늘의 운세 앱에서 확인하기 ✨`;
+      `오늘의 운세 확인하기 👉 https://fortune-site-nu.vercel.app`;
 
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
-    } catch {
-      const textarea = document.createElement('textarea');
-      textarea.value = text;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textarea);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
-    }
+    if (!navigator.clipboard) return;
+    await navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
   };
 
   const handleLinkCopy = async () => {
-    const url = typeof window !== 'undefined' ? window.location.href : 'https://fortune-site-nu.vercel.app';
-    try {
-      await navigator.clipboard.writeText(url);
-    } catch {
-      const textarea = document.createElement('textarea');
-      textarea.value = url;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textarea);
-    }
+    const url = 'https://fortune-site-nu.vercel.app';
+    if (!navigator.clipboard) return;
+    await navigator.clipboard.writeText(url);
     setLinkCopied(true);
     setTimeout(() => setLinkCopied(false), 2500);
   };

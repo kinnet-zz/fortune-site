@@ -29,27 +29,26 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { birthDate, gender } = body as { birthDate: string; gender: string };
 
+    // birthDate 검증
     if (!birthDate) {
-      return NextResponse.json(
-        { error: "birthDate가 필요합니다." },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "birthDate가 필요합니다." }, { status: 400 });
     }
-
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
     if (!dateRegex.test(birthDate)) {
-      return NextResponse.json(
-        { error: "birthDate는 YYYY-MM-DD 형식이어야 합니다." },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "birthDate는 YYYY-MM-DD 형식이어야 합니다." }, { status: 400 });
     }
-
     const parsedDate = new Date(birthDate);
     if (isNaN(parsedDate.getTime())) {
-      return NextResponse.json(
-        { error: "유효하지 않은 날짜입니다." },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "유효하지 않은 날짜입니다." }, { status: 400 });
+    }
+    if (parsedDate > new Date()) {
+      return NextResponse.json({ error: "미래 날짜는 입력할 수 없습니다." }, { status: 400 });
+    }
+
+    // gender 검증 (허용값만 통과)
+    const ALLOWED_GENDERS = ["남자", "여자"];
+    if (!gender || !ALLOWED_GENDERS.includes(gender)) {
+      return NextResponse.json({ error: "성별은 남자 또는 여자만 허용됩니다." }, { status: 400 });
     }
 
     const zodiac = getZodiacSign(birthDate);
@@ -105,15 +104,24 @@ export async function POST(request: NextRequest) {
 
       fortuneData = JSON.parse(cleanedText);
     } catch {
-      console.error("JSON 파싱 실패. 원본 응답:", responseText);
+      console.error("JSON 파싱 실패");
       return NextResponse.json(
         { error: "운세 데이터 파싱에 실패했습니다." },
         { status: 500 }
       );
     }
 
+    // 숫자 범위 보정
     fortuneData.luckyNumber = Math.max(1, Math.min(99, Number(fortuneData.luckyNumber)));
     fortuneData.score = Math.max(1, Math.min(100, Number(fortuneData.score)));
+
+    // 텍스트 필드 길이 제한 (프롬프트 인젝션 방지)
+    const MAX_TEXT_LENGTH = 300;
+    fortuneData.overall = String(fortuneData.overall).slice(0, MAX_TEXT_LENGTH);
+    fortuneData.love = String(fortuneData.love).slice(0, MAX_TEXT_LENGTH);
+    fortuneData.money = String(fortuneData.money).slice(0, MAX_TEXT_LENGTH);
+    fortuneData.work = String(fortuneData.work).slice(0, MAX_TEXT_LENGTH);
+    fortuneData.luckyColor = String(fortuneData.luckyColor).slice(0, 20);
 
     return NextResponse.json(fortuneData, { status: 200 });
   } catch (error: unknown) {
@@ -126,7 +134,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorMessage = error instanceof Error ? error.message : "";
     if (errorMessage.includes("429") || errorMessage.toLowerCase().includes("quota") || errorMessage.toLowerCase().includes("rate limit")) {
       return NextResponse.json(
         { error: "QUOTA_EXCEEDED" },
