@@ -18,10 +18,10 @@ export default function ContactPage() {
             <h2 className="text-white font-semibold mb-4">📧 이메일 문의</h2>
             <p className="text-sm mb-2">아래 이메일로 문의 주시면 영업일 기준 2-3일 내에 답변드립니다.</p>
             <a
-              href="mailto:contact@fortune-site.com"
+              href="mailto:dhcho0607@gmail.com"
               className="text-purple-400 hover:text-purple-300 font-medium text-lg"
             >
-              contact@fortune-site.com
+              dhcho0607@gmail.com
             </a>
           </div>
 

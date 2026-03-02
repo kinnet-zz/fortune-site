@@ -85,7 +85,7 @@ export default function PrivacyPage() {
             <h2 className="text-lg font-semibold text-white mb-3">7. 개인정보 보호책임자</h2>
             <div className="bg-white/5 rounded-xl p-4 border border-white/10">
               <p><strong className="text-white">책임자</strong>: 오늘의 운세 운영팀</p>
-              <p className="mt-1"><strong className="text-white">이메일</strong>: <a href="mailto:contact@fortune-site.com" className="text-purple-400">contact@fortune-site.com</a></p>
+              <p className="mt-1"><strong className="text-white">이메일</strong>: <a href="mailto:dhcho0607@gmail.com" className="text-purple-400">dhcho0607@gmail.com</a></p>
             </div>
           </section>
 
