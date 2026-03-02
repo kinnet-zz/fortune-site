@@ -129,6 +129,9 @@ export default function HomePage() {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
+        if (response.status === 429 || errorData.error === 'QUOTA_EXCEEDED') {
+          throw new Error('QUOTA_EXCEEDED');
+        }
         throw new Error(errorData.message || `서버 오류가 발생했습니다. (${response.status})`);
       }
 
@@ -195,19 +198,29 @@ export default function HomePage() {
             <div
               className="w-full max-w-md mb-6 px-5 py-4 rounded-2xl flex items-start gap-3"
               style={{
-                background: 'rgba(239,68,68,0.1)',
-                border: '1px solid rgba(239,68,68,0.3)',
+                background: error === 'QUOTA_EXCEEDED' ? 'rgba(251,191,36,0.1)' : 'rgba(239,68,68,0.1)',
+                border: error === 'QUOTA_EXCEEDED' ? '1px solid rgba(251,191,36,0.3)' : '1px solid rgba(239,68,68,0.3)',
               }}
             >
-              <span className="text-xl flex-shrink-0">⚠️</span>
+              <span className="text-xl flex-shrink-0">{error === 'QUOTA_EXCEEDED' ? '🌙' : '⚠️'}</span>
               <div>
-                <p className="text-red-300 text-sm font-semibold mb-1">오류 발생</p>
-                <p className="text-red-300/70 text-sm">{error}</p>
+                {error === 'QUOTA_EXCEEDED' ? (
+                  <>
+                    <p className="text-yellow-300 text-sm font-semibold mb-1">오늘의 운세 조회 한도를 초과했습니다</p>
+                    <p className="text-yellow-300/70 text-sm">별빛이 너무 많은 분들께 닿았나봐요 🌟<br />자정이 지나면 다시 운세를 확인할 수 있습니다.</p>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-red-300 text-sm font-semibold mb-1">오류 발생</p>
+                    <p className="text-red-300/70 text-sm">{error}</p>
+                  </>
+                )}
                 <button
                   onClick={handleReset}
-                  className="mt-2 text-red-300/50 text-xs underline hover:text-red-300/80 transition-colors"
+                  className="mt-2 text-xs underline transition-colors"
+                  style={{ color: error === 'QUOTA_EXCEEDED' ? 'rgba(251,191,36,0.5)' : 'rgba(239,68,68,0.5)' }}
                 >
-                  다시 시도하기
+                  돌아가기
                 </button>
               </div>
             </div>

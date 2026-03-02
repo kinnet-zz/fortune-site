@@ -126,6 +126,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    if (errorMessage.includes("429") || errorMessage.toLowerCase().includes("quota") || errorMessage.toLowerCase().includes("rate limit")) {
+      return NextResponse.json(
+        { error: "QUOTA_EXCEEDED" },
+        { status: 429 }
+      );
+    }
+
     return NextResponse.json(
       { error: "서버 내부 오류가 발생했습니다." },
       { status: 500 }
