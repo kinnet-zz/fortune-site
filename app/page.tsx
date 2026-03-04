@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from 'react';
 import FortuneForm from '../components/FortuneForm';
 import FortuneCard from '../components/FortuneCard';
 import LoadingSpinner from '../components/LoadingSpinner';
+import AdUnit from '../components/AdUnit';
+import InfoSection from '../components/InfoSection';
 
 interface FortuneResult {
   zodiacSign: string;
@@ -251,37 +253,33 @@ export default function HomePage() {
             </div>
           )}
 
-          {/* 운세 결과 후 다시 입력 버튼 - 결과 아래에 폼 대신 */}
+          {/* 운세 결과 후 광고 */}
           {fortune && !isLoading && (
-            <div className="mt-8 text-center">
-              <p className="text-white/20 text-xs">
-                다른 날짜로 운세를 확인하려면 &quot;다시 보기&quot;를 눌러주세요
-              </p>
+            <>
+              <div className="mt-8 text-center">
+                <p className="text-white/20 text-xs">
+                  다른 날짜로 운세를 확인하려면 &quot;다시 보기&quot;를 눌러주세요
+                </p>
+              </div>
+              <div className="w-full max-w-lg mx-auto mt-6">
+                <AdUnit slot="4511932122" format="auto" />
+              </div>
+            </>
+          )}
+
+          {/* 폼 하단 정보 섹션 */}
+          {!isLoading && (
+            <InfoSection />
+          )}
+
+          {/* 하단 광고 */}
+          {!isLoading && (
+            <div className="w-full max-w-2xl mx-auto px-4 mt-10">
+              <AdUnit slot="4511932122" format="horizontal" />
             </div>
           )}
         </div>
 
-        {/* 푸터 */}
-        <footer className="relative z-10 py-6 text-center space-y-3">
-          <div
-            className="inline-flex items-center gap-3 px-6 py-3 rounded-full"
-            style={{
-              background: 'rgba(255,255,255,0.03)',
-              border: '1px solid rgba(255,255,255,0.05)',
-            }}
-          >
-            <span className="text-white/20 text-xs">⭐</span>
-            <p className="text-white/20 text-xs font-medium" suppressHydrationWarning>
-              오늘의 운세 © {new Date().getFullYear()}
-            </p>
-            <span className="text-white/20 text-xs">⭐</span>
-          </div>
-          <div className="flex justify-center gap-6 text-xs pb-16">
-            <a href="/privacy" className="text-white/30 hover:text-white/60 transition-colors">개인정보처리방침</a>
-            <a href="/terms" className="text-white/30 hover:text-white/60 transition-colors">이용약관</a>
-            <a href="/contact" className="text-white/30 hover:text-white/60 transition-colors">문의하기</a>
-          </div>
-        </footer>
       </main>
 
       {/* 하단 배경 글로우 */}

@@ -141,7 +141,7 @@ export default function FortuneCard({ fortune, onReset }: FortuneCardProps) {
       `💼 직업운: ${fortune.work}\n\n` +
       `🍀 행운의 색: ${fortune.luckyColor}\n` +
       `🔢 행운의 숫자: ${fortune.luckyNumber}\n\n` +
-      `오늘의 운세 확인하기 👉 https://fortune-site-nu.vercel.app`;
+      `오늘의 운세 확인하기 👉 https://fortune-site-6dg.pages.dev`;
 
     if (!navigator.clipboard) return;
     await navigator.clipboard.writeText(text);
@@ -150,7 +150,7 @@ export default function FortuneCard({ fortune, onReset }: FortuneCardProps) {
   };
 
   const handleLinkCopy = async () => {
-    const url = 'https://fortune-site-nu.vercel.app';
+    const url = 'https://fortune-site-6dg.pages.dev';
     if (!navigator.clipboard) return;
     await navigator.clipboard.writeText(url);
     setLinkCopied(true);
