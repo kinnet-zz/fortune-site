@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 
 interface FortuneFormProps {
   onSubmit: (birthDate: string, gender: string) => void;
@@ -11,9 +11,17 @@ export default function FortuneForm({ onSubmit, isLoading }: FortuneFormProps) {
   const [birthDate, setBirthDate] = useState('');
   const [gender, setGender] = useState('');
   const [isFocused, setIsFocused] = useState(false);
+  const [today, setToday] = useState('');
+  const [shuffledSigns, setShuffledSigns] = useState<string[]>([]);
 
-  const today = new Date().toISOString().split('T')[0];
   const minDate = '1900-01-01';
+
+  useEffect(() => {
+    setToday(new Date().toISOString().split('T')[0]);
+    const all = ['양자리','황소자리','쌍둥이자리','게자리','사자자리','처녀자리','천칭자리','전갈자리','사수자리','염소자리','물병자리','물고기자리'];
+    const shuffled = [...all].sort(() => Math.random() - 0.5);
+    setShuffledSigns(shuffled.slice(0, 4));
+  }, []);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -196,16 +204,12 @@ export default function FortuneForm({ onSubmit, isLoading }: FortuneFormProps) {
 
           {/* 하단 장식 */}
           <div className="mt-6 pt-4 border-t border-white/5 flex justify-center gap-6">
-            {(() => {
-              const all = ['양자리','황소자리','쌍둥이자리','게자리','사자자리','처녀자리','천칭자리','전갈자리','사수자리','염소자리','물병자리','물고기자리'];
-              const shuffled = [...all].sort(() => Math.random() - 0.5);
-              return shuffled.slice(0, 4).map((sign, i) => (
-                <span key={sign} className="text-purple-400/40 text-xs font-medium animate-twinkle"
-                  style={{ animationDelay: `${i * 0.3}s` }}>
-                  {sign}
-                </span>
-              ));
-            })()}
+            {shuffledSigns.map((sign, i) => (
+              <span key={sign} className="text-purple-400/40 text-xs font-medium animate-twinkle"
+                style={{ animationDelay: `${i * 0.3}s` }}>
+                {sign}
+              </span>
+            ))}
           </div>
         </div>
       </div>

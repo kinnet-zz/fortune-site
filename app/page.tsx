@@ -28,17 +28,21 @@ interface BackgroundStar {
 }
 
 function BackgroundStars() {
-  const [stars] = useState<BackgroundStar[]>(() =>
-    Array.from({ length: 80 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 2.5 + 0.5,
-      opacity: Math.random() * 0.6 + 0.1,
-      delay: Math.random() * 4,
-      duration: Math.random() * 3 + 2,
-    }))
-  );
+  const [stars, setStars] = useState<BackgroundStar[]>([]);
+
+  useEffect(() => {
+    setStars(
+      Array.from({ length: 80 }, (_, i) => ({
+        id: i,
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        size: Math.random() * 2.5 + 0.5,
+        opacity: Math.random() * 0.6 + 0.1,
+        delay: Math.random() * 4,
+        duration: Math.random() * 3 + 2,
+      }))
+    );
+  }, []);
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
@@ -267,7 +271,7 @@ export default function HomePage() {
             }}
           >
             <span className="text-white/20 text-xs">⭐</span>
-            <p className="text-white/20 text-xs font-medium">
+            <p className="text-white/20 text-xs font-medium" suppressHydrationWarning>
               오늘의 운세 © {new Date().getFullYear()}
             </p>
             <span className="text-white/20 text-xs">⭐</span>

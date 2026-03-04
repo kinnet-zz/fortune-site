@@ -1,4 +1,10 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {}
+const { setupDevPlatform } = require('@cloudflare/next-on-pages/next-dev');
 
-module.exports = nextConfig
+/** @type {import('next').NextConfig} */
+const nextConfig = {};
+
+if (process.env.NODE_ENV === 'development') {
+  setupDevPlatform().catch(console.error);
+}
+
+module.exports = nextConfig;
