@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
 
     const prompt = `오늘은 ${todayKorean}입니다.
 사용자는 ${gender}이고, 별자리는 ${zodiac.korean}(${zodiac.english}, ${zodiac.dateRange})이며, 띠는 ${chineseZodiac}입니다.
