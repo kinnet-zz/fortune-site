@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import FortuneForm from '../components/FortuneForm';
 import FortuneCard from '../components/FortuneCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import AdUnit from '../components/AdUnit';
 import InfoSection from '../components/InfoSection';
-import { type Lang, t } from '@/lib/i18n';
+import { t } from '@/lib/i18n';
+import { useLang } from '@/lib/useLang';
 
 interface FortuneResult {
   zodiacSign: string;
@@ -105,22 +106,15 @@ function BackgroundStars() {
   );
 }
 
-const LANG_LABELS: Record<Lang, string> = {
-  ko: '한국어',
-  en: 'EN',
-  zh: '中文',
-  ja: '日本語',
-};
-
 export default function HomePage() {
-  const [lang, setLang] = useState<Lang>('ko');
+  const { lang, setLang } = useLang();
   const [birthDate, setBirthDate] = useState('');
   const [fortune, setFortune] = useState<FortuneResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const resultRef = useRef<HTMLDivElement>(null);
 
-  const handleLangChange = (newLang: Lang) => {
+  const handleLangChange = (newLang: typeof lang) => {
     setLang(newLang);
     setFortune(null);
     setError(null);
@@ -197,31 +191,6 @@ export default function HomePage() {
 
       {/* 메인 컨텐츠 */}
       <main className="relative z-10 min-h-screen flex flex-col">
-        {/* 언어 선택 */}
-        <div className="flex justify-center pt-8 pb-4">
-          <div
-            className="flex items-center gap-1 p-1 rounded-full"
-            style={{
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.08)',
-            }}
-          >
-            {(Object.entries(LANG_LABELS) as [Lang, string][]).map(([code, label]) => (
-              <button
-                key={code}
-                onClick={() => handleLangChange(code)}
-                className="px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200"
-                style={{
-                  background: lang === code ? 'rgba(124,58,237,0.6)' : 'transparent',
-                  color: lang === code ? '#e9d5ff' : 'rgba(255,255,255,0.4)',
-                  border: lang === code ? '1px solid rgba(167,139,250,0.4)' : '1px solid transparent',
-                }}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-        </div>
 
         {/* 콘텐츠 영역 */}
         <div className="flex-1 flex flex-col items-center justify-start px-4 py-8 pb-16">

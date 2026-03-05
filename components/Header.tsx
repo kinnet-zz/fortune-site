@@ -3,17 +3,22 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-
-const NAV_ITEMS = [
-  { href: '/', label: '오늘의 운세' },
-  { href: '/zodiac', label: '별자리 정보' },
-  { href: '/chinese-zodiac', label: '12띠 정보' },
-  { href: '/about', label: '사이트 소개' },
-];
+import { LANG_LABELS, type Lang } from '@/lib/i18n';
+import { useLang } from '@/lib/useLang';
 
 export default function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { lang, setLang } = useLang();
+
+  const NAV_ITEMS = [
+    { href: '/', label: lang === 'ko' ? '오늘의 운세' : lang === 'en' ? 'Fortune' : lang === 'zh' ? '今日运势' : '今日の運勢' },
+    { href: '/zodiac', label: lang === 'ko' ? '별자리 정보' : lang === 'en' ? 'Zodiac Info' : lang === 'zh' ? '星座信息' : '星座情報' },
+    { href: '/chinese-zodiac', label: lang === 'ko' ? '12띠 정보' : lang === 'en' ? 'Chinese Zodiac' : lang === 'zh' ? '生肖信息' : '十二支情報' },
+    { href: '/about', label: lang === 'ko' ? '사이트 소개' : lang === 'en' ? 'About' : lang === 'zh' ? '关于我们' : 'サイト紹介' },
+  ];
+
+  const logoLabel = lang === 'ko' ? '오늘의 운세' : lang === 'en' ? 'Fortune Teller' : lang === 'zh' ? '今日运势' : '今日の運勢';
 
   return (
     <header
@@ -24,14 +29,14 @@ export default function Header() {
         backdropFilter: 'blur(12px)',
       }}
     >
-      <div className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
+      <div className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between gap-2">
         {/* 로고 */}
         <Link
           href="/"
-          className="flex items-center gap-2 text-white/90 font-bold text-base hover:text-white transition-colors"
+          className="flex items-center gap-2 text-white/90 font-bold text-base hover:text-white transition-colors flex-shrink-0"
         >
           <span className="text-xl">🔮</span>
-          <span>오늘의 운세</span>
+          <span>{logoLabel}</span>
         </Link>
 
         {/* 데스크탑 네비게이션 */}
@@ -53,6 +58,30 @@ export default function Header() {
             );
           })}
         </nav>
+
+        {/* 언어 선택 */}
+        <div
+          className="hidden sm:flex items-center gap-0.5 p-0.5 rounded-full flex-shrink-0"
+          style={{
+            background: 'rgba(255,255,255,0.04)',
+            border: '1px solid rgba(255,255,255,0.08)',
+          }}
+        >
+          {(Object.entries(LANG_LABELS) as [Lang, string][]).map(([code, label]) => (
+            <button
+              key={code}
+              onClick={() => setLang(code)}
+              className="px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-200"
+              style={{
+                background: lang === code ? 'rgba(124,58,237,0.6)' : 'transparent',
+                color: lang === code ? '#e9d5ff' : 'rgba(255,255,255,0.4)',
+                border: lang === code ? '1px solid rgba(167,139,250,0.4)' : '1px solid transparent',
+              }}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
 
         {/* 모바일 햄버거 버튼 */}
         <button
@@ -99,6 +128,23 @@ export default function Header() {
               );
             })}
           </nav>
+          {/* 모바일 언어 선택 */}
+          <div className="flex items-center gap-1 px-4 py-3">
+            {(Object.entries(LANG_LABELS) as [Lang, string][]).map(([code, label]) => (
+              <button
+                key={code}
+                onClick={() => { setLang(code); setMenuOpen(false); }}
+                className="px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200"
+                style={{
+                  background: lang === code ? 'rgba(124,58,237,0.6)' : 'rgba(255,255,255,0.04)',
+                  color: lang === code ? '#e9d5ff' : 'rgba(255,255,255,0.4)',
+                  border: lang === code ? '1px solid rgba(167,139,250,0.4)' : '1px solid rgba(255,255,255,0.08)',
+                }}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </header>
