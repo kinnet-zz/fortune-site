@@ -1,13 +1,15 @@
 'use client';
 
 import { useState, useEffect, FormEvent } from 'react';
+import { type Lang, t } from '@/lib/i18n';
 
 interface FortuneFormProps {
   onSubmit: (birthDate: string, gender: string) => void;
   isLoading: boolean;
+  lang: Lang;
 }
 
-export default function FortuneForm({ onSubmit, isLoading }: FortuneFormProps) {
+export default function FortuneForm({ onSubmit, isLoading, lang }: FortuneFormProps) {
   const [birthDate, setBirthDate] = useState('');
   const [gender, setGender] = useState('');
   const [isFocused, setIsFocused] = useState(false);
@@ -15,13 +17,14 @@ export default function FortuneForm({ onSubmit, isLoading }: FortuneFormProps) {
   const [shuffledSigns, setShuffledSigns] = useState<string[]>([]);
 
   const minDate = '1900-01-01';
+  const tr = t(lang);
 
   useEffect(() => {
     setToday(new Date().toISOString().split('T')[0]);
-    const all = ['양자리','황소자리','쌍둥이자리','게자리','사자자리','처녀자리','천칭자리','전갈자리','사수자리','염소자리','물병자리','물고기자리'];
-    const shuffled = [...all].sort(() => Math.random() - 0.5);
+    const signs = tr.zodiacSigns;
+    const shuffled = [...signs].sort(() => Math.random() - 0.5);
     setShuffledSigns(shuffled.slice(0, 4));
-  }, []);
+  }, [lang]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,7 +49,7 @@ export default function FortuneForm({ onSubmit, isLoading }: FortuneFormProps) {
         </div>
 
         <h1 className="text-4xl font-black mb-2 bg-gradient-to-r from-purple-300 via-pink-200 to-indigo-300 bg-clip-text text-transparent leading-tight">
-          오늘의 운세
+          {tr.formTitle}
         </h1>
         <p className="text-purple-200/70 text-sm font-medium tracking-widest uppercase">
           Daily Fortune
@@ -79,20 +82,20 @@ export default function FortuneForm({ onSubmit, isLoading }: FortuneFormProps) {
             {/* 안내 텍스트 */}
             <div className="mb-6 text-center">
               <p className="text-white/80 text-base font-medium leading-relaxed">
-                별자리가 당신의 운명을 속삭입니다
+                {tr.formSubtitle}
               </p>
               <p className="text-purple-300/60 text-sm mt-1">
-                생년월일을 입력하면 오늘의 운세를 알려드려요
+                {tr.formHint}
               </p>
             </div>
 
             {/* 성별 선택 */}
             <div className="mb-6">
               <label className="block text-purple-200 text-sm font-semibold mb-2 tracking-wide">
-                👤 성별
+                {tr.genderLabel}
               </label>
               <div className="grid grid-cols-2 gap-3">
-                {[{ value: '남자', emoji: '♂️', label: '남자' }, { value: '여자', emoji: '♀️', label: '여자' }].map(({ value, emoji, label }) => (
+                {[{ value: '남자', emoji: '♂️', label: tr.male }, { value: '여자', emoji: '♀️', label: tr.female }].map(({ value, emoji, label }) => (
                   <button
                     key={value}
                     type="button"
@@ -122,7 +125,7 @@ export default function FortuneForm({ onSubmit, isLoading }: FortuneFormProps) {
                 htmlFor="birthDate"
                 className="block text-purple-200 text-sm font-semibold mb-2 tracking-wide"
               >
-                🗓️ 생년월일
+                {tr.dateLabel}
               </label>
               <div
                 className={`relative rounded-2xl p-[1px] transition-all duration-300 ${
@@ -189,12 +192,12 @@ export default function FortuneForm({ onSubmit, isLoading }: FortuneFormProps) {
                 {isLoading ? (
                   <>
                     <span className="inline-block w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    <span>운세 확인 중...</span>
+                    <span>{tr.loadingBtn}</span>
                   </>
                 ) : (
                   <>
                     <span>🔮</span>
-                    <span>운세 보기</span>
+                    <span>{tr.submitBtn}</span>
                     <span>✨</span>
                   </>
                 )}
@@ -216,7 +219,7 @@ export default function FortuneForm({ onSubmit, isLoading }: FortuneFormProps) {
 
       {/* 하단 문구 */}
       <p className="text-center text-white/20 text-xs mt-6 leading-relaxed">
-        ✦ 오늘 하루도 별빛이 당신을 비추기를 ✦
+        {tr.footerText}
       </p>
     </div>
   );

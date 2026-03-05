@@ -6,6 +6,7 @@ import FortuneCard from '../components/FortuneCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import AdUnit from '../components/AdUnit';
 import InfoSection from '../components/InfoSection';
+import { type Lang, t } from '@/lib/i18n';
 
 interface FortuneResult {
   zodiacSign: string;
@@ -104,12 +105,26 @@ function BackgroundStars() {
   );
 }
 
+const LANG_LABELS: Record<Lang, string> = {
+  ko: '한국어',
+  en: 'EN',
+  zh: '中文',
+  ja: '日本語',
+};
+
 export default function HomePage() {
+  const [lang, setLang] = useState<Lang>('ko');
   const [birthDate, setBirthDate] = useState('');
   const [fortune, setFortune] = useState<FortuneResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const resultRef = useRef<HTMLDivElement>(null);
+
+  const handleLangChange = (newLang: Lang) => {
+    setLang(newLang);
+    setFortune(null);
+    setError(null);
+  };
 
   // 운세 결과가 나오면 스크롤
   useEffect(() => {
@@ -130,7 +145,7 @@ export default function HomePage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ birthDate: date, gender }),
+        body: JSON.stringify({ birthDate: date, gender, language: lang }),
       });
 
       if (!response.ok) {
@@ -138,7 +153,7 @@ export default function HomePage() {
         if (response.status === 429 || errorData.error === 'QUOTA_EXCEEDED') {
           throw new Error('QUOTA_EXCEEDED');
         }
-        throw new Error(errorData.message || `서버 오류가 발생했습니다. (${response.status})`);
+        throw new Error('GENERAL_ERROR');
       }
 
       const data: FortuneResult = await response.json();
@@ -147,7 +162,7 @@ export default function HomePage() {
       if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError('운세를 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.');
+        setError('GENERAL_ERROR');
       }
     } finally {
       setIsLoading(false);
@@ -182,18 +197,29 @@ export default function HomePage() {
 
       {/* 메인 컨텐츠 */}
       <main className="relative z-10 min-h-screen flex flex-col">
-        {/* 상단 네비게이션 느낌 */}
+        {/* 언어 선택 */}
         <div className="flex justify-center pt-8 pb-4">
           <div
-            className="flex items-center gap-2 px-5 py-2 rounded-full"
+            className="flex items-center gap-1 p-1 rounded-full"
             style={{
               background: 'rgba(255,255,255,0.04)',
               border: '1px solid rgba(255,255,255,0.08)',
             }}
           >
-            <span className="text-purple-300/60 text-xs tracking-widest uppercase font-medium">
-              ✦ Fortune Teller ✦
-            </span>
+            {(Object.entries(LANG_LABELS) as [Lang, string][]).map(([code, label]) => (
+              <button
+                key={code}
+                onClick={() => handleLangChange(code)}
+                className="px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200"
+                style={{
+                  background: lang === code ? 'rgba(124,58,237,0.6)' : 'transparent',
+                  color: lang === code ? '#e9d5ff' : 'rgba(255,255,255,0.4)',
+                  border: lang === code ? '1px solid rgba(167,139,250,0.4)' : '1px solid transparent',
+                }}
+              >
+                {label}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -212,13 +238,13 @@ export default function HomePage() {
               <div>
                 {error === 'QUOTA_EXCEEDED' ? (
                   <>
-                    <p className="text-yellow-300 text-sm font-semibold mb-1">오늘의 운세 조회 한도를 초과했습니다</p>
-                    <p className="text-yellow-300/70 text-sm">별빛이 너무 많은 분들께 닿았나봐요 🌟<br />자정이 지나면 다시 운세를 확인할 수 있습니다.</p>
+                    <p className="text-yellow-300 text-sm font-semibold mb-1">{t(lang).quotaTitle}</p>
+                    <p className="text-yellow-300/70 text-sm">{t(lang).quotaMsg1}<br />{t(lang).quotaMsg2}</p>
                   </>
                 ) : (
                   <>
-                    <p className="text-red-300 text-sm font-semibold mb-1">오류 발생</p>
-                    <p className="text-red-300/70 text-sm">{error}</p>
+                    <p className="text-red-300 text-sm font-semibold mb-1">{t(lang).errorTitle}</p>
+                    <p className="text-red-300/70 text-sm">{t(lang).generalError}</p>
                   </>
                 )}
                 <button
@@ -226,7 +252,7 @@ export default function HomePage() {
                   className="mt-2 text-xs underline transition-colors"
                   style={{ color: error === 'QUOTA_EXCEEDED' ? 'rgba(251,191,36,0.5)' : 'rgba(239,68,68,0.5)' }}
                 >
-                  돌아가기
+                  {t(lang).back}
                 </button>
               </div>
             </div>
@@ -242,14 +268,14 @@ export default function HomePage() {
           {/* 운세 결과 */}
           {fortune && !isLoading && (
             <div ref={resultRef} className="w-full flex justify-center">
-              <FortuneCard fortune={fortune} onReset={handleReset} />
+              <FortuneCard fortune={fortune} onReset={handleReset} lang={lang} />
             </div>
           )}
 
           {/* 폼 - 결과가 없고 로딩 중이 아닐 때 */}
           {!fortune && !isLoading && (
             <div className="w-full flex justify-center">
-              <FortuneForm onSubmit={handleSubmit} isLoading={isLoading} />
+              <FortuneForm onSubmit={handleSubmit} isLoading={isLoading} lang={lang} />
             </div>
           )}
 
@@ -258,7 +284,7 @@ export default function HomePage() {
             <>
               <div className="mt-8 text-center">
                 <p className="text-white/20 text-xs">
-                  다른 날짜로 운세를 확인하려면 &quot;다시 보기&quot;를 눌러주세요
+                  {t(lang).retryHint}
                 </p>
               </div>
               <div className="w-full max-w-lg mx-auto mt-6">

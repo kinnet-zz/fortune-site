@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { type Lang, t } from '@/lib/i18n';
 
 interface FortuneResult {
   zodiacSign: string;
@@ -17,6 +18,7 @@ interface FortuneResult {
 interface FortuneCardProps {
   fortune: FortuneResult;
   onReset: () => void;
+  lang: Lang;
 }
 
 interface SectionProps {
@@ -122,10 +124,11 @@ function ScoreBar({ score }: { score: number }) {
   );
 }
 
-export default function FortuneCard({ fortune, onReset }: FortuneCardProps) {
+export default function FortuneCard({ fortune, onReset, lang }: FortuneCardProps) {
   const [copied, setCopied] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
   const [cardVisible, setCardVisible] = useState(false);
+  const tr = t(lang);
 
   useEffect(() => {
     const timer = setTimeout(() => setCardVisible(true), 100);
@@ -133,15 +136,15 @@ export default function FortuneCard({ fortune, onReset }: FortuneCardProps) {
   }, []);
 
   const handleShare = async () => {
-    const text = `🔮 오늘의 운세 (${fortune.zodiacSign} / ${fortune.chineseZodiac})\n\n` +
-      `⭐ 운세 점수: ${fortune.score}/100\n\n` +
-      `✨ 종합운: ${fortune.overall}\n` +
-      `💕 연애운: ${fortune.love}\n` +
-      `💰 금전운: ${fortune.money}\n` +
-      `💼 직업운: ${fortune.work}\n\n` +
-      `🍀 행운의 색: ${fortune.luckyColor}\n` +
-      `🔢 행운의 숫자: ${fortune.luckyNumber}\n\n` +
-      `오늘의 운세 확인하기 👉 https://fortune-site-6dg.pages.dev`;
+    const text = `🔮 ${tr.resultHeader} (${fortune.zodiacSign} / ${fortune.chineseZodiac})\n\n` +
+      `⭐ ${tr.scoreLabel}: ${fortune.score}/100\n\n` +
+      `✨ ${tr.overall}: ${fortune.overall}\n` +
+      `💕 ${tr.love}: ${fortune.love}\n` +
+      `💰 ${tr.money}: ${fortune.money}\n` +
+      `💼 ${tr.work}: ${fortune.work}\n\n` +
+      `🍀 ${tr.luckyColorLabel}: ${fortune.luckyColor}\n` +
+      `🔢 ${tr.luckyNumberLabel}: ${fortune.luckyNumber}\n\n` +
+      `https://fortune-site-6dg.pages.dev`;
 
     if (!navigator.clipboard) return;
     await navigator.clipboard.writeText(text);
@@ -157,9 +160,7 @@ export default function FortuneCard({ fortune, onReset }: FortuneCardProps) {
     setTimeout(() => setLinkCopied(false), 2500);
   };
 
-  const scoreLevel = fortune.score >= 80 ? '최고의 날' :
-    fortune.score >= 60 ? '좋은 날' :
-    fortune.score >= 40 ? '보통의 날' : '주의가 필요한 날';
+  const scoreLevel = tr.scoreLevel(fortune.score);
 
   const scoreEmoji = fortune.score >= 80 ? '🌟' :
     fortune.score >= 60 ? '⭐' :
@@ -201,7 +202,7 @@ export default function FortuneCard({ fortune, onReset }: FortuneCardProps) {
             <div className="absolute bottom-4 left-10 text-purple-400/20 text-2xl select-none animate-twinkle-delayed">★</div>
 
             <p className="text-purple-300/60 text-xs tracking-widest uppercase font-medium mb-3">
-              오늘의 운세 결과
+              {tr.resultHeader}
             </p>
 
             {/* 별자리 & 띠 */}
@@ -242,7 +243,7 @@ export default function FortuneCard({ fortune, onReset }: FortuneCardProps) {
           {/* 점수 섹션 */}
           <div className="px-8 py-6" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
             <p className="text-center text-white/40 text-xs tracking-widest uppercase font-medium mb-4">
-              오늘의 운세 점수
+              {tr.scoreLabel}
             </p>
             <ScoreBar score={fortune.score} />
           </div>
@@ -250,32 +251,32 @@ export default function FortuneCard({ fortune, onReset }: FortuneCardProps) {
           {/* 운세 섹션들 */}
           <div className="px-8 py-6 space-y-4">
             <p className="text-white/30 text-xs tracking-widest uppercase font-medium mb-2">
-              세부 운세
+              {tr.detailLabel}
             </p>
             <FortuneSection
               icon="✨"
-              title="종합운"
+              title={tr.overall}
               content={fortune.overall}
               color="#c084fc"
               delay={200}
             />
             <FortuneSection
               icon="💕"
-              title="연애운"
+              title={tr.love}
               content={fortune.love}
               color="#f9a8d4"
               delay={400}
             />
             <FortuneSection
               icon="💰"
-              title="금전운"
+              title={tr.money}
               content={fortune.money}
               color="#6ee7b7"
               delay={600}
             />
             <FortuneSection
               icon="💼"
-              title="직업운"
+              title={tr.work}
               content={fortune.work}
               color="#93c5fd"
               delay={800}
@@ -292,7 +293,7 @@ export default function FortuneCard({ fortune, onReset }: FortuneCardProps) {
               }}
             >
               <p className="text-white/40 text-xs tracking-widest uppercase font-medium mb-4 text-center">
-                오늘의 행운 아이템
+                {tr.luckyItemLabel}
               </p>
               <div className="flex justify-center gap-8">
                 {/* 행운의 색상 */}
@@ -304,7 +305,7 @@ export default function FortuneCard({ fortune, onReset }: FortuneCardProps) {
                       boxShadow: `0 0 20px ${getLuckyColorHex(fortune.luckyColor)}60`,
                     }}
                   />
-                  <p className="text-white/40 text-xs mb-1">행운의 색</p>
+                  <p className="text-white/40 text-xs mb-1">{tr.luckyColorLabel}</p>
                   <p className="text-white/80 text-sm font-bold">{fortune.luckyColor}</p>
                 </div>
 
@@ -324,7 +325,7 @@ export default function FortuneCard({ fortune, onReset }: FortuneCardProps) {
                   >
                     <span className="text-xl font-black text-white">{fortune.luckyNumber}</span>
                   </div>
-                  <p className="text-white/40 text-xs mb-1">행운의 숫자</p>
+                  <p className="text-white/40 text-xs mb-1">{tr.luckyNumberLabel}</p>
                   <p className="text-white/80 text-sm font-bold">{fortune.luckyNumber}</p>
                 </div>
               </div>
@@ -349,7 +350,7 @@ export default function FortuneCard({ fortune, onReset }: FortuneCardProps) {
                 }}
               >
                 <span className="flex items-center justify-center gap-2">
-                  {copied ? <><span>✅</span><span>복사됨!</span></> : <><span>📋</span><span>운세 공유</span></>}
+                  {copied ? <><span>✅</span><span>{tr.copied}</span></> : <><span>📋</span><span>{tr.shareBtn}</span></>}
                 </span>
               </button>
 
@@ -364,7 +365,7 @@ export default function FortuneCard({ fortune, onReset }: FortuneCardProps) {
               >
                 <span className="flex items-center justify-center gap-2 text-white">
                   <span>🔮</span>
-                  <span>다시 보기</span>
+                  <span>{tr.resetBtn}</span>
                 </span>
               </button>
             </div>
@@ -384,7 +385,7 @@ export default function FortuneCard({ fortune, onReset }: FortuneCardProps) {
               }}
             >
               <span className="flex items-center justify-center gap-2">
-                {linkCopied ? <><span>✅</span><span>링크 복사됨!</span></> : <><span>🔗</span><span>사이트 링크 복사</span></>}
+                {linkCopied ? <><span>✅</span><span>{tr.linkCopied}</span></> : <><span>🔗</span><span>{tr.linkCopyBtn}</span></>}
               </span>
             </button>
           </div>
@@ -393,7 +394,7 @@ export default function FortuneCard({ fortune, onReset }: FortuneCardProps) {
 
       {/* 하단 장식 문구 */}
       <p className="text-center text-white/15 text-xs mt-6">
-        ✦ 운세는 참고용입니다. 당신의 노력이 가장 중요합니다 ✦
+        {tr.disclaimer}
       </p>
     </div>
   );
@@ -401,40 +402,68 @@ export default function FortuneCard({ fortune, onReset }: FortuneCardProps) {
 
 function getLuckyColorHex(colorName: string): string {
   const colorMap: Record<string, string> = {
-    '빨간색': '#ef4444',
-    '빨강': '#ef4444',
-    '파란색': '#3b82f6',
-    '파랑': '#3b82f6',
-    '노란색': '#eab308',
-    '노랑': '#eab308',
-    '초록색': '#22c55e',
-    '초록': '#22c55e',
-    '보라색': '#a855f7',
-    '보라': '#a855f7',
-    '주황색': '#f97316',
-    '주황': '#f97316',
-    '분홍색': '#ec4899',
-    '분홍': '#ec4899',
-    '하늘색': '#38bdf8',
-    '하늘': '#38bdf8',
-    '하얀색': '#f1f5f9',
-    '흰색': '#f1f5f9',
-    '검은색': '#374151',
-    '검정': '#374151',
-    '금색': '#f59e0b',
-    '금': '#f59e0b',
-    '은색': '#94a3b8',
-    '은': '#94a3b8',
-    '갈색': '#92400e',
-    '남색': '#1e3a8a',
-    '연두색': '#84cc16',
-    '연두': '#84cc16',
-    '자주색': '#9d174d',
-    '베이지': '#d4b896',
-    '민트': '#6ee7b7',
-    '민트색': '#6ee7b7',
+    // Korean
+    '빨간색': '#ef4444', '빨강': '#ef4444',
+    '파란색': '#3b82f6', '파랑': '#3b82f6',
+    '노란색': '#eab308', '노랑': '#eab308',
+    '초록색': '#22c55e', '초록': '#22c55e',
+    '보라색': '#a855f7', '보라': '#a855f7',
+    '주황색': '#f97316', '주황': '#f97316',
+    '분홍색': '#ec4899', '분홍': '#ec4899',
+    '하늘색': '#38bdf8', '하늘': '#38bdf8',
+    '하얀색': '#f1f5f9', '흰색': '#f1f5f9', '백색': '#f1f5f9',
+    '검은색': '#374151', '검정': '#374151',
+    '금색': '#f59e0b', '금': '#f59e0b',
+    '은색': '#94a3b8', '은': '#94a3b8',
+    '갈색': '#92400e', '남색': '#1e3a8a',
+    '연두색': '#84cc16', '연두': '#84cc16',
+    '자주색': '#9d174d', '베이지': '#d4b896',
+    '민트': '#6ee7b7', '민트색': '#6ee7b7',
+    '회색': '#6b7280', '회색계열': '#6b7280',
+    // English
+    'red': '#ef4444', 'crimson': '#dc2626',
+    'blue': '#3b82f6', 'navy': '#1e3a8a', 'indigo': '#6366f1', 'teal': '#14b8a6',
+    'yellow': '#eab308', 'amber': '#f59e0b', 'gold': '#f59e0b',
+    'green': '#22c55e', 'emerald': '#10b981', 'lime': '#84cc16',
+    'purple': '#a855f7', 'violet': '#8b5cf6', 'lavender': '#c4b5fd',
+    'orange': '#f97316', 'coral': '#fb923c',
+    'pink': '#ec4899', 'rose': '#f43f5e',
+    'sky blue': '#38bdf8', 'sky': '#38bdf8', 'turquoise': '#2dd4bf', 'cyan': '#06b6d4',
+    'white': '#f1f5f9', 'cream': '#fef9c3', 'ivory': '#fef9c3', 'beige': '#d4b896',
+    'black': '#374151', 'charcoal': '#374151',
+    'silver': '#94a3b8', 'gray': '#6b7280', 'grey': '#6b7280',
+    'brown': '#92400e', 'chocolate': '#78350f',
+    'mint': '#6ee7b7',
+    // Chinese
+    '红色': '#ef4444', '红': '#ef4444', '玫瑰红': '#f43f5e',
+    '蓝色': '#3b82f6', '蓝': '#3b82f6', '深蓝色': '#1e3a8a', '深蓝': '#1e3a8a', '靛蓝': '#6366f1',
+    '黄色': '#eab308', '黄': '#eab308', '金色': '#f59e0b', '金黄色': '#f59e0b',
+    '绿色': '#22c55e', '绿': '#22c55e', '翠绿': '#10b981', '草绿': '#84cc16',
+    '紫色': '#a855f7', '紫': '#a855f7', '薰衣草色': '#c4b5fd',
+    '橙色': '#f97316', '橙': '#f97316', '珊瑚色': '#fb923c',
+    '粉色': '#ec4899', '粉红色': '#ec4899', '粉红': '#ec4899',
+    '天蓝色': '#38bdf8', '天蓝': '#38bdf8', '青色': '#06b6d4', '青': '#06b6d4',
+    '白色': '#f1f5f9', '白': '#f1f5f9', '米色': '#d4b896', '奶白色': '#fef9c3',
+    '黑色': '#374151', '黑': '#374151',
+    '银色': '#94a3b8', '银': '#94a3b8', '灰色': '#6b7280', '灰': '#6b7280',
+    '棕色': '#92400e', '棕': '#92400e', '褐色': '#92400e',
+    '薄荷色': '#6ee7b7', '薄荷绿': '#6ee7b7',
+    // Japanese (katakana & unique kanji only; shared CJK entries handled above)
+    '赤': '#ef4444', '赤色': '#ef4444', '紅色': '#dc2626',
+    '紺': '#1e3a8a', '紺色': '#1e3a8a',
+    '金': '#f59e0b',
+    '緑': '#22c55e', '緑色': '#22c55e', '黄緑': '#84cc16',
+    'ラベンダー': '#c4b5fd',
+    'オレンジ': '#f97316', 'オレンジ色': '#f97316', 'サーモン': '#fb923c',
+    'ピンク': '#ec4899', 'ピンク色': '#ec4899',
+    '水色': '#38bdf8', 'ターコイズ': '#2dd4bf', 'シアン': '#06b6d4',
+    'ベージュ': '#d4b896', 'クリーム': '#fef9c3',
+    '黒': '#374151', '黒色': '#374151',
+    '銀': '#94a3b8', '銀色': '#94a3b8', 'グレー': '#6b7280',
+    '茶': '#92400e', '茶色': '#92400e',
+    'ミント': '#6ee7b7', 'ライム': '#84cc16', 'ライムグリーン': '#84cc16',
   };
 
-  const normalized = colorName.trim();
-  return colorMap[normalized] || '#a855f7';
+  const normalized = colorName.trim().toLowerCase();
+  return colorMap[colorName.trim()] || colorMap[normalized] || '#a855f7';
 }
