@@ -18,6 +18,8 @@ export interface Translations {
   dateLabel: string;
   submitBtn: string;
   loadingBtn: string;
+  loadingTitle: string;
+  loadingMessages: string[];
   footerText: string;
   zodiacSigns: string[];
   // Fortune Card
@@ -123,6 +125,8 @@ const translations: Record<Lang, Translations> = {
     dateLabel: '🗓️ 생년월일',
     submitBtn: '운세 보기',
     loadingBtn: '운세 확인 중...',
+    loadingTitle: '운세를 불러오는 중...',
+    loadingMessages: ['별자리를 분석하는 중...','우주의 기운을 읽는 중...','오늘의 운세를 계산하는 중...','별빛 에너지를 모으는 중...','운명의 실을 잇는 중...'],
     footerText: '✦ 오늘 하루도 별빛이 당신을 비추기를 ✦',
     zodiacSigns: ['양자리','황소자리','쌍둥이자리','게자리','사자자리','처녀자리','천칭자리','전갈자리','사수자리','염소자리','물병자리','물고기자리'],
     resultHeader: '오늘의 운세 결과',
@@ -243,6 +247,8 @@ const translations: Record<Lang, Translations> = {
     dateLabel: '🗓️ Birth Date',
     submitBtn: 'See Fortune',
     loadingBtn: 'Reading Fortune...',
+    loadingTitle: 'Reading your fortune...',
+    loadingMessages: ['Analyzing your zodiac sign...','Reading cosmic energy...','Calculating today\'s fortune...','Gathering starlight energy...','Weaving the threads of fate...'],
     footerText: '✦ May the stars light your path today ✦',
     zodiacSigns: ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'],
     resultHeader: "Today's Fortune",
@@ -363,6 +369,8 @@ const translations: Record<Lang, Translations> = {
     dateLabel: '🗓️ 生日',
     submitBtn: '查看运势',
     loadingBtn: '运势解读中...',
+    loadingTitle: '正在读取运势...',
+    loadingMessages: ['正在分析星座...','正在感应宇宙能量...','正在计算今日运势...','正在汇聚星光能量...','正在编织命运之线...'],
     footerText: '✦ 愿今日星光照耀你 ✦',
     zodiacSigns: ['白羊座','金牛座','双子座','巨蟹座','狮子座','处女座','天秤座','天蝎座','射手座','摩羯座','水瓶座','双鱼座'],
     resultHeader: '今日运势结果',
@@ -483,6 +491,8 @@ const translations: Record<Lang, Translations> = {
     dateLabel: '🗓️ 生年月日',
     submitBtn: '運勢を見る',
     loadingBtn: '運勢確認中...',
+    loadingTitle: '運勢を読み込んでいます...',
+    loadingMessages: ['星座を分析中...','宇宙のエネルギーを読んでいます...','今日の運勢を計算中...','星明かりのエネルギーを集めています...','運命の糸を結んでいます...'],
     footerText: '✦ 今日も星明かりがあなたを照らしますように ✦',
     zodiacSigns: ['おひつじ座','おうし座','ふたご座','かに座','しし座','おとめ座','てんびん座','さそり座','いて座','やぎ座','みずがめ座','うお座'],
     resultHeader: '今日の運勢結果',

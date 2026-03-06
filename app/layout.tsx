@@ -4,6 +4,7 @@ import './globals.css';
 import CookieBanner from '../components/CookieBanner';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { LangProvider } from '@/lib/LangContext';
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],
@@ -76,10 +77,12 @@ export default function RootLayout({
         />
       </head>
       <body className={`${notoSansKR.className} antialiased`}>
-        <Header />
-        {children}
-        <Footer />
-        <CookieBanner />
+        <LangProvider>
+          <Header />
+          {children}
+          <Footer />
+          <CookieBanner />
+        </LangProvider>
       </body>
     </html>
   );
