@@ -4,17 +4,6 @@ import Link from 'next/link';
 import { useLang } from '@/lib/useLang';
 import { t } from '@/lib/i18n';
 
-const POLICY_LINKS = [
-  { href: '/privacy', labelKey: 'privacy' as const },
-  { href: '/terms', labelKey: 'terms' as const },
-  { href: '/contact', labelKey: 'contact' as const },
-];
-
-const POLICY_LABELS: Record<string, Record<string, string>> = {
-  privacy: { ko: '개인정보처리방침', en: 'Privacy Policy', zh: '隐私政策', ja: 'プライバシーポリシー' },
-  terms: { ko: '이용약관', en: 'Terms of Use', zh: '使用条款', ja: '利用規約' },
-  contact: { ko: '문의하기', en: 'Contact', zh: '联系我们', ja: 'お問い合わせ' },
-};
 
 export default function Footer() {
   const { lang } = useLang();
@@ -69,13 +58,17 @@ export default function Footer() {
           <div>
             <h3 className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-3">{tr.footerPolicy}</h3>
             <ul className="space-y-2">
-              {POLICY_LINKS.map(({ href, labelKey }) => (
+              {[
+                { href: '/privacy', label: tr.footerPrivacy },
+                { href: '/terms', label: tr.footerTerms },
+                { href: '/contact', label: tr.footerContact },
+              ].map(({ href, label }) => (
                 <li key={href}>
                   <Link
                     href={href}
                     className="text-white/35 hover:text-white/60 text-xs transition-colors"
                   >
-                    {POLICY_LABELS[labelKey][lang]}
+                    {label}
                   </Link>
                 </li>
               ))}

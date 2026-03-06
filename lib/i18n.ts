@@ -95,6 +95,9 @@ export interface Translations {
   footerDesc: string;
   footerService: string;
   footerPolicy: string;
+  footerPrivacy: string;
+  footerTerms: string;
+  footerContact: string;
   footerDisclaimer: string;
   // About page
   aboutTitle: string;
@@ -234,6 +237,9 @@ const translations: Record<Lang, Translations> = {
     footerDesc: '생년월일로 별자리와 띠를 분석하는 AI 무료 운세 서비스. 오늘의 종합운, 연애운, 금전운, 직업운을 확인해보세요.',
     footerService: '서비스',
     footerPolicy: '정책',
+    footerPrivacy: '개인정보처리방침',
+    footerTerms: '이용약관',
+    footerContact: '문의하기',
     footerDisclaimer: '본 서비스의 운세는 AI가 생성한 오락적 콘텐츠입니다. 실제 미래를 예측하지 않습니다.',
   },
 
@@ -356,6 +362,9 @@ const translations: Record<Lang, Translations> = {
     footerDesc: 'A free AI fortune service analyzing zodiac signs and Chinese zodiac from your birthdate. Check your Overall, Love, Money, and Career fortune.',
     footerService: 'Services',
     footerPolicy: 'Policies',
+    footerPrivacy: 'Privacy Policy',
+    footerTerms: 'Terms of Use',
+    footerContact: 'Contact',
     footerDisclaimer: 'The fortune in this service is AI-generated entertainment content. It does not predict actual future events.',
   },
 
@@ -478,6 +487,9 @@ const translations: Record<Lang, Translations> = {
     footerDesc: '基于生日分析星座和生肖的免费AI运势服务。查看综合运、爱情运、财运和事业运。',
     footerService: '服务',
     footerPolicy: '政策',
+    footerPrivacy: '隐私政策',
+    footerTerms: '使用条款',
+    footerContact: '联系我们',
     footerDisclaimer: '本服务的运势是AI生成的娱乐内容，不预测实际未来。',
   },
 
@@ -600,6 +612,9 @@ const translations: Record<Lang, Translations> = {
     footerDesc: '生年月日から星座と干支を分析するAI無料運勢サービス。総合運・恋愛運・金運・仕事運をご確認ください。',
     footerService: 'サービス',
     footerPolicy: 'ポリシー',
+    footerPrivacy: 'プライバシーポリシー',
+    footerTerms: '利用規約',
+    footerContact: 'お問い合わせ',
     footerDisclaimer: '本サービスの運勢はAIが生成したエンターテインメントコンテンツです。実際の未来を予測するものではありません。',
   },
 };
