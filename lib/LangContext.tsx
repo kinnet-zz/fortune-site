@@ -1,42 +1,10 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import { type Lang } from './i18n';
+import { type ReactNode } from 'react';
 
-const VALID_LANGS: Lang[] = ['ko', 'en', 'zh', 'ja'];
-
-interface LangContextValue {
-  lang: Lang;
-  setLang: (lang: Lang) => void;
-}
-
-const LangContext = createContext<LangContextValue>({
-  lang: 'ko',
-  setLang: () => {},
-});
-
+// LangProvider is now a no-op wrapper kept for layout.tsx compatibility.
+// Language state is managed by the singleton store in useLang.ts,
+// which works reliably across all React roots in Next.js App Router.
 export function LangProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>('ko');
-
-  useEffect(() => {
-    const stored = localStorage.getItem('lang') as Lang | null;
-    if (stored && VALID_LANGS.includes(stored)) {
-      setLangState(stored);
-    }
-  }, []);
-
-  const setLang = (newLang: Lang) => {
-    setLangState(newLang);
-    localStorage.setItem('lang', newLang);
-  };
-
-  return (
-    <LangContext.Provider value={{ lang, setLang }}>
-      {children}
-    </LangContext.Provider>
-  );
-}
-
-export function useLangContext() {
-  return useContext(LangContext);
+  return <>{children}</>;
 }
