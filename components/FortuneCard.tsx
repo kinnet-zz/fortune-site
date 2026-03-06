@@ -19,6 +19,8 @@ interface FortuneCardProps {
   fortune: FortuneResult;
   onReset: () => void;
   lang: Lang;
+  birthDate: string;
+  gender: string;
 }
 
 interface SectionProps {
@@ -124,7 +126,7 @@ function ScoreBar({ score }: { score: number }) {
   );
 }
 
-export default function FortuneCard({ fortune, onReset, lang }: FortuneCardProps) {
+export default function FortuneCard({ fortune, onReset, lang, birthDate, gender }: FortuneCardProps) {
   const [copied, setCopied] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
   const [cardVisible, setCardVisible] = useState(false);
@@ -153,8 +155,10 @@ export default function FortuneCard({ fortune, onReset, lang }: FortuneCardProps
   };
 
   const handleLinkCopy = async () => {
-    const url = 'https://fortune-site-6dg.pages.dev';
     if (!navigator.clipboard) return;
+    const encoded = btoa(encodeURIComponent(JSON.stringify(fortune)));
+    const params = new URLSearchParams({ r: encoded, bd: birthDate, g: gender });
+    const url = `${window.location.origin}/?${params.toString()}`;
     await navigator.clipboard.writeText(url);
     setLinkCopied(true);
     setTimeout(() => setLinkCopied(false), 2500);

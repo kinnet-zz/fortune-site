@@ -109,12 +109,30 @@ function BackgroundStars() {
 export default function HomePage() {
   const { lang, setLang } = useLang();
   const [birthDate, setBirthDate] = useState('');
+  const [gender, setGender] = useState('');
   const [fortune, setFortune] = useState<FortuneResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const resultRef = useRef<HTMLDivElement>(null);
   const lastGenderRef = useRef('');
   const prevLangRef = useRef(lang);
+
+  // URL 파라미터로 공유된 결과 로드
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const r = params.get('r');
+    if (!r) return;
+    try {
+      const decoded = JSON.parse(decodeURIComponent(atob(r))) as FortuneResult;
+      const bd = params.get('bd') ?? '';
+      const g = params.get('g') ?? '';
+      setFortune(decoded);
+      if (bd) setBirthDate(bd);
+      if (g) { setGender(g); lastGenderRef.current = g; }
+    } catch {
+      // 잘못된 URL 파라미터는 무시
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // 운세 결과가 나오면 스크롤
   useEffect(() => {
@@ -123,9 +141,10 @@ export default function HomePage() {
     }
   }, [fortune]);
 
-  const handleSubmit = useCallback(async (date: string, gender: string) => {
+  const handleSubmit = useCallback(async (date: string, genderInput: string) => {
     setBirthDate(date);
-    lastGenderRef.current = gender;
+    setGender(genderInput);
+    lastGenderRef.current = genderInput;
     setIsLoading(true);
     setError(null);
     setFortune(null);
@@ -136,7 +155,7 @@ export default function HomePage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ birthDate: date, gender, language: lang }),
+        body: JSON.stringify({ birthDate: date, gender: genderInput, language: lang }),
       });
 
       if (!response.ok) {
@@ -243,7 +262,7 @@ export default function HomePage() {
           {/* 운세 결과 */}
           {fortune && !isLoading && (
             <div ref={resultRef} className="w-full flex justify-center">
-              <FortuneCard fortune={fortune} onReset={handleReset} lang={lang} />
+                <FortuneCard fortune={fortune} onReset={handleReset} lang={lang} birthDate={birthDate} gender={gender} />
             </div>
           )}
 
