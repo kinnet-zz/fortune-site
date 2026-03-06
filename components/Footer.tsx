@@ -41,7 +41,7 @@ export default function Footer() {
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-3">
               <span className="text-xl">🔮</span>
-              <span className="text-white/80 font-bold text-base">오늘의 운세</span>
+              <span className="text-white/80 font-bold text-base">{tr.navFortune}</span>
             </div>
             <p className="text-white/35 text-xs leading-relaxed max-w-xs">
               {tr.footerDesc}
@@ -92,7 +92,7 @@ export default function Footer() {
         {/* 하단: 저작권 + 면책 */}
         <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
           <p className="text-white/25 text-xs">
-            © {new Date().getFullYear()} 오늘의 운세. All rights reserved.
+            © {new Date().getFullYear()} {tr.navFortune}. All rights reserved.
           </p>
           <p className="text-white/20 text-xs max-w-sm text-right leading-relaxed">
             {tr.footerDisclaimer}
