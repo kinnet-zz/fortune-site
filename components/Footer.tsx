@@ -1,19 +1,31 @@
-import Link from 'next/link';
+'use client';
 
-const SITE_LINKS = [
-  { href: '/', label: '오늘의 운세' },
-  { href: '/zodiac', label: '별자리 정보' },
-  { href: '/chinese-zodiac', label: '12띠 정보' },
-  { href: '/about', label: '사이트 소개' },
-];
+import Link from 'next/link';
+import { useLang } from '@/lib/useLang';
+import { t } from '@/lib/i18n';
 
 const POLICY_LINKS = [
-  { href: '/privacy', label: '개인정보처리방침' },
-  { href: '/terms', label: '이용약관' },
-  { href: '/contact', label: '문의하기' },
+  { href: '/privacy', labelKey: 'privacy' as const },
+  { href: '/terms', labelKey: 'terms' as const },
+  { href: '/contact', labelKey: 'contact' as const },
 ];
 
+const POLICY_LABELS: Record<string, Record<string, string>> = {
+  privacy: { ko: '개인정보처리방침', en: 'Privacy Policy', zh: '隐私政策', ja: 'プライバシーポリシー' },
+  terms: { ko: '이용약관', en: 'Terms of Use', zh: '使用条款', ja: '利用規約' },
+  contact: { ko: '문의하기', en: 'Contact', zh: '联系我们', ja: 'お問い合わせ' },
+};
+
 export default function Footer() {
+  const { lang } = useLang();
+  const tr = t(lang);
+
+  const SITE_LINKS = [
+    { href: '/', label: tr.navFortune },
+    { href: '/zodiac', label: tr.navZodiac },
+    { href: '/chinese-zodiac', label: tr.navChineseZodiac },
+    { href: '/about', label: tr.navAbout },
+  ];
   return (
     <footer
       className="relative z-10 mt-16 py-10 px-6"
@@ -32,14 +44,13 @@ export default function Footer() {
               <span className="text-white/80 font-bold text-base">오늘의 운세</span>
             </div>
             <p className="text-white/35 text-xs leading-relaxed max-w-xs">
-              생년월일로 별자리와 띠를 분석하는 AI 무료 운세 서비스.
-              오늘의 종합운, 연애운, 금전운, 직업운을 확인해보세요.
+              {tr.footerDesc}
             </p>
           </div>
 
           {/* 사이트 링크 */}
           <div>
-            <h3 className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-3">서비스</h3>
+            <h3 className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-3">{tr.footerService}</h3>
             <ul className="space-y-2">
               {SITE_LINKS.map(({ href, label }) => (
                 <li key={href}>
@@ -56,15 +67,15 @@ export default function Footer() {
 
           {/* 정책 링크 */}
           <div>
-            <h3 className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-3">정책</h3>
+            <h3 className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-3">{tr.footerPolicy}</h3>
             <ul className="space-y-2">
-              {POLICY_LINKS.map(({ href, label }) => (
+              {POLICY_LINKS.map(({ href, labelKey }) => (
                 <li key={href}>
                   <Link
                     href={href}
                     className="text-white/35 hover:text-white/60 text-xs transition-colors"
                   >
-                    {label}
+                    {POLICY_LABELS[labelKey][lang]}
                   </Link>
                 </li>
               ))}
@@ -84,7 +95,7 @@ export default function Footer() {
             © {new Date().getFullYear()} 오늘의 운세. All rights reserved.
           </p>
           <p className="text-white/20 text-xs max-w-sm text-right leading-relaxed">
-            본 서비스의 운세는 AI가 생성한 오락적 콘텐츠입니다. 실제 미래를 예측하지 않습니다.
+            {tr.footerDisclaimer}
           </p>
         </div>
       </div>

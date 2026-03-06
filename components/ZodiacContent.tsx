@@ -6,19 +6,23 @@ import { t } from '@/lib/i18n';
 import { ZODIAC_CONTENT } from '@/lib/zodiac-data';
 
 const ZODIAC_BASE = [
-  { sign: '양자리', english: 'Aries', symbol: '♈', period: '3/21 ~ 4/19', element: '불 🔥', planet: '화성 ♂', color: '#ef4444' },
-  { sign: '황소자리', english: 'Taurus', symbol: '♉', period: '4/20 ~ 5/20', element: '땅 🌍', planet: '금성 ♀', color: '#22c55e' },
-  { sign: '쌍둥이자리', english: 'Gemini', symbol: '♊', period: '5/21 ~ 6/21', element: '공기 💨', planet: '수성 ☿', color: '#eab308' },
-  { sign: '게자리', english: 'Cancer', symbol: '♋', period: '6/22 ~ 7/22', element: '물 💧', planet: '달 🌙', color: '#38bdf8' },
-  { sign: '사자자리', english: 'Leo', symbol: '♌', period: '7/23 ~ 8/22', element: '불 🔥', planet: '태양 ☀️', color: '#f97316' },
-  { sign: '처녀자리', english: 'Virgo', symbol: '♍', period: '8/23 ~ 9/22', element: '땅 🌍', planet: '수성 ☿', color: '#84cc16' },
-  { sign: '천칭자리', english: 'Libra', symbol: '♎', period: '9/23 ~ 10/23', element: '공기 💨', planet: '금성 ♀', color: '#ec4899' },
-  { sign: '전갈자리', english: 'Scorpio', symbol: '♏', period: '10/24 ~ 11/22', element: '물 💧', planet: '명왕성 ♇', color: '#7c3aed' },
-  { sign: '사수자리', english: 'Sagittarius', symbol: '♐', period: '11/23 ~ 12/21', element: '불 🔥', planet: '목성 ♃', color: '#6366f1' },
-  { sign: '염소자리', english: 'Capricorn', symbol: '♑', period: '12/22 ~ 1/19', element: '땅 🌍', planet: '토성 ♄', color: '#94a3b8' },
-  { sign: '물병자리', english: 'Aquarius', symbol: '♒', period: '1/20 ~ 2/18', element: '공기 💨', planet: '천왕성 ♅', color: '#38bdf8' },
-  { sign: '물고기자리', english: 'Pisces', symbol: '♓', period: '2/19 ~ 3/20', element: '물 💧', planet: '해왕성 ♆', color: '#a78bfa' },
+  { english: 'Aries', symbol: '♈', period: '3/21 ~ 4/19', elementKey: '불 🔥', color: '#ef4444' },
+  { english: 'Taurus', symbol: '♉', period: '4/20 ~ 5/20', elementKey: '땅 🌍', color: '#22c55e' },
+  { english: 'Gemini', symbol: '♊', period: '5/21 ~ 6/21', elementKey: '공기 💨', color: '#eab308' },
+  { english: 'Cancer', symbol: '♋', period: '6/22 ~ 7/22', elementKey: '물 💧', color: '#38bdf8' },
+  { english: 'Leo', symbol: '♌', period: '7/23 ~ 8/22', elementKey: '불 🔥', color: '#f97316' },
+  { english: 'Virgo', symbol: '♍', period: '8/23 ~ 9/22', elementKey: '땅 🌍', color: '#84cc16' },
+  { english: 'Libra', symbol: '♎', period: '9/23 ~ 10/23', elementKey: '공기 💨', color: '#ec4899' },
+  { english: 'Scorpio', symbol: '♏', period: '10/24 ~ 11/22', elementKey: '물 💧', color: '#7c3aed' },
+  { english: 'Sagittarius', symbol: '♐', period: '11/23 ~ 12/21', elementKey: '불 🔥', color: '#6366f1' },
+  { english: 'Capricorn', symbol: '♑', period: '12/22 ~ 1/19', elementKey: '땅 🌍', color: '#94a3b8' },
+  { english: 'Aquarius', symbol: '♒', period: '1/20 ~ 2/18', elementKey: '공기 💨', color: '#38bdf8' },
+  { english: 'Pisces', symbol: '♓', period: '2/19 ~ 3/20', elementKey: '물 💧', color: '#a78bfa' },
 ];
+
+const ELEMENT_INDEX: Record<string, number> = {
+  '불 🔥': 0, '땅 🌍': 1, '공기 💨': 2, '물 💧': 3,
+};
 
 const bgStyle = {
   background: 'linear-gradient(160deg, #050520 0%, #0a0a2e 30%, #130a2e 60%, #1a0a3e 100%)',
@@ -29,7 +33,13 @@ export default function ZodiacContent() {
   const { lang } = useLang();
   const tr = t(lang);
   const zodiacContent = ZODIAC_CONTENT[lang];
-  const ZODIAC_DATA = ZODIAC_BASE.map((base, i) => ({ ...base, ...zodiacContent[i] }));
+  const ZODIAC_DATA = ZODIAC_BASE.map((base, i) => ({
+    ...base,
+    sign: tr.zodiacSigns[i],
+    element: tr.elementItems[ELEMENT_INDEX[base.elementKey]]?.element ?? base.elementKey,
+    planet: tr.zodiacPlanets[i],
+    ...zodiacContent[i],
+  }));
 
   return (
     <div style={bgStyle}>

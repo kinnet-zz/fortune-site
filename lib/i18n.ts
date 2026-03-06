@@ -85,6 +85,15 @@ export interface Translations {
   recentYearsLabel: string;
   animalUnit: string;
   chineseZodiacCTA: string;
+  // Zodiac planets (12 items, by sign order)
+  zodiacPlanets: string[];
+  // Chinese zodiac animal names (12 items)
+  chineseZodiacAnimals: string[];
+  // Footer
+  footerDesc: string;
+  footerService: string;
+  footerPolicy: string;
+  footerDisclaimer: string;
   // About page
   aboutTitle: string;
   aboutSubtitle: string;
@@ -216,6 +225,12 @@ const translations: Record<Lang, Translations> = {
     ],
     operationTitle: '운영 정보',
     opLabels: { serviceName: '서비스명', serviceUrl: '서비스 주소', email: '문의 이메일', started: '서비스 시작', tech: '사용 기술' },
+    zodiacPlanets: ['화성 ♂', '금성 ♀', '수성 ☿', '달 🌙', '태양 ☀️', '수성 ☿', '금성 ♀', '명왕성 ♇', '목성 ♃', '토성 ♄', '천왕성 ♅', '해왕성 ♆'],
+    chineseZodiacAnimals: ['쥐', '소', '호랑이', '토끼', '용', '뱀', '말', '양', '원숭이', '닭', '개', '돼지'],
+    footerDesc: '생년월일로 별자리와 띠를 분석하는 AI 무료 운세 서비스. 오늘의 종합운, 연애운, 금전운, 직업운을 확인해보세요.',
+    footerService: '서비스',
+    footerPolicy: '정책',
+    footerDisclaimer: '본 서비스의 운세는 AI가 생성한 오락적 콘텐츠입니다. 실제 미래를 예측하지 않습니다.',
   },
 
   en: {
@@ -330,6 +345,12 @@ const translations: Record<Lang, Translations> = {
     ],
     operationTitle: 'Service Information',
     opLabels: { serviceName: 'Service Name', serviceUrl: 'URL', email: 'Contact Email', started: 'Since', tech: 'Technology' },
+    zodiacPlanets: ['Mars ♂', 'Venus ♀', 'Mercury ☿', 'Moon 🌙', 'Sun ☀️', 'Mercury ☿', 'Venus ♀', 'Pluto ♇', 'Jupiter ♃', 'Saturn ♄', 'Uranus ♅', 'Neptune ♆'],
+    chineseZodiacAnimals: ['Rat', 'Ox', 'Tiger', 'Rabbit', 'Dragon', 'Snake', 'Horse', 'Goat', 'Monkey', 'Rooster', 'Dog', 'Pig'],
+    footerDesc: 'A free AI fortune service analyzing zodiac signs and Chinese zodiac from your birthdate. Check your Overall, Love, Money, and Career fortune.',
+    footerService: 'Services',
+    footerPolicy: 'Policies',
+    footerDisclaimer: 'The fortune in this service is AI-generated entertainment content. It does not predict actual future events.',
   },
 
   zh: {
@@ -444,6 +465,12 @@ const translations: Record<Lang, Translations> = {
     ],
     operationTitle: '运营信息',
     opLabels: { serviceName: '服务名称', serviceUrl: '服务地址', email: '联系邮箱', started: '上线时间', tech: '使用技术' },
+    zodiacPlanets: ['火星 ♂', '金星 ♀', '水星 ☿', '月亮 🌙', '太阳 ☀️', '水星 ☿', '金星 ♀', '冥王星 ♇', '木星 ♃', '土星 ♄', '天王星 ♅', '海王星 ♆'],
+    chineseZodiacAnimals: ['鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪'],
+    footerDesc: '基于生日分析星座和生肖的免费AI运势服务。查看综合运、爱情运、财运和事业运。',
+    footerService: '服务',
+    footerPolicy: '政策',
+    footerDisclaimer: '本服务的运势是AI生成的娱乐内容，不预测实际未来。',
   },
 
   ja: {
@@ -558,6 +585,12 @@ const translations: Record<Lang, Translations> = {
     ],
     operationTitle: '運営情報',
     opLabels: { serviceName: 'サービス名', serviceUrl: 'サービスURL', email: 'お問い合わせ', started: 'サービス開始', tech: '使用技術' },
+    zodiacPlanets: ['火星 ♂', '金星 ♀', '水星 ☿', '月 🌙', '太陽 ☀️', '水星 ☿', '金星 ♀', '冥王星 ♇', '木星 ♃', '土星 ♄', '天王星 ♅', '海王星 ♆'],
+    chineseZodiacAnimals: ['ねずみ', 'うし', 'とら', 'うさぎ', 'たつ', 'へび', 'うま', 'ひつじ', 'さる', 'とり', 'いぬ', 'いのしし'],
+    footerDesc: '生年月日から星座と干支を分析するAI無料運勢サービス。総合運・恋愛運・金運・仕事運をご確認ください。',
+    footerService: 'サービス',
+    footerPolicy: 'ポリシー',
+    footerDisclaimer: '本サービスの運勢はAIが生成したエンターテインメントコンテンツです。実際の未来を予測するものではありません。',
   },
 };
 

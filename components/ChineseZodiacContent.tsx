@@ -6,19 +6,29 @@ import { t } from '@/lib/i18n';
 import { CHINESE_ZODIAC_CONTENT } from '@/lib/chinese-zodiac-data';
 
 const CHINESE_ZODIAC_BASE = [
-  { animal: '쥐', emoji: '🐭', english: 'Rat', element: '물 💧', years: [1924, 1936, 1948, 1960, 1972, 1984, 1996, 2008, 2020] },
-  { animal: '소', emoji: '🐮', english: 'Ox', element: '땅 🌍', years: [1925, 1937, 1949, 1961, 1973, 1985, 1997, 2009, 2021] },
-  { animal: '호랑이', emoji: '🐯', english: 'Tiger', element: '나무 🌿', years: [1926, 1938, 1950, 1962, 1974, 1986, 1998, 2010, 2022] },
-  { animal: '토끼', emoji: '🐰', english: 'Rabbit', element: '나무 🌿', years: [1927, 1939, 1951, 1963, 1975, 1987, 1999, 2011, 2023] },
-  { animal: '용', emoji: '🐉', english: 'Dragon', element: '나무/흙', years: [1928, 1940, 1952, 1964, 1976, 1988, 2000, 2012, 2024] },
-  { animal: '뱀', emoji: '🐍', english: 'Snake', element: '불 🔥', years: [1929, 1941, 1953, 1965, 1977, 1989, 2001, 2013, 2025] },
-  { animal: '말', emoji: '🐎', english: 'Horse', element: '불 🔥', years: [1930, 1942, 1954, 1966, 1978, 1990, 2002, 2014, 2026] },
-  { animal: '양', emoji: '🐑', english: 'Goat', element: '땅 🌍', years: [1931, 1943, 1955, 1967, 1979, 1991, 2003, 2015, 2027] },
-  { animal: '원숭이', emoji: '🐒', english: 'Monkey', element: '금 ⚙️', years: [1932, 1944, 1956, 1968, 1980, 1992, 2004, 2016, 2028] },
-  { animal: '닭', emoji: '🐓', english: 'Rooster', element: '금 ⚙️', years: [1933, 1945, 1957, 1969, 1981, 1993, 2005, 2017, 2029] },
-  { animal: '개', emoji: '🐕', english: 'Dog', element: '흙 🌍', years: [1934, 1946, 1958, 1970, 1982, 1994, 2006, 2018, 2030] },
-  { animal: '돼지', emoji: '🐷', english: 'Pig', element: '물 💧', years: [1935, 1947, 1959, 1971, 1983, 1995, 2007, 2019, 2031] },
+  { emoji: '🐭', english: 'Rat', elementKey: '물 💧', years: [1924, 1936, 1948, 1960, 1972, 1984, 1996, 2008, 2020] },
+  { emoji: '🐮', english: 'Ox', elementKey: '땅 🌍', years: [1925, 1937, 1949, 1961, 1973, 1985, 1997, 2009, 2021] },
+  { emoji: '🐯', english: 'Tiger', elementKey: '나무 🌿', years: [1926, 1938, 1950, 1962, 1974, 1986, 1998, 2010, 2022] },
+  { emoji: '🐰', english: 'Rabbit', elementKey: '나무 🌿', years: [1927, 1939, 1951, 1963, 1975, 1987, 1999, 2011, 2023] },
+  { emoji: '🐉', english: 'Dragon', elementKey: '나무/흙', years: [1928, 1940, 1952, 1964, 1976, 1988, 2000, 2012, 2024] },
+  { emoji: '🐍', english: 'Snake', elementKey: '불 🔥', years: [1929, 1941, 1953, 1965, 1977, 1989, 2001, 2013, 2025] },
+  { emoji: '🐎', english: 'Horse', elementKey: '불 🔥', years: [1930, 1942, 1954, 1966, 1978, 1990, 2002, 2014, 2026] },
+  { emoji: '🐑', english: 'Goat', elementKey: '땅 🌍', years: [1931, 1943, 1955, 1967, 1979, 1991, 2003, 2015, 2027] },
+  { emoji: '🐒', english: 'Monkey', elementKey: '금 ⚙️', years: [1932, 1944, 1956, 1968, 1980, 1992, 2004, 2016, 2028] },
+  { emoji: '🐓', english: 'Rooster', elementKey: '금 ⚙️', years: [1933, 1945, 1957, 1969, 1981, 1993, 2005, 2017, 2029] },
+  { emoji: '🐕', english: 'Dog', elementKey: '흙 🌍', years: [1934, 1946, 1958, 1970, 1982, 1994, 2006, 2018, 2030] },
+  { emoji: '🐷', english: 'Pig', elementKey: '물 💧', years: [1935, 1947, 1959, 1971, 1983, 1995, 2007, 2019, 2031] },
 ];
+
+const WUXING_ELEMENT: Record<string, Record<string, string>> = {
+  '물 💧': { en: 'Water 💧', zh: '水 💧', ja: '水 💧' },
+  '땅 🌍': { en: 'Earth 🌍', zh: '土 🌍', ja: '土 🌍' },
+  '나무 🌿': { en: 'Wood 🌿', zh: '木 🌿', ja: '木 🌿' },
+  '불 🔥': { en: 'Fire 🔥', zh: '火 🔥', ja: '火 🔥' },
+  '금 ⚙️': { en: 'Metal ⚙️', zh: '金 ⚙️', ja: '金 ⚙️' },
+  '흙 🌍': { en: 'Earth 🌍', zh: '土 🌍', ja: '土 🌍' },
+  '나무/흙': { en: 'Wood/Earth', zh: '木/土', ja: '木/土' },
+};
 
 const bgStyle = {
   background: 'linear-gradient(160deg, #050520 0%, #0a0a2e 30%, #130a2e 60%, #1a0a3e 100%)',
@@ -29,7 +39,12 @@ export default function ChineseZodiacContent() {
   const { lang } = useLang();
   const tr = t(lang);
   const chineseContent = CHINESE_ZODIAC_CONTENT[lang];
-  const CHINESE_ZODIAC_DATA = CHINESE_ZODIAC_BASE.map((base, i) => ({ ...base, ...chineseContent[i] }));
+  const CHINESE_ZODIAC_DATA = CHINESE_ZODIAC_BASE.map((base, i) => ({
+    ...base,
+    animal: tr.chineseZodiacAnimals[i],
+    element: lang === 'ko' ? base.elementKey : (WUXING_ELEMENT[base.elementKey]?.[lang] ?? base.elementKey),
+    ...chineseContent[i],
+  }));
 
   return (
     <div style={bgStyle}>

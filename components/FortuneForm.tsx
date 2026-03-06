@@ -52,7 +52,7 @@ export default function FortuneForm({ onSubmit, isLoading, lang }: FortuneFormPr
           {tr.formTitle}
         </h1>
         <p className="text-purple-200/70 text-sm font-medium tracking-widest uppercase">
-          Daily Fortune
+          {tr.formTitle}
         </p>
       </div>
 
