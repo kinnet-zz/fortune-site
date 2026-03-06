@@ -1,14 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-
-const LOADING_MESSAGES = [
-  '별자리를 분석하는 중...',
-  '우주의 기운을 읽는 중...',
-  '오늘의 운세를 계산하는 중...',
-  '별빛 에너지를 모으는 중...',
-  '운명의 실을 잇는 중...',
-];
+import { useLang } from '@/lib/useLang';
+import { t } from '@/lib/i18n';
 
 interface Star {
   id: number;
@@ -20,6 +14,8 @@ interface Star {
 }
 
 export default function LoadingSpinner() {
+  const { lang } = useLang();
+  const tr = t(lang);
   const [messageIndex, setMessageIndex] = useState(0);
   const [stars] = useState<Star[]>(() =>
     Array.from({ length: 20 }, (_, i) => ({
@@ -33,11 +29,15 @@ export default function LoadingSpinner() {
   );
 
   useEffect(() => {
+    setMessageIndex(0);
+  }, [lang]);
+
+  useEffect(() => {
     const interval = setInterval(() => {
-      setMessageIndex((prev) => (prev + 1) % LOADING_MESSAGES.length);
+      setMessageIndex((prev) => (prev + 1) % tr.loadingMessages.length);
     }, 1800);
     return () => clearInterval(interval);
-  }, []);
+  }, [tr.loadingMessages.length]);
 
   return (
     <div className="w-full max-w-md mx-auto flex flex-col items-center justify-center py-8">
@@ -149,13 +149,13 @@ export default function LoadingSpinner() {
       {/* 텍스트 */}
       <div className="text-center min-h-[3.5rem] flex flex-col items-center justify-center">
         <h2 className="text-xl font-bold text-white/90 mb-2">
-          운세를 불러오는 중...
+          {tr.loadingTitle}
         </h2>
         <p
           key={messageIndex}
           className="text-purple-300/70 text-sm font-medium animate-fade-in-up"
         >
-          {LOADING_MESSAGES[messageIndex]}
+          {tr.loadingMessages[messageIndex]}
         </p>
       </div>
 
