@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import FortuneForm from '../components/FortuneForm';
 import FortuneCard from '../components/FortuneCard';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -113,12 +113,8 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const resultRef = useRef<HTMLDivElement>(null);
-
-  const handleLangChange = (newLang: typeof lang) => {
-    setLang(newLang);
-    setFortune(null);
-    setError(null);
-  };
+  const lastGenderRef = useRef('');
+  const prevLangRef = useRef(lang);
 
   // 운세 결과가 나오면 스크롤
   useEffect(() => {
@@ -127,8 +123,9 @@ export default function HomePage() {
     }
   }, [fortune]);
 
-  const handleSubmit = async (date: string, gender: string) => {
+  const handleSubmit = useCallback(async (date: string, gender: string) => {
     setBirthDate(date);
+    lastGenderRef.current = gender;
     setIsLoading(true);
     setError(null);
     setFortune(null);
@@ -161,7 +158,16 @@ export default function HomePage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [lang]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // 언어 변경 시 운세 결과가 있으면 자동 재조회
+  useEffect(() => {
+    if (prevLangRef.current === lang) return;
+    prevLangRef.current = lang;
+    if (fortune && birthDate && lastGenderRef.current) {
+      handleSubmit(birthDate, lastGenderRef.current);
+    }
+  }, [lang]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleReset = () => {
     setFortune(null);
