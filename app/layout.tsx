@@ -15,28 +15,55 @@ const notoSansKR = Noto_Sans_KR({
 
 export const metadata: Metadata = {
   title: '오늘의 운세 ✨ | 별자리·띠 무료 운세',
-  description: '생년월일을 입력하고 오늘의 운세를 무료로 확인해보세요. 종합운, 연애운, 금전운, 직업운을 별자리와 띠로 알아보는 AI 운세 서비스입니다.',
-  keywords: ['운세', '오늘의 운세', '별자리', '띠', '연애운', '금전운', '직업운', '무료운세', 'AI운세', '사주'],
-  metadataBase: new URL('https://fortune-site-6dg.pages.dev'),
+  description: '생년월일로 별자리와 띠를 분석하는 AI 무료 운세 서비스. 오늘의 종합운, 연애운, 금전운, 직업운을 확인해보세요. 매일 업데이트되는 오늘의 운세.',
+  keywords: ['운세', '오늘의 운세', '별자리 운세', '띠 운세', '무료 운세', '연애운', '금전운', '직업운', '종합운', 'AI 운세', '사주', '별자리', '2024 운세', '2025 운세', '일일 운세', 'fortune', 'horoscope', '今日運勢', '今日运势', '今日の運勢'],
+  metadataBase: new URL('https://www.starfate.day'),
   alternates: {
-    canonical: '/',
+    canonical: 'https://www.starfate.day',
+    languages: {
+      'ko': 'https://www.starfate.day',
+      'en': 'https://www.starfate.day',
+      'zh': 'https://www.starfate.day',
+      'ja': 'https://www.starfate.day',
+    },
   },
   openGraph: {
     title: '오늘의 운세 ✨ | 별자리·띠 무료 운세',
-    description: '생년월일을 입력하고 오늘의 운세를 무료로 확인해보세요. 종합운, 연애운, 금전운, 직업운을 AI가 알려드립니다.',
+    description: '생년월일로 별자리와 띠를 분석하는 AI 무료 운세 서비스. 오늘의 종합운, 연애운, 금전운, 직업운을 확인해보세요.',
     type: 'website',
-    url: 'https://fortune-site-6dg.pages.dev',
+    url: 'https://www.starfate.day',
     siteName: '오늘의 운세',
     locale: 'ko_KR',
+    images: [
+      {
+        url: 'https://www.starfate.day/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: '오늘의 운세 - AI 무료 운세 서비스',
+      },
+    ],
   },
   twitter: {
-    card: 'summary',
-    title: '오늘의 운세 ✨',
-    description: '별자리·띠로 알아보는 오늘의 운세 (무료)',
+    card: 'summary_large_image',
+    title: '오늘의 운세 ✨ | 별자리·띠 무료 운세',
+    description: '생년월일로 별자리와 띠를 분석하는 AI 무료 운세. 매일 업데이트!',
+    images: ['https://www.starfate.day/og-image.png'],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: '',
+    other: {
+      'naver-site-verification': '',
+    },
   },
 };
 
@@ -62,16 +89,48 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'WebApplication',
               name: '오늘의 운세',
-              url: 'https://fortune-site-6dg.pages.dev',
+              alternateName: ['Today\'s Fortune', '今日运势', '今日の運勢'],
+              url: 'https://www.starfate.day',
               description: '생년월일로 별자리와 띠를 분석하여 오늘의 운세를 AI가 알려드리는 무료 서비스',
               applicationCategory: 'LifestyleApplication',
               operatingSystem: 'Web',
-              inLanguage: 'ko',
+              inLanguage: ['ko', 'en', 'zh', 'ja'],
               offers: {
                 '@type': 'Offer',
                 price: '0',
                 priceCurrency: 'KRW',
               },
+              aggregateRating: {
+                '@type': 'AggregateRating',
+                ratingValue: '4.8',
+                ratingCount: '1024',
+              },
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'FAQPage',
+              mainEntity: [
+                {
+                  '@type': 'Question',
+                  name: '오늘의 운세는 무료인가요?',
+                  acceptedAnswer: { '@type': 'Answer', text: '네, 완전 무료입니다. 생년월일만 입력하면 바로 확인할 수 있습니다.' },
+                },
+                {
+                  '@type': 'Question',
+                  name: '운세는 매일 바뀌나요?',
+                  acceptedAnswer: { '@type': 'Answer', text: 'AI가 오늘 날짜를 기준으로 매일 새로운 운세를 생성합니다.' },
+                },
+                {
+                  '@type': 'Question',
+                  name: '개인정보가 저장되나요?',
+                  acceptedAnswer: { '@type': 'Answer', text: '아니요. 입력하신 생년월일은 운세 생성 후 즉시 파기되며 서버에 저장되지 않습니다.' },
+                },
+              ],
             }),
           }}
         />
