@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Noto_Sans_KR, Noto_Sans_JP } from 'next/font/google';
+import { Noto_Sans_KR, Noto_Sans_JP, Noto_Sans_SC } from 'next/font/google';
 import './globals.css';
 import CookieBanner from '../components/CookieBanner';
 import Header from '../components/Header';
@@ -20,14 +20,21 @@ const notoSansJP = Noto_Sans_JP({
   variable: '--font-noto-sans-jp',
 });
 
+const notoSansSC = Noto_Sans_SC({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '900'],
+  display: 'swap',
+  variable: '--font-noto-sans-sc',
+});
+
 export const metadata: Metadata = {
   title: '오늘의 운세 ✨ | 별자리·띠 무료 운세',
   description: '생년월일로 별자리와 띠를 분석하는 AI 무료 운세 서비스. 오늘의 종합운, 연애운, 금전운, 직업운을 확인해보세요. 매일 업데이트되는 오늘의 운세.',
   keywords: [
     '운세', '오늘의 운세', '별자리 운세', '띠 운세', '무료 운세', '연애운', '금전운', '직업운', '종합운', 'AI 운세', '사주', '별자리', '2025 운세', '2026 운세', '일일 운세',
-    'fortune', 'horoscope', 'free horoscope', 'daily horoscope', 'zodiac fortune', 'AI fortune',
+    'fortune', 'horoscope', 'free horoscope', 'daily horoscope', 'zodiac fortune', 'AI fortune', 'zodiac sign', 'birth date fortune', 'free zodiac reading', 'horoscope today', 'Chinese zodiac', 'love horoscope', 'money horoscope', 'career horoscope', 'star sign', 'astrology', 'free astrology',
     '今日の運勢', '占い', '無料占い', '星座占い', '誕生日占い', '十二支', '恋愛運', '金運', '仕事運', '総合運', 'AI占い', '毎日の運勢', '星占い', '今日の星座', '運勢診断', '無料星座占い',
-    '今日运势', '今日運勢', '免费占卜', '星座运势', '生肖运势',
+    '今日运势', '免费占卜', '星座运势', '生肖运势', '星座', '免费星座', '每日运势', '爱情运', '财运', '工作运', 'AI占卜', '生日占卜', '十二生肖', '星座占卜',
   ],
   metadataBase: new URL('https://www.starfate.day'),
   alternates: {
@@ -87,7 +94,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" className={`${notoSansKR.variable} ${notoSansJP.variable}`}>
+    <html lang="ko" className={`${notoSansKR.variable} ${notoSansJP.variable} ${notoSansSC.variable}`}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -164,12 +171,52 @@ export default function RootLayout({
                   name: 'どの星座と十二支に対応していますか？',
                   acceptedAnswer: { '@type': 'Answer', text: '西洋占星術の12星座（おひつじ座〜うお座）と東洋の十二支（ねずみ〜いのしし）すべてに対応しています。' },
                 },
+                {
+                  '@type': 'Question',
+                  name: 'Is the fortune telling service free?',
+                  acceptedAnswer: { '@type': 'Answer', text: 'Yes, completely free. Just enter your birth date to get your daily fortune instantly.' },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'Does the fortune change every day?',
+                  acceptedAnswer: { '@type': 'Answer', text: 'Yes, AI generates a new fortune every day based on today\'s date. Even with the same birth date, the fortune changes daily.' },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'Is my personal information stored?',
+                  acceptedAnswer: { '@type': 'Answer', text: 'No. Your birth date is discarded immediately after generating your fortune and is never stored on our servers.' },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'Which zodiac signs are supported?',
+                  acceptedAnswer: { '@type': 'Answer', text: 'All 12 Western zodiac signs (Aries to Pisces) and all 12 Chinese zodiac animals are supported.' },
+                },
+                {
+                  '@type': 'Question',
+                  name: '今日运势是免费的吗？',
+                  acceptedAnswer: { '@type': 'Answer', text: '是的，完全免费。只需输入生日即可立即查看今日运势。' },
+                },
+                {
+                  '@type': 'Question',
+                  name: '运势每天都会变化吗？',
+                  acceptedAnswer: { '@type': 'Answer', text: '是的，AI每天根据今天的日期生成新的运势。即使生日相同，日期不同运势也会不同。' },
+                },
+                {
+                  '@type': 'Question',
+                  name: '个人信息会被保存吗？',
+                  acceptedAnswer: { '@type': 'Answer', text: '不会。您输入的生日在生成运势后立即删除，不会存储在服务器上，请放心使用。' },
+                },
+                {
+                  '@type': 'Question',
+                  name: '支持哪些星座和生肖？',
+                  acceptedAnswer: { '@type': 'Answer', text: '支持西方占星术的12个星座（白羊座至双鱼座）和东方十二生肖全部12种动物。' },
+                },
               ],
             }),
           }}
         />
       </head>
-      <body className={`${notoSansKR.className} ${notoSansJP.className} antialiased`}>
+      <body className={`${notoSansKR.className} ${notoSansJP.className} ${notoSansSC.className} antialiased`}>
         <LangProvider>
           <Header />
           {children}
