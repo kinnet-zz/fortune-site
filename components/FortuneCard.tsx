@@ -165,7 +165,7 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
 
   const handleLinkCopy = async () => {
     if (!navigator.clipboard) return;
-    await navigator.clipboard.writeText(buildShareUrl());
+    await navigator.clipboard.writeText('https://www.starfate.day');
     setLinkCopied(true);
     setTimeout(() => setLinkCopied(false), 2500);
   };
