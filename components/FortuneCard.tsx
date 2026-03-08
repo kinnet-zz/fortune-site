@@ -148,8 +148,7 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
       `💰 ${tr.money}: ${fortune.money}\n` +
       `💼 ${tr.work}: ${fortune.work}\n\n` +
       `🍀 ${tr.luckyColorLabel}: ${fortune.luckyColor}\n` +
-      `🔢 ${tr.luckyNumberLabel}: ${fortune.luckyNumber}\n\n` +
-      `https://www.starfate.day`;
+      `🔢 ${tr.luckyNumberLabel}: ${fortune.luckyNumber}`;
 
     if (!navigator.clipboard) return;
     await navigator.clipboard.writeText(text);
