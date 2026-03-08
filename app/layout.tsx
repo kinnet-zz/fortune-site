@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Noto_Sans_KR } from 'next/font/google';
+import { Noto_Sans_KR, Noto_Sans_JP } from 'next/font/google';
 import './globals.css';
 import CookieBanner from '../components/CookieBanner';
 import Header from '../components/Header';
@@ -13,14 +13,27 @@ const notoSansKR = Noto_Sans_KR({
   variable: '--font-noto-sans-kr',
 });
 
+const notoSansJP = Noto_Sans_JP({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '900'],
+  display: 'swap',
+  variable: '--font-noto-sans-jp',
+});
+
 export const metadata: Metadata = {
   title: '오늘의 운세 ✨ | 별자리·띠 무료 운세',
   description: '생년월일로 별자리와 띠를 분석하는 AI 무료 운세 서비스. 오늘의 종합운, 연애운, 금전운, 직업운을 확인해보세요. 매일 업데이트되는 오늘의 운세.',
-  keywords: ['운세', '오늘의 운세', '별자리 운세', '띠 운세', '무료 운세', '연애운', '금전운', '직업운', '종합운', 'AI 운세', '사주', '별자리', '2024 운세', '2025 운세', '일일 운세', 'fortune', 'horoscope', '今日運勢', '今日运势', '今日の運勢'],
+  keywords: [
+    '운세', '오늘의 운세', '별자리 운세', '띠 운세', '무료 운세', '연애운', '금전운', '직업운', '종합운', 'AI 운세', '사주', '별자리', '2025 운세', '2026 운세', '일일 운세',
+    'fortune', 'horoscope', 'free horoscope', 'daily horoscope', 'zodiac fortune', 'AI fortune',
+    '今日の運勢', '占い', '無料占い', '星座占い', '誕生日占い', '十二支', '恋愛運', '金運', '仕事運', '総合運', 'AI占い', '毎日の運勢', '星占い', '今日の星座', '運勢診断', '無料星座占い',
+    '今日运势', '今日運勢', '免费占卜', '星座运势', '生肖运势',
+  ],
   metadataBase: new URL('https://www.starfate.day'),
   alternates: {
     canonical: 'https://www.starfate.day',
     languages: {
+      'x-default': 'https://www.starfate.day',
       'ko': 'https://www.starfate.day',
       'en': 'https://www.starfate.day',
       'zh': 'https://www.starfate.day',
@@ -34,6 +47,7 @@ export const metadata: Metadata = {
     url: 'https://www.starfate.day',
     siteName: '오늘의 운세',
     locale: 'ko_KR',
+    alternateLocale: ['en_US', 'ja_JP', 'zh_CN'],
     images: [
       {
         url: 'https://www.starfate.day/og-image.png',
@@ -73,7 +87,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" className={notoSansKR.variable}>
+    <html lang="ko" className={`${notoSansKR.variable} ${notoSansJP.variable}`}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -130,12 +144,32 @@ export default function RootLayout({
                   name: '개인정보가 저장되나요?',
                   acceptedAnswer: { '@type': 'Answer', text: '아니요. 입력하신 생년월일은 운세 생성 후 즉시 파기되며 서버에 저장되지 않습니다.' },
                 },
+                {
+                  '@type': 'Question',
+                  name: '今日の運勢は無料ですか？',
+                  acceptedAnswer: { '@type': 'Answer', text: 'はい、完全無料です。生年月日を入力するだけですぐに確認できます。' },
+                },
+                {
+                  '@type': 'Question',
+                  name: '占い結果は毎日変わりますか？',
+                  acceptedAnswer: { '@type': 'Answer', text: 'AIが今日の日付をもとに毎日新しい運勢を生成します。同じ生年月日でも日付が変わると結果が変わります。' },
+                },
+                {
+                  '@type': 'Question',
+                  name: '個人情報は保存されますか？',
+                  acceptedAnswer: { '@type': 'Answer', text: 'いいえ。入力された生年月日は運勢生成後すぐに破棄され、サーバーには保存されません。' },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'どの星座と十二支に対応していますか？',
+                  acceptedAnswer: { '@type': 'Answer', text: '西洋占星術の12星座（おひつじ座〜うお座）と東洋の十二支（ねずみ〜いのしし）すべてに対応しています。' },
+                },
               ],
             }),
           }}
         />
       </head>
-      <body className={`${notoSansKR.className} antialiased`}>
+      <body className={`${notoSansKR.className} ${notoSansJP.className} antialiased`}>
         <LangProvider>
           <Header />
           {children}

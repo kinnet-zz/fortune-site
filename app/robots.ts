@@ -13,6 +13,11 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: '/api/',
       },
+      {
+        userAgent: 'Y!J-BRW',
+        allow: '/',
+        disallow: '/api/',
+      },
     ],
     sitemap: 'https://www.starfate.day/sitemap.xml',
   };
