@@ -129,12 +129,27 @@ function ScoreBar({ score }: { score: number }) {
 export default function FortuneCard({ fortune, onReset, lang, birthDate, gender }: FortuneCardProps) {
   const [copied, setCopied] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
+  const [showSharePanel, setShowSharePanel] = useState(false);
   const [cardVisible, setCardVisible] = useState(false);
   const tr = t(lang);
 
   useEffect(() => {
     const timer = setTimeout(() => setCardVisible(true), 100);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const kakaoKey = process.env.NEXT_PUBLIC_KAKAO_APP_KEY;
+    if (!kakaoKey || document.getElementById('kakao-sdk')) return;
+    const script = document.createElement('script');
+    script.id = 'kakao-sdk';
+    script.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js';
+    script.crossOrigin = 'anonymous';
+    script.onload = () => {
+      const kakao = (window as any).Kakao;
+      if (kakao && !kakao.isInitialized()) kakao.init(kakaoKey);
+    };
+    document.head.appendChild(script);
   }, []);
 
   const handleShare = async () => {
@@ -154,14 +169,61 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const handleLinkCopy = async () => {
-    if (!navigator.clipboard) return;
+  const buildShareUrl = () => {
     const encoded = btoa(encodeURIComponent(JSON.stringify(fortune)));
     const params = new URLSearchParams({ r: encoded, bd: birthDate, g: gender });
-    const url = `${window.location.origin}/?${params.toString()}`;
-    await navigator.clipboard.writeText(url);
+    return `${window.location.origin}/?${params.toString()}`;
+  };
+
+  const handleLinkCopy = async () => {
+    if (!navigator.clipboard) return;
+    await navigator.clipboard.writeText(buildShareUrl());
     setLinkCopied(true);
+    setShowSharePanel(true);
     setTimeout(() => setLinkCopied(false), 2500);
+  };
+
+  const handleFacebookShare = () => {
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(buildShareUrl())}`,
+      '_blank', 'width=600,height=400,noopener,noreferrer'
+    );
+  };
+
+  const handleLineShare = () => {
+    window.open(
+      `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(buildShareUrl())}`,
+      '_blank', 'width=600,height=400,noopener,noreferrer'
+    );
+  };
+
+  const handleKakaoShare = () => {
+    const url = buildShareUrl();
+    const kakao = (window as any).Kakao;
+    if (kakao?.isInitialized()) {
+      kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: tr.resultHeader,
+          description: `${fortune.zodiacSign} · ${fortune.chineseZodiac} | ${fortune.score}/100`,
+          imageUrl: 'https://www.starfate.day/og-image.png',
+          link: { mobileWebUrl: url, webUrl: url },
+        },
+      });
+    } else if (navigator.share) {
+      navigator.share({ url }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(url);
+    }
+  };
+
+  const handleInstagramShare = async () => {
+    const url = buildShareUrl();
+    if (navigator.share) {
+      await navigator.share({ url }).catch(() => {});
+    } else {
+      await navigator.clipboard.writeText(url);
+    }
   };
 
   const scoreLevel = tr.scoreLevel(fortune.score);
@@ -392,6 +454,42 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
                 {linkCopied ? <><span>✅</span><span>{tr.linkCopied}</span></> : <><span>🔗</span><span>{tr.linkCopyBtn}</span></>}
               </span>
             </button>
+
+            {/* SNS 공유 패널 */}
+            <div
+              className="overflow-hidden transition-all duration-300"
+              style={{ maxHeight: showSharePanel ? '90px' : '0px', opacity: showSharePanel ? 1 : 0 }}
+            >
+              <div className="pt-2 pb-1">
+                <p className="text-center text-white/25 text-xs mb-3">{tr.shareTo}</p>
+                <div className="flex justify-center gap-5">
+                  <button onClick={handleFacebookShare} className="flex flex-col items-center gap-1 group" aria-label="Facebook">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center transition-transform duration-200 group-hover:scale-110" style={{ background: 'rgba(24,119,242,0.2)', border: '1px solid rgba(24,119,242,0.4)' }}>
+                      <span className="text-lg">📘</span>
+                    </div>
+                    <span className="text-white/25 text-[10px]">Facebook</span>
+                  </button>
+                  <button onClick={handleLineShare} className="flex flex-col items-center gap-1 group" aria-label="LINE">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center transition-transform duration-200 group-hover:scale-110" style={{ background: 'rgba(0,195,0,0.2)', border: '1px solid rgba(0,195,0,0.4)' }}>
+                      <span className="text-lg">💬</span>
+                    </div>
+                    <span className="text-white/25 text-[10px]">LINE</span>
+                  </button>
+                  <button onClick={handleKakaoShare} className="flex flex-col items-center gap-1 group" aria-label="KakaoTalk">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center transition-transform duration-200 group-hover:scale-110" style={{ background: 'rgba(254,229,0,0.15)', border: '1px solid rgba(254,229,0,0.35)' }}>
+                      <span className="text-lg">💛</span>
+                    </div>
+                    <span className="text-white/25 text-[10px]">KakaoTalk</span>
+                  </button>
+                  <button onClick={handleInstagramShare} className="flex flex-col items-center gap-1 group" aria-label="Instagram">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center transition-transform duration-200 group-hover:scale-110" style={{ background: 'rgba(225,48,108,0.2)', border: '1px solid rgba(225,48,108,0.35)' }}>
+                      <span className="text-lg">📷</span>
+                    </div>
+                    <span className="text-white/25 text-[10px]">Instagram</span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
