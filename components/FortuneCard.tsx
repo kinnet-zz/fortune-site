@@ -185,20 +185,20 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
 
   const handleFacebookShare = () => {
     window.open(
-      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://www.starfate.day')}`,
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(buildShareUrl())}`,
       '_blank', 'width=600,height=400,noopener,noreferrer'
     );
   };
 
   const handleLineShare = () => {
     window.open(
-      `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent('https://www.starfate.day')}`,
+      `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(buildShareUrl())}`,
       '_blank', 'width=600,height=400,noopener,noreferrer'
     );
   };
 
   const handleKakaoShare = () => {
-    const url = 'https://www.starfate.day';
+    const url = buildShareUrl();
     const kakao = (window as any).Kakao;
     if (kakao?.isInitialized()) {
       kakao.Share.sendDefault({
@@ -218,7 +218,7 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
   };
 
   const handleInstagramShare = async () => {
-    const url = 'https://www.starfate.day';
+    const url = buildShareUrl();
     if (navigator.share) {
       await navigator.share({ url }).catch(() => {});
     } else {
