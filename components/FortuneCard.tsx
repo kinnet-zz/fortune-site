@@ -178,32 +178,40 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
         backgroundColor: '#0f0a2d',
         scale: 2,
         useCORS: true,
+        allowTaint: true,
         logging: false,
+        imageTimeout: 0,
       });
-      canvas.toBlob(async (blob) => {
-        if (!blob) { setImageSharing(false); return; }
-        const file = new File([blob], 'fortune.png', { type: 'image/png' });
 
-        // 클립보드에 이미지 복사 (카카오톡 등 붙여넣기 가능하도록)
-        try {
-          if (navigator.clipboard && 'write' in navigator.clipboard) {
-            await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-          }
-        } catch { /* 미지원 기기 무시 */ }
+      const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
+      if (!blob) throw new Error('blob is null');
 
-        if (navigator.share && navigator.canShare({ files: [file] })) {
-          await navigator.share({ files: [file], title: tr.resultHeader }).catch(() => {});
-        } else {
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'fortune.png';
-          a.click();
-          URL.revokeObjectURL(url);
+      const file = new File([blob], 'fortune.png', { type: 'image/png' });
+
+      // 클립보드에 이미지 복사
+      try {
+        if (navigator.clipboard && 'write' in navigator.clipboard) {
+          await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
         }
-        setImageSharing(false);
-      }, 'image/png');
-    } catch {
+      } catch { /* 미지원 기기 무시 */ }
+
+      // 공유 시트 or 다운로드
+      if (navigator.share && navigator.canShare?.({ files: [file] })) {
+        await navigator.share({ files: [file], title: tr.resultHeader }).catch(() => {});
+      } else {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'fortune.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    } catch (err) {
+      console.error('이미지 공유 실패:', err);
+      alert('이미지 생성에 실패했습니다. 다시 시도해주세요.');
+    } finally {
       setImageSharing(false);
     }
   };
