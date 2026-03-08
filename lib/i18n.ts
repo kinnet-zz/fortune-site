@@ -41,6 +41,7 @@ export interface Translations {
   shareTo: string;
   imageShareBtn: string;
   imageSharing: string;
+  imageSaved: string;
   disclaimer: string;
   scoreLevel: (score: number) => string;
   // Errors
@@ -151,8 +152,9 @@ const translations: Record<Lang, Translations> = {
     linkCopyBtn: '사이트 링크 복사',
     linkCopied: '링크 복사됨!',
     shareTo: 'SNS 공유',
-    imageShareBtn: '이미지로 공유',
+    imageShareBtn: '이미지 저장',
     imageSharing: '이미지 생성 중...',
+    imageSaved: '저장됨! 갤러리에서 공유하세요',
     disclaimer: '✦ 운세는 참고용입니다. 당신의 노력이 가장 중요합니다 ✦',
     scoreLevel: (s) => s >= 80 ? '최고의 날' : s >= 60 ? '좋은 날' : s >= 40 ? '보통의 날' : '주의가 필요한 날',
     quotaTitle: '오늘의 운세 조회 한도를 초과했습니다',
@@ -279,8 +281,9 @@ const translations: Record<Lang, Translations> = {
     linkCopyBtn: 'Copy Site Link',
     linkCopied: 'Link Copied!',
     shareTo: 'Share',
-    imageShareBtn: 'Share as Image',
+    imageShareBtn: 'Save Image',
     imageSharing: 'Generating...',
+    imageSaved: 'Saved! Share from gallery',
     disclaimer: '✦ Fortune is for reference only. Your efforts matter most ✦',
     scoreLevel: (s) => s >= 80 ? 'Amazing Day' : s >= 60 ? 'Good Day' : s >= 40 ? 'Ordinary Day' : 'Day to be Careful',
     quotaTitle: 'Daily fortune limit exceeded',
@@ -407,8 +410,9 @@ const translations: Record<Lang, Translations> = {
     linkCopyBtn: '复制网站链接',
     linkCopied: '链接已复制！',
     shareTo: '分享',
-    imageShareBtn: '分享图片',
+    imageShareBtn: '保存图片',
     imageSharing: '生成中...',
+    imageSaved: '已保存！请从相册分享',
     disclaimer: '✦ 运势仅供参考，努力才是关键 ✦',
     scoreLevel: (s) => s >= 80 ? '最佳之日' : s >= 60 ? '吉日' : s >= 40 ? '普通之日' : '需谨慎之日',
     quotaTitle: '今日运势查询已达上限',
@@ -535,8 +539,9 @@ const translations: Record<Lang, Translations> = {
     linkCopyBtn: 'サイトリンクをコピー',
     linkCopied: 'リンクコピー済み！',
     shareTo: 'シェア',
-    imageShareBtn: '画像でシェア',
+    imageShareBtn: '画像を保存',
     imageSharing: '生成中...',
+    imageSaved: '保存済！ギャラリーからシェアして',
     disclaimer: '✦ 運勢は参考程度に。あなたの努力が最も大切です ✦',
     scoreLevel: (s) => s >= 80 ? '最高の一日' : s >= 60 ? '良い一日' : s >= 40 ? '普通の一日' : '注意が必要な一日',
     quotaTitle: '本日の運勢確認上限を超えました',

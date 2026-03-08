@@ -130,6 +130,7 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
   const [copied, setCopied] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
   const [imageSharing, setImageSharing] = useState(false);
+  const [imageSaved, setImageSaved] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const [cardVisible, setCardVisible] = useState(false);
   const tr = t(lang);
@@ -186,30 +187,27 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
       const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
       if (!blob) throw new Error('blob is null');
 
-      const file = new File([blob], 'fortune.png', { type: 'image/png' });
+      const objectUrl = URL.createObjectURL(blob);
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-      // 클립보드에 이미지 복사
-      try {
-        if (navigator.clipboard && 'write' in navigator.clipboard) {
-          await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-        }
-      } catch { /* 미지원 기기 무시 */ }
-
-      // 공유 시트 or 다운로드
-      if (navigator.share && navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ files: [file], title: tr.resultHeader }).catch(() => {});
+      if (isIOS) {
+        // iOS: 새 탭에서 열기 → 꾹 눌러 저장
+        window.open(objectUrl, '_blank');
       } else {
-        const url = URL.createObjectURL(blob);
+        // Android/PC: 파일 다운로드
         const a = document.createElement('a');
-        a.href = url;
+        a.href = objectUrl;
         a.download = 'fortune.png';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        URL.revokeObjectURL(url);
       }
+      URL.revokeObjectURL(objectUrl);
+
+      setImageSaved(true);
+      setTimeout(() => setImageSaved(false), 3500);
     } catch (err) {
-      console.error('이미지 공유 실패:', err);
+      console.error('이미지 저장 실패:', err);
       alert('이미지 생성에 실패했습니다. 다시 시도해주세요.');
     } finally {
       setImageSharing(false);
@@ -406,8 +404,8 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
                 }}
               >
                 <span className="flex items-center justify-center gap-2">
-                  <span>{imageSharing ? '⏳' : '📸'}</span>
-                  <span>{imageSharing ? tr.imageSharing : tr.imageShareBtn}</span>
+                  <span>{imageSharing ? '⏳' : imageSaved ? '✅' : '📸'}</span>
+                  <span>{imageSharing ? tr.imageSharing : imageSaved ? tr.imageSaved : tr.imageShareBtn}</span>
                 </span>
               </button>
 
