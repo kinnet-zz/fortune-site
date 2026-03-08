@@ -184,6 +184,14 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
       canvas.toBlob(async (blob) => {
         if (!blob) { setImageSharing(false); return; }
         const file = new File([blob], 'fortune.png', { type: 'image/png' });
+
+        // 클립보드에 이미지 복사 (카카오톡 등 붙여넣기 가능하도록)
+        try {
+          if (navigator.clipboard && 'write' in navigator.clipboard) {
+            await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+          }
+        } catch { /* 미지원 기기 무시 */ }
+
         if (navigator.share && navigator.canShare({ files: [file] })) {
           await navigator.share({ files: [file], title: tr.resultHeader }).catch(() => {});
         } else {
