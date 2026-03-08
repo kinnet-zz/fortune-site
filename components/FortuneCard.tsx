@@ -146,7 +146,7 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
       `💼 ${tr.work}: ${fortune.work}\n\n` +
       `🍀 ${tr.luckyColorLabel}: ${fortune.luckyColor}\n` +
       `🔢 ${tr.luckyNumberLabel}: ${fortune.luckyNumber}\n\n` +
-      `https://fortune-site-6dg.pages.dev`;
+      `https://www.starfate.day`;
 
     if (!navigator.clipboard) return;
     await navigator.clipboard.writeText(text);
