@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { type Lang, t } from '@/lib/i18n';
 
 interface FortuneResult {
@@ -129,7 +129,8 @@ function ScoreBar({ score }: { score: number }) {
 export default function FortuneCard({ fortune, onReset, lang, birthDate, gender }: FortuneCardProps) {
   const [copied, setCopied] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
-  const [showSharePanel, setShowSharePanel] = useState(false);
+  const [imageSharing, setImageSharing] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
   const [cardVisible, setCardVisible] = useState(false);
   const tr = t(lang);
 
@@ -138,19 +139,6 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
     return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    const kakaoKey = process.env.NEXT_PUBLIC_KAKAO_APP_KEY;
-    if (!kakaoKey || document.getElementById('kakao-sdk')) return;
-    const script = document.createElement('script');
-    script.id = 'kakao-sdk';
-    script.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js';
-    script.crossOrigin = 'anonymous';
-    script.onload = () => {
-      const kakao = (window as any).Kakao;
-      if (kakao && !kakao.isInitialized()) kakao.init(kakaoKey);
-    };
-    document.head.appendChild(script);
-  }, []);
 
   const handleShare = async () => {
     const text = `🔮 ${tr.resultHeader} (${fortune.zodiacSign} / ${fortune.chineseZodiac})\n\n` +
@@ -179,50 +167,37 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
     if (!navigator.clipboard) return;
     await navigator.clipboard.writeText(buildShareUrl());
     setLinkCopied(true);
-    setShowSharePanel(true);
     setTimeout(() => setLinkCopied(false), 2500);
   };
 
-  const handleFacebookShare = () => {
-    window.open(
-      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(buildShareUrl())}`,
-      '_blank', 'width=600,height=400,noopener,noreferrer'
-    );
-  };
-
-  const handleLineShare = () => {
-    window.open(
-      `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(buildShareUrl())}`,
-      '_blank', 'width=600,height=400,noopener,noreferrer'
-    );
-  };
-
-  const handleKakaoShare = () => {
-    const url = buildShareUrl();
-    const kakao = (window as any).Kakao;
-    if (kakao?.isInitialized()) {
-      kakao.Share.sendDefault({
-        objectType: 'feed',
-        content: {
-          title: tr.resultHeader,
-          description: `${fortune.zodiacSign} · ${fortune.chineseZodiac} | ${fortune.score}/100`,
-          imageUrl: 'https://www.starfate.day/og-image.png',
-          link: { mobileWebUrl: url, webUrl: url },
-        },
+  const handleImageShare = async () => {
+    if (!cardRef.current) return;
+    setImageSharing(true);
+    try {
+      const html2canvas = (await import('html2canvas')).default;
+      const canvas = await html2canvas(cardRef.current, {
+        backgroundColor: '#0f0a2d',
+        scale: 2,
+        useCORS: true,
+        logging: false,
       });
-    } else if (navigator.share) {
-      navigator.share({ url }).catch(() => {});
-    } else {
-      navigator.clipboard.writeText(url);
-    }
-  };
-
-  const handleInstagramShare = async () => {
-    const url = buildShareUrl();
-    if (navigator.share) {
-      await navigator.share({ url }).catch(() => {});
-    } else {
-      await navigator.clipboard.writeText(url);
+      canvas.toBlob(async (blob) => {
+        if (!blob) { setImageSharing(false); return; }
+        const file = new File([blob], 'fortune.png', { type: 'image/png' });
+        if (navigator.share && navigator.canShare({ files: [file] })) {
+          await navigator.share({ files: [file], title: tr.resultHeader }).catch(() => {});
+        } else {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'fortune.png';
+          a.click();
+          URL.revokeObjectURL(url);
+        }
+        setImageSharing(false);
+      }, 'image/png');
+    } catch {
+      setImageSharing(false);
     }
   };
 
@@ -240,6 +215,7 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
     >
       {/* 메인 카드 */}
       <div
+        ref={cardRef}
         className="rounded-3xl p-[1px]"
         style={{
           background: 'linear-gradient(135deg, rgba(139,92,246,0.7), rgba(99,102,241,0.4), rgba(236,72,153,0.5))',
@@ -401,22 +377,22 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
           {/* 버튼 영역 */}
           <div className="px-8 pb-8 space-y-3">
             <div className="flex gap-3">
-              {/* 운세 텍스트 공유 버튼 */}
+              {/* 이미지 공유 버튼 */}
               <button
-                onClick={handleShare}
-                className="flex-1 py-4 rounded-2xl font-bold text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                onClick={handleImageShare}
+                disabled={imageSharing}
+                className="flex-1 py-4 rounded-2xl font-bold text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{
-                  background: copied
-                    ? 'linear-gradient(135deg, rgba(34,197,94,0.3), rgba(16,185,129,0.3))'
-                    : 'rgba(255,255,255,0.06)',
-                  border: copied
-                    ? '1px solid rgba(34,197,94,0.4)'
-                    : '1px solid rgba(255,255,255,0.1)',
-                  color: copied ? '#86efac' : 'rgba(255,255,255,0.7)',
+                  background: imageSharing
+                    ? 'rgba(255,255,255,0.04)'
+                    : 'linear-gradient(135deg, rgba(236,72,153,0.3), rgba(139,92,246,0.3))',
+                  border: '1px solid rgba(236,72,153,0.3)',
+                  color: imageSharing ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.8)',
                 }}
               >
                 <span className="flex items-center justify-center gap-2">
-                  {copied ? <><span>✅</span><span>{tr.copied}</span></> : <><span>📋</span><span>{tr.shareBtn}</span></>}
+                  <span>{imageSharing ? '⏳' : '📸'}</span>
+                  <span>{imageSharing ? tr.imageSharing : tr.imageShareBtn}</span>
                 </span>
               </button>
 
@@ -436,59 +412,38 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
               </button>
             </div>
 
-            {/* 링크 복사 버튼 */}
-            <button
-              onClick={handleLinkCopy}
-              className="w-full py-3 rounded-2xl font-semibold text-sm transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]"
-              style={{
-                background: linkCopied
-                  ? 'linear-gradient(135deg, rgba(99,102,241,0.3), rgba(139,92,246,0.3))'
-                  : 'rgba(255,255,255,0.03)',
-                border: linkCopied
-                  ? '1px solid rgba(139,92,246,0.5)'
-                  : '1px solid rgba(255,255,255,0.07)',
-                color: linkCopied ? '#c4b5fd' : 'rgba(255,255,255,0.35)',
-              }}
-            >
-              <span className="flex items-center justify-center gap-2">
-                {linkCopied ? <><span>✅</span><span>{tr.linkCopied}</span></> : <><span>🔗</span><span>{tr.linkCopyBtn}</span></>}
-              </span>
-            </button>
-
-            {/* SNS 공유 패널 */}
-            <div
-              className="overflow-hidden transition-all duration-300"
-              style={{ maxHeight: showSharePanel ? '90px' : '0px', opacity: showSharePanel ? 1 : 0 }}
-            >
-              <div className="pt-2 pb-1">
-                <p className="text-center text-white/25 text-xs mb-3">{tr.shareTo}</p>
-                <div className="flex justify-center gap-5">
-                  <button onClick={handleFacebookShare} className="flex flex-col items-center gap-1 group" aria-label="Facebook">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center transition-transform duration-200 group-hover:scale-110" style={{ background: 'rgba(24,119,242,0.2)', border: '1px solid rgba(24,119,242,0.4)' }}>
-                      <span className="text-lg">📘</span>
-                    </div>
-                    <span className="text-white/25 text-[10px]">Facebook</span>
-                  </button>
-                  <button onClick={handleLineShare} className="flex flex-col items-center gap-1 group" aria-label="LINE">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center transition-transform duration-200 group-hover:scale-110" style={{ background: 'rgba(0,195,0,0.2)', border: '1px solid rgba(0,195,0,0.4)' }}>
-                      <span className="text-lg">💬</span>
-                    </div>
-                    <span className="text-white/25 text-[10px]">LINE</span>
-                  </button>
-                  <button onClick={handleKakaoShare} className="flex flex-col items-center gap-1 group" aria-label="KakaoTalk">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center transition-transform duration-200 group-hover:scale-110" style={{ background: 'rgba(254,229,0,0.15)', border: '1px solid rgba(254,229,0,0.35)' }}>
-                      <span className="text-lg">💛</span>
-                    </div>
-                    <span className="text-white/25 text-[10px]">KakaoTalk</span>
-                  </button>
-                  <button onClick={handleInstagramShare} className="flex flex-col items-center gap-1 group" aria-label="Instagram">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center transition-transform duration-200 group-hover:scale-110" style={{ background: 'rgba(225,48,108,0.2)', border: '1px solid rgba(225,48,108,0.35)' }}>
-                      <span className="text-lg">📷</span>
-                    </div>
-                    <span className="text-white/25 text-[10px]">Instagram</span>
-                  </button>
-                </div>
-              </div>
+            {/* 텍스트 공유 + 링크 복사 */}
+            <div className="flex gap-3">
+              <button
+                onClick={handleShare}
+                className="flex-1 py-3 rounded-2xl font-semibold text-sm transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]"
+                style={{
+                  background: copied
+                    ? 'linear-gradient(135deg, rgba(34,197,94,0.3), rgba(16,185,129,0.3))'
+                    : 'rgba(255,255,255,0.03)',
+                  border: copied ? '1px solid rgba(34,197,94,0.4)' : '1px solid rgba(255,255,255,0.07)',
+                  color: copied ? '#86efac' : 'rgba(255,255,255,0.35)',
+                }}
+              >
+                <span className="flex items-center justify-center gap-2">
+                  {copied ? <><span>✅</span><span>{tr.copied}</span></> : <><span>📋</span><span>{tr.shareBtn}</span></>}
+                </span>
+              </button>
+              <button
+                onClick={handleLinkCopy}
+                className="flex-1 py-3 rounded-2xl font-semibold text-sm transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]"
+                style={{
+                  background: linkCopied
+                    ? 'linear-gradient(135deg, rgba(99,102,241,0.3), rgba(139,92,246,0.3))'
+                    : 'rgba(255,255,255,0.03)',
+                  border: linkCopied ? '1px solid rgba(139,92,246,0.5)' : '1px solid rgba(255,255,255,0.07)',
+                  color: linkCopied ? '#c4b5fd' : 'rgba(255,255,255,0.35)',
+                }}
+              >
+                <span className="flex items-center justify-center gap-2">
+                  {linkCopied ? <><span>✅</span><span>{tr.linkCopied}</span></> : <><span>🔗</span><span>{tr.linkCopyBtn}</span></>}
+                </span>
+              </button>
             </div>
           </div>
         </div>
