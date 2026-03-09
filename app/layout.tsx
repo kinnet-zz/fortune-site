@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Noto_Sans_KR, Noto_Sans_JP, Noto_Sans_SC } from 'next/font/google';
 import './globals.css';
 import CookieBanner from '../components/CookieBanner';
-import Header from '../components/Header';
+import ConditionalHeader from '../components/ConditionalHeader';
 import Footer from '../components/Footer';
 import { LangProvider } from '@/lib/LangContext';
 
@@ -219,7 +219,7 @@ export default function RootLayout({
       </head>
       <body className={`${notoSansKR.className} ${notoSansJP.className} ${notoSansSC.className} antialiased`}>
         <LangProvider>
-          <Header />
+          <ConditionalHeader />
           {children}
           <Footer />
           <CookieBanner />

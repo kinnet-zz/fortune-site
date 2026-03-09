@@ -26,11 +26,17 @@ export default function IdolClient() {
 
   const tr = tIdol(lang);
 
-  // URL에서 lang 읽기
+  // URL에서 lang 읽기 + IdolHeader 언어 변경 이벤트 수신
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const l = params.get('lang');
-    if (l === 'en') setLang('en');
+    if (params.get('lang') === 'en') setLang('en');
+
+    const onLangChange = () => {
+      const p = new URLSearchParams(window.location.search);
+      setLang(p.get('lang') === 'en' ? 'en' : 'ko');
+    };
+    window.addEventListener('idol-lang-change', onLangChange);
+    return () => window.removeEventListener('idol-lang-change', onLangChange);
   }, []);
 
   // 결과 나오면 스크롤
@@ -106,14 +112,6 @@ export default function IdolClient() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const switchLang = (l: IdolLang) => {
-    setLang(l);
-    const url = new URL(window.location.href);
-    if (l === 'ko') url.searchParams.delete('lang');
-    else url.searchParams.set('lang', l);
-    window.history.replaceState({}, '', url.toString());
-  };
-
   return (
     <div
       className="min-h-screen relative"
@@ -131,28 +129,6 @@ export default function IdolClient() {
       />
 
       <main className="relative z-10 min-h-screen flex flex-col items-center px-4 py-8 pb-20">
-
-        {/* 언어 전환 */}
-        <div className="w-full max-w-md flex justify-end mb-4">
-          <div
-            className="flex rounded-xl overflow-hidden"
-            style={{ border: '1px solid rgba(255,255,255,0.1)' }}
-          >
-            {(['ko', 'en'] as IdolLang[]).map((l) => (
-              <button
-                key={l}
-                onClick={() => switchLang(l)}
-                className="px-4 py-2 text-xs font-semibold transition-colors"
-                style={{
-                  background: lang === l ? 'rgba(139,92,246,0.4)' : 'transparent',
-                  color: lang === l ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.35)',
-                }}
-              >
-                {l === 'ko' ? '한국어' : 'EN'}
-              </button>
-            ))}
-          </div>
-        </div>
 
         {/* 헤더 */}
         <div className="text-center mb-8 w-full max-w-md">
