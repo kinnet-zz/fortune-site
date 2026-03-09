@@ -10,14 +10,14 @@ interface IdolUploadProps {
 
 const MAX_SIZE = 5 * 1024 * 1024;
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
-const TARGET_SIZE = 1024; // 분석용 리사이즈 목표 px
+const TARGET_SIZE = 1024;
 
 async function resizeImage(file: File): Promise<{ base64: string; mimeType: string; preview: string }> {
   return new Promise((resolve, reject) => {
     const img = new Image();
-    const objectUrl = URL.createObjectURL(file);
+    const url = URL.createObjectURL(file);
     img.onload = () => {
-      URL.revokeObjectURL(objectUrl);
+      URL.revokeObjectURL(url);
       const canvas = document.createElement('canvas');
       const scale = Math.min(1, TARGET_SIZE / Math.max(img.width, img.height));
       canvas.width = Math.round(img.width * scale);
@@ -26,18 +26,17 @@ async function resizeImage(file: File): Promise<{ base64: string; mimeType: stri
       if (!ctx) return reject(new Error('canvas error'));
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       const preview = canvas.toDataURL('image/jpeg', 0.9);
-      const base64 = preview.split(',')[1];
-      resolve({ base64, mimeType: 'image/jpeg', preview });
+      resolve({ base64: preview.split(',')[1], mimeType: 'image/jpeg', preview });
     };
     img.onerror = reject;
-    img.src = objectUrl;
+    img.src = url;
   });
 }
 
 export default function IdolUpload({ onImageReady, lang }: IdolUploadProps) {
   const tr = tIdol(lang);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const cameraInputRef = useRef<HTMLInputElement>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+  const camRef = useRef<HTMLInputElement>(null);
   const [dragOver, setDragOver] = useState(false);
   const [error, setError] = useState('');
   const [preview, setPreview] = useState('');
@@ -45,56 +44,43 @@ export default function IdolUpload({ onImageReady, lang }: IdolUploadProps) {
 
   const processFile = async (file: File) => {
     setError('');
-    if (!ALLOWED_TYPES.includes(file.type)) {
-      setError(tr.invalidFile);
-      return;
-    }
-    if (file.size > MAX_SIZE) {
-      setError(tr.fileTooLarge);
-      return;
-    }
+    if (!ALLOWED_TYPES.includes(file.type)) { setError(tr.invalidFile); return; }
+    if (file.size > MAX_SIZE) { setError(tr.fileTooLarge); return; }
     setProcessing(true);
     try {
       const { base64, mimeType, preview } = await resizeImage(file);
       setPreview(preview);
       onImageReady(base64, mimeType, preview);
-    } catch {
-      setError(tr.errorMsg);
-    } finally {
-      setProcessing(false);
-    }
+    } catch { setError(tr.errorMsg); }
+    finally { setProcessing(false); }
   };
 
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) processFile(file);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0];
+    if (f) processFile(f);
     e.target.value = '';
   };
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setDragOver(false);
-    const file = e.dataTransfer.files?.[0];
-    if (file) processFile(file);
+    const f = e.dataTransfer.files?.[0];
+    if (f) processFile(f);
   };
 
   return (
-    <div className="w-full max-w-md mx-auto space-y-4">
+    <div className="space-y-3">
       {/* 업로드 영역 */}
       <div
         onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
         onDragLeave={() => setDragOver(false)}
         onDrop={handleDrop}
-        onClick={() => fileInputRef.current?.click()}
-        className="relative cursor-pointer rounded-3xl transition-all duration-300"
+        onClick={() => fileRef.current?.click()}
+        className="relative cursor-pointer rounded-3xl overflow-hidden transition-all duration-200"
         style={{
-          border: `2px dashed ${dragOver ? 'rgba(168,85,247,0.8)' : 'rgba(255,255,255,0.15)'}`,
-          background: dragOver
-            ? 'rgba(168,85,247,0.1)'
-            : preview
-            ? 'transparent'
-            : 'rgba(255,255,255,0.02)',
-          minHeight: '280px',
+          border: `2px dashed ${dragOver ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.08)'}`,
+          background: dragOver ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.02)',
+          minHeight: '240px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -103,81 +89,45 @@ export default function IdolUpload({ onImageReady, lang }: IdolUploadProps) {
         {preview ? (
           <div className="relative w-full">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={preview}
-              alt="preview"
-              className="w-full rounded-3xl object-cover"
-              style={{ maxHeight: '360px', objectFit: 'cover' }}
-            />
-            <div
-              className="absolute inset-0 rounded-3xl flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200"
-              style={{ background: 'rgba(0,0,0,0.5)' }}
-            >
-              <p className="text-white font-semibold text-sm">{tr.uploadBtn}</p>
+            <img src={preview} alt="preview" className="w-full object-cover" style={{ maxHeight: '320px' }} />
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity"
+              style={{ background: 'rgba(0,0,0,0.6)' }}>
+              <p className="text-white text-sm font-bold">사진 변경</p>
             </div>
           </div>
         ) : (
-          <div className="text-center px-8 py-12">
-            <div className="text-6xl mb-4">🤳</div>
-            <p className="text-white/70 font-semibold text-lg mb-2">{tr.uploadTitle}</p>
-            <p className="text-white/40 text-sm">{tr.uploadDesc}</p>
-            {processing && (
-              <p className="text-purple-300 text-sm mt-3 animate-pulse">처리 중...</p>
-            )}
+          <div className="text-center px-8 py-10">
+            <div className="text-5xl mb-3">🤳</div>
+            <p className="text-white/60 font-bold mb-1">{tr.uploadTitle}</p>
+            <p className="text-white/25 text-xs">{tr.uploadDesc}</p>
+            {processing && <p className="text-white/40 text-xs mt-3 animate-pulse">처리 중...</p>}
           </div>
         )}
       </div>
 
-      {/* 에러 메시지 */}
-      {error && (
-        <p className="text-red-400 text-sm text-center px-4">{error}</p>
-      )}
+      {error && <p className="text-red-400 text-xs text-center">{error}</p>}
 
-      {/* 버튼 영역 */}
-      <div className="flex gap-3">
+      <div className="flex gap-2">
         <button
-          onClick={() => fileInputRef.current?.click()}
-          className="flex-1 py-4 rounded-2xl font-bold text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-          style={{
-            background: 'linear-gradient(135deg, rgba(139,92,246,0.4), rgba(99,102,241,0.4))',
-            border: '1px solid rgba(139,92,246,0.5)',
-            color: 'rgba(255,255,255,0.9)',
-          }}
+          onClick={() => fileRef.current?.click()}
+          className="flex-1 py-3.5 rounded-2xl text-sm font-bold transition-all hover:opacity-90"
+          style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)' }}
         >
           📁 {tr.uploadBtn}
         </button>
         <button
-          onClick={() => cameraInputRef.current?.click()}
-          className="flex-1 py-4 rounded-2xl font-bold text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-          style={{
-            background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(255,255,255,0.12)',
-            color: 'rgba(255,255,255,0.7)',
-          }}
+          onClick={() => camRef.current?.click()}
+          className="flex-1 py-3.5 rounded-2xl text-sm font-bold transition-all hover:opacity-90"
+          style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.5)' }}
         >
           📷 {tr.cameraBtn}
         </button>
       </div>
 
-      {/* 숨긴 파일 인풋 */}
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/jpeg,image/png,image/webp"
-        className="hidden"
-        onChange={handleFile}
-      />
-      <input
-        ref={cameraInputRef}
-        type="file"
-        accept="image/*"
-        capture="user"
-        className="hidden"
-        onChange={handleFile}
-      />
+      <p className="text-center text-white/20 text-xs">{tr.privacyNote}</p>
 
-      {/* 개인정보 안심 문구 */}
-      <p className="text-center text-white/30 text-xs">{tr.privacyNote}</p>
+      <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={handleChange} />
+      <input ref={camRef} type="file" accept="image/*" capture="user" className="hidden" onChange={handleChange} />
     </div>
   );
 }

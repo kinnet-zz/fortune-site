@@ -36,8 +36,8 @@ export interface IdolTranslations {
 
 const translations: Record<IdolLang, IdolTranslations> = {
   ko: {
-    pageTitle: '내 K-아이돌 소속사 관상',
-    pageSubtitle: 'SM · JYP · YG · HYBE 중 내 얼굴은 어느 소속사?',
+    pageTitle: '나는 어느 소속사 스타일?',
+    pageSubtitle: '내 얼굴을 AI가 분석해 SM · JYP · YG · HYBE 중 딱 맞는 소속사를 찾아드립니다',
     uploadTitle: '사진을 업로드하세요',
     uploadDesc: '정면 얼굴 사진이 가장 정확합니다',
     uploadBtn: '사진 선택',
@@ -83,8 +83,8 @@ const translations: Record<IdolLang, IdolTranslations> = {
     disclaimer: '✦ 본 서비스는 AI 기반 오락 콘텐츠입니다. 실제 소속사 오디션 기준과 다를 수 있습니다 ✦',
   },
   en: {
-    pageTitle: 'My K-Idol Agency Face Type',
-    pageSubtitle: 'SM · JYP · YG · HYBE — Which agency fits your face?',
+    pageTitle: 'Which K-Pop Agency Fits Your Face?',
+    pageSubtitle: 'AI analyzes your face and finds your perfect match among SM · JYP · YG · HYBE',
     uploadTitle: 'Upload Your Photo',
     uploadDesc: 'A front-facing photo gives the most accurate result',
     uploadBtn: 'Choose Photo',

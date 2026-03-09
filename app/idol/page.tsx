@@ -5,12 +5,12 @@ import IdolClient from '@/components/IdolClient';
 
 const ogData = {
   ko: {
-    title: '내 K-아이돌 소속사 관상 분석 | SM · JYP · YG · HYBE',
-    description: '내 얼굴은 어느 K-팝 소속사 스타일? SM의 우아함, JYP의 발랄함, YG의 카리스마, HYBE의 청량함 — AI가 분석해드립니다.',
+    title: '나는 어느 소속사 스타일? | SM · JYP · YG · HYBE 관상 분석',
+    description: '내 얼굴을 AI가 분석해 SM, JYP, YG, HYBE 중 딱 맞는 소속사를 찾아드립니다. 사진 한 장으로 바로 확인!',
   },
   en: {
-    title: 'My K-Idol Agency Face Type | SM · JYP · YG · HYBE',
-    description: 'Which K-pop agency does your face match? SM elegance, JYP energy, YG charisma, or HYBE freshness — analyzed by AI.',
+    title: 'Which K-Pop Agency Fits Your Face? | SM · JYP · YG · HYBE',
+    description: 'AI analyzes your face and finds your perfect K-pop agency match — SM, JYP, YG, or HYBE. Upload a photo and find out!',
   },
 };
 
