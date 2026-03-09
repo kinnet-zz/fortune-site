@@ -264,7 +264,7 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
 
         await navigator.share({
           title: tr.resultHeader,
-          text: '🔮 오늘의 운세를 확인해보세요!',
+          text: tr.imageShareText,
           url: 'https://www.starfate.day',
         });
         setImageSaved(true);
