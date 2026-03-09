@@ -151,21 +151,43 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
       `🍀 ${tr.luckyColorLabel}: ${fortune.luckyColor}\n` +
       `🔢 ${tr.luckyNumberLabel}: ${fortune.luckyNumber}`;
 
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: tr.resultHeader,
+          text,
+          url: 'https://www.starfate.day',
+        });
+        return;
+      } catch (err) {
+        if ((err as Error).name === 'AbortError') return;
+        // share 실패 시 클립보드로 폴백
+      }
+    }
+
     if (!navigator.clipboard) return;
-    await navigator.clipboard.writeText(text);
+    await navigator.clipboard.writeText(text + '\nhttps://www.starfate.day');
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const buildShareUrl = () => {
-    const encoded = btoa(encodeURIComponent(JSON.stringify(fortune)));
-    const params = new URLSearchParams({ r: encoded, bd: birthDate, g: gender });
-    return `${window.location.origin}/?${params.toString()}`;
-  };
-
   const handleLinkCopy = async () => {
+    const url = 'https://www.starfate.day';
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: tr.resultHeader,
+          url,
+        });
+        return;
+      } catch (err) {
+        if ((err as Error).name === 'AbortError') return;
+      }
+    }
+
     if (!navigator.clipboard) return;
-    await navigator.clipboard.writeText('https://www.starfate.day');
+    await navigator.clipboard.writeText(url);
     setLinkCopied(true);
     setTimeout(() => setLinkCopied(false), 2500);
   };
