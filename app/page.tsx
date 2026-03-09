@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import type { Metadata } from 'next';
 import type { Lang } from '@/lib/i18n';
 import HomeClient from '@/components/HomeClient';
