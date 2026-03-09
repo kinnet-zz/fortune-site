@@ -75,7 +75,11 @@ export default function IdolClient() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(res.status === 429 || data.error === 'QUOTA_EXCEEDED' ? tr.quotaMsg : tr.errorMsg);
+        if (res.status === 429 || data.error === 'QUOTA_EXCEEDED') {
+          setError(tr.quotaMsg);
+        } else {
+          setError(`[DEBUG] ${data.error || res.status}`);
+        }
         return;
       }
       setResult(data);
