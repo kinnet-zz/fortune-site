@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     const isKorean = lang === 'ko';
 
@@ -126,11 +126,12 @@ Respond ONLY with JSON, no other text.
 
     let analysisData: IdolAnalysisResponse & { error?: string };
     try {
-      const cleaned = responseText
-        .replace(/^```(?:json)?\s*/i, '')
-        .replace(/\s*```$/i, '')
-        .trim();
-      analysisData = JSON.parse(cleaned);
+      // JSON 블록 추출 (모델이 앞뒤에 텍스트를 추가할 경우 대응)
+      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) {
+        return NextResponse.json({ error: '결과 파싱에 실패했습니다.' }, { status: 500 });
+      }
+      analysisData = JSON.parse(jsonMatch[0]);
     } catch {
       return NextResponse.json({ error: '결과 파싱에 실패했습니다.' }, { status: 500 });
     }
