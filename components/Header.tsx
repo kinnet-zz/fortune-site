@@ -13,6 +13,7 @@ export default function Header() {
 
   const NAV_ITEMS = [
     { href: '/', label: lang === 'ko' ? '오늘의 운세' : lang === 'en' ? 'Fortune' : lang === 'zh' ? '今日运势' : '今日の運勢' },
+    { href: '/idol', label: lang === 'ko' ? '🎤 소속사 관상' : '🎤 K-Idol Type' },
     { href: '/zodiac', label: lang === 'ko' ? '별자리 정보' : lang === 'en' ? 'Zodiac Info' : lang === 'zh' ? '星座信息' : '星座情報' },
     { href: '/chinese-zodiac', label: lang === 'ko' ? '12띠 정보' : lang === 'en' ? 'Chinese Zodiac' : lang === 'zh' ? '生肖信息' : '十二支情報' },
     { href: '/about', label: lang === 'ko' ? '사이트 소개' : lang === 'en' ? 'About' : lang === 'zh' ? '关于我们' : 'サイト紹介' },
