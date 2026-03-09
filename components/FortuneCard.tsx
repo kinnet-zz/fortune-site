@@ -209,14 +209,27 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
       const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
       if (!blob) throw new Error('blob is null');
 
+      const file = new File([blob], 'fortune.png', { type: 'image/png' });
+
+      // 이미지 파일 공유 지원 여부 확인 (Android Chrome, iOS Safari 15+)
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: tr.resultHeader,
+          url: 'https://www.starfate.day',
+        });
+        setImageSaved(true);
+        setTimeout(() => setImageSaved(false), 3500);
+        return;
+      }
+
+      // 폴백: 파일 공유 미지원 시 다운로드
       const objectUrl = URL.createObjectURL(blob);
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
       if (isIOS) {
-        // iOS: 새 탭에서 열기 → 꾹 눌러 저장
         window.open(objectUrl, '_blank');
       } else {
-        // Android/PC: 파일 다운로드
         const a = document.createElement('a');
         a.href = objectUrl;
         a.download = 'fortune.png';
@@ -229,7 +242,8 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
       setImageSaved(true);
       setTimeout(() => setImageSaved(false), 3500);
     } catch (err) {
-      console.error('이미지 저장 실패:', err);
+      if ((err as Error).name === 'AbortError') return;
+      console.error('이미지 공유 실패:', err);
       alert('이미지 생성에 실패했습니다. 다시 시도해주세요.');
     } finally {
       setImageSharing(false);
