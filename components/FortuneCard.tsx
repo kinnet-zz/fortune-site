@@ -132,11 +132,34 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
   const [imageSharing, setImageSharing] = useState(false);
   const [imageSaved, setImageSaved] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+  const preBlobRef = useRef<Blob | null>(null);
   const [cardVisible, setCardVisible] = useState(false);
   const tr = t(lang);
 
   useEffect(() => {
     const timer = setTimeout(() => setCardVisible(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // iOS Safari 대응: 카드 렌더 후 미리 이미지 생성 (클릭 시 즉시 share 호출 위해)
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      if (!cardRef.current) return;
+      try {
+        const html2canvas = (await import('html2canvas')).default;
+        const canvas = await html2canvas(cardRef.current, {
+          backgroundColor: '#0f0a2d',
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          logging: false,
+          imageTimeout: 0,
+        });
+        canvas.toBlob((blob) => { preBlobRef.current = blob; }, 'image/png');
+      } catch {
+        // 조용히 실패 — 클릭 시 다시 생성
+      }
+    }, 1500); // 애니메이션 완료 후 생성
     return () => clearTimeout(timer);
   }, []);
 
@@ -196,17 +219,22 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
     if (!cardRef.current) return;
     setImageSharing(true);
     try {
-      const html2canvas = (await import('html2canvas')).default;
-      const canvas = await html2canvas(cardRef.current, {
-        backgroundColor: '#0f0a2d',
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        logging: false,
-        imageTimeout: 0,
-      });
+      // 미리 생성된 blob 사용 (iOS Safari user activation 만료 방지)
+      let blob = preBlobRef.current;
 
-      const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
+      if (!blob) {
+        const html2canvas = (await import('html2canvas')).default;
+        const canvas = await html2canvas(cardRef.current, {
+          backgroundColor: '#0f0a2d',
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          logging: false,
+          imageTimeout: 0,
+        });
+        blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
+      }
+
       if (!blob) throw new Error('blob is null');
 
       const file = new File([blob], 'fortune.png', { type: 'image/png' });
