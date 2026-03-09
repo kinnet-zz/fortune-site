@@ -164,6 +164,8 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
   }, []);
 
 
+  const shareUrl = lang === 'ko' ? 'https://www.starfate.day' : `https://www.starfate.day/?lang=${lang}`;
+
   const handleShare = async () => {
     const text = `🔮 ${tr.resultHeader} (${fortune.zodiacSign} / ${fortune.chineseZodiac})\n\n` +
       `⭐ ${tr.scoreLabel}: ${fortune.score}/100\n\n` +
@@ -179,7 +181,7 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
         await navigator.share({
           title: tr.resultHeader,
           text,
-          url: 'https://www.starfate.day',
+          url: shareUrl,
         });
         return;
       } catch (err) {
@@ -195,13 +197,11 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
   };
 
   const handleLinkCopy = async () => {
-    const url = 'https://www.starfate.day';
-
     if (navigator.share) {
       try {
         await navigator.share({
           title: tr.resultHeader,
-          url,
+          url: shareUrl,
         });
         return;
       } catch (err) {
@@ -210,7 +210,7 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
     }
 
     if (!navigator.clipboard) return;
-    await navigator.clipboard.writeText(url);
+    await navigator.clipboard.writeText(shareUrl);
     setLinkCopied(true);
     setTimeout(() => setLinkCopied(false), 2500);
   };
@@ -244,7 +244,7 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
         await navigator.share({
           files: [file],
           title: tr.resultHeader,
-          url: 'https://www.starfate.day',
+          url: shareUrl,
         });
         setImageSaved(true);
         setTimeout(() => setImageSaved(false), 3500);
@@ -265,7 +265,7 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
         await navigator.share({
           title: tr.resultHeader,
           text: tr.imageShareText,
-          url: 'https://www.starfate.day',
+          url: shareUrl,
         });
         setImageSaved(true);
         setTimeout(() => setImageSaved(false), 3500);

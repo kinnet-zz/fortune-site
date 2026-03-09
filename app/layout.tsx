@@ -28,8 +28,8 @@ const notoSansSC = Noto_Sans_SC({
 });
 
 export const metadata: Metadata = {
-  title: '오늘의 운세 ✨ | Today\'s Fortune | 今日の運勢 | 今日运势',
-  description: '무료 AI 운세 · Free AI Fortune · AI占い無料 · 免费AI占卜 | 별자리·띠로 보는 오늘의 운세. Zodiac & Chinese zodiac fortune. 星座・十二支で見る今日の運勢。星座生肖免费算命。',
+  title: '오늘의 운세 ✨ | 별자리·띠 무료 운세',
+  description: '생년월일로 별자리와 띠를 분석하는 AI 무료 운세 서비스. 오늘의 종합운, 연애운, 금전운, 직업운을 확인해보세요. 매일 업데이트되는 오늘의 운세.',
   keywords: [
     '운세', '오늘의 운세', '별자리 운세', '띠 운세', '무료 운세', '연애운', '금전운', '직업운', '종합운', 'AI 운세', '사주', '별자리', '2025 운세', '2026 운세', '일일 운세',
     'fortune', 'horoscope', 'free horoscope', 'daily horoscope', 'zodiac fortune', 'AI fortune', 'zodiac sign', 'birth date fortune', 'free zodiac reading', 'horoscope today', 'Chinese zodiac', 'love horoscope', 'money horoscope', 'career horoscope', 'star sign', 'astrology', 'free astrology',
@@ -48,8 +48,8 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: '오늘의 운세 ✨ | Today\'s Fortune | 今日の運勢 | 今日运势',
-    description: '무료 AI 운세 · Free AI Fortune · AI占い無料 · 免费AI占卜 | 별자리·띠로 보는 오늘의 운세. Zodiac fortune. 星座占い。星座运势。',
+    title: '오늘의 운세 ✨ | 별자리·띠 무료 운세',
+    description: '생년월일로 별자리와 띠를 분석하는 AI 무료 운세 서비스. 오늘의 종합운, 연애운, 금전운, 직업운을 확인해보세요.',
     type: 'website',
     url: 'https://www.starfate.day',
     siteName: '오늘의 운세',
@@ -66,8 +66,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '오늘의 운세 ✨ | Today\'s Fortune | 今日の運勢 | 今日运势',
-    description: '무료 AI 운세 · Free AI Fortune · AI占い無料 · 免费AI占卜',
+    title: '오늘의 운세 ✨ | 별자리·띠 무료 운세',
+    description: '생년월일로 별자리와 띠를 분석하는 AI 무료 운세. 매일 업데이트!',
     images: ['https://www.starfate.day/og-image.png'],
   },
   robots: {
