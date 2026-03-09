@@ -166,10 +166,11 @@ Respond ONLY with JSON, no other text.
 
     return NextResponse.json(analysisData, { status: 200 });
   } catch (error: unknown) {
-    const msg = error instanceof Error ? error.message : '';
+    const msg = error instanceof Error ? error.message : String(error);
     if (msg.includes('429') || msg.toLowerCase().includes('quota') || msg.toLowerCase().includes('rate limit')) {
       return NextResponse.json({ error: 'QUOTA_EXCEEDED' }, { status: 429 });
     }
-    return NextResponse.json({ error: '서버 내부 오류가 발생했습니다.' }, { status: 500 });
+    // DEBUG: 실제 오류 메시지 노출 (확인 후 제거 예정)
+    return NextResponse.json({ error: msg || '알 수 없는 오류' }, { status: 500 });
   }
 }
