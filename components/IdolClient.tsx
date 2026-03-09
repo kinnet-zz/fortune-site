@@ -83,8 +83,8 @@ export default function IdolClient() {
         return;
       }
       setResult(data);
-    } catch {
-      setError(tr.errorMsg);
+    } catch (e) {
+      setError(`[DEBUG-CATCH] ${e instanceof Error ? e.message : String(e)}`);
     } finally {
       setIsLoading(false);
       if (loadingRef.current) clearInterval(loadingRef.current);
