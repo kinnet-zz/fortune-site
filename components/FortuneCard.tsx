@@ -211,8 +211,8 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
 
       const file = new File([blob], 'fortune.png', { type: 'image/png' });
 
-      // 이미지 파일 공유 지원 여부 확인 (Android Chrome, iOS Safari 15+)
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      // 1순위: 이미지 파일 첨부 공유 (Android Chrome, iOS Safari 15+)
+      if (navigator.canShare?.({ files: [file] })) {
         await navigator.share({
           files: [file],
           title: tr.resultHeader,
@@ -223,20 +223,35 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
         return;
       }
 
-      // 폴백: 파일 공유 미지원 시 다운로드
-      const objectUrl = URL.createObjectURL(blob);
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-
-      if (isIOS) {
-        window.open(objectUrl, '_blank');
-      } else {
+      // 2순위: 파일 공유 미지원이지만 Web Share API는 있는 경우 → 이미지 다운로드 + 공유 시트 오픈
+      if (navigator.share) {
+        const objectUrl = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = objectUrl;
         a.download = 'fortune.png';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
+        URL.revokeObjectURL(objectUrl);
+
+        await navigator.share({
+          title: tr.resultHeader,
+          text: '🔮 오늘의 운세를 확인해보세요!',
+          url: 'https://www.starfate.day',
+        });
+        setImageSaved(true);
+        setTimeout(() => setImageSaved(false), 3500);
+        return;
       }
+
+      // 3순위: PC/미지원 → 다운로드만
+      const objectUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = objectUrl;
+      a.download = 'fortune.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
       URL.revokeObjectURL(objectUrl);
 
       setImageSaved(true);
