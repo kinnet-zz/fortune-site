@@ -5,9 +5,18 @@ import { tIdol, AGENCY_COLORS, type IdolLang, type Agency } from '@/lib/idol-i18
 import IdolUpload from './IdolUpload';
 import IdolResultCard from './IdolResultCard';
 
+interface SubScore {
+  faceShape: number;
+  eyes: number;
+  noseLips: number;
+  vibe: number;
+  similarity: number;
+}
+
 interface IdolAnalysisResult {
   topAgency: Agency;
   scores: Record<Agency, number>;
+  subScores: Record<Agency, SubScore>;
   summary: string;
   features: { eyes: string; nose: string; lips: string; overall: string };
   similarIdol: string;

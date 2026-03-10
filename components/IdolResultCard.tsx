@@ -3,9 +3,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { tIdol, AGENCY_COLORS, type IdolLang, type Agency } from '@/lib/idol-i18n';
 
+interface SubScore {
+  faceShape: number;
+  eyes: number;
+  noseLips: number;
+  vibe: number;
+  similarity: number;
+}
+
 interface IdolAnalysisResult {
   topAgency: Agency;
   scores: Record<Agency, number>;
+  subScores: Record<Agency, SubScore>;
   summary: string;
   features: { eyes: string; nose: string; lips: string; overall: string };
   similarIdol: string;
@@ -169,6 +178,56 @@ export default function IdolResultCard({
           <p className="text-white/25 text-xs uppercase tracking-widest mb-2">{tr.summaryLabel}</p>
           <p className="text-white/75 text-sm leading-relaxed">{result.summary}</p>
         </div>
+
+        {/* 세부 채점 */}
+        {result.subScores?.[top] && (() => {
+          const sub = result.subScores[top];
+          const items = lang === 'ko'
+            ? [
+                { label: '얼굴형', val: sub.faceShape },
+                { label: '눈매', val: sub.eyes },
+                { label: '코/입', val: sub.noseLips },
+                { label: '분위기', val: sub.vibe },
+                { label: '아이돌 유사도', val: sub.similarity },
+              ]
+            : [
+                { label: 'Face Shape', val: sub.faceShape },
+                { label: 'Eyes', val: sub.eyes },
+                { label: 'Nose & Lips', val: sub.noseLips },
+                { label: 'Vibe', val: sub.vibe },
+                { label: 'Idol Match', val: sub.similarity },
+              ];
+          return (
+            <div className="px-5 pb-4">
+              <p className="text-white/25 text-xs uppercase tracking-widest mb-2">
+                {lang === 'ko' ? '세부 채점' : 'Score Breakdown'}
+              </p>
+              <div className="space-y-2">
+                {items.map(({ label, val }) => {
+                  const score = Math.min(10, Math.max(0, Number(val) || 0));
+                  return (
+                    <div key={label} className="flex items-center gap-2">
+                      <span className="text-white/35 text-xs w-20 shrink-0">{label}</span>
+                      <div className="flex-1 h-1.5 rounded-full" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                        <div
+                          className="h-full rounded-full transition-all duration-1000 ease-out"
+                          style={{
+                            width: animated ? `${score * 10}%` : '0%',
+                            background: `linear-gradient(90deg, ${colors.primary}99, ${colors.primary})`,
+                          }}
+                        />
+                      </div>
+                      <span className="text-xs font-bold w-6 text-right" style={{ color: colors.text }}>{score}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })()}
+
+        {/* 구분선 */}
+        <div style={{ height: '1px', background: 'rgba(255,255,255,0.05)', margin: '0 20px 16px' }} />
 
         {/* 부위별 */}
         <div className="px-5 pb-4 grid grid-cols-2 gap-2">

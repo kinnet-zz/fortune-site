@@ -5,9 +5,18 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 type Agency = 'SM' | 'JYP' | 'YG' | 'HYBE';
 
+interface SubScore {
+  faceShape: number;
+  eyes: number;
+  noseLips: number;
+  vibe: number;
+  similarity: number;
+}
+
 interface IdolAnalysisResponse {
   topAgency: Agency;
   scores: Record<Agency, number>;
+  subScores: Record<Agency, SubScore>;
   summary: string;
   features: {
     eyes: string;
@@ -19,7 +28,9 @@ interface IdolAnalysisResponse {
 }
 
 const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
-const MAX_BASE64_LENGTH = 7_000_000; // ~5MB
+const MAX_BASE64_LENGTH = 7_000_000;
+const SUB_SCORE_KEYS: (keyof SubScore)[] = ['faceShape', 'eyes', 'noseLips', 'vibe', 'similarity'];
+const AGENCIES: Agency[] = ['SM', 'JYP', 'YG', 'HYBE'];
 
 export async function POST(request: NextRequest) {
   try {
@@ -51,38 +62,66 @@ export async function POST(request: NextRequest) {
     const isKorean = lang === 'ko';
 
     const prompt = isKorean
-      ? `당신은 K-팝 기획사 캐스팅 디렉터입니다. 이 사람의 얼굴을 분석하여 4대 기획사(SM, JYP, YG, HYBE) 중 어느 소속사의 아이돌 외모 기준에 가장 잘 맞는지 분석해주세요.
+      ? `당신은 K-팝 기획사 캐스팅 디렉터입니다. 이 사람의 얼굴을 5개 항목으로 세부 채점하여 4대 기획사 적합도를 분석해주세요.
 
-[중요: 얼굴 감지 우선 확인]
-이미지에 사람의 얼굴이 명확하게 보이지 않는 경우, 반드시 error 필드만 반환하고 분석을 진행하지 마세요.
-error를 반환해야 하는 경우:
-- 동물, 식물, 음식, 사물, 풍경 등 사람이 아닌 이미지
-- 얼굴이 가려지거나 너무 작아서 이목구비를 분석할 수 없는 경우
-- 그림, 만화, 애니메이션, 캐릭터 이미지
-- 여러 명이 있어 분석 대상이 불명확한 경우
+[중요: 얼굴 감지 먼저]
+사람 얼굴이 명확히 보이지 않으면 {"error": "이유"} 만 반환하세요.
+- 동물, 사물, 풍경, 음식, 그림, 만화, 캐릭터 → 즉시 error 반환
+- 얼굴이 가려지거나 너무 작아 이목구비 불분명 → error 반환
+- 여러 명이어서 분석 대상 불명확 → error 반환
 
-각 기획사의 선호 외모 기준:
-- SM엔터테인먼트: 하트형 얼굴, 균형잡힌 이목구비, 도시적이고 우아한 클래식 미인형. 대표 아이돌: 카리나, 윈터, 샤이니, EXO
-- JYP엔터테인먼트: 건강하고 발랄한 에너지, 웃는 모습이 매력적인 친근한 인상, 큰 눈이 특징. 대표: 트와이스, ITZY, 스트레이키즈
-- YG엔터테인먼트: 힙합 무드의 강렬하고 개성있는 인상, 고양이상 또는 날카로운 피처, 트렌디한 마스크. 대표: BLACKPINK, BIGBANG, iKON
-- HYBE: 소년미/소녀미가 돋보이는 청량한 매력, 세련되고 글로벌 트렌드에 맞는 이목구비, 청순하거나 시크한 느낌. 대표: BTS, NewJeans, LE SSERAFIM
+[5개 항목 세부 채점 (각 항목 0-10점, 4개 기획사 각각)]
+각 항목마다 이 사람의 얼굴이 각 기획사 기준에 얼마나 맞는지 채점하세요.
+반드시 각 항목에서 최고점과 최저점 차이가 4점 이상이어야 합니다.
 
-[분석 규칙]
-1. 4개 기획사 점수의 합이 반드시 200점이 되도록 배분하세요.
-2. 1위와 2위 차이가 최소 15점은 나야 합니다 (명확한 결과를 위해).
-3. 모든 텍스트는 한국어로 작성하세요.
-4. similarIdol은 반드시 topAgency 소속 실제 아이돌 이름 1-2명을 명시하여 "이름(그룹) 스타일" 또는 "이름(그룹) 분위기"로 작성하세요.
-   - SM 1위: 카리나(aespa), 윈터(aespa), 태민(SHINee), 수호(EXO) 등에서 선택
-   - JYP 1위: 나연(TWICE), 류진(ITZY), 필릭스(Stray Kids) 등에서 선택
-   - YG 1위: 제니(BLACKPINK), 리사(BLACKPINK), G-DRAGON(BIGBANG) 등에서 선택
-   - HYBE 1위: 뷔(BTS), 민지(NewJeans), 카즈하(LE SSERAFIM) 등에서 선택
-   다른 소속사 아이돌 언급 금지. 예시: "카리나(aespa) + 윈터(aespa) 스타일"
+항목1 faceShape (얼굴형):
+- SM 10점: 하트형·계란형, 갸름하고 균형잡힌 클래식 얼굴
+- JYP 10점: 둥글고 귀여운 인상, 친근한 얼굴형
+- YG 10점: 개성있고 각지거나 강한 윤곽, 독특한 얼굴형
+- HYBE 10점: 갸름하고 청량한 소년/소녀 느낌 얼굴형
 
-얼굴이 감지된 경우에만 아래 JSON 형식으로 응답하세요. 얼굴이 없으면 {"error": "이유"} 만 반환.
+항목2 eyes (눈매):
+- SM 10점: 또렷하고 세련된 눈, 균형잡힌 쌍꺼풀
+- JYP 10점: 크고 동그란 큰 눈, 친근하고 활기찬 눈매
+- YG 10점: 고양이상·날카로운 눈매, 강렬한 인상
+- HYBE 10점: 길고 청량한 눈, 몽환적이거나 시크한 눈매
+
+항목3 noseLips (코/입꼬리):
+- SM 10점: 오목하고 균형잡힌 코, 우아한 입꼬리
+- JYP 10점: 도톰하고 귀여운 코/입, 웃는 입꼬리
+- YG 10점: 날카롭고 강한 코선, 도전적인 입매
+- HYBE 10점: 작고 단정한 코, 청순한 입꼬리
+
+항목4 vibe (전체분위기):
+- SM 10점: 도시적이고 우아한 클래식 분위기
+- JYP 10점: 밝고 친근하며 건강한 에너지
+- YG 10점: 힙하고 강렬하며 카리스마 있는 분위기
+- HYBE 10점: 청량하고 세련된 글로벌 감성
+
+항목5 similarity (소속 아이돌 유사도):
+- SM 아이돌: 카리나·윈터(aespa), 태민·키(SHINee), 수호·디오(EXO), 루나(f(x))
+- JYP 아이돌: 나연·지효(TWICE), 류진·예지(ITZY), 필릭스·현진(Stray Kids)
+- YG 아이돌: 제니·리사·지수·로제(BLACKPINK), G-DRAGON·태양(BIGBANG), 바비(iKON)
+- HYBE 아이돌: 뷔·정국·지민(BTS), 민지·해린·혜인(NewJeans), 카즈하·채원(LE SSERAFIM)
+각 소속사 실제 아이돌들과 이 사람의 외모 유사도를 0-10으로 채점
+
+[similarIdol 필수 규칙]
+topAgency 소속 아이돌 중 가장 유사한 실제 아이돌 1-2명을 이름으로 직접 명시하세요.
+형식: "이름(그룹) 스타일" 또는 "이름(그룹) + 이름(그룹) 분위기"
+예시: "카리나(aespa) 스타일", "윈터(aespa) + 태민(SHINee) 분위기"
+절대로 소속사 특성 묘사로 채우지 말고, 반드시 실제 아이돌 이름을 쓰세요.
+다른 소속사 아이돌 언급 금지.
+
+얼굴이 있는 경우에만 아래 JSON으로 응답. 그 외: {"error": "이유"}
 
 {
   "topAgency": "SM" | "JYP" | "YG" | "HYBE",
-  "scores": { "SM": 숫자, "JYP": 숫자, "YG": 숫자, "HYBE": 숫자 },
+  "subScores": {
+    "SM":   {"faceShape": 숫자, "eyes": 숫자, "noseLips": 숫자, "vibe": 숫자, "similarity": 숫자},
+    "JYP":  {"faceShape": 숫자, "eyes": 숫자, "noseLips": 숫자, "vibe": 숫자, "similarity": 숫자},
+    "YG":   {"faceShape": 숫자, "eyes": 숫자, "noseLips": 숫자, "vibe": 숫자, "similarity": 숫자},
+    "HYBE": {"faceShape": 숫자, "eyes": 숫자, "noseLips": 숫자, "vibe": 숫자, "similarity": 숫자}
+  },
   "summary": "전체 분석 요약 (2-3문장, 1위 소속사 특성과 연결)",
   "features": {
     "eyes": "눈매 분석 (1-2문장)",
@@ -90,40 +129,67 @@ error를 반환해야 하는 경우:
     "lips": "입꼬리/입술 분석 (1문장)",
     "overall": "전체 인상 분석 (1-2문장)"
   },
-  "similarIdol": "이름(그룹) 스타일 또는 이름(그룹) 분위기"
+  "similarIdol": "이름(그룹) 스타일"
 }`
-      : `You are a K-pop talent scout. Analyze this person's facial features and determine which of the 4 major K-pop agencies (SM, JYP, YG, HYBE) their appearance best aligns with.
+      : `You are a K-pop talent scout. Score this person's face across 5 dimensions to determine which of the 4 major agencies (SM, JYP, YG, HYBE) they match best.
 
-[IMPORTANT: Face detection check first]
-If a human face is NOT clearly visible in the image, return ONLY an error field and do not proceed with analysis.
-Return error when:
-- Image contains animals, plants, food, objects, scenery, or anything non-human
-- Face is obscured, too small, or features cannot be analyzed
-- Drawings, cartoons, anime, or illustrated characters
-- Multiple people where the subject is unclear
+[IMPORTANT: Face detection first]
+If no clear human face is visible, return {"error": "reason"} only.
+- Animals, objects, scenery, food, drawings, cartoons, characters → return error immediately
+- Face obscured or too small to analyze → return error
+- Multiple people, unclear subject → return error
 
-Agency aesthetic preferences:
-- SM Entertainment: Heart-shaped face, balanced features, urban and elegant classic beauty. Examples: Karina, Winter, SHINee, EXO
-- JYP Entertainment: Healthy and energetic vibe, charming smile, friendly and approachable impression, often with large expressive eyes. Examples: TWICE, ITZY, Stray Kids
-- YG Entertainment: Bold hip-hop influenced impression, sharp cat-like features, unique and trendy look. Examples: BLACKPINK, BIGBANG, iKON
-- HYBE: Fresh boyish/girlish charm, refined and globally appealing features, can range from innocent to chic. Examples: BTS, NewJeans, LE SSERAFIM
+[5-Dimension Scoring (0-10 per dimension per agency)]
+Score how well this person's face matches each agency's standards.
+Each dimension MUST have at least a 4-point gap between highest and lowest score.
 
-[Rules]
-1. The 4 scores MUST sum to exactly 200.
-2. The top score must exceed the second score by at least 15 points.
-3. All text must be in English.
-4. For similarIdol, name 1-2 actual idols from the topAgency and write as "Name (Group) style" or "Name (Group) vibe".
-   - SM winner: choose from Karina (aespa), Winter (aespa), Taemin (SHINee), Suho (EXO), etc.
-   - JYP winner: choose from Nayeon (TWICE), Ryujin (ITZY), Felix (Stray Kids), etc.
-   - YG winner: choose from Jennie (BLACKPINK), Lisa (BLACKPINK), G-Dragon (BIGBANG), etc.
-   - HYBE winner: choose from V (BTS), Minji (NewJeans), Kazuha (LE SSERAFIM), etc.
-   Do NOT mention idols from other agencies. Example: "Karina (aespa) + Winter (aespa) style"
+Dimension 1 faceShape:
+- SM 10pts: Heart/oval shaped, slim and balanced classic face
+- JYP 10pts: Round and cute, friendly approachable face shape
+- YG 10pts: Strong jawline, angular or distinctive face shape
+- HYBE 10pts: Slim, fresh boyish/girlish face shape
 
-Respond with JSON only. If no face detected: {"error": "reason"} only.
+Dimension 2 eyes:
+- SM 10pts: Sharp and refined eyes, balanced double eyelid
+- JYP 10pts: Large round expressive eyes, bright and friendly
+- YG 10pts: Cat-like or sharp eyes, intense gaze
+- HYBE 10pts: Long and clear eyes, dreamy or chic look
+
+Dimension 3 noseLips:
+- SM 10pts: Balanced elegant nose, graceful lip corners
+- JYP 10pts: Soft plump nose/lips, smiling mouth corners
+- YG 10pts: Sharp strong nose, bold lip line
+- HYBE 10pts: Small neat nose, innocent lip corners
+
+Dimension 4 vibe:
+- SM 10pts: Urban, elegant, classic beauty vibe
+- JYP 10pts: Bright, friendly, healthy energy
+- YG 10pts: Hip, intense, charismatic aura
+- HYBE 10pts: Fresh, refined, global appeal
+
+Dimension 5 similarity (idol resemblance):
+- SM idols: Karina, Winter (aespa), Taemin, Key (SHINee), Suho, D.O. (EXO)
+- JYP idols: Nayeon, Jihyo (TWICE), Ryujin, Yeji (ITZY), Felix, Hyunjin (Stray Kids)
+- YG idols: Jennie, Lisa, Jisoo, Rosé (BLACKPINK), G-Dragon, Taeyang (BIGBANG)
+- HYBE idols: V, Jungkook, Jimin (BTS), Minji, Haerin (NewJeans), Kazuha, Chaewon (LE SSERAFIM)
+
+[similarIdol — MANDATORY RULE]
+Name 1-2 actual idols from topAgency who most resemble this person.
+Format: "Name (Group) style" or "Name (Group) + Name (Group) vibe"
+Example: "Karina (aespa) style", "Winter (aespa) + Taemin (SHINee) vibe"
+NEVER fill this with agency descriptions. MUST use real idol names.
+Do NOT mention idols from other agencies.
+
+Respond with JSON only if face detected. Otherwise: {"error": "reason"}
 
 {
   "topAgency": "SM" | "JYP" | "YG" | "HYBE",
-  "scores": { "SM": number, "JYP": number, "YG": number, "HYBE": number },
+  "subScores": {
+    "SM":   {"faceShape": number, "eyes": number, "noseLips": number, "vibe": number, "similarity": number},
+    "JYP":  {"faceShape": number, "eyes": number, "noseLips": number, "vibe": number, "similarity": number},
+    "YG":   {"faceShape": number, "eyes": number, "noseLips": number, "vibe": number, "similarity": number},
+    "HYBE": {"faceShape": number, "eyes": number, "noseLips": number, "vibe": number, "similarity": number}
+  },
   "summary": "Overall analysis (2-3 sentences connecting to top agency traits)",
   "features": {
     "eyes": "Eye shape analysis (1-2 sentences)",
@@ -131,7 +197,7 @@ Respond with JSON only. If no face detected: {"error": "reason"} only.
     "lips": "Lip/mouth analysis (1 sentence)",
     "overall": "Overall impression (1-2 sentences)"
   },
-  "similarIdol": "Name (Group) style or Name (Group) vibe"
+  "similarIdol": "Name (Group) style"
 }`;
 
     const imagePart = {
@@ -150,7 +216,6 @@ Respond with JSON only. If no face detected: {"error": "reason"} only.
 
     let analysisData: IdolAnalysisResponse & { error?: string };
     try {
-      // JSON 블록 추출 (모델이 앞뒤에 텍스트를 추가할 경우 대응)
       const jsonMatch = responseText.match(/\{[\s\S]*\}/);
       if (!jsonMatch) {
         return NextResponse.json({ error: '결과 파싱에 실패했습니다.' }, { status: 500 });
@@ -164,23 +229,30 @@ Respond with JSON only. If no face detected: {"error": "reason"} only.
       return NextResponse.json({ error: 'NO_FACE' }, { status: 422 });
     }
 
-    // 점수 합계 보정 (200으로 정규화)
-    const agencies: Agency[] = ['SM', 'JYP', 'YG', 'HYBE'];
-    const total = agencies.reduce((sum, a) => sum + (analysisData.scores[a] || 0), 0);
-    if (total !== 200 && total > 0) {
-      agencies.forEach((a) => {
-        analysisData.scores[a] = Math.round((analysisData.scores[a] / total) * 200);
-      });
+    // subScores → scores 계산 (각 소속사 5개 항목 합산 후 200점 정규화)
+    if (!analysisData.subScores) {
+      return NextResponse.json({ error: 'NO_FACE' }, { status: 422 });
     }
 
+    const rawScores: Record<Agency, number> = { SM: 0, JYP: 0, YG: 0, HYBE: 0 };
+    for (const agency of AGENCIES) {
+      const sub = analysisData.subScores[agency] || {};
+      rawScores[agency] = SUB_SCORE_KEYS.reduce((sum, key) => sum + (Number(sub[key]) || 0), 0);
+    }
+
+    const rawTotal = AGENCIES.reduce((sum, a) => sum + rawScores[a], 0);
+    const scores: Record<Agency, number> = { SM: 0, JYP: 0, YG: 0, HYBE: 0 };
+    for (const agency of AGENCIES) {
+      scores[agency] = rawTotal > 0 ? Math.round((rawScores[agency] / rawTotal) * 200) : 50;
+    }
+    analysisData.scores = scores;
+
     // topAgency 재확인
-    const topAgency = agencies.reduce((a, b) =>
-      analysisData.scores[a] > analysisData.scores[b] ? a : b
-    );
+    const topAgency = AGENCIES.reduce((a, b) => scores[a] > scores[b] ? a : b);
     analysisData.topAgency = topAgency;
 
-    // 점수가 너무 균등하면 얼굴 인식 실패로 간주 (최고점 < 65/200 = 32.5%)
-    if (analysisData.scores[topAgency] < 65) {
+    // 점수가 너무 균등하면 얼굴 인식 실패 (최고점 < 65/200 = 32.5%)
+    if (scores[topAgency] < 65) {
       return NextResponse.json({ error: 'NO_FACE' }, { status: 422 });
     }
 
