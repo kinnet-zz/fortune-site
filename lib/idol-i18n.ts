@@ -38,7 +38,7 @@ export interface IdolTranslations {
 const translations: Record<IdolLang, IdolTranslations> = {
   ko: {
     pageTitle: '나는 어느 소속사 스타일?',
-    pageSubtitle: '각 소속사 아이돌의 외모 특성을 기반으로 당신이 어울리는 소속사를 분석합니다',
+    pageSubtitle: '각 소속사 아이돌의 외모 특성을 바탕으로, 당신에게 어울리는 소속사를 찾아드립니다',
     uploadTitle: '사진을 업로드하세요',
     uploadDesc: '정면 얼굴 사진이 가장 정확합니다',
     uploadBtn: '사진 선택',
