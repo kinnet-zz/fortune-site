@@ -71,7 +71,12 @@ error를 반환해야 하는 경우:
 1. 4개 기획사 점수의 합이 반드시 200점이 되도록 배분하세요.
 2. 1위와 2위 차이가 최소 15점은 나야 합니다 (명확한 결과를 위해).
 3. 모든 텍스트는 한국어로 작성하세요.
-4. similarIdol은 특정 인물과 닮았다는 표현 대신 "~스타일" 또는 "~분위기"로 작성하세요.
+4. similarIdol은 반드시 topAgency 소속 실제 아이돌 이름 1-2명을 명시하여 "이름(그룹) 스타일" 또는 "이름(그룹) 분위기"로 작성하세요.
+   - SM 1위: 카리나(aespa), 윈터(aespa), 태민(SHINee), 수호(EXO) 등에서 선택
+   - JYP 1위: 나연(TWICE), 류진(ITZY), 필릭스(Stray Kids) 등에서 선택
+   - YG 1위: 제니(BLACKPINK), 리사(BLACKPINK), G-DRAGON(BIGBANG) 등에서 선택
+   - HYBE 1위: 뷔(BTS), 민지(NewJeans), 카즈하(LE SSERAFIM) 등에서 선택
+   다른 소속사 아이돌 언급 금지. 예시: "카리나(aespa) + 윈터(aespa) 스타일"
 
 얼굴이 감지된 경우에만 아래 JSON 형식으로 응답하세요. 얼굴이 없으면 {"error": "이유"} 만 반환.
 
@@ -85,7 +90,7 @@ error를 반환해야 하는 경우:
     "lips": "입꼬리/입술 분석 (1문장)",
     "overall": "전체 인상 분석 (1-2문장)"
   },
-  "similarIdol": "~스타일 또는 ~분위기 (1-2개 소속사 예시 포함)"
+  "similarIdol": "이름(그룹) 스타일 또는 이름(그룹) 분위기"
 }`
       : `You are a K-pop talent scout. Analyze this person's facial features and determine which of the 4 major K-pop agencies (SM, JYP, YG, HYBE) their appearance best aligns with.
 
@@ -107,7 +112,12 @@ Agency aesthetic preferences:
 1. The 4 scores MUST sum to exactly 200.
 2. The top score must exceed the second score by at least 15 points.
 3. All text must be in English.
-4. For similarIdol, describe style/vibe rather than claiming resemblance to specific individuals.
+4. For similarIdol, name 1-2 actual idols from the topAgency and write as "Name (Group) style" or "Name (Group) vibe".
+   - SM winner: choose from Karina (aespa), Winter (aespa), Taemin (SHINee), Suho (EXO), etc.
+   - JYP winner: choose from Nayeon (TWICE), Ryujin (ITZY), Felix (Stray Kids), etc.
+   - YG winner: choose from Jennie (BLACKPINK), Lisa (BLACKPINK), G-Dragon (BIGBANG), etc.
+   - HYBE winner: choose from V (BTS), Minji (NewJeans), Kazuha (LE SSERAFIM), etc.
+   Do NOT mention idols from other agencies. Example: "Karina (aespa) + Winter (aespa) style"
 
 Respond with JSON only. If no face detected: {"error": "reason"} only.
 
@@ -121,7 +131,7 @@ Respond with JSON only. If no face detected: {"error": "reason"} only.
     "lips": "Lip/mouth analysis (1 sentence)",
     "overall": "Overall impression (1-2 sentences)"
   },
-  "similarIdol": "~style or ~vibe (include 1-2 agency examples)"
+  "similarIdol": "Name (Group) style or Name (Group) vibe"
 }`;
 
     const imagePart = {
