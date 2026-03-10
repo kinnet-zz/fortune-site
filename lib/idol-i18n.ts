@@ -44,7 +44,7 @@ const translations: Record<IdolLang, IdolTranslations> = {
     uploadBtn: '사진 선택',
     cameraBtn: '카메라 촬영',
     privacyNote: '🔒 이미지는 분석 후 즉시 삭제됩니다',
-    analyzeBtn: '소속사 분석하기',
+    analyzeBtn: '소속사 테스트 시작',
     analyzing: '분석 중...',
     analyzingMessages: [
       '눈매를 분석하는 중...',
