@@ -53,6 +53,14 @@ export async function POST(request: NextRequest) {
     const prompt = isKorean
       ? `당신은 K-팝 기획사 캐스팅 디렉터입니다. 이 사람의 얼굴을 분석하여 4대 기획사(SM, JYP, YG, HYBE) 중 어느 소속사의 아이돌 외모 기준에 가장 잘 맞는지 분석해주세요.
 
+[중요: 얼굴 감지 우선 확인]
+이미지에 사람의 얼굴이 명확하게 보이지 않는 경우, 반드시 error 필드만 반환하고 분석을 진행하지 마세요.
+error를 반환해야 하는 경우:
+- 동물, 식물, 음식, 사물, 풍경 등 사람이 아닌 이미지
+- 얼굴이 가려지거나 너무 작아서 이목구비를 분석할 수 없는 경우
+- 그림, 만화, 애니메이션, 캐릭터 이미지
+- 여러 명이 있어 분석 대상이 불명확한 경우
+
 각 기획사의 선호 외모 기준:
 - SM엔터테인먼트: 하트형 얼굴, 균형잡힌 이목구비, 도시적이고 우아한 클래식 미인형. 대표 아이돌: 카리나, 윈터, 샤이니, EXO
 - JYP엔터테인먼트: 건강하고 발랄한 에너지, 웃는 모습이 매력적인 친근한 인상, 큰 눈이 특징. 대표: 트와이스, ITZY, 스트레이키즈
@@ -61,12 +69,11 @@ export async function POST(request: NextRequest) {
 
 [분석 규칙]
 1. 4개 기획사 점수의 합이 반드시 200점이 되도록 배분하세요.
-2. 1위와 2위 차이가 최소 10점은 나야 합니다 (명확한 결과를 위해).
-3. 얼굴이 보이지 않거나 사진이 아닌 경우 error 필드를 반환하세요.
-4. 모든 텍스트는 한국어로 작성하세요.
-5. similarIdol은 특정 인물과 닮았다는 표현 대신 "~스타일" 또는 "~분위기"로 작성하세요.
+2. 1위와 2위 차이가 최소 15점은 나야 합니다 (명확한 결과를 위해).
+3. 모든 텍스트는 한국어로 작성하세요.
+4. similarIdol은 특정 인물과 닮았다는 표현 대신 "~스타일" 또는 "~분위기"로 작성하세요.
 
-반드시 아래 JSON 형식으로만 응답하세요. JSON 외 텍스트 없음.
+얼굴이 감지된 경우에만 아래 JSON 형식으로 응답하세요. 얼굴이 없으면 {"error": "이유"} 만 반환.
 
 {
   "topAgency": "SM" | "JYP" | "YG" | "HYBE",
@@ -82,6 +89,14 @@ export async function POST(request: NextRequest) {
 }`
       : `You are a K-pop talent scout. Analyze this person's facial features and determine which of the 4 major K-pop agencies (SM, JYP, YG, HYBE) their appearance best aligns with.
 
+[IMPORTANT: Face detection check first]
+If a human face is NOT clearly visible in the image, return ONLY an error field and do not proceed with analysis.
+Return error when:
+- Image contains animals, plants, food, objects, scenery, or anything non-human
+- Face is obscured, too small, or features cannot be analyzed
+- Drawings, cartoons, anime, or illustrated characters
+- Multiple people where the subject is unclear
+
 Agency aesthetic preferences:
 - SM Entertainment: Heart-shaped face, balanced features, urban and elegant classic beauty. Examples: Karina, Winter, SHINee, EXO
 - JYP Entertainment: Healthy and energetic vibe, charming smile, friendly and approachable impression, often with large expressive eyes. Examples: TWICE, ITZY, Stray Kids
@@ -90,12 +105,11 @@ Agency aesthetic preferences:
 
 [Rules]
 1. The 4 scores MUST sum to exactly 200.
-2. The top score must exceed the second score by at least 10 points.
-3. If no face is visible, return an error field.
-4. All text must be in English.
-5. For similarIdol, describe style/vibe rather than claiming resemblance to specific individuals.
+2. The top score must exceed the second score by at least 15 points.
+3. All text must be in English.
+4. For similarIdol, describe style/vibe rather than claiming resemblance to specific individuals.
 
-Respond ONLY with JSON, no other text.
+Respond with JSON only. If no face detected: {"error": "reason"} only.
 
 {
   "topAgency": "SM" | "JYP" | "YG" | "HYBE",
@@ -137,7 +151,7 @@ Respond ONLY with JSON, no other text.
     }
 
     if (analysisData.error) {
-      return NextResponse.json({ error: analysisData.error }, { status: 422 });
+      return NextResponse.json({ error: 'NO_FACE' }, { status: 422 });
     }
 
     // 점수 합계 보정 (200으로 정규화)
@@ -151,9 +165,14 @@ Respond ONLY with JSON, no other text.
 
     // topAgency 재확인
     const topAgency = agencies.reduce((a, b) =>
-      analysisData.scores[a] >= analysisData.scores[b] ? a : b
+      analysisData.scores[a] > analysisData.scores[b] ? a : b
     );
     analysisData.topAgency = topAgency;
+
+    // 점수가 너무 균등하면 얼굴 인식 실패로 간주 (최고점 < 65/200 = 32.5%)
+    if (analysisData.scores[topAgency] < 65) {
+      return NextResponse.json({ error: 'NO_FACE' }, { status: 422 });
+    }
 
     // 텍스트 타입 보장
     analysisData.summary = String(analysisData.summary);

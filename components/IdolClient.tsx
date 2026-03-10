@@ -77,6 +77,8 @@ export default function IdolClient() {
       if (!res.ok) {
         if (res.status === 429 || data.error === 'QUOTA_EXCEEDED') {
           setError(tr.quotaMsg);
+        } else if (res.status === 422 || data.error === 'NO_FACE') {
+          setError(tr.noFaceMsg);
         } else {
           setError(tr.errorMsg);
         }

@@ -25,6 +25,7 @@ export interface IdolTranslations {
   shareBtn: string;
   retryBtn: string;
   errorMsg: string;
+  noFaceMsg: string;
   quotaMsg: string;
   fileTooLarge: string;
   invalidFile: string;
@@ -64,6 +65,7 @@ const translations: Record<IdolLang, IdolTranslations> = {
     shareBtn: '결과 공유하기',
     retryBtn: '다시 분석하기',
     errorMsg: '분석에 실패했습니다. 다른 사진으로 다시 시도해주세요.',
+    noFaceMsg: '얼굴이 인식되지 않았습니다. 정면 얼굴이 잘 보이는 사진을 올려주세요.',
     quotaMsg: '일일 분석 한도를 초과했습니다. 자정 이후 다시 이용해주세요.',
     fileTooLarge: '파일 크기가 5MB를 초과합니다.',
     invalidFile: 'JPG, PNG, WEBP 형식만 지원합니다.',
@@ -111,6 +113,7 @@ const translations: Record<IdolLang, IdolTranslations> = {
     shareBtn: 'Share Result',
     retryBtn: 'Try Again',
     errorMsg: 'Analysis failed. Please try with a different photo.',
+    noFaceMsg: 'No face detected. Please upload a photo with a clearly visible front-facing face.',
     quotaMsg: 'Daily limit reached. Please try again after midnight.',
     fileTooLarge: 'File size exceeds 5MB.',
     invalidFile: 'Only JPG, PNG, and WEBP formats are supported.',
