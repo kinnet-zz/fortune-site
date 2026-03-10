@@ -205,7 +205,7 @@ export default function IdolClient() {
                     style={{ background: AGENCY_COLORS[a].bg, border: `1px solid ${AGENCY_COLORS[a].border}` }}
                   >
                     <div className="flex items-center gap-1.5 mb-0.5">
-                      <span className="text-2xl">{AGENCY_INFO[a].emoji}</span>
+                      <span className="text-base leading-none">{AGENCY_INFO[a].emoji}</span>
                       <span className="font-black text-sm" style={{ color: AGENCY_COLORS[a].text }}>{a}</span>
                     </div>
                     <div className="text-white/30 text-xs">{tr.agencyDesc[a]}</div>

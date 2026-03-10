@@ -39,7 +39,7 @@ export default function IdolHeader() {
             ))}
           </div>
           <span className="text-white font-black text-sm tracking-tight ml-1">
-            {lang === 'ko' ? '소속사 관상' : 'K-Idol Type'}
+            {lang === 'ko' ? '소속사 테스트' : 'K-Idol Type'}
           </span>
         </Link>
 
