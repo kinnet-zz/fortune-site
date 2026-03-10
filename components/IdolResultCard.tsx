@@ -180,7 +180,7 @@ export default function IdolResultCard({
           ].map(({ label, val, e }) => (
             <div key={label} className="rounded-xl p-3" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
               <p className="text-white/30 text-xs mb-1">{e} {label}</p>
-              <p className="text-white/60 text-xs leading-relaxed line-clamp-3">{val}</p>
+              <p className="text-white/60 text-xs leading-relaxed">{val}</p>
             </div>
           ))}
         </div>

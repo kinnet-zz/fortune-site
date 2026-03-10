@@ -155,14 +155,13 @@ Respond ONLY with JSON, no other text.
     );
     analysisData.topAgency = topAgency;
 
-    // 텍스트 길이 제한
-    const MAX = 300;
-    analysisData.summary = String(analysisData.summary).slice(0, MAX);
-    analysisData.features.eyes = String(analysisData.features.eyes).slice(0, MAX);
-    analysisData.features.nose = String(analysisData.features.nose).slice(0, MAX);
-    analysisData.features.lips = String(analysisData.features.lips).slice(0, MAX);
-    analysisData.features.overall = String(analysisData.features.overall).slice(0, MAX);
-    analysisData.similarIdol = String(analysisData.similarIdol).slice(0, 100);
+    // 텍스트 타입 보장
+    analysisData.summary = String(analysisData.summary);
+    analysisData.features.eyes = String(analysisData.features.eyes);
+    analysisData.features.nose = String(analysisData.features.nose);
+    analysisData.features.lips = String(analysisData.features.lips);
+    analysisData.features.overall = String(analysisData.features.overall);
+    analysisData.similarIdol = String(analysisData.similarIdol);
 
     return NextResponse.json(analysisData, { status: 200 });
   } catch (error: unknown) {
@@ -170,7 +169,6 @@ Respond ONLY with JSON, no other text.
     if (msg.includes('429') || msg.toLowerCase().includes('quota') || msg.toLowerCase().includes('rate limit')) {
       return NextResponse.json({ error: 'QUOTA_EXCEEDED' }, { status: 429 });
     }
-    // DEBUG: 실제 오류 메시지 노출 (확인 후 제거 예정)
-    return NextResponse.json({ error: msg || '알 수 없는 오류' }, { status: 500 });
+    return NextResponse.json({ error: '분석에 실패했습니다.' }, { status: 500 });
   }
 }

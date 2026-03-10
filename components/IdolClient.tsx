@@ -78,13 +78,13 @@ export default function IdolClient() {
         if (res.status === 429 || data.error === 'QUOTA_EXCEEDED') {
           setError(tr.quotaMsg);
         } else {
-          setError(`[DEBUG] ${data.error || res.status}`);
+          setError(tr.errorMsg);
         }
         return;
       }
       setResult(data);
-    } catch (e) {
-      setError(`[DEBUG-CATCH] ${e instanceof Error ? e.message : String(e)}`);
+    } catch {
+      setError(tr.errorMsg);
     } finally {
       setIsLoading(false);
       if (loadingRef.current) clearInterval(loadingRef.current);
