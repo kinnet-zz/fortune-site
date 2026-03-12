@@ -41,6 +41,25 @@ export default function IdolResultCard({
   const colors = AGENCY_COLORS[top];
   const shareUrl = lang === 'ko' ? 'https://www.starfate.day/idol' : 'https://www.starfate.day/idol?lang=en';
 
+  const sorted = [...AGENCIES].sort((a, b) => result.scores[b] - result.scores[a]);
+  const topPct = Math.round((result.scores[top] / 200) * 100);
+
+  const debutComment = lang === 'ko'
+    ? topPct >= 75
+      ? '🌟 아이돌 데뷔해도 되겠어요! 지금 당장 오디션 지원하세요!'
+      : topPct >= 60
+        ? '✨ 조금만 더 다듬으면 아이돌 데뷔 충분히 가능해요!'
+        : topPct >= 45
+          ? '💫 개성 있는 매력으로 무대에 설 수 있는 잠재력이 있어요!'
+          : '🎶 당신만의 독특한 매력이 빛나는 스타일이에요!'
+    : topPct >= 75
+      ? '🌟 You could totally debut as an idol! Apply for auditions now!'
+      : topPct >= 60
+        ? '✨ With a little polish, idol debut is totally within reach!'
+        : topPct >= 45
+          ? '💫 You have the potential to shine on stage with your unique charm!'
+          : '🎶 You have your own one-of-a-kind star appeal!';
+
   useEffect(() => {
     const t = setTimeout(() => setAnimated(true), 200);
     return () => clearTimeout(t);
@@ -97,8 +116,6 @@ export default function IdolResultCard({
       setSharing(false);
     }
   };
-
-  const sorted = [...AGENCIES].sort((a, b) => result.scores[b] - result.scores[a]);
 
   return (
     <div className="w-full space-y-4">
@@ -173,58 +190,14 @@ export default function IdolResultCard({
         {/* 구분선 */}
         <div style={{ height: '1px', background: 'rgba(255,255,255,0.05)', margin: '0 20px' }} />
 
-        {/* 종합 분석 */}
+        {/* 종합 분析 + 데뷔 멘트 */}
         <div className="px-5 py-4">
           <p className="text-white/25 text-xs uppercase tracking-widest mb-2">{tr.summaryLabel}</p>
-          <p className="text-white/75 text-sm leading-relaxed">{result.summary}</p>
+          <p className="text-white/75 text-sm leading-relaxed mb-3">{result.summary}</p>
+          <p className="text-sm font-black leading-relaxed" style={{ color: colors.text }}>
+            {debutComment}
+          </p>
         </div>
-
-        {/* 세부 채점 */}
-        {result.subScores?.[top] && (() => {
-          const sub = result.subScores[top];
-          const items = lang === 'ko'
-            ? [
-                { label: '얼굴형', val: sub.faceShape },
-                { label: '눈매', val: sub.eyes },
-                { label: '코/입', val: sub.noseLips },
-                { label: '분위기', val: sub.vibe },
-                { label: '아이돌 유사도', val: sub.similarity },
-              ]
-            : [
-                { label: 'Face Shape', val: sub.faceShape },
-                { label: 'Eyes', val: sub.eyes },
-                { label: 'Nose & Lips', val: sub.noseLips },
-                { label: 'Vibe', val: sub.vibe },
-                { label: 'Idol Match', val: sub.similarity },
-              ];
-          return (
-            <div className="px-5 pb-4">
-              <p className="text-white/25 text-xs uppercase tracking-widest mb-2">
-                {lang === 'ko' ? '세부 채점' : 'Score Breakdown'}
-              </p>
-              <div className="space-y-2">
-                {items.map(({ label, val }) => {
-                  const score = Math.min(10, Math.max(0, Number(val) || 0));
-                  return (
-                    <div key={label} className="flex items-center gap-2">
-                      <span className="text-white/35 text-xs w-20 shrink-0">{label}</span>
-                      <div className="flex-1 h-1.5 rounded-full" style={{ background: 'rgba(255,255,255,0.06)' }}>
-                        <div
-                          className="h-full rounded-full transition-all duration-1000 ease-out"
-                          style={{
-                            width: animated ? `${score * 10}%` : '0%',
-                            background: `linear-gradient(90deg, ${colors.primary}99, ${colors.primary})`,
-                          }}
-                        />
-                      </div>
-                      <span className="text-xs font-bold w-6 text-right" style={{ color: colors.text }}>{score}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })()}
 
         {/* 구분선 */}
         <div style={{ height: '1px', background: 'rgba(255,255,255,0.05)', margin: '0 20px 16px' }} />
