@@ -42,23 +42,23 @@ export default function IdolResultCard({
   const shareUrl = lang === 'ko' ? 'https://www.starfate.day/idol' : 'https://www.starfate.day/idol?lang=en';
 
   const sorted = [...AGENCIES].sort((a, b) => result.scores[b] - result.scores[a]);
-  const topPct = Math.round((result.scores[top] / 200) * 100);
+  const topScore = result.scores[top]; // 0.0 ~ 100.0
 
   const debutComment = lang === 'ko'
-    ? topPct >= 75
-      ? '🌟 아이돌 데뷔해도 되겠어요! 지금 당장 오디션 지원하세요!'
-      : topPct >= 60
-        ? '✨ 조금만 더 다듬으면 아이돌 데뷔 충분히 가능해요!'
-        : topPct >= 45
-          ? '💫 개성 있는 매력으로 무대에 설 수 있는 잠재력이 있어요!'
-          : '🎶 당신만의 독특한 매력이 빛나는 스타일이에요!'
-    : topPct >= 75
-      ? '🌟 You could totally debut as an idol! Apply for auditions now!'
-      : topPct >= 60
-        ? '✨ With a little polish, idol debut is totally within reach!'
-        : topPct >= 45
-          ? '💫 You have the potential to shine on stage with your unique charm!'
-          : '🎶 You have your own one-of-a-kind star appeal!';
+    ? topScore >= 75
+      ? '🌟 아이돌 데뷔해도 되겠어요! 오디션에 도전해보세요!'
+      : topScore >= 60
+        ? '✨ 이 외모라면 아이돌 오디션에 지원할 만해요!'
+        : topScore >= 45
+          ? '💫 개성 있는 매력으로 무대에 설 가능성이 있어요!'
+          : '🎶 당신만의 독특한 스타일이 빛나는 외모예요!'
+    : topScore >= 75
+      ? '🌟 Idol debut material! You should audition!'
+      : topScore >= 60
+        ? '✨ Your looks are worth submitting for an idol audition!'
+        : topScore >= 45
+          ? '💫 Your unique charm could shine on stage!'
+          : '🎶 You have your own one-of-a-kind star style!';
 
   useEffect(() => {
     const t = setTimeout(() => setAnimated(true), 200);
@@ -161,7 +161,7 @@ export default function IdolResultCard({
           />
           <div className="flex-1 space-y-2">
             {sorted.map((agency) => {
-              const pct = Math.round((result.scores[agency] / 200) * 100);
+              const score = result.scores[agency]; // 0.0 ~ 100.0
               const isTop = agency === top;
               return (
                 <div key={agency}>
@@ -169,13 +169,15 @@ export default function IdolResultCard({
                     <span className="font-bold" style={{ color: isTop ? colors.text : 'rgba(255,255,255,0.3)' }}>
                       {isTop && '👑 '}{agency}
                     </span>
-                    <span style={{ color: isTop ? colors.text : 'rgba(255,255,255,0.25)' }}>{pct}%</span>
+                    <span style={{ color: isTop ? colors.text : 'rgba(255,255,255,0.25)' }}>
+                      {score.toFixed(1)}점
+                    </span>
                   </div>
                   <div className="h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.05)' }}>
                     <div
                       className="h-full rounded-full transition-all duration-1000 ease-out"
                       style={{
-                        width: animated ? `${pct}%` : '0%',
+                        width: animated ? `${score}%` : '0%',
                         background: isTop ? `linear-gradient(90deg, ${colors.primary}88, ${colors.primary})` : 'rgba(255,255,255,0.1)',
                         boxShadow: isTop ? `0 0 8px ${colors.primary}50` : 'none',
                       }}

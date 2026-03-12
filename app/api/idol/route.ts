@@ -264,21 +264,17 @@ Respond with JSON only if face detected. Otherwise: {"error": "reason"}
       return NextResponse.json({ error: 'NO_FACE' }, { status: 422 });
     }
 
-    // subScores → scores 계산 (각 소속사 5개 항목 합산 후 200점 정규화)
+    // subScores → scores 계산 (각 소속사 독립 100점 절대 채점, 소수점 1자리)
+    // 5개 항목 × 최대 10점 = 최대 50 raw → /50 × 100 = 100점 만점
     if (!analysisData.subScores) {
       return NextResponse.json({ error: 'NO_FACE' }, { status: 422 });
     }
 
-    const rawScores: Record<Agency, number> = { SM: 0, JYP: 0, YG: 0, HYBE: 0 };
-    for (const agency of AGENCIES) {
-      const sub = analysisData.subScores[agency] || {};
-      rawScores[agency] = SUB_SCORE_KEYS.reduce((sum, key) => sum + (Number(sub[key]) || 0), 0);
-    }
-
-    const rawTotal = AGENCIES.reduce((sum, a) => sum + rawScores[a], 0);
     const scores: Record<Agency, number> = { SM: 0, JYP: 0, YG: 0, HYBE: 0 };
     for (const agency of AGENCIES) {
-      scores[agency] = rawTotal > 0 ? Math.round((rawScores[agency] / rawTotal) * 200) : 50;
+      const sub = analysisData.subScores[agency] || {};
+      const raw = SUB_SCORE_KEYS.reduce((sum, key) => sum + (Number(sub[key]) || 0), 0);
+      scores[agency] = Math.round((raw / 50) * 1000) / 10; // 소수점 1자리 (0.0~100.0)
     }
     analysisData.scores = scores;
 
@@ -286,8 +282,8 @@ Respond with JSON only if face detected. Otherwise: {"error": "reason"}
     const topAgency = AGENCIES.reduce((a, b) => scores[a] > scores[b] ? a : b);
     analysisData.topAgency = topAgency;
 
-    // 점수가 너무 균등하면 얼굴 인식 실패 (최고점 < 45/200 = 22.5%)
-    if (scores[topAgency] < 45) {
+    // 얼굴 인식 실패 기준: 최고점 20점 미만
+    if (scores[topAgency] < 20) {
       return NextResponse.json({ error: 'NO_FACE' }, { status: 422 });
     }
 
