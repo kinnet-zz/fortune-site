@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { tIdol, AGENCY_COLORS, type IdolLang, type Agency } from '@/lib/idol-i18n';
+import { tIdol, AGENCY_COLORS, type IdolLang, type Agency, type Gender } from '@/lib/idol-i18n';
 import IdolUpload from './IdolUpload';
 import IdolResultCard from './IdolResultCard';
 
@@ -33,6 +33,7 @@ const AGENCY_INFO = {
 
 export default function IdolClient() {
   const [lang, setLang] = useState<IdolLang>('ko');
+  const [gender, setGender] = useState<Gender>('female');
   const [image, setImage] = useState<{ base64: string; mimeType: string } | null>(null);
   const [preview, setPreview] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -80,7 +81,7 @@ export default function IdolClient() {
       const res = await fetch('/api/idol', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ image: image.base64, mimeType: image.mimeType, lang }),
+        body: JSON.stringify({ image: image.base64, mimeType: image.mimeType, lang, gender }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -172,6 +173,29 @@ export default function IdolClient() {
         {/* 업로드 + 분석 */}
         {!result && !isLoading && (
           <>
+            {/* 성별 선택 */}
+            <div className="flex gap-3">
+              {(['female', 'male'] as Gender[]).map((g) => {
+                const isSelected = gender === g;
+                const label = g === 'female' ? tr.genderFemale : tr.genderMale;
+                const emoji = g === 'female' ? '👩' : '👨';
+                return (
+                  <button
+                    key={g}
+                    onClick={() => { setGender(g); setResult(null); setError(''); }}
+                    className="flex-1 py-3 rounded-2xl font-bold text-sm transition-all duration-200"
+                    style={{
+                      background: isSelected ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.04)',
+                      border: isSelected ? '1.5px solid rgba(255,255,255,0.35)' : '1.5px solid rgba(255,255,255,0.1)',
+                      color: isSelected ? '#fff' : 'rgba(255,255,255,0.35)',
+                    }}
+                  >
+                    {emoji} {label}
+                  </button>
+                );
+              })}
+            </div>
+
             <IdolUpload onImageReady={handleImageReady} lang={lang} />
 
             {error && (

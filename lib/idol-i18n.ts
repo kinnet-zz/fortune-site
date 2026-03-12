@@ -1,4 +1,5 @@
 export type IdolLang = 'ko' | 'en';
+export type Gender = 'female' | 'male';
 
 export type Agency = 'SM' | 'JYP' | 'YG' | 'HYBE';
 
@@ -33,6 +34,9 @@ export interface IdolTranslations {
   agencyTagline: Record<Agency, string>;
   langLabel: string;
   disclaimer: string;
+  genderLabel: string;
+  genderFemale: string;
+  genderMale: string;
 }
 
 const translations: Record<IdolLang, IdolTranslations> = {
@@ -83,6 +87,9 @@ const translations: Record<IdolLang, IdolTranslations> = {
     },
     langLabel: 'Language',
     disclaimer: '✦ 본 서비스는 AI 기반 오락 콘텐츠입니다. 실제 소속사 오디션 기준과 다를 수 있습니다 ✦',
+    genderLabel: '성별 선택',
+    genderFemale: '여자',
+    genderMale: '남자',
   },
   en: {
     pageTitle: 'Which K-Pop Agency Fits Your Face?',
@@ -131,6 +138,9 @@ const translations: Record<IdolLang, IdolTranslations> = {
     },
     langLabel: 'Language',
     disclaimer: '✦ This is AI-based entertainment content. Results may differ from actual agency audition standards ✦',
+    genderLabel: 'Select Gender',
+    genderFemale: 'Female',
+    genderMale: 'Male',
   },
 };
 
