@@ -47,7 +47,8 @@ export default function IdolClient() {
   useEffect(() => {
     const sync = () => {
       const p = new URLSearchParams(window.location.search);
-      setLang(p.get('lang') === 'en' ? 'en' : 'ko');
+      const l = p.get('lang') as IdolLang;
+      setLang(['ko', 'en', 'zh', 'ja'].includes(l) ? l : 'ko');
     };
     sync();
     window.addEventListener('idol-lang-change', sync);

@@ -12,7 +12,8 @@ export default function IdolHeader() {
   useEffect(() => {
     const sync = () => {
       const p = new URLSearchParams(window.location.search);
-      setLang(p.get('lang') === 'en' ? 'en' : 'ko');
+      const l = p.get('lang') as IdolLang;
+      setLang(['ko', 'en', 'zh', 'ja'].includes(l) ? l : 'ko');
     };
     sync();
     window.addEventListener('idol-lang-change', sync);
@@ -55,17 +56,17 @@ export default function IdolHeader() {
 
           {/* 언어 토글 */}
           <div className="flex rounded-lg overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
-            {(['ko', 'en'] as IdolLang[]).map((l) => (
+            {(['ko', 'en', 'zh', 'ja'] as IdolLang[]).map((l) => (
               <button
                 key={l}
                 onClick={() => switchLang(l)}
-                className="px-3 py-1.5 text-xs font-bold transition-colors"
+                className="px-2.5 py-1.5 text-xs font-bold transition-colors"
                 style={{
                   background: lang === l ? 'rgba(255,255,255,0.12)' : 'transparent',
                   color: lang === l ? 'white' : 'rgba(255,255,255,0.3)',
                 }}
               >
-                {l === 'ko' ? 'KO' : 'EN'}
+                {l === 'ko' ? '한국어' : l === 'en' ? 'EN' : l === 'zh' ? '中文' : '日本語'}
               </button>
             ))}
           </div>
