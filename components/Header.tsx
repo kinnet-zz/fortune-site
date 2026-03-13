@@ -14,6 +14,7 @@ export default function Header() {
   const NAV_ITEMS = [
     { href: '/idol', label: lang === 'ko' ? '🎤 소속사 테스트' : '🎤 K-Idol Type' },
     { href: '/past-life', label: lang === 'ko' ? '🌀 나의 전생은?' : lang === 'en' ? '🌀 Past Life' : lang === 'zh' ? '🌀 我的前世' : '🌀 私の前世' },
+    { href: '/card-draw', label: lang === 'ko' ? '🃏 카드 뽑기' : lang === 'en' ? '🃏 Card Draw' : lang === 'zh' ? '🃏 抽塔罗牌' : '🃏 カード引き' },
     { href: '/zodiac', label: lang === 'ko' ? '별자리 정보' : lang === 'en' ? 'Zodiac Info' : lang === 'zh' ? '星座信息' : '星座情報' },
     { href: '/chinese-zodiac', label: lang === 'ko' ? '12띠 정보' : lang === 'en' ? 'Chinese Zodiac' : lang === 'zh' ? '生肖信息' : '十二支情報' },
     { href: '/about', label: lang === 'ko' ? '사이트 소개' : lang === 'en' ? 'About' : lang === 'zh' ? '关于我们' : 'サイト紹介' },
