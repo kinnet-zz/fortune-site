@@ -12,12 +12,12 @@ export default function CookieBanner() {
   }, []);
 
   const accept = () => {
-    localStorage.setItem('cookie-consent', 'accepted');
+    try { localStorage.setItem('cookie-consent', 'accepted'); } catch { /* QuotaExceededError 무시 */ }
     setVisible(false);
   };
 
   const decline = () => {
-    localStorage.setItem('cookie-consent', 'declined');
+    try { localStorage.setItem('cookie-consent', 'declined'); } catch { /* QuotaExceededError 무시 */ }
     setVisible(false);
   };
 
