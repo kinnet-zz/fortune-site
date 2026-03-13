@@ -52,6 +52,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: '파일 크기가 너무 큽니다.' }, { status: 400 });
     }
 
+    const ALLOWED_LANGS = ['ko', 'en', 'zh', 'ja'];
+    const ALLOWED_GENDERS = ['female', 'male'];
+    if (!ALLOWED_LANGS.includes(lang)) {
+      return NextResponse.json({ error: '지원하지 않는 언어입니다.' }, { status: 400 });
+    }
+    if (!ALLOWED_GENDERS.includes(gender)) {
+      return NextResponse.json({ error: '잘못된 요청입니다.' }, { status: 400 });
+    }
+
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
       return NextResponse.json({ error: '서버 설정 오류' }, { status: 500 });
