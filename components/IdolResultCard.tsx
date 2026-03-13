@@ -39,7 +39,7 @@ export default function IdolResultCard({
   const tr = tIdol(lang);
   const top = result.topAgency;
   const colors = AGENCY_COLORS[top];
-  const shareUrl = lang === 'ko' ? 'https://www.starfate.day/idol' : 'https://www.starfate.day/idol?lang=en';
+  const shareUrl = lang === 'ko' ? 'https://www.starfate.day/idol' : `https://www.starfate.day/idol?lang=${lang}`;
 
   const sorted = [...AGENCIES].sort((a, b) => result.scores[b] - result.scores[a]);
   const topScore = result.scores[top]; // 0.0 ~ 100.0
@@ -52,13 +52,29 @@ export default function IdolResultCard({
         : topScore >= 45
           ? '💫 개성 있는 매력으로 무대에 설 가능성이 있어요!'
           : '🎶 당신만의 독특한 스타일이 빛나는 외모예요!'
-    : topScore >= 75
-      ? '🌟 Idol debut material! You should audition!'
-      : topScore >= 60
-        ? '✨ Your looks are worth submitting for an idol audition!'
-        : topScore >= 45
-          ? '💫 Your unique charm could shine on stage!'
-          : '🎶 You have your own one-of-a-kind star style!';
+    : lang === 'zh'
+      ? topScore >= 75
+        ? '🌟 完全可以出道！快去参加偶像选秀吧！'
+        : topScore >= 60
+          ? '✨ 这样的颜值完全可以去参加偶像选秀！'
+          : topScore >= 45
+            ? '💫 独特的个人魅力让你有机会站上舞台！'
+            : '🎶 你有着属于自己的独特明星风格！'
+      : lang === 'ja'
+        ? topScore >= 75
+          ? '🌟 アイドルデビューできそう！オーディションに挑戦してみて！'
+          : topScore >= 60
+            ? '✨ このビジュアルなら、アイドルオーディションに応募する価値アリ！'
+            : topScore >= 45
+              ? '💫 個性的な魅力でステージに立てる可能性があります！'
+              : '🎶 あなただけの独自のスタースタイルが光っています！'
+        : topScore >= 75
+          ? '🌟 Idol debut material! You should audition!'
+          : topScore >= 60
+            ? '✨ Your looks are worth submitting for an idol audition!'
+            : topScore >= 45
+              ? '💫 Your unique charm could shine on stage!'
+              : '🎶 You have your own one-of-a-kind star style!';
 
   useEffect(() => {
     const t = setTimeout(() => setAnimated(true), 200);
