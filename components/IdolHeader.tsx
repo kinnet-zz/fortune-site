@@ -50,7 +50,7 @@ export default function IdolHeader() {
             className="text-xs px-3 py-1.5 rounded-full transition-all hover:opacity-80"
             style={{ color: 'rgba(255,255,255,0.3)', border: '1px solid rgba(255,255,255,0.08)' }}
           >
-            {lang === 'ko' ? '🔮 운세' : '🔮 Fortune'}
+            {lang === 'ko' ? '🔮 오늘의 운세' : '🔮 Fortune'}
           </Link>
 
           {/* 언어 토글 */}
