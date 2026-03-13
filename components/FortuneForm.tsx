@@ -51,9 +51,6 @@ export default function FortuneForm({ onSubmit, isLoading, lang }: FortuneFormPr
         <h1 className="text-4xl font-black mb-2 bg-gradient-to-r from-purple-300 via-pink-200 to-indigo-300 bg-clip-text text-transparent leading-tight">
           {tr.formTitle}
         </h1>
-        <p className="text-purple-200/70 text-sm font-medium tracking-widest uppercase">
-          {tr.formTitle}
-        </p>
       </div>
 
       {/* 카드 */}
