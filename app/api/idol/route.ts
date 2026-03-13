@@ -2,6 +2,7 @@ export const runtime = 'edge';
 
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { VALID_LANGS } from '@/lib/i18n';
 
 type Agency = 'SM' | 'JYP' | 'YG' | 'HYBE';
 
@@ -52,9 +53,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: '파일 크기가 너무 큽니다.' }, { status: 400 });
     }
 
-    const ALLOWED_LANGS = ['ko', 'en', 'zh', 'ja'];
     const ALLOWED_GENDERS = ['female', 'male'];
-    if (!ALLOWED_LANGS.includes(lang)) {
+    if (!VALID_LANGS.includes(lang as never)) {
       return NextResponse.json({ error: '지원하지 않는 언어입니다.' }, { status: 400 });
     }
     if (!ALLOWED_GENDERS.includes(gender)) {

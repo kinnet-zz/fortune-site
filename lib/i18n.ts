@@ -1,4 +1,5 @@
 export type Lang = 'ko' | 'en' | 'zh' | 'ja';
+export const VALID_LANGS: Lang[] = ['ko', 'en', 'zh', 'ja'];
 
 export const LANG_LABELS: Record<Lang, string> = {
   ko: '한국어',

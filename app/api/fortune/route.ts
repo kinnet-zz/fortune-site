@@ -3,6 +3,7 @@ export const runtime = 'edge';
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { getZodiacSign, getChineseZodiac } from "@/lib/zodiac";
+import { VALID_LANGS } from "@/lib/i18n";
 
 interface FortuneResponse {
   zodiacSign: string;
@@ -57,8 +58,7 @@ export async function POST(request: NextRequest) {
     }
 
     // language 검증 (허용값만 통과)
-    const ALLOWED_LANGS = ['ko', 'en', 'zh', 'ja'];
-    if (language !== undefined && !ALLOWED_LANGS.includes(language)) {
+    if (language !== undefined && !VALID_LANGS.includes(language as never)) {
       return NextResponse.json({ error: "지원하지 않는 언어입니다." }, { status: 400 });
     }
 

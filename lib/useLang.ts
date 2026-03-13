@@ -1,9 +1,7 @@
 'use client';
 
 import { useSyncExternalStore, useEffect } from 'react';
-import { type Lang } from './i18n';
-
-const VALID_LANGS: Lang[] = ['ko', 'en', 'zh', 'ja'];
+import { type Lang, VALID_LANGS } from './i18n';
 
 // Singleton store — works across all React roots / context boundaries
 let listeners: Array<() => void> = [];
