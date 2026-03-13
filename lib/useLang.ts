@@ -21,6 +21,7 @@ function getSnapshot(): Lang {
 }
 
 export function setLang(newLang: Lang) {
+  if (!VALID_LANGS.includes(newLang)) return;
   _lang = newLang;
   if (typeof window !== 'undefined') {
     localStorage.setItem('lang', newLang);

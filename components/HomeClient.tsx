@@ -120,7 +120,32 @@ export default function HomeClient() {
     const r = params.get('r');
     if (!r) return;
     try {
-      const decoded = JSON.parse(decodeURIComponent(atob(r))) as FortuneResult;
+      const raw = JSON.parse(decodeURIComponent(atob(r)));
+      if (
+        typeof raw !== 'object' || raw === null ||
+        typeof raw.zodiacSign !== 'string' ||
+        typeof raw.chineseZodiac !== 'string' ||
+        typeof raw.overall !== 'string' ||
+        typeof raw.love !== 'string' ||
+        typeof raw.money !== 'string' ||
+        typeof raw.work !== 'string' ||
+        typeof raw.luckyColor !== 'string' ||
+        typeof raw.luckyNumber !== 'number' ||
+        typeof raw.score !== 'number'
+      ) {
+        return;
+      }
+      const decoded: FortuneResult = {
+        zodiacSign: String(raw.zodiacSign).slice(0, 50),
+        chineseZodiac: String(raw.chineseZodiac).slice(0, 50),
+        overall: String(raw.overall).slice(0, 500),
+        love: String(raw.love).slice(0, 500),
+        money: String(raw.money).slice(0, 500),
+        work: String(raw.work).slice(0, 500),
+        luckyColor: String(raw.luckyColor).slice(0, 30),
+        luckyNumber: Math.max(1, Math.min(99, Number(raw.luckyNumber))),
+        score: Math.max(1, Math.min(100, Number(raw.score))),
+      };
       const bd = params.get('bd') ?? '';
       const g = params.get('g') ?? '';
       setFortune(decoded);

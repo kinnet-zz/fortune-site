@@ -286,7 +286,6 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
       setTimeout(() => setImageSaved(false), 3500);
     } catch (err) {
       if ((err as Error).name === 'AbortError') return;
-      console.error('이미지 공유 실패:', err);
       alert('이미지 생성에 실패했습니다. 다시 시도해주세요.');
     } finally {
       setImageSharing(false);

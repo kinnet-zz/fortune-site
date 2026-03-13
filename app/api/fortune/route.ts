@@ -46,11 +46,20 @@ export async function POST(request: NextRequest) {
     if (parsedDate > new Date()) {
       return NextResponse.json({ error: "미래 날짜는 입력할 수 없습니다." }, { status: 400 });
     }
+    if (parsedDate.getFullYear() < 1900) {
+      return NextResponse.json({ error: "1900년 이후 날짜를 입력해주세요." }, { status: 400 });
+    }
 
     // gender 검증 (허용값만 통과)
     const ALLOWED_GENDERS = ["남자", "여자"];
     if (!gender || !ALLOWED_GENDERS.includes(gender)) {
       return NextResponse.json({ error: "성별은 남자 또는 여자만 허용됩니다." }, { status: 400 });
+    }
+
+    // language 검증 (허용값만 통과)
+    const ALLOWED_LANGS = ['ko', 'en', 'zh', 'ja'];
+    if (language !== undefined && !ALLOWED_LANGS.includes(language)) {
+      return NextResponse.json({ error: "지원하지 않는 언어입니다." }, { status: 400 });
     }
 
     const zodiac = getZodiacSign(birthDate);
@@ -185,7 +194,7 @@ ALL text fields must be written in ${outputLang}.
 
     return NextResponse.json(fortuneData, { status: 200 });
   } catch (error: unknown) {
-    console.error("운세 API 오류:", error);
+    console.error("운세 API 오류 발생");
 
     if (error instanceof SyntaxError) {
       return NextResponse.json(
