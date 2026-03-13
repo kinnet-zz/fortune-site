@@ -170,7 +170,7 @@ export default function IdolResultCard({
                       {isTop && '👑 '}{agency}
                     </span>
                     <span style={{ color: isTop ? colors.text : 'rgba(255,255,255,0.25)' }}>
-                      {score.toFixed(1)}점
+                      {score.toFixed(1)}%
                     </span>
                   </div>
                   <div className="h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.05)' }}>
