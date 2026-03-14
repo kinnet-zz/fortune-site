@@ -304,17 +304,8 @@ function ResultCard({
             boxShadow: `0 0 50px ${card.color}35, 0 20px 60px rgba(0,0,0,0.6)`,
           }}
         >
-          {/* 상단: 로마 숫자 */}
-          <div className="flex items-center justify-center py-2.5">
-            <div style={{ width: 18, height: 1, background: `${card.color}50` }} />
-            <span style={{ color: card.color, fontSize: '0.7rem', fontWeight: 900, letterSpacing: '0.12em', margin: '0 8px' }}>
-              {ROMAN[card.id]}
-            </span>
-            <div style={{ width: 18, height: 1, background: `${card.color}50` }} />
-          </div>
-
           {/* 이미지: 잘림 없이 전체 표시 */}
-          <div className="mx-2.5 rounded-lg overflow-hidden" style={{ border: `1px solid ${card.color}30` }}>
+          <div className="mx-2.5 mt-2.5 rounded-lg overflow-hidden" style={{ border: `1px solid ${card.color}30` }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={card.image}
