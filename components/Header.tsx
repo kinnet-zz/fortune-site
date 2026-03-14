@@ -12,6 +12,7 @@ export default function Header() {
   const { lang, setLang } = useLang();
 
   const NAV_ITEMS = [
+    { href: '/number-game', label: lang === 'ko' ? '🔢 숫자 찾기' : lang === 'en' ? '🔢 Number Hunt' : lang === 'zh' ? '🔢 找数字' : '🔢 数字探し' },
     { href: '/idol', label: lang === 'ko' ? '🎤 소속사 테스트' : '🎤 K-Idol Type' },
     { href: '/past-life', label: lang === 'ko' ? '🌀 나의 전생은?' : lang === 'en' ? '🌀 Past Life' : lang === 'zh' ? '🌀 我的前世' : '🌀 私の前世' },
     { href: '/card-draw', label: lang === 'ko' ? '🃏 카드 뽑기' : lang === 'en' ? '🃏 Card Draw' : lang === 'zh' ? '🃏 抽塔罗牌' : '🃏 カード引き' },
