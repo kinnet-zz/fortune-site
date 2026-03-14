@@ -4,22 +4,18 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import type { LeaderboardEntry } from '@/app/api/leaderboard/route';
 
-const LEVELS = [
-  { count: 16, cols: 4, time: 20 },
-  { count: 25, cols: 5, time: 30 },
-  { count: 36, cols: 6, time: 40 },
-  { count: 49, cols: 7, time: 50 },
-  { count: 64, cols: 8, time: 60 },
-  { count: 81, cols: 9, time: 70 },
-];
+const TOTAL = 100;
+const COLS = 10;
+const START_TIME = 60;
+const TIME_DECREASE = 5;
+const MIN_TIME = 15;
 
-function getLevelConfig(level: number) {
-  return LEVELS[Math.min(level - 1, LEVELS.length - 1)];
+function getTimeLimit(round: number): number {
+  return Math.max(START_TIME - (round - 1) * TIME_DECREASE, MIN_TIME);
 }
 
-function generateGrid(level: number): number[] {
-  const { count } = getLevelConfig(level);
-  const nums = Array.from({ length: count }, (_, i) => i + 1);
+function generateGrid(): number[] {
+  const nums = Array.from({ length: TOTAL }, (_, i) => i + 1);
   for (let i = nums.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [nums[i], nums[j]] = [nums[j], nums[i]];
@@ -31,13 +27,13 @@ type GameState = 'idle' | 'playing' | 'finished' | 'submitting' | 'submitted';
 
 export default function NumberGameClient() {
   const [gameState, setGameState] = useState<GameState>('idle');
-  const [level, setLevel] = useState(1);
+  const [round, setRound] = useState(1);
   const [grid, setGrid] = useState<number[]>([]);
   const [nextTarget, setNextTarget] = useState(1);
-  const [timeLeft, setTimeLeft] = useState(20);
+  const [timeLeft, setTimeLeft] = useState(START_TIME);
   const [wrongFlash, setWrongFlash] = useState(false);
-  const [levelTimes, setLevelTimes] = useState<number[]>([]);
-  const [levelStartTime, setLevelStartTime] = useState(0);
+  const [roundTimes, setRoundTimes] = useState<number[]>([]);
+  const [roundStartTime, setRoundStartTime] = useState(0);
   const [nickname, setNickname] = useState('');
   const [rank, setRank] = useState<number | null>(null);
   const [submitError, setSubmitError] = useState('');
@@ -53,19 +49,18 @@ export default function NumberGameClient() {
     }
   };
 
-  const startLevel = useCallback((lv: number) => {
-    const cfg = getLevelConfig(lv);
-    setLevel(lv);
-    setGrid(generateGrid(lv));
+  const startRound = useCallback((r: number) => {
+    setRound(r);
+    setGrid(generateGrid());
     setNextTarget(1);
-    setTimeLeft(cfg.time);
-    setLevelStartTime(Date.now());
+    setTimeLeft(getTimeLimit(r));
+    setRoundStartTime(Date.now());
   }, []);
 
   const endGame = useCallback((times: number[]) => {
     clearTimer();
     setGameState('finished');
-    setLevelTimes(times);
+    setRoundTimes(times);
     setLoadingBoard(true);
     fetch('/api/leaderboard')
       .then(r => r.json())
@@ -74,6 +69,7 @@ export default function NumberGameClient() {
       .finally(() => setLoadingBoard(false));
   }, []);
 
+  // 타이머
   useEffect(() => {
     if (gameState !== 'playing') return;
     clearTimer();
@@ -81,7 +77,6 @@ export default function NumberGameClient() {
       setTimeLeft(t => {
         if (t <= 1) {
           clearTimer();
-          setGameState('finished');
           return 0;
         }
         return t - 1;
@@ -89,45 +84,41 @@ export default function NumberGameClient() {
     }, 1000);
     return clearTimer;
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameState, level]);
+  }, [gameState, round]);
 
-  // 타임아웃 게임 오버
+  // 타임아웃
   useEffect(() => {
     if (gameState === 'playing' && timeLeft === 0) {
-      endGame(levelTimes);
+      endGame(roundTimes);
     }
-  }, [timeLeft, gameState, endGame, levelTimes]);
+  }, [timeLeft, gameState, endGame, roundTimes]);
 
   const startGame = () => {
-    setLevelTimes([]);
+    setRoundTimes([]);
     setRank(null);
     setNickname('');
     setSubmitError('');
     setGameState('playing');
-    startLevel(1);
+    startRound(1);
   };
 
   const handleClick = (num: number) => {
     if (gameState !== 'playing') return;
-
     if (num !== nextTarget) {
       setWrongFlash(true);
       setTimeout(() => setWrongFlash(false), 300);
       return;
     }
 
-    const cfg = getLevelConfig(level);
-    const newTarget = nextTarget + 1;
-
-    if (newTarget > cfg.count) {
-      // 레벨 클리어
+    if (nextTarget === TOTAL) {
+      // 라운드 클리어
       clearTimer();
-      const elapsed = (Date.now() - levelStartTime) / 1000;
-      const newTimes = [...levelTimes, elapsed];
-      setLevelTimes(newTimes);
-      startLevel(level + 1);
+      const elapsed = (Date.now() - roundStartTime) / 1000;
+      const newTimes = [...roundTimes, elapsed];
+      setRoundTimes(newTimes);
+      startRound(round + 1);
     } else {
-      setNextTarget(newTarget);
+      setNextTarget(nextTarget + 1);
     }
   };
 
@@ -141,16 +132,16 @@ export default function NumberGameClient() {
     setSubmitError('');
     setGameState('submitting');
 
-    const clearedLevel = levelTimes.length;
-    const avgTime = levelTimes.length > 0
-      ? levelTimes.reduce((a, b) => a + b, 0) / levelTimes.length
+    const clearedRounds = roundTimes.length;
+    const avgTime = roundTimes.length > 0
+      ? roundTimes.reduce((a, b) => a + b, 0) / roundTimes.length
       : 0;
 
     try {
       const res = await fetch('/api/leaderboard', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, level: clearedLevel, avgTime }),
+        body: JSON.stringify({ name, level: clearedRounds, avgTime }),
       });
       const data = await res.json() as { rank?: number; error?: string };
       if (data.rank) {
@@ -176,10 +167,10 @@ export default function NumberGameClient() {
     }
   }, [gameState]);
 
-  const cfg = getLevelConfig(level);
-  const clearedLevel = levelTimes.length;
-  const avgTime = levelTimes.length > 0
-    ? (levelTimes.reduce((a, b) => a + b, 0) / levelTimes.length).toFixed(1)
+  const clearedRounds = roundTimes.length;
+  const timeLimit = getTimeLimit(round);
+  const avgTime = roundTimes.length > 0
+    ? (roundTimes.reduce((a, b) => a + b, 0) / roundTimes.length).toFixed(1)
     : '0.0';
 
   return (
@@ -193,7 +184,7 @@ export default function NumberGameClient() {
         </Link>
         <Link
           href="/number-game/leaderboard"
-          className="text-sm font-medium transition-colors px-3 py-1.5 rounded-lg"
+          className="text-sm font-medium px-3 py-1.5 rounded-lg"
           style={{ color: '#c084fc', background: 'rgba(124,58,237,0.15)' }}
         >
           🏆 TOP 100
@@ -207,8 +198,8 @@ export default function NumberGameClient() {
           <div className="flex flex-col items-center gap-6 mt-8 text-center">
             <div>
               <div className="text-6xl mb-3">🔢</div>
-              <h1 className="text-3xl font-bold text-white mb-2">숫자 순서대로 터치</h1>
-              <p className="text-white/50 text-sm">1부터 순서대로 빠르게 눌러라!</p>
+              <h1 className="text-3xl font-bold text-white mb-2">1~100 순서대로 터치</h1>
+              <p className="text-white/50 text-sm">매 라운드마다 더 빠르게!</p>
             </div>
 
             <div
@@ -216,18 +207,18 @@ export default function NumberGameClient() {
               style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
             >
               <p className="text-white/70 text-sm">📋 <span className="text-white/90 font-medium">규칙</span></p>
-              <p className="text-white/50 text-sm">• 1, 2, 3... 순서대로 눌러야 합니다</p>
-              <p className="text-white/50 text-sm">• 숫자 위치는 매번 랜덤으로 섞입니다</p>
-              <p className="text-white/50 text-sm">• 시간 안에 다 누르면 다음 레벨</p>
-              <p className="text-white/50 text-sm">• 레벨이 오를수록 숫자가 많아집니다</p>
+              <p className="text-white/50 text-sm">• 1~100 숫자가 랜덤 위치에 섞여 있습니다</p>
+              <p className="text-white/50 text-sm">• 1부터 순서대로 눌러야 합니다</p>
+              <p className="text-white/50 text-sm">• 클리어하면 다음 라운드, 5초씩 짧아집니다</p>
+              <p className="text-white/50 text-sm">• 시간이 다 되면 게임 오버</p>
             </div>
 
             <div className="grid grid-cols-3 gap-3 w-full text-center text-sm">
-              {LEVELS.slice(0, 3).map((l, i) => (
-                <div key={i} className="rounded-lg p-3" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                  <div className="text-purple-400 font-bold">Lv.{i + 1}</div>
-                  <div className="text-white/60">1~{l.count}</div>
-                  <div className="text-white/40 text-xs">{l.time}초</div>
+              {[1, 2, 3].map(r => (
+                <div key={r} className="rounded-lg p-3" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                  <div className="text-purple-400 font-bold">{r}라운드</div>
+                  <div className="text-white/60">1~100</div>
+                  <div className="text-white/40 text-xs">{getTimeLimit(r)}초</div>
                 </div>
               ))}
             </div>
@@ -245,14 +236,13 @@ export default function NumberGameClient() {
         {/* 게임 화면 */}
         {gameState === 'playing' && (
           <div className="w-full flex flex-col gap-3">
-            {/* 상태 바 */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span
                   className="px-3 py-1 rounded-full text-sm font-bold"
                   style={{ background: 'rgba(124,58,237,0.3)', color: '#c084fc' }}
                 >
-                  Lv.{level}
+                  {round}라운드
                 </span>
                 <span
                   className="px-3 py-1 rounded-full text-sm font-bold"
@@ -273,18 +263,16 @@ export default function NumberGameClient() {
               </div>
             </div>
 
-            {/* 타이머 바 */}
             <div className="w-full h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.08)' }}>
               <div
                 className="h-full rounded-full transition-all duration-1000"
                 style={{
-                  width: `${(timeLeft / cfg.time) * 100}%`,
+                  width: `${(timeLeft / timeLimit) * 100}%`,
                   background: timeLeft <= 5 ? '#ef4444' : 'linear-gradient(90deg, #7c3aed, #a855f7)',
                 }}
               />
             </div>
 
-            {/* 그리드 */}
             <div
               className="w-full rounded-xl p-2 transition-all"
               style={{
@@ -293,8 +281,8 @@ export default function NumberGameClient() {
               }}
             >
               <div
-                className="grid gap-1.5"
-                style={{ gridTemplateColumns: `repeat(${cfg.cols}, minmax(0, 1fr))` }}
+                className="grid gap-1"
+                style={{ gridTemplateColumns: `repeat(${COLS}, minmax(0, 1fr))` }}
               >
                 {grid.map((num, idx) => {
                   const done = num < nextTarget;
@@ -303,12 +291,12 @@ export default function NumberGameClient() {
                       key={idx}
                       onClick={() => handleClick(num)}
                       disabled={done}
-                      className="aspect-square flex items-center justify-center rounded-lg font-bold transition-all active:scale-90"
+                      className="aspect-square flex items-center justify-center rounded-md font-bold transition-all active:scale-90"
                       style={{
                         background: done ? 'rgba(124,58,237,0.15)' : 'rgba(255,255,255,0.07)',
-                        color: done ? 'rgba(167,139,250,0.4)' : 'rgba(255,255,255,0.9)',
-                        border: done ? '1px solid rgba(124,58,237,0.2)' : '1px solid rgba(255,255,255,0.1)',
-                        fontSize: cfg.count > 49 ? '0.75rem' : cfg.count > 25 ? '0.85rem' : '1rem',
+                        color: done ? 'rgba(167,139,250,0.35)' : 'rgba(255,255,255,0.9)',
+                        border: done ? '1px solid rgba(124,58,237,0.15)' : '1px solid rgba(255,255,255,0.1)',
+                        fontSize: '0.7rem',
                         cursor: done ? 'default' : 'pointer',
                       }}
                     >
@@ -326,17 +314,17 @@ export default function NumberGameClient() {
           <div className="w-full flex flex-col items-center gap-5 mt-4">
             <div className="text-center">
               <div className="text-5xl mb-2">
-                {clearedLevel >= 5 ? '🏆' : clearedLevel >= 3 ? '🥈' : clearedLevel >= 1 ? '🥉' : '😅'}
+                {clearedRounds >= 5 ? '🏆' : clearedRounds >= 3 ? '🥈' : clearedRounds >= 1 ? '🥉' : '😅'}
               </div>
               <h2 className="text-2xl font-bold text-white">
-                {clearedLevel > 0 ? `레벨 ${clearedLevel} 클리어!` : '레벨 1 실패'}
+                {clearedRounds > 0 ? `${clearedRounds}라운드 클리어!` : '1라운드 실패'}
               </h2>
-              {clearedLevel > 0 && (
-                <p className="text-white/50 text-sm mt-1">평균 {avgTime}초 / 레벨</p>
+              {clearedRounds > 0 && (
+                <p className="text-white/50 text-sm mt-1">평균 {avgTime}초 / 라운드</p>
               )}
             </div>
 
-            {clearedLevel > 0 ? (
+            {clearedRounds > 0 ? (
               <div
                 className="w-full rounded-xl p-4 text-center"
                 style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.2)' }}
@@ -367,7 +355,7 @@ export default function NumberGameClient() {
                 {submitError && <p className="text-red-400 text-xs mt-2">{submitError}</p>}
               </div>
             ) : (
-              <p className="text-white/40 text-sm">레벨 1을 클리어해야 등록할 수 있어요</p>
+              <p className="text-white/40 text-sm">1라운드를 클리어해야 등록할 수 있어요</p>
             )}
 
             {!loadingBoard && leaderboard.length > 0 && (
@@ -382,7 +370,7 @@ export default function NumberGameClient() {
                     >
                       <span className="text-white/50">{i + 1}위</span>
                       <span className="text-white/80 font-medium">{e.name}</span>
-                      <span className="text-purple-400">Lv.{e.level}</span>
+                      <span className="text-purple-400">{e.level}라운드</span>
                       <span className="text-white/40">{e.avgTime}초</span>
                     </div>
                   ))}
@@ -426,7 +414,7 @@ export default function NumberGameClient() {
                     >
                       <span className="w-8 text-white/40 font-mono">{i + 1}</span>
                       <span className="flex-1 text-left text-white/80 font-medium">{e.name}</span>
-                      <span className="text-purple-400 mr-3">Lv.{e.level}</span>
+                      <span className="text-purple-400 mr-3">{e.level}라운드</span>
                       <span className="text-white/40 text-xs">{e.avgTime}초</span>
                     </div>
                   ))}
