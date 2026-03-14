@@ -221,11 +221,11 @@ function TarotCardBack({
               {ROMAN[card.id]}
             </span>
           </div>
-          {/* 내부 장식 테두리 */}
-          <div className="flex-1 mx-1.5 mb-1.5 rounded-lg overflow-hidden"
-            style={{ border: `1px solid ${card.color}30`, background: `${card.color}08` }}>
+          {/* 내부: 이미지 */}
+          <div className="flex-1 mx-1.5 mb-1.5 rounded-lg overflow-hidden flex items-center justify-center"
+            style={{ border: `1px solid ${card.color}30`, background: '#06030f' }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={card.image} alt={card.name.en} className="w-full h-full object-cover object-top" />
+            <img src={card.image} alt={card.name.en} className="w-full h-full object-contain" />
           </div>
           {/* 하단 이름 */}
           <div className="pb-1.5 text-center">
@@ -293,74 +293,58 @@ function ResultCard({
       style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(28px)' }}
     >
       {/* 타로카드 */}
-      <div className="flex justify-center mb-7">
+      <div className="flex flex-col items-center mb-7">
         <div
-          className="relative flex flex-col overflow-hidden"
+          className="relative overflow-hidden"
           style={{
-            width: 180,
-            height: 300,
+            width: 190,
             background: 'linear-gradient(160deg, #1a0840 0%, #0e0520 100%)',
             border: `2px solid ${card.color}80`,
             borderRadius: 16,
             boxShadow: `0 0 50px ${card.color}35, 0 20px 60px rgba(0,0,0,0.6)`,
           }}
         >
-          {/* 외부 내부 이중 테두리 */}
-          <div className="absolute inset-[6px] rounded-[10px] pointer-events-none" style={{ border: `1px solid ${card.color}35` }} />
-
           {/* 상단: 로마 숫자 */}
-          <div className="flex items-center justify-center pt-4 pb-2 relative z-10">
-            <div className="flex items-center gap-2">
-              <div style={{ width: 20, height: 1, background: `${card.color}50` }} />
-              <span style={{ color: card.color, fontSize: '0.75rem', fontWeight: 900, letterSpacing: '0.12em' }}>
-                {ROMAN[card.id]}
-              </span>
-              <div style={{ width: 20, height: 1, background: `${card.color}50` }} />
-            </div>
+          <div className="flex items-center justify-center py-2.5">
+            <div style={{ width: 18, height: 1, background: `${card.color}50` }} />
+            <span style={{ color: card.color, fontSize: '0.7rem', fontWeight: 900, letterSpacing: '0.12em', margin: '0 8px' }}>
+              {ROMAN[card.id]}
+            </span>
+            <div style={{ width: 18, height: 1, background: `${card.color}50` }} />
           </div>
 
-          {/* 중앙 일러스트 영역 */}
-          <div
-            className="flex-1 mx-3 relative overflow-hidden"
-            style={{
-              border: `1px solid ${card.color}25`,
-              borderRadius: 8,
-              boxShadow: `inset 0 0 20px ${card.color}10`,
-            }}
-          >
+          {/* 이미지: 잘림 없이 전체 표시 */}
+          <div className="mx-2.5 rounded-lg overflow-hidden" style={{ border: `1px solid ${card.color}30` }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={card.image}
               alt={card.name.en}
-              className="w-full h-full object-cover object-top"
-              style={{ filter: `drop-shadow(0 0 8px ${card.color}40)` }}
+              style={{ width: '100%', height: 'auto', display: 'block' }}
             />
-            {/* 키워드 오버레이 */}
-            <div className="absolute bottom-2 left-0 right-0 flex justify-center">
-              <div className="px-3 py-1 rounded-full" style={{
-                background: `rgba(10,5,25,0.85)`,
-                border: `1px solid ${card.color}50`,
-                backdropFilter: 'blur(4px)',
-              }}>
-                <span style={{ color: `${card.color}ee`, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.08em' }}>
-                  {card.keyword[lang].toUpperCase()}
-                </span>
-              </div>
-            </div>
           </div>
 
           {/* 하단: 카드 이름 배너 */}
           <div
-            className="flex items-center justify-center py-3 mx-3 mb-3 mt-2 rounded-lg"
+            className="flex items-center justify-center mx-2.5 my-2 py-2 rounded-lg"
             style={{
               background: `linear-gradient(135deg, ${card.color}25, ${card.color}10)`,
               border: `1px solid ${card.color}35`,
             }}
           >
-            <span style={{ color: card.color, fontSize: '0.7rem', fontWeight: 900, letterSpacing: '0.1em', textAlign: 'center' }}>
+            <span style={{ color: card.color, fontSize: '0.65rem', fontWeight: 900, letterSpacing: '0.1em' }}>
               {card.name[lang].toUpperCase()}
             </span>
           </div>
+        </div>
+
+        {/* 키워드: 카드 아래에 */}
+        <div className="mt-3 px-4 py-1.5 rounded-full" style={{
+          background: `${card.color}18`,
+          border: `1px solid ${card.color}50`,
+        }}>
+          <span style={{ color: card.color, fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em' }}>
+            ✦ {card.keyword[lang]} ✦
+          </span>
         </div>
       </div>
 
