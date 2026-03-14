@@ -18,14 +18,19 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [fortuneOpen, setFortuneOpen] = useState(false);
   const [gameOpen, setGameOpen] = useState(false);
+  const [guideOpen, setGuideOpen] = useState(false);
   const fortuneRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<HTMLDivElement>(null);
+  const guideRef = useRef<HTMLDivElement>(null);
 
   const FORTUNE_ITEMS: NavItem[] = [
     { href: '/', emoji: '✨', label: lang === 'ko' ? '오늘의 운세' : lang === 'en' ? 'Daily Fortune' : lang === 'zh' ? '今日运势' : '今日の運勢' },
     { href: '/card-draw', emoji: '🃏', label: lang === 'ko' ? '타로 카드 뽑기' : lang === 'en' ? 'Tarot Card' : lang === 'zh' ? '抽塔罗牌' : 'タロットカード' },
     { href: '/idol', emoji: '🎤', label: lang === 'ko' ? '소속사 테스트' : lang === 'en' ? 'K-Idol Type' : lang === 'zh' ? '经纪公司测试' : 'K-アイドル診断' },
     { href: '/past-life', emoji: '🌀', label: lang === 'ko' ? '나의 전생은?' : lang === 'en' ? 'Past Life' : lang === 'zh' ? '我的前世' : '私の前世' },
+  ];
+
+  const GUIDE_ITEMS: NavItem[] = [
     { href: '/zodiac', emoji: '⭐', label: lang === 'ko' ? '별자리 정보' : lang === 'en' ? 'Zodiac Info' : lang === 'zh' ? '星座信息' : '星座情報' },
     { href: '/chinese-zodiac', emoji: '🐉', label: lang === 'ko' ? '12띠 정보' : lang === 'en' ? 'Chinese Zodiac' : lang === 'zh' ? '生肖信息' : '十二支情報' },
   ];
@@ -35,15 +40,18 @@ export default function Header() {
   ];
 
   const fortuneLabel = lang === 'ko' ? '운세/테스트' : lang === 'en' ? 'Fortune' : lang === 'zh' ? '运势' : '運勢';
+  const guideLabel = lang === 'ko' ? '백과' : lang === 'en' ? 'Guide' : lang === 'zh' ? '百科' : '図鑑';
   const gameLabel = lang === 'ko' ? '게임' : lang === 'en' ? 'Game' : lang === 'zh' ? '游戏' : 'ゲーム';
 
   const isFortuneActive = FORTUNE_ITEMS.some(i => i.href === pathname);
+  const isGuideActive = GUIDE_ITEMS.some(i => i.href === pathname);
   const isGameActive = GAME_ITEMS.some(i => i.href === pathname);
 
   // 드롭다운 외부 클릭 시 닫기
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (fortuneRef.current && !fortuneRef.current.contains(e.target as Node)) setFortuneOpen(false);
+      if (guideRef.current && !guideRef.current.contains(e.target as Node)) setGuideOpen(false);
       if (gameRef.current && !gameRef.current.contains(e.target as Node)) setGameOpen(false);
     };
     document.addEventListener('mousedown', handler);
@@ -109,10 +117,46 @@ export default function Header() {
             )}
           </div>
 
+          {/* 백과 드롭다운 */}
+          <div ref={guideRef} className="relative">
+            <button
+              onClick={() => { setGuideOpen(o => !o); setFortuneOpen(false); setGameOpen(false); }}
+              className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-all"
+              style={{
+                color: isGuideActive ? '#c084fc' : 'rgba(255,255,255,0.55)',
+                background: isGuideActive ? 'rgba(124,58,237,0.15)' : 'transparent',
+              }}
+            >
+              📖 {guideLabel}
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" className={`transition-transform ${guideOpen ? 'rotate-180' : ''}`}>
+                <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+              </svg>
+            </button>
+            {guideOpen && (
+              <div
+                className="absolute top-full left-0 mt-1 w-44 rounded-xl overflow-hidden shadow-xl"
+                style={{ background: 'rgba(10,10,40,0.97)', border: '1px solid rgba(255,255,255,0.1)' }}
+              >
+                {GUIDE_ITEMS.map(({ href, emoji, label }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    onClick={() => setGuideOpen(false)}
+                    className="flex items-center gap-2 px-4 py-2.5 text-sm transition-colors hover:bg-white/5"
+                    style={{ color: pathname === href ? '#c084fc' : 'rgba(255,255,255,0.65)' }}
+                  >
+                    <span>{emoji}</span>
+                    <span>{label}</span>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
           {/* 게임/테스트 드롭다운 */}
           <div ref={gameRef} className="relative">
             <button
-              onClick={() => { setGameOpen(o => !o); setFortuneOpen(false); }}
+              onClick={() => { setGameOpen(o => !o); setFortuneOpen(false); setGuideOpen(false); }}
               className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-all"
               style={{
                 color: isGameActive ? '#c084fc' : 'rgba(255,255,255,0.55)',
@@ -197,6 +241,26 @@ export default function Header() {
           <div className="px-4 pt-3 pb-1">
             <p className="text-white/30 text-xs font-medium uppercase tracking-wider mb-1">🔮 {fortuneLabel}</p>
             {FORTUNE_ITEMS.map(({ href, emoji, label }) => (
+              <Link
+                key={href}
+                href={href}
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-2 py-2.5 px-2 text-sm border-b transition-colors"
+                style={{
+                  color: pathname === href ? '#c084fc' : 'rgba(255,255,255,0.6)',
+                  borderColor: 'rgba(255,255,255,0.04)',
+                }}
+              >
+                <span>{emoji}</span>
+                <span>{label}</span>
+              </Link>
+            ))}
+          </div>
+
+          {/* 백과 섹션 */}
+          <div className="px-4 pt-3 pb-1">
+            <p className="text-white/30 text-xs font-medium uppercase tracking-wider mb-1">📖 {guideLabel}</p>
+            {GUIDE_ITEMS.map(({ href, emoji, label }) => (
               <Link
                 key={href}
                 href={href}
