@@ -305,7 +305,7 @@ function ResultCard({
           }}
         >
           {/* 이미지: 잘림 없이 전체 표시 */}
-          <div className="mx-2.5 mt-2.5 rounded-lg overflow-hidden" style={{ border: `1px solid ${card.color}30` }}>
+          <div className="mx-2.5 mt-2.5 mb-2.5 rounded-lg overflow-hidden" style={{ border: `1px solid ${card.color}30` }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={card.image}
@@ -314,18 +314,6 @@ function ResultCard({
             />
           </div>
 
-          {/* 하단: 카드 이름 배너 */}
-          <div
-            className="flex items-center justify-center mx-2.5 my-2 py-2 rounded-lg"
-            style={{
-              background: `linear-gradient(135deg, ${card.color}25, ${card.color}10)`,
-              border: `1px solid ${card.color}35`,
-            }}
-          >
-            <span style={{ color: card.color, fontSize: '0.65rem', fontWeight: 900, letterSpacing: '0.1em' }}>
-              {card.name[lang].toUpperCase()}
-            </span>
-          </div>
         </div>
 
         {/* 키워드: 카드 아래에 */}
