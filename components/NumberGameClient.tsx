@@ -277,8 +277,12 @@ export default function NumberGameClient() {
     if (num !== nextTarget) {
       setWrongFlash(true);
       setTimeout(() => setWrongFlash(false), 300);
+      setTimeLeft(prev => Math.max(prev - 2, 0));
       return;
     }
+
+    // 정확히 클릭 → +1초 (레벨 제한시간 초과 불가)
+    setTimeLeft(prev => Math.min(prev + 1, cfg.timeLimit));
 
     if (nextTarget === cfg.total) {
       // 레벨 클리어
