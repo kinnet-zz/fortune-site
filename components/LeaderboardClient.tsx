@@ -34,7 +34,7 @@ export default function LeaderboardClient() {
         <div className="text-center mb-6">
           <div className="text-5xl mb-2">🏆</div>
           <h1 className="text-2xl font-bold text-white">TOP 100 랭킹</h1>
-          <p className="text-white/40 text-sm mt-1">빠진 숫자 찾기</p>
+          <p className="text-white/40 text-sm mt-1">1~100 순서대로 누르기</p>
         </div>
 
         {loading && (
