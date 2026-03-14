@@ -1,15 +1,19 @@
 export interface TarotCard {
   id: number;
   emoji: string;
+  image: string; // Rider-Waite 1909 public domain image (Wikimedia Commons)
   name: Record<'ko' | 'en' | 'zh' | 'ja', string>;
   keyword: Record<'ko' | 'en' | 'zh' | 'ja', string>;
   message: Record<'ko' | 'en' | 'zh' | 'ja', string>;
   color: string; // accent color
 }
 
+const WM = 'https://upload.wikimedia.org/wikipedia/commons/thumb';
+
 export const TAROT_CARDS: TarotCard[] = [
   {
     id: 0, emoji: '🌟', color: '#f59e0b',
+    image: `${WM}/6/6e/RWS1909_-_00_Fool.jpeg/250px-RWS1909_-_00_Fool.jpeg`,
     name: { ko: '광대', en: 'The Fool', zh: '愚者', ja: '愚者' },
     keyword: { ko: '새로운 시작', en: 'New Beginning', zh: '新的开始', ja: '新たな始まり' },
     message: {
@@ -21,6 +25,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 1, emoji: '✨', color: '#8b5cf6',
+    image: `${WM}/b/b0/RWS1909_-_01_Magician.jpeg/250px-RWS1909_-_01_Magician.jpeg`,
     name: { ko: '마법사', en: 'The Magician', zh: '魔法师', ja: '魔術師' },
     keyword: { ko: '능력과 의지', en: 'Skill & Will', zh: '能力与意志', ja: '能力と意志' },
     message: {
@@ -32,6 +37,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 2, emoji: '🌙', color: '#6366f1',
+    image: `${WM}/2/26/RWS1909_-_02_High_Priestess.jpeg/250px-RWS1909_-_02_High_Priestess.jpeg`,
     name: { ko: '여사제', en: 'High Priestess', zh: '女祭司', ja: '女教皇' },
     keyword: { ko: '직관과 신비', en: 'Intuition & Mystery', zh: '直觉与神秘', ja: '直観と神秘' },
     message: {
@@ -43,6 +49,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 3, emoji: '🌸', color: '#ec4899',
+    image: `${WM}/7/70/RWS1909_-_03_Empress.jpeg/250px-RWS1909_-_03_Empress.jpeg`,
     name: { ko: '여황제', en: 'The Empress', zh: '女皇', ja: '女帝' },
     keyword: { ko: '풍요와 창조', en: 'Abundance & Creation', zh: '丰盛与创造', ja: '豊かさと創造' },
     message: {
@@ -54,6 +61,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 4, emoji: '👑', color: '#f59e0b',
+    image: `${WM}/b/b4/RWS1909_-_04_Emperor.jpeg/250px-RWS1909_-_04_Emperor.jpeg`,
     name: { ko: '황제', en: 'The Emperor', zh: '皇帝', ja: '皇帝' },
     keyword: { ko: '안정과 권위', en: 'Stability & Authority', zh: '稳定与权威', ja: '安定と権威' },
     message: {
@@ -65,6 +73,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 5, emoji: '🕊️', color: '#10b981',
+    image: `${WM}/7/70/RWS1909_-_05_Hierophant.jpeg/250px-RWS1909_-_05_Hierophant.jpeg`,
     name: { ko: '교황', en: 'The Hierophant', zh: '教皇', ja: '法王' },
     keyword: { ko: '전통과 지혜', en: 'Tradition & Wisdom', zh: '传统与智慧', ja: '伝統と知恵' },
     message: {
@@ -76,6 +85,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 6, emoji: '💕', color: '#f43f5e',
+    image: `${WM}/8/87/RWS1909_-_06_Lovers.jpeg/250px-RWS1909_-_06_Lovers.jpeg`,
     name: { ko: '연인', en: 'The Lovers', zh: '恋人', ja: '恋人' },
     keyword: { ko: '사랑과 선택', en: 'Love & Choice', zh: '爱与选择', ja: '愛と選択' },
     message: {
@@ -87,6 +97,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 7, emoji: '⚡', color: '#3b82f6',
+    image: `${WM}/a/aa/RWS1909_-_07_Chariot.jpeg/250px-RWS1909_-_07_Chariot.jpeg`,
     name: { ko: '전차', en: 'The Chariot', zh: '战车', ja: '戦車' },
     keyword: { ko: '승리와 추진력', en: 'Victory & Drive', zh: '胜利与推进力', ja: '勝利と推進力' },
     message: {
@@ -98,6 +109,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 8, emoji: '🦁', color: '#f97316',
+    image: `${WM}/2/29/RWS1909_-_08_Strength.jpeg/250px-RWS1909_-_08_Strength.jpeg`,
     name: { ko: '힘', en: 'Strength', zh: '力量', ja: '力' },
     keyword: { ko: '용기와 인내', en: 'Courage & Patience', zh: '勇气与耐心', ja: '勇気と忍耐' },
     message: {
@@ -109,6 +121,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 9, emoji: '🕯️', color: '#94a3b8',
+    image: `${WM}/2/28/RWS1909_-_09_Hermit.jpeg/250px-RWS1909_-_09_Hermit.jpeg`,
     name: { ko: '은둔자', en: 'The Hermit', zh: '隐者', ja: '隠者' },
     keyword: { ko: '내면의 빛', en: 'Inner Light', zh: '内在之光', ja: '内なる光' },
     message: {
@@ -120,6 +133,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 10, emoji: '🎡', color: '#8b5cf6',
+    image: `${WM}/8/8a/RWS1909_-_10_Wheel_of_Fortune.jpeg/250px-RWS1909_-_10_Wheel_of_Fortune.jpeg`,
     name: { ko: '운명의 수레바퀴', en: 'Wheel of Fortune', zh: '命运之轮', ja: '運命の輪' },
     keyword: { ko: '변화와 행운', en: 'Change & Luck', zh: '变化与好运', ja: '変化と幸運' },
     message: {
@@ -131,6 +145,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 11, emoji: '⚖️', color: '#10b981',
+    image: `${WM}/4/4f/RWS1909_-_11_Justice.jpeg/250px-RWS1909_-_11_Justice.jpeg`,
     name: { ko: '정의', en: 'Justice', zh: '正义', ja: '正義' },
     keyword: { ko: '균형과 진실', en: 'Balance & Truth', zh: '平衡与真相', ja: 'バランスと真実' },
     message: {
@@ -142,6 +157,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 12, emoji: '🌿', color: '#06b6d4',
+    image: `${WM}/a/ab/RWS1909_-_12_Hanged_Man.jpeg/250px-RWS1909_-_12_Hanged_Man.jpeg`,
     name: { ko: '매달린 사람', en: 'The Hanged Man', zh: '倒吊人', ja: '吊るされた男' },
     keyword: { ko: '새로운 시각', en: 'New Perspective', zh: '新视角', ja: '新たな視点' },
     message: {
@@ -153,6 +169,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 13, emoji: '🦋', color: '#a855f7',
+    image: `${WM}/e/e9/RWS1909_-_13_Death.jpeg/250px-RWS1909_-_13_Death.jpeg`,
     name: { ko: '변화', en: 'Transformation', zh: '蜕变', ja: '変容' },
     keyword: { ko: '끝과 새 시작', en: 'Endings & Renewal', zh: '结束与新生', ja: '終わりと再生' },
     message: {
@@ -164,6 +181,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 14, emoji: '🌈', color: '#14b8a6',
+    image: `${WM}/9/9e/RWS1909_-_14_Temperance.jpeg/250px-RWS1909_-_14_Temperance.jpeg`,
     name: { ko: '절제', en: 'Temperance', zh: '节制', ja: '節制' },
     keyword: { ko: '균형과 조화', en: 'Balance & Harmony', zh: '平衡与和谐', ja: 'バランスと調和' },
     message: {
@@ -175,6 +193,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 15, emoji: '🔥', color: '#ef4444',
+    image: `${WM}/2/26/RWS1909_-_15_Devil.jpeg/250px-RWS1909_-_15_Devil.jpeg`,
     name: { ko: '해방', en: 'Liberation', zh: '解放', ja: '解放' },
     keyword: { ko: '자유와 각성', en: 'Freedom & Awakening', zh: '自由与觉醒', ja: '自由と覚醒' },
     message: {
@@ -186,6 +205,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 16, emoji: '⚡', color: '#f59e0b',
+    image: `${WM}/2/2a/RWS1909_-_16_Tower.jpeg/250px-RWS1909_-_16_Tower.jpeg`,
     name: { ko: '번개', en: 'The Lightning', zh: '闪电', ja: '雷光' },
     keyword: { ko: '돌파와 각성', en: 'Breakthrough & Insight', zh: '突破与觉悟', ja: '突破と覚悟' },
     message: {
@@ -197,6 +217,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 17, emoji: '⭐', color: '#818cf8',
+    image: `${WM}/4/44/RWS1909_-_17_Star.jpeg/250px-RWS1909_-_17_Star.jpeg`,
     name: { ko: '별', en: 'The Star', zh: '星星', ja: '星' },
     keyword: { ko: '희망과 치유', en: 'Hope & Healing', zh: '希望与治愈', ja: '希望と癒し' },
     message: {
@@ -208,6 +229,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 18, emoji: '🌊', color: '#6366f1',
+    image: `${WM}/3/3d/RWS1909_-_18_Moon.jpeg/250px-RWS1909_-_18_Moon.jpeg`,
     name: { ko: '달', en: 'The Moon', zh: '月亮', ja: '月' },
     keyword: { ko: '직관과 상상', en: 'Intuition & Imagination', zh: '直觉与想象', ja: '直観と想像' },
     message: {
@@ -219,6 +241,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 19, emoji: '☀️', color: '#fbbf24',
+    image: `${WM}/e/e1/RWS1909_-_19_Sun.jpeg/250px-RWS1909_-_19_Sun.jpeg`,
     name: { ko: '태양', en: 'The Sun', zh: '太阳', ja: '太陽' },
     keyword: { ko: '기쁨과 성공', en: 'Joy & Success', zh: '喜悦与成功', ja: '喜びと成功' },
     message: {
@@ -230,6 +253,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 20, emoji: '🎺', color: '#a78bfa',
+    image: `${WM}/8/8b/RWS1909_-_20_Judgement.jpeg/250px-RWS1909_-_20_Judgement.jpeg`,
     name: { ko: '심판', en: 'Judgement', zh: '审判', ja: '審判' },
     keyword: { ko: '각성과 재탄생', en: 'Awakening & Rebirth', zh: '觉醒与重生', ja: '覚醒と再生' },
     message: {
@@ -241,6 +265,7 @@ export const TAROT_CARDS: TarotCard[] = [
   },
   {
     id: 21, emoji: '🌍', color: '#10b981',
+    image: `${WM}/a/a4/RWS1909_-_21_World.jpeg/250px-RWS1909_-_21_World.jpeg`,
     name: { ko: '세계', en: 'The World', zh: '世界', ja: '世界' },
     keyword: { ko: '완성과 성취', en: 'Completion & Achievement', zh: '完成与成就', ja: '完成と達成' },
     message: {

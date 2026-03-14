@@ -132,36 +132,21 @@ export default function CardDrawClient() {
             <p className="text-center text-purple-300/40 text-xs mb-6 tracking-widest uppercase">
               ✦ {t.instruction} ✦
             </p>
-            <div className="grid grid-cols-4 gap-3 mb-3">
-              {spreadIndices.slice(0, 4).map((cardIdx, i) => (
-                <TarotCardBack
-                  key={i}
-                  card={TAROT_CARDS[cardIdx]}
-                  isSelected={selectedCard === TAROT_CARDS[cardIdx]}
-                  isHovered={hoveredIdx === i}
-                  isFlipped={selectedCard === TAROT_CARDS[cardIdx] && flipped}
-                  disabled={selectedCard !== null}
-                  lang={l}
-                  onHover={() => setHoveredIdx(i)}
-                  onLeave={() => setHoveredIdx(null)}
-                  onSelect={() => handleSelect(cardIdx)}
-                />
-              ))}
-            </div>
-            <div className="grid grid-cols-3 gap-3 px-6">
-              {spreadIndices.slice(4, 7).map((cardIdx, i) => (
-                <TarotCardBack
-                  key={i + 4}
-                  card={TAROT_CARDS[cardIdx]}
-                  isSelected={selectedCard === TAROT_CARDS[cardIdx]}
-                  isHovered={hoveredIdx === i + 4}
-                  isFlipped={selectedCard === TAROT_CARDS[cardIdx] && flipped}
-                  disabled={selectedCard !== null}
-                  lang={l}
-                  onHover={() => setHoveredIdx(i + 4)}
-                  onLeave={() => setHoveredIdx(null)}
-                  onSelect={() => handleSelect(cardIdx)}
-                />
+            <div className="flex flex-wrap justify-center gap-3">
+              {spreadIndices.map((cardIdx, i) => (
+                <div key={i} style={{ width: 'calc(25% - 9px)', flexShrink: 0 }}>
+                  <TarotCardBack
+                    card={TAROT_CARDS[cardIdx]}
+                    isSelected={selectedCard === TAROT_CARDS[cardIdx]}
+                    isHovered={hoveredIdx === i}
+                    isFlipped={selectedCard === TAROT_CARDS[cardIdx] && flipped}
+                    disabled={selectedCard !== null}
+                    lang={l}
+                    onHover={() => setHoveredIdx(i)}
+                    onLeave={() => setHoveredIdx(null)}
+                    onSelect={() => handleSelect(cardIdx)}
+                  />
+                </div>
               ))}
             </div>
           </div>
@@ -237,9 +222,10 @@ function TarotCardBack({
             </span>
           </div>
           {/* 내부 장식 테두리 */}
-          <div className="flex-1 mx-1.5 mb-1.5 rounded-lg flex flex-col items-center justify-center"
+          <div className="flex-1 mx-1.5 mb-1.5 rounded-lg overflow-hidden"
             style={{ border: `1px solid ${card.color}30`, background: `${card.color}08` }}>
-            <span style={{ fontSize: '1.6rem', filter: `drop-shadow(0 0 8px ${card.color}80)` }}>{card.emoji}</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={card.image} alt={card.name.en} className="w-full h-full object-cover object-top" />
           </div>
           {/* 하단 이름 */}
           <div className="pb-1.5 text-center">
@@ -335,37 +321,31 @@ function ResultCard({
 
           {/* 중앙 일러스트 영역 */}
           <div
-            className="flex-1 mx-3 flex flex-col items-center justify-center relative"
+            className="flex-1 mx-3 relative overflow-hidden"
             style={{
-              background: `radial-gradient(ellipse at 50% 40%, ${card.color}18 0%, transparent 70%)`,
               border: `1px solid ${card.color}25`,
               borderRadius: 8,
+              boxShadow: `inset 0 0 20px ${card.color}10`,
             }}
           >
-            {/* 코너 장식 */}
-            {['top-2 left-2', 'top-2 right-2', 'bottom-2 left-2', 'bottom-2 right-2'].map((pos, i) => (
-              <div key={i} className={`absolute ${pos}`} style={{ color: `${card.color}50`, fontSize: '0.55rem' }}>◇</div>
-            ))}
-
-            {/* 메인 이모지 */}
-            <div
-              style={{
-                fontSize: '5rem',
-                filter: `drop-shadow(0 0 20px ${card.color}80) drop-shadow(0 0 40px ${card.color}40)`,
-                lineHeight: 1,
-              }}
-            >
-              {card.emoji}
-            </div>
-
-            {/* 키워드 */}
-            <div className="mt-3 px-3 py-1 rounded-full" style={{
-              background: `${card.color}15`,
-              border: `1px solid ${card.color}35`,
-            }}>
-              <span style={{ color: `${card.color}cc`, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.08em' }}>
-                {card.keyword[lang].toUpperCase()}
-              </span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={card.image}
+              alt={card.name.en}
+              className="w-full h-full object-cover object-top"
+              style={{ filter: `drop-shadow(0 0 8px ${card.color}40)` }}
+            />
+            {/* 키워드 오버레이 */}
+            <div className="absolute bottom-2 left-0 right-0 flex justify-center">
+              <div className="px-3 py-1 rounded-full" style={{
+                background: `rgba(10,5,25,0.85)`,
+                border: `1px solid ${card.color}50`,
+                backdropFilter: 'blur(4px)',
+              }}>
+                <span style={{ color: `${card.color}ee`, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.08em' }}>
+                  {card.keyword[lang].toUpperCase()}
+                </span>
+              </div>
             </div>
           </div>
 
