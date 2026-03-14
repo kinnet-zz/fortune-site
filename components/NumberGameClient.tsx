@@ -583,7 +583,6 @@ export default function NumberGameClient() {
               >
                 {grid.map((num, idx) => {
                   const done = num < nextTarget;
-                  const isNext = num === nextTarget;
                   return (
                     <button
                       key={idx}
@@ -591,22 +590,9 @@ export default function NumberGameClient() {
                       disabled={done}
                       className="aspect-square flex items-center justify-center rounded-xl font-bold transition-all active:scale-90"
                       style={{
-                        background: done
-                          ? 'rgba(99,102,241,0.2)'
-                          : isNext
-                            ? 'rgba(99,102,241,0.15)'
-                            : 'rgba(255,255,255,0.07)',
-                        color: done
-                          ? 'rgba(165,180,252,0.4)'
-                          : isNext
-                            ? '#a5b4fc'
-                            : 'rgba(255,255,255,0.85)',
-                        border: done
-                          ? '1px solid rgba(99,102,241,0.2)'
-                          : isNext
-                            ? '1px solid rgba(99,102,241,0.6)'
-                            : '1px solid rgba(255,255,255,0.1)',
-                        boxShadow: isNext && !done ? '0 0 10px rgba(99,102,241,0.4)' : 'none',
+                        background: done ? 'rgba(99,102,241,0.2)' : 'rgba(255,255,255,0.07)',
+                        color: done ? 'rgba(165,180,252,0.4)' : 'rgba(255,255,255,0.85)',
+                        border: done ? '1px solid rgba(99,102,241,0.2)' : '1px solid rgba(255,255,255,0.1)',
                         fontSize: cfg.cols <= 5 ? '1.2rem' : '0.72rem',
                         cursor: done ? 'default' : 'pointer',
                       }}
