@@ -352,7 +352,7 @@ export default function NumberGameClient() {
     <div
       className="min-h-screen flex flex-col"
       style={{
-        background: 'linear-gradient(160deg, #1e1b4b 0%, #2e2670 40%, #1e1b4b 100%)',
+        background: 'linear-gradient(160deg, #06061a 0%, #0e0b28 50%, #06061a 100%)',
       }}
     >
       {/* 상단 헤더 */}
