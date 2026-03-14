@@ -4,32 +4,27 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import type { LeaderboardEntry } from '@/app/api/leaderboard/route';
 
-// 레벨 설정
 const LEVELS = [
-  { max: 20, cols: 5, time: 15 },
-  { max: 30, cols: 6, time: 15 },
-  { max: 42, cols: 7, time: 12 },
-  { max: 56, cols: 7, time: 12 },
-  { max: 72, cols: 8, time: 10 },
-  { max: 90, cols: 9, time: 10 },
+  { count: 16, cols: 4, time: 20 },
+  { count: 25, cols: 5, time: 30 },
+  { count: 36, cols: 6, time: 40 },
+  { count: 49, cols: 7, time: 50 },
+  { count: 64, cols: 8, time: 60 },
+  { count: 81, cols: 9, time: 70 },
 ];
 
 function getLevelConfig(level: number) {
   return LEVELS[Math.min(level - 1, LEVELS.length - 1)];
 }
 
-function generateGrid(level: number): { numbers: number[]; missing: number } {
-  const { max } = getLevelConfig(level);
-  const all = Array.from({ length: max }, (_, i) => i + 1);
-  const missingIdx = Math.floor(Math.random() * max);
-  const missing = all[missingIdx];
-  const numbers = all.filter((_, i) => i !== missingIdx);
-  // 셔플
-  for (let i = numbers.length - 1; i > 0; i--) {
+function generateGrid(level: number): number[] {
+  const { count } = getLevelConfig(level);
+  const nums = Array.from({ length: count }, (_, i) => i + 1);
+  for (let i = nums.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
+    [nums[i], nums[j]] = [nums[j], nums[i]];
   }
-  return { numbers, missing };
+  return nums;
 }
 
 type GameState = 'idle' | 'playing' | 'finished' | 'submitting' | 'submitted';
@@ -37,8 +32,9 @@ type GameState = 'idle' | 'playing' | 'finished' | 'submitting' | 'submitted';
 export default function NumberGameClient() {
   const [gameState, setGameState] = useState<GameState>('idle');
   const [level, setLevel] = useState(1);
-  const [grid, setGrid] = useState<{ numbers: number[]; missing: number }>({ numbers: [], missing: 0 });
-  const [timeLeft, setTimeLeft] = useState(15);
+  const [grid, setGrid] = useState<number[]>([]);
+  const [nextTarget, setNextTarget] = useState(1);
+  const [timeLeft, setTimeLeft] = useState(20);
   const [wrongFlash, setWrongFlash] = useState(false);
   const [levelTimes, setLevelTimes] = useState<number[]>([]);
   const [levelStartTime, setLevelStartTime] = useState(0);
@@ -61,16 +57,15 @@ export default function NumberGameClient() {
     const cfg = getLevelConfig(lv);
     setLevel(lv);
     setGrid(generateGrid(lv));
+    setNextTarget(1);
     setTimeLeft(cfg.time);
     setLevelStartTime(Date.now());
   }, []);
 
-  const endGame = useCallback((finalLevel: number, times: number[]) => {
+  const endGame = useCallback((times: number[]) => {
     clearTimer();
     setGameState('finished');
     setLevelTimes(times);
-    setLevel(finalLevel);
-    // 리더보드 미리 로드
     setLoadingBoard(true);
     fetch('/api/leaderboard')
       .then(r => r.json())
@@ -79,7 +74,6 @@ export default function NumberGameClient() {
       .finally(() => setLoadingBoard(false));
   }, []);
 
-  // 타이머
   useEffect(() => {
     if (gameState !== 'playing') return;
     clearTimer();
@@ -87,16 +81,23 @@ export default function NumberGameClient() {
       setTimeLeft(t => {
         if (t <= 1) {
           clearTimer();
-          endGame(level, levelTimes);
+          setGameState('finished');
           return 0;
         }
         return t - 1;
       });
     }, 1000);
     return clearTimer;
-  }, [gameState, level, endGame, levelTimes]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameState, level]);
 
-  // 게임 시작
+  // 타임아웃 게임 오버
+  useEffect(() => {
+    if (gameState === 'playing' && timeLeft === 0) {
+      endGame(levelTimes);
+    }
+  }, [timeLeft, gameState, endGame, levelTimes]);
+
   const startGame = () => {
     setLevelTimes([]);
     setRank(null);
@@ -106,27 +107,30 @@ export default function NumberGameClient() {
     startLevel(1);
   };
 
-  // 숫자 클릭
   const handleClick = (num: number) => {
     if (gameState !== 'playing') return;
-    const elapsed = (Date.now() - levelStartTime) / 1000;
 
-    if (num === grid.missing) {
-      // 정답
+    if (num !== nextTarget) {
+      setWrongFlash(true);
+      setTimeout(() => setWrongFlash(false), 300);
+      return;
+    }
+
+    const cfg = getLevelConfig(level);
+    const newTarget = nextTarget + 1;
+
+    if (newTarget > cfg.count) {
+      // 레벨 클리어
       clearTimer();
+      const elapsed = (Date.now() - levelStartTime) / 1000;
       const newTimes = [...levelTimes, elapsed];
       setLevelTimes(newTimes);
-      const nextLevel = level + 1;
-      setGameState('playing');
-      startLevel(nextLevel);
+      startLevel(level + 1);
     } else {
-      // 오답 — 화면 빨간 플래시
-      setWrongFlash(true);
-      setTimeout(() => setWrongFlash(false), 400);
+      setNextTarget(newTarget);
     }
   };
 
-  // 점수 제출
   const handleSubmit = async () => {
     const name = nickname.trim();
     if (!name) return;
@@ -137,11 +141,10 @@ export default function NumberGameClient() {
     setSubmitError('');
     setGameState('submitting');
 
+    const clearedLevel = levelTimes.length;
     const avgTime = levelTimes.length > 0
       ? levelTimes.reduce((a, b) => a + b, 0) / levelTimes.length
       : 0;
-    // 클리어한 레벨 수 = levelTimes.length
-    const clearedLevel = levelTimes.length;
 
     try {
       const res = await fetch('/api/leaderboard', {
@@ -153,7 +156,6 @@ export default function NumberGameClient() {
       if (data.rank) {
         setRank(data.rank);
         setGameState('submitted');
-        // 리더보드 갱신
         fetch('/api/leaderboard')
           .then(r => r.json())
           .then((d: { entries: LeaderboardEntry[] }) => setLeaderboard(d.entries))
@@ -175,17 +177,16 @@ export default function NumberGameClient() {
   }, [gameState]);
 
   const cfg = getLevelConfig(level);
+  const clearedLevel = levelTimes.length;
   const avgTime = levelTimes.length > 0
     ? (levelTimes.reduce((a, b) => a + b, 0) / levelTimes.length).toFixed(1)
     : '0.0';
-  const clearedLevel = levelTimes.length;
 
   return (
     <div
       className="min-h-screen flex flex-col items-center"
       style={{ background: 'linear-gradient(135deg, #050520 0%, #0a0a2e 50%, #050520 100%)' }}
     >
-      {/* 헤더 */}
       <div className="w-full max-w-2xl px-4 pt-6 pb-2 flex items-center justify-between">
         <Link href="/" className="text-white/40 hover:text-white/70 text-sm transition-colors">
           ← 홈으로
@@ -206,8 +207,8 @@ export default function NumberGameClient() {
           <div className="flex flex-col items-center gap-6 mt-8 text-center">
             <div>
               <div className="text-6xl mb-3">🔢</div>
-              <h1 className="text-3xl font-bold text-white mb-2">빠진 숫자 찾기</h1>
-              <p className="text-white/50 text-sm">숫자 그리드에서 사라진 숫자를 찾아라!</p>
+              <h1 className="text-3xl font-bold text-white mb-2">숫자 순서대로 터치</h1>
+              <p className="text-white/50 text-sm">1부터 순서대로 빠르게 눌러라!</p>
             </div>
 
             <div
@@ -215,17 +216,17 @@ export default function NumberGameClient() {
               style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
             >
               <p className="text-white/70 text-sm">📋 <span className="text-white/90 font-medium">규칙</span></p>
-              <p className="text-white/50 text-sm">• 1~N 숫자 중 하나가 사라졌습니다</p>
-              <p className="text-white/50 text-sm">• 빠진 숫자를 클릭하면 다음 레벨</p>
-              <p className="text-white/50 text-sm">• 시간 초과 또는 틀리면 게임 오버</p>
-              <p className="text-white/50 text-sm">• 레벨이 오를수록 숫자는 많아지고 시간은 줄어듭니다</p>
+              <p className="text-white/50 text-sm">• 1, 2, 3... 순서대로 눌러야 합니다</p>
+              <p className="text-white/50 text-sm">• 숫자 위치는 매번 랜덤으로 섞입니다</p>
+              <p className="text-white/50 text-sm">• 시간 안에 다 누르면 다음 레벨</p>
+              <p className="text-white/50 text-sm">• 레벨이 오를수록 숫자가 많아집니다</p>
             </div>
 
             <div className="grid grid-cols-3 gap-3 w-full text-center text-sm">
               {LEVELS.slice(0, 3).map((l, i) => (
                 <div key={i} className="rounded-lg p-3" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
                   <div className="text-purple-400 font-bold">Lv.{i + 1}</div>
-                  <div className="text-white/60">1~{l.max}</div>
+                  <div className="text-white/60">1~{l.count}</div>
                   <div className="text-white/40 text-xs">{l.time}초</div>
                 </div>
               ))}
@@ -253,14 +254,19 @@ export default function NumberGameClient() {
                 >
                   Lv.{level}
                 </span>
-                <span className="text-white/40 text-sm">1~{cfg.max} 중</span>
+                <span
+                  className="px-3 py-1 rounded-full text-sm font-bold"
+                  style={{ background: 'rgba(255,255,255,0.08)', color: '#fff' }}
+                >
+                  다음: {nextTarget}
+                </span>
               </div>
               <div
                 className="px-4 py-1.5 rounded-full font-mono font-bold text-lg"
                 style={{
-                  background: timeLeft <= 3 ? 'rgba(239,68,68,0.2)' : 'rgba(255,255,255,0.06)',
-                  color: timeLeft <= 3 ? '#f87171' : '#fff',
-                  border: `1px solid ${timeLeft <= 3 ? 'rgba(239,68,68,0.4)' : 'rgba(255,255,255,0.1)'}`,
+                  background: timeLeft <= 5 ? 'rgba(239,68,68,0.2)' : 'rgba(255,255,255,0.06)',
+                  color: timeLeft <= 5 ? '#f87171' : '#fff',
+                  border: `1px solid ${timeLeft <= 5 ? 'rgba(239,68,68,0.4)' : 'rgba(255,255,255,0.1)'}`,
                 }}
               >
                 {timeLeft}초
@@ -273,16 +279,16 @@ export default function NumberGameClient() {
                 className="h-full rounded-full transition-all duration-1000"
                 style={{
                   width: `${(timeLeft / cfg.time) * 100}%`,
-                  background: timeLeft <= 3 ? '#ef4444' : 'linear-gradient(90deg, #7c3aed, #a855f7)',
+                  background: timeLeft <= 5 ? '#ef4444' : 'linear-gradient(90deg, #7c3aed, #a855f7)',
                 }}
               />
             </div>
 
             {/* 그리드 */}
             <div
-              className="w-full rounded-xl p-3 transition-all"
+              className="w-full rounded-xl p-2 transition-all"
               style={{
-                background: wrongFlash ? 'rgba(239,68,68,0.1)' : 'rgba(255,255,255,0.03)',
+                background: wrongFlash ? 'rgba(239,68,68,0.08)' : 'rgba(255,255,255,0.03)',
                 border: wrongFlash ? '1px solid rgba(239,68,68,0.3)' : '1px solid rgba(255,255,255,0.06)',
               }}
             >
@@ -290,39 +296,46 @@ export default function NumberGameClient() {
                 className="grid gap-1.5"
                 style={{ gridTemplateColumns: `repeat(${cfg.cols}, minmax(0, 1fr))` }}
               >
-                {grid.numbers.map((num, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => handleClick(num)}
-                    className="aspect-square flex items-center justify-center rounded-lg font-medium text-sm transition-all active:scale-90"
-                    style={{
-                      background: 'rgba(255,255,255,0.06)',
-                      color: 'rgba(255,255,255,0.8)',
-                      border: '1px solid rgba(255,255,255,0.08)',
-                      fontSize: cfg.max > 56 ? '0.7rem' : cfg.max > 30 ? '0.8rem' : '0.9rem',
-                    }}
-                  >
-                    {num}
-                  </button>
-                ))}
+                {grid.map((num, idx) => {
+                  const done = num < nextTarget;
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => handleClick(num)}
+                      disabled={done}
+                      className="aspect-square flex items-center justify-center rounded-lg font-bold transition-all active:scale-90"
+                      style={{
+                        background: done ? 'rgba(124,58,237,0.15)' : 'rgba(255,255,255,0.07)',
+                        color: done ? 'rgba(167,139,250,0.4)' : 'rgba(255,255,255,0.9)',
+                        border: done ? '1px solid rgba(124,58,237,0.2)' : '1px solid rgba(255,255,255,0.1)',
+                        fontSize: cfg.count > 49 ? '0.75rem' : cfg.count > 25 ? '0.85rem' : '1rem',
+                        cursor: done ? 'default' : 'pointer',
+                      }}
+                    >
+                      {done ? '✓' : num}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
         )}
 
-        {/* 게임 오버 / 점수 등록 */}
+        {/* 게임 오버 */}
         {(gameState === 'finished' || gameState === 'submitting') && (
           <div className="w-full flex flex-col items-center gap-5 mt-4">
             <div className="text-center">
-              <div className="text-5xl mb-2">{clearedLevel >= 6 ? '🏆' : clearedLevel >= 4 ? '🥈' : clearedLevel >= 2 ? '🥉' : '😅'}</div>
-              {clearedLevel > 0
-                ? <h2 className="text-2xl font-bold text-white">레벨 {clearedLevel} 클리어!</h2>
-                : <h2 className="text-2xl font-bold text-white">레벨 1 실패</h2>
-              }
-              {clearedLevel > 0 && <p className="text-white/50 text-sm mt-1">평균 {avgTime}초 / 레벨</p>}
+              <div className="text-5xl mb-2">
+                {clearedLevel >= 5 ? '🏆' : clearedLevel >= 3 ? '🥈' : clearedLevel >= 1 ? '🥉' : '😅'}
+              </div>
+              <h2 className="text-2xl font-bold text-white">
+                {clearedLevel > 0 ? `레벨 ${clearedLevel} 클리어!` : '레벨 1 실패'}
+              </h2>
+              {clearedLevel > 0 && (
+                <p className="text-white/50 text-sm mt-1">평균 {avgTime}초 / 레벨</p>
+              )}
             </div>
 
-            {/* 레벨 1 이상 클리어해야 등록 가능 */}
             {clearedLevel > 0 ? (
               <div
                 className="w-full rounded-xl p-4 text-center"
@@ -357,7 +370,6 @@ export default function NumberGameClient() {
               <p className="text-white/40 text-sm">레벨 1을 클리어해야 등록할 수 있어요</p>
             )}
 
-            {/* 현재 리더보드 미리보기 TOP 10 */}
             {!loadingBoard && leaderboard.length > 0 && (
               <div className="w-full">
                 <p className="text-white/40 text-xs mb-2">현재 TOP 10</p>
@@ -394,14 +406,12 @@ export default function NumberGameClient() {
             <div>
               <div className="text-5xl mb-3">🎉</div>
               <h2 className="text-2xl font-bold text-white">등록 완료!</h2>
-              {rank && rank <= 100 ? (
-                <p className="text-purple-300 text-lg font-bold mt-2">현재 {rank}위</p>
-              ) : (
-                <p className="text-white/50 text-sm mt-2">100위 밖이에요. 재도전하세요!</p>
-              )}
+              {rank && rank <= 100
+                ? <p className="text-purple-300 text-lg font-bold mt-2">현재 {rank}위</p>
+                : <p className="text-white/50 text-sm mt-2">100위 밖이에요. 재도전!</p>
+              }
             </div>
 
-            {/* 리더보드 */}
             {leaderboard.length > 0 && (
               <div className="w-full">
                 <div className="space-y-1.5">
