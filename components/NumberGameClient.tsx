@@ -315,46 +315,54 @@ export default function NumberGameClient() {
           <div className="w-full flex flex-col items-center gap-5 mt-4">
             <div className="text-center">
               <div className="text-5xl mb-2">{clearedLevel >= 6 ? '🏆' : clearedLevel >= 4 ? '🥈' : clearedLevel >= 2 ? '🥉' : '😅'}</div>
-              <h2 className="text-2xl font-bold text-white">레벨 {clearedLevel} 클리어!</h2>
-              <p className="text-white/50 text-sm mt-1">평균 {avgTime}초 / 레벨</p>
+              {clearedLevel > 0
+                ? <h2 className="text-2xl font-bold text-white">레벨 {clearedLevel} 클리어!</h2>
+                : <h2 className="text-2xl font-bold text-white">레벨 1 실패</h2>
+              }
+              {clearedLevel > 0 && <p className="text-white/50 text-sm mt-1">평균 {avgTime}초 / 레벨</p>}
             </div>
 
-            <div
-              className="w-full rounded-xl p-4 text-center"
-              style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.2)' }}
-            >
-              <p className="text-white/60 text-sm mb-3">TOP 100에 이름을 남기세요</p>
-              <div className="flex gap-2">
-                <input
-                  ref={inputRef}
-                  type="text"
-                  placeholder="닉네임 (최대 10자)"
-                  value={nickname}
-                  onChange={e => setNickname(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && handleSubmit()}
-                  maxLength={10}
-                  disabled={gameState === 'submitting'}
-                  className="flex-1 px-3 py-2.5 rounded-lg text-sm text-white outline-none"
-                  style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}
-                />
-                <button
-                  onClick={handleSubmit}
-                  disabled={gameState === 'submitting' || !nickname.trim()}
-                  className="px-4 py-2.5 rounded-lg font-bold text-sm text-white transition-all disabled:opacity-40"
-                  style={{ background: 'linear-gradient(135deg, #7c3aed, #6d28d9)' }}
-                >
-                  {gameState === 'submitting' ? '...' : '등록'}
-                </button>
+            {/* 레벨 1 이상 클리어해야 등록 가능 */}
+            {clearedLevel > 0 ? (
+              <div
+                className="w-full rounded-xl p-4 text-center"
+                style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.2)' }}
+              >
+                <p className="text-white/60 text-sm mb-3">TOP 100에 이름을 남기세요</p>
+                <div className="flex gap-2">
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    placeholder="닉네임 (최대 10자)"
+                    value={nickname}
+                    onChange={e => setNickname(e.target.value)}
+                    onKeyDown={e => e.key === 'Enter' && handleSubmit()}
+                    maxLength={10}
+                    disabled={gameState === 'submitting'}
+                    className="flex-1 px-3 py-2.5 rounded-lg text-sm text-white outline-none"
+                    style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}
+                  />
+                  <button
+                    onClick={handleSubmit}
+                    disabled={gameState === 'submitting' || !nickname.trim()}
+                    className="px-4 py-2.5 rounded-lg font-bold text-sm text-white transition-all disabled:opacity-40"
+                    style={{ background: 'linear-gradient(135deg, #7c3aed, #6d28d9)' }}
+                  >
+                    {gameState === 'submitting' ? '...' : '등록'}
+                  </button>
+                </div>
+                {submitError && <p className="text-red-400 text-xs mt-2">{submitError}</p>}
               </div>
-              {submitError && <p className="text-red-400 text-xs mt-2">{submitError}</p>}
-            </div>
+            ) : (
+              <p className="text-white/40 text-sm">레벨 1을 클리어해야 등록할 수 있어요</p>
+            )}
 
-            {/* 현재 리더보드 미리보기 */}
+            {/* 현재 리더보드 미리보기 TOP 10 */}
             {!loadingBoard && leaderboard.length > 0 && (
               <div className="w-full">
-                <p className="text-white/40 text-xs mb-2">현재 TOP 5</p>
+                <p className="text-white/40 text-xs mb-2">현재 TOP 10</p>
                 <div className="space-y-1.5">
-                  {leaderboard.slice(0, 5).map((e, i) => (
+                  {leaderboard.slice(0, 10).map((e, i) => (
                     <div
                       key={i}
                       className="flex items-center justify-between px-3 py-2 rounded-lg text-sm"
