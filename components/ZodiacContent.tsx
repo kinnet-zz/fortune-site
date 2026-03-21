@@ -130,6 +130,14 @@ export default function ZodiacContent() {
                     <span>🤝 {tr.compatibleSignsLabel}: <strong className="text-white/60">{compatible}</strong></span>
                     <span>🍀 {tr.luckyLabel}: <strong className="text-white/60">{lucky}</strong></span>
                   </div>
+                  <div className="pt-3">
+                    <Link
+                      href={`/zodiac/${english.toLowerCase()}`}
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors"
+                    >
+                      {sign} 상세 가이드 →
+                    </Link>
+                  </div>
                 </div>
               </article>
             ))}

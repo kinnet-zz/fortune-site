@@ -150,6 +150,14 @@ export default function ChineseZodiacContent() {
                     <span className="hidden sm:inline text-white/20">·</span>
                     <span>💼 {tr.careersLabel}: <strong className="text-white/60">{careers}</strong></span>
                   </div>
+                  <div className="pt-3">
+                    <Link
+                      href={`/chinese-zodiac/${english.toLowerCase()}`}
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors"
+                    >
+                      {animal}띠 상세 가이드 →
+                    </Link>
+                  </div>
                 </div>
               </article>
             ))}
