@@ -122,11 +122,6 @@ export default function RootLayout({
                 price: '0',
                 priceCurrency: 'KRW',
               },
-              aggregateRating: {
-                '@type': 'AggregateRating',
-                ratingValue: '4.8',
-                ratingCount: '1024',
-              },
             }),
           }}
         />
