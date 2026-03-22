@@ -67,10 +67,11 @@ export default function ChineseZodiacContent() {
           >
             <p className="text-white/60 mb-4">{tr.lunarNote}</p>
             <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-              {CHINESE_ZODIAC_DATA.map(({ animal, emoji, years }) => (
-                <div
+              {CHINESE_ZODIAC_DATA.map(({ animal, emoji, english, years }) => (
+                <Link
                   key={animal}
-                  className="text-center rounded-xl p-2"
+                  href={`/chinese-zodiac/${english.toLowerCase()}`}
+                  className="text-center rounded-xl p-2 block transition-all hover:scale-105"
                   style={{ background: 'rgba(255,255,255,0.04)' }}
                 >
                   <div className="text-2xl mb-1">{emoji}</div>
@@ -78,7 +79,7 @@ export default function ChineseZodiacContent() {
                   <div className="text-white/30 text-xs mt-1">
                     {years.slice(-3).join(', ')}...
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
