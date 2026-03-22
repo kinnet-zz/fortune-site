@@ -53,6 +53,30 @@ export default function ZodiacContent() {
           <p className="text-white/50 text-base max-w-xl mx-auto leading-relaxed">{tr.zodiacPageSubtitle}</p>
         </header>
 
+        {/* 내 별자리 확인하기 */}
+        <section className="mb-12" aria-labelledby="find-zodiac">
+          <h2 id="find-zodiac" className="text-xl font-bold text-white mb-4">{tr.findMyZodiacTitle ?? '내 별자리 확인하기'}</h2>
+          <div
+            className="rounded-2xl p-6"
+            style={{ background: 'rgba(124,58,237,0.08)', border: '1px solid rgba(124,58,237,0.2)' }}
+          >
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+              {ZODIAC_DATA.map(({ sign, english, symbol, period }) => (
+                <Link
+                  key={english}
+                  href={`/zodiac/${english.toLowerCase()}`}
+                  className="text-center rounded-xl p-2 block transition-all hover:scale-105"
+                  style={{ background: 'rgba(255,255,255,0.04)' }}
+                >
+                  <div className="text-2xl mb-1">{symbol}</div>
+                  <div className="text-white/70 text-xs font-semibold">{sign}</div>
+                  <div className="text-white/30 text-xs mt-1">{period}</div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* 원소 섹션 */}
         <section className="mb-12" aria-labelledby="elements-heading">
           <h2 id="elements-heading" className="text-xl font-bold text-white mb-4">{tr.elementsTitle}</h2>
@@ -74,11 +98,29 @@ export default function ZodiacContent() {
                 'Water 💧': { color: 'rgba(56,189,248,0.15)', border: 'rgba(56,189,248,0.3)' },
                 '水 💧': { color: 'rgba(56,189,248,0.15)', border: 'rgba(56,189,248,0.3)' },
               };
+              const elementSignMap: Record<string, string[]> = {
+                '불 🔥': ['aries','leo','sagittarius'], 'Fire 🔥': ['aries','leo','sagittarius'], '火 🔥': ['aries','leo','sagittarius'],
+                '땅 🌍': ['taurus','virgo','capricorn'], 'Earth 🌍': ['taurus','virgo','capricorn'], '土 🌍': ['taurus','virgo','capricorn'], '地 🌍': ['taurus','virgo','capricorn'],
+                '공기 💨': ['gemini','libra','aquarius'], 'Air 💨': ['gemini','libra','aquarius'], '风 💨': ['gemini','libra','aquarius'], '風 💨': ['gemini','libra','aquarius'],
+                '물 💧': ['cancer','scorpio','pisces'], 'Water 💧': ['cancer','scorpio','pisces'], '水 💧': ['cancer','scorpio','pisces'],
+              };
+              const signLinks = elementSignMap[element] ?? [];
+              const signNames = signs.split(/[,，、]/).map(s => s.trim());
               const style = colorMap[element] ?? { color: 'rgba(255,255,255,0.05)', border: 'rgba(255,255,255,0.1)' };
               return (
                 <div key={element} className="rounded-xl p-4 text-center text-sm" style={{ background: style.color, border: `1px solid ${style.border}` }}>
-                  <div className="text-lg mb-1">{element}</div>
-                  <div className="text-white/50 text-xs mb-1">{signs}</div>
+                  <div className="text-lg mb-2">{element}</div>
+                  <div className="flex flex-wrap justify-center gap-1 mb-1">
+                    {signNames.map((name, i) => (
+                      <Link
+                        key={name}
+                        href={`/zodiac/${signLinks[i] ?? name.toLowerCase()}`}
+                        className="text-white/60 hover:text-white text-xs underline-offset-2 hover:underline transition-colors"
+                      >
+                        {name}
+                      </Link>
+                    ))}
+                  </div>
                   <div className="text-white/35 text-xs">{desc}</div>
                 </div>
               );
