@@ -540,10 +540,16 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
         </div>
       </div>
 
-      {/* 하단 장식 문구 */}
-      <p className="text-center text-white/15 text-xs mt-6">
-        {tr.disclaimer}
-      </p>
+      {/* 하단 면책 조항 — AdSense 정책 준수 */}
+      <div className="mt-6 text-center space-y-1">
+        <p className="text-white/20 text-xs">{tr.disclaimer}</p>
+        <p
+          className="text-xs px-4 py-2 rounded-xl mx-auto max-w-sm"
+          style={{ color: 'rgba(255,255,255,0.25)', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
+        >
+          ⚠️ 본 운세는 오락·자기성찰 목적의 콘텐츠입니다. 실제 미래를 예측하지 않으며, 중요한 의사결정의 근거로 사용하지 마세요.
+        </p>
+      </div>
     </div>
   );
 }

@@ -28,8 +28,8 @@ const notoSansSC = Noto_Sans_SC({
 });
 
 export const metadata: Metadata = {
-  title: '오늘의 운세 ✨ | 별자리·띠 무료 운세',
-  description: '생년월일로 별자리와 띠를 분석하는 AI 무료 운세 서비스. 오늘의 종합운, 연애운, 금전운, 직업운을 확인해보세요. 매일 업데이트되는 오늘의 운세.',
+  title: '오늘의 운세 ✨ | 별자리·띠 무료 AI 운세 — StarFate',
+  description: '생년월일을 입력하면 AI가 별자리와 띠를 분석해 오늘의 종합운·연애운·금전운·직업운을 알려드립니다. 매일 새롭게 생성되는 완전 무료 운세 서비스.',
   keywords: [
     '운세', '오늘의 운세', '별자리 운세', '띠 운세', '무료 운세', '연애운', '금전운', '직업운', '종합운', 'AI 운세', '사주', '별자리', '2025 운세', '2026 운세', '일일 운세',
     'fortune', 'horoscope', 'free horoscope', 'daily horoscope', 'zodiac fortune', 'AI fortune', 'zodiac sign', 'birth date fortune', 'free zodiac reading', 'horoscope today', 'Chinese zodiac', 'love horoscope', 'money horoscope', 'career horoscope', 'star sign', 'astrology', 'free astrology',
@@ -104,6 +104,24 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔮</text></svg>" />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3314960461630607" crossOrigin="anonymous"></script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'StarFate',
+              url: 'https://www.starfate.day',
+              logo: 'https://www.starfate.day/og-image.png',
+              description: '생년월일 기반 AI 무료 운세 서비스 — 별자리·띠 분석',
+              contactPoint: {
+                '@type': 'ContactPoint',
+                email: 'dhcho0607@gmail.com',
+                contactType: 'customer service',
+              },
+            }),
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

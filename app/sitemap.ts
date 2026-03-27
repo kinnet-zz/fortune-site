@@ -10,19 +10,49 @@ const CHINESE_ZODIAC_SLUGS = [
   'horse', 'goat', 'monkey', 'rooster', 'dog', 'pig',
 ];
 
+const BLOG_SLUGS = [
+  'what-is-astrology',
+  'zodiac-compatibility-guide',
+  'chinese-vs-western-zodiac',
+  'how-to-read-daily-fortune',
+  'planets-and-zodiac-signs',
+  'zodiac-career-guide',
+  'moon-sign-guide',
+  'rising-sign-guide',
+  'chinese-zodiac-compatibility',
+  'numerology-lucky-numbers',
+  'zodiac-blood-type',
+  'love-compatibility-guide',
+  'zodiac-myths-facts',
+  'chinese-zodiac-2026',
+  '2026-yearly-horoscope',
+];
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.starfate.day';
   const now = new Date();
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified: now, changeFrequency: 'daily', priority: 1 },
+    { url: `${baseUrl}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${baseUrl}/zodiac`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/chinese-zodiac`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/card-draw`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/past-life`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/number-game`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${baseUrl}/idol`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${baseUrl}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${baseUrl}/contact`, lastModified: now, changeFrequency: 'monthly', priority: 0.4 },
     { url: `${baseUrl}/privacy`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
     { url: `${baseUrl}/terms`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
   ];
+
+  const blogPages: MetadataRoute.Sitemap = BLOG_SLUGS.map((slug) => ({
+    url: `${baseUrl}/blog/${slug}`,
+    lastModified: now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }));
 
   const zodiacPages: MetadataRoute.Sitemap = ZODIAC_SLUGS.map((slug) => ({
     url: `${baseUrl}/zodiac/${slug}`,
@@ -38,5 +68,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticPages, ...zodiacPages, ...chineseZodiacPages];
+  return [...staticPages, ...blogPages, ...zodiacPages, ...chineseZodiacPages];
 }
