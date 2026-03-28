@@ -174,6 +174,35 @@ export default function BlogIndexPage() {
           <p className="text-white/30 text-sm mt-3">총 {ARTICLES.length}개 아티클</p>
         </header>
 
+        {/* 오늘의 일일 운세 배너 */}
+        <Link
+          href="/blog/daily"
+          className="block rounded-2xl p-6 mb-10 transition-all hover:scale-[1.01]"
+          style={{
+            background: 'linear-gradient(135deg, rgba(124,58,237,0.25) 0%, rgba(99,102,241,0.15) 100%)',
+            border: '1px solid rgba(124,58,237,0.35)',
+          }}
+        >
+          <div className="flex items-center gap-4">
+            <div className="text-5xl">🔮</div>
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-1 flex-wrap">
+                <span
+                  className="px-2 py-0.5 rounded-full text-xs font-bold"
+                  style={{ background: 'rgba(124,58,237,0.5)', color: 'rgba(221,214,254,1)' }}
+                >
+                  ✨ 매일 AI 자동 생성
+                </span>
+              </div>
+              <h2 className="text-white font-bold text-xl mb-1">오늘의 12별자리 일일 운세</h2>
+              <p className="text-white/50 text-sm">
+                Gemini AI가 매일 새롭게 생성하는 별자리별 운세. 종합·사랑·금전·건강 운세와 행운 아이템까지 확인하세요.
+              </p>
+            </div>
+            <div className="text-purple-300 text-sm font-medium whitespace-nowrap">바로 보기 →</div>
+          </div>
+        </Link>
+
         {/* 카테고리 태그 */}
         <div className="flex flex-wrap gap-2 mb-8 justify-center">
           {CATEGORIES.map((cat) => (
