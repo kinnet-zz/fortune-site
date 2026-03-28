@@ -26,6 +26,11 @@ const BLOG_SLUGS = [
   'zodiac-myths-facts',
   'chinese-zodiac-2026',
   '2026-yearly-horoscope',
+  'barnum-effect-astrology',
+  'morning-fortune-ritual',
+  'nasa-ophiuchus-13th-zodiac',
+  'twin-study-astrology',
+  'ancient-egypt-astronomy',
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
