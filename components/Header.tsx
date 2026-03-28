@@ -31,6 +31,8 @@ export default function Header() {
   ];
 
   const GUIDE_ITEMS: NavItem[] = [
+    { href: '/blog/daily', emoji: '🔮', label: lang === 'ko' ? '오늘의 별자리 운세' : lang === 'en' ? 'Daily Horoscope' : lang === 'zh' ? '今日星座运势' : '今日星座運勢' },
+    { href: '/blog', emoji: '📝', label: lang === 'ko' ? '운세 가이드 블로그' : lang === 'en' ? 'Blog' : lang === 'zh' ? '运势博客' : '運勢ブログ' },
     { href: '/zodiac', emoji: '⭐', label: lang === 'ko' ? '별자리 정보' : lang === 'en' ? 'Zodiac Info' : lang === 'zh' ? '星座信息' : '星座情報' },
     { href: '/chinese-zodiac', emoji: '🐉', label: lang === 'ko' ? '12띠 정보' : lang === 'en' ? 'Chinese Zodiac' : lang === 'zh' ? '生肖信息' : '十二支情報' },
   ];
@@ -40,11 +42,11 @@ export default function Header() {
   ];
 
   const fortuneLabel = lang === 'ko' ? '운세/테스트' : lang === 'en' ? 'Fortune' : lang === 'zh' ? '运势' : '運勢';
-  const guideLabel = lang === 'ko' ? '백과' : lang === 'en' ? 'Guide' : lang === 'zh' ? '百科' : '図鑑';
+  const guideLabel = lang === 'ko' ? '블로그·백과' : lang === 'en' ? 'Blog & Guide' : lang === 'zh' ? '博客·百科' : 'ブログ·図鑑';
   const gameLabel = lang === 'ko' ? '게임' : lang === 'en' ? 'Game' : lang === 'zh' ? '游戏' : 'ゲーム';
 
   const isFortuneActive = FORTUNE_ITEMS.some(i => i.href === pathname);
-  const isGuideActive = GUIDE_ITEMS.some(i => i.href === pathname);
+  const isGuideActive = GUIDE_ITEMS.some(i => i.href === pathname) || pathname.startsWith('/blog');
   const isGameActive = GAME_ITEMS.some(i => i.href === pathname);
 
   // 드롭다운 외부 클릭 시 닫기
@@ -134,7 +136,7 @@ export default function Header() {
             </button>
             {guideOpen && (
               <div
-                className="absolute top-full left-0 mt-1 w-44 rounded-xl overflow-hidden shadow-xl"
+                className="absolute top-full left-0 mt-1 w-52 rounded-xl overflow-hidden shadow-xl"
                 style={{ background: 'rgba(10,10,40,0.97)', border: '1px solid rgba(255,255,255,0.1)' }}
               >
                 {GUIDE_ITEMS.map(({ href, emoji, label }) => (

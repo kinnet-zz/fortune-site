@@ -34,7 +34,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified: now, changeFrequency: 'daily', priority: 1 },
-    { url: `${baseUrl}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/blog`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${baseUrl}/blog/daily`, lastModified: now, changeFrequency: 'daily', priority: 0.95 },
     { url: `${baseUrl}/zodiac`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/chinese-zodiac`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/card-draw`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
@@ -54,6 +55,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
+  const dailyHoroscopePages: MetadataRoute.Sitemap = ZODIAC_SLUGS.map((slug) => ({
+    url: `${baseUrl}/blog/daily/${slug}`,
+    lastModified: now,
+    changeFrequency: 'daily' as const,
+    priority: 0.9,
+  }));
+
   const zodiacPages: MetadataRoute.Sitemap = ZODIAC_SLUGS.map((slug) => ({
     url: `${baseUrl}/zodiac/${slug}`,
     lastModified: now,
@@ -68,5 +76,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticPages, ...blogPages, ...zodiacPages, ...chineseZodiacPages];
+  return [...staticPages, ...blogPages, ...dailyHoroscopePages, ...zodiacPages, ...chineseZodiacPages];
 }
