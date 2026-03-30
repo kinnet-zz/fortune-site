@@ -111,41 +111,40 @@ ${info.ko}의 특성: 원소(${info.element}), 지배행성(${info.planet})
 날짜: ${dateLabel}
 긍정적이고 실용적인 조언을 담아주세요.`;
 
-  try {
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
-      }
-    );
-    const json = await res.json() as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
-    const text = json.candidates?.[0]?.content?.parts?.[0]?.text?.trim() ?? '';
-    const cleaned = text.replace(/^```json\n?/, '').replace(/\n?```$/, '').trim();
-    const parsed = JSON.parse(cleaned) as Partial<DailyHoroscope>;
-
-    return {
-      zodiac,
-      zodiacKo: info.ko,
-      date,
-      emoji: info.emoji,
-      score: typeof parsed.score === 'number' ? Math.min(95, Math.max(55, parsed.score)) : 70,
-      summary: parsed.summary ?? `${info.ko}의 오늘 운세`,
-      overall: parsed.overall ?? '',
-      love: parsed.love ?? '',
-      money: parsed.money ?? '',
-      work: parsed.work ?? '',
-      health: parsed.health ?? '',
-      luckyColor: parsed.luckyColor ?? '보라색',
-      luckyNumber: typeof parsed.luckyNumber === 'number' ? parsed.luckyNumber : 7,
-      luckyItem: parsed.luckyItem ?? '수정',
-      advice: parsed.advice ?? '오늘도 화이팅!',
-      generatedAt: new Date().toISOString(),
-    };
-  } catch {
-    return fallbackHoroscope(zodiac, date);
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${apiKey}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
+    }
+  );
+  const json = await res.json() as { candidates?: { content?: { parts?: { text?: string }[] } }[]; error?: { message?: string } };
+  if (!res.ok || json.error) {
+    throw new Error(json.error?.message ?? `Gemini HTTP ${res.status}`);
   }
+  const text = json.candidates?.[0]?.content?.parts?.[0]?.text?.trim() ?? '';
+  const cleaned = text.replace(/^```json\n?/, '').replace(/\n?```$/, '').trim();
+  const parsed = JSON.parse(cleaned) as Partial<DailyHoroscope>;
+
+  return {
+    zodiac,
+    zodiacKo: info.ko,
+    date,
+    emoji: info.emoji,
+    score: typeof parsed.score === 'number' ? Math.min(95, Math.max(55, parsed.score)) : 70,
+    summary: parsed.summary ?? `${info.ko}의 오늘 운세`,
+    overall: parsed.overall ?? '',
+    love: parsed.love ?? '',
+    money: parsed.money ?? '',
+    work: parsed.work ?? '',
+    health: parsed.health ?? '',
+    luckyColor: parsed.luckyColor ?? '보라색',
+    luckyNumber: typeof parsed.luckyNumber === 'number' ? parsed.luckyNumber : 7,
+    luckyItem: parsed.luckyItem ?? '수정',
+    advice: parsed.advice ?? '오늘도 화이팅!',
+    generatedAt: new Date().toISOString(),
+  };
 }
 
 export async function GET(request: NextRequest) {
@@ -186,10 +185,11 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(horoscope, {
       headers: { 'Cache-Control': 'no-store', 'X-Cache': 'MISS' },
     });
-  } catch {
+  } catch (err) {
     const horoscope = fallbackHoroscope(zodiac, date);
-    return NextResponse.json(horoscope, {
-      headers: { 'Cache-Control': 'public, max-age=300' },
+    const errMsg = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ ...horoscope, _error: errMsg }, {
+      headers: { 'Cache-Control': 'no-store' },
     });
   }
 }
