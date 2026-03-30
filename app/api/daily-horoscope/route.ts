@@ -78,7 +78,13 @@ function fallbackHoroscope(zodiac: string, date: string): DailyHoroscope {
 
 async function generateWithGemini(zodiac: string, date: string): Promise<DailyHoroscope> {
   const info = ZODIAC_MAP[zodiac];
-  const apiKey = (process.env.GEMINI_API_KEY ?? '') as string;
+  let apiKey: string;
+  try {
+    const { env } = getRequestContext();
+    apiKey = (env as Record<string, string>)['GEMINI_API_KEY'] ?? process.env.GEMINI_API_KEY ?? '';
+  } catch {
+    apiKey = process.env.GEMINI_API_KEY ?? '';
+  }
   if (!apiKey) return fallbackHoroscope(zodiac, date);
 
   const [year, month, day] = date.split('-');
