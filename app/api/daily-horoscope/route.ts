@@ -175,7 +175,7 @@ export async function GET(request: NextRequest) {
       if (cached) {
         const data = JSON.parse(cached) as DailyHoroscope;
         return NextResponse.json(data, {
-          headers: { 'Cache-Control': 'public, max-age=3600', 'X-Cache': 'HIT' },
+          headers: { 'Cache-Control': 'no-store', 'X-Cache': 'HIT' },
         });
       }
     }
