@@ -15,7 +15,7 @@ function getTodayKST(): string {
 
 // POST /api/daily-horoscope/generate-all
 // Authorization: Bearer {CRON_SECRET}
-// body: { date?: "2026-03-28" }  (optional, defaults to today KST)
+// body: { date?: "2026-03-28", force?: true }  (force bypasses KV cache and regenerates)
 export async function POST(request: NextRequest) {
   const secret = process.env.CRON_SECRET ?? '';
   const auth = request.headers.get('Authorization') ?? '';
@@ -25,23 +25,33 @@ export async function POST(request: NextRequest) {
   }
 
   let date: string;
+  let force = false;
   try {
-    const body = await request.json() as { date?: string };
+    const body = await request.json() as { date?: string; force?: boolean };
     date = body.date ?? getTodayKST();
+    force = body.force === true;
   } catch {
     date = getTodayKST();
   }
 
   const origin = new URL(request.url).origin;
-  const results: { zodiac: string; status: 'ok' | 'error'; cached?: boolean }[] = [];
+  const results: { zodiac: string; status: 'ok' | 'error'; cached?: boolean; ai?: boolean }[] = [];
 
   for (const zodiac of ZODIACS) {
     try {
-      const res = await fetch(`${origin}/api/daily-horoscope?zodiac=${zodiac}&date=${date}`, {
-        headers: { 'User-Agent': 'StarFate-CronBot/1.0' },
+      const url = force
+        ? `${origin}/api/daily-horoscope?zodiac=${zodiac}&date=${date}&force=true`
+        : `${origin}/api/daily-horoscope?zodiac=${zodiac}&date=${date}`;
+      const res = await fetch(url, {
+        headers: {
+          'User-Agent': 'StarFate-CronBot/1.0',
+          ...(force ? { Authorization: `Bearer ${secret}` } : {}),
+        },
       });
       const cacheStatus = res.headers.get('X-Cache');
-      results.push({ zodiac, status: 'ok', cached: cacheStatus === 'HIT' });
+      const data = await res.json() as { generatedAt?: string };
+      // fallback 여부 판별: generatedAt이 없거나 fallback 특유의 score 범위
+      results.push({ zodiac, status: 'ok', cached: cacheStatus === 'HIT', ai: !!data.generatedAt });
     } catch {
       results.push({ zodiac, status: 'error' });
     }
@@ -50,6 +60,7 @@ export async function POST(request: NextRequest) {
   const ok = results.filter((r) => r.status === 'ok').length;
   return NextResponse.json({
     date,
+    force,
     total: ZODIACS.length,
     generated: ok,
     failed: ZODIACS.length - ok,

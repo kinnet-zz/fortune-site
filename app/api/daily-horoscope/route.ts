@@ -83,7 +83,7 @@ async function generateWithGemini(zodiac: string, date: string): Promise<DailyHo
   if (!apiKey) return fallbackHoroscope(zodiac, date);
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-lite' });
 
   const [year, month, day] = date.split('-');
   const dateLabel = `${year}년 ${parseInt(month)}월 ${parseInt(day)}일`;
@@ -142,28 +142,39 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const zodiac = (searchParams.get('zodiac') ?? '').toLowerCase();
   const date = searchParams.get('date') ?? getTodayKST();
+  const force = searchParams.get('force') === 'true';
+  const secret = process.env.CRON_SECRET ?? '';
+  const auth = request.headers.get('Authorization') ?? '';
+  const authorized = secret && auth === `Bearer ${secret}`;
 
   if (!ZODIAC_MAP[zodiac]) {
     return NextResponse.json({ error: 'Invalid zodiac sign' }, { status: 400 });
+  }
+
+  if (force && !authorized) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   const cacheKey = `horoscope:v1:${date}:${zodiac}`;
 
   try {
     const kv = getKV();
-    const cached = await kv.get(cacheKey);
-    if (cached) {
-      const data = JSON.parse(cached) as DailyHoroscope;
-      return NextResponse.json(data, {
-        headers: { 'Cache-Control': 'public, max-age=3600', 'X-Cache': 'HIT' },
-      });
+
+    if (!force) {
+      const cached = await kv.get(cacheKey);
+      if (cached) {
+        const data = JSON.parse(cached) as DailyHoroscope;
+        return NextResponse.json(data, {
+          headers: { 'Cache-Control': 'public, max-age=3600', 'X-Cache': 'HIT' },
+        });
+      }
     }
 
     const horoscope = await generateWithGemini(zodiac, date);
     await kv.put(cacheKey, JSON.stringify(horoscope), { expirationTtl: 86400 });
 
     return NextResponse.json(horoscope, {
-      headers: { 'Cache-Control': 'public, max-age=3600', 'X-Cache': 'MISS' },
+      headers: { 'Cache-Control': 'no-store', 'X-Cache': 'MISS' },
     });
   } catch {
     const horoscope = fallbackHoroscope(zodiac, date);
