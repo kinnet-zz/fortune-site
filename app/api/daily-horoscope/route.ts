@@ -1,7 +1,6 @@
 export const runtime = 'edge';
 
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getRequestContext } from '@cloudflare/next-on-pages';
 
 export interface DailyHoroscope {
@@ -82,9 +81,6 @@ async function generateWithGemini(zodiac: string, date: string): Promise<DailyHo
   const apiKey = (process.env.GEMINI_API_KEY ?? '') as string;
   if (!apiKey) return fallbackHoroscope(zodiac, date);
 
-  const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-lite' });
-
   const [year, month, day] = date.split('-');
   const dateLabel = `${year}년 ${parseInt(month)}월 ${parseInt(day)}일`;
 
@@ -110,8 +106,16 @@ ${info.ko}의 특성: 원소(${info.element}), 지배행성(${info.planet})
 긍정적이고 실용적인 조언을 담아주세요.`;
 
   try {
-    const result = await model.generateContent(prompt);
-    const text = result.response.text().trim();
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
+      }
+    );
+    const json = await res.json() as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
+    const text = json.candidates?.[0]?.content?.parts?.[0]?.text?.trim() ?? '';
     const cleaned = text.replace(/^```json\n?/, '').replace(/\n?```$/, '').trim();
     const parsed = JSON.parse(cleaned) as Partial<DailyHoroscope>;
 
