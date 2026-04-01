@@ -1,6 +1,7 @@
 export const runtime = 'edge';
 
 import { NextRequest, NextResponse } from 'next/server';
+import { getRequestContext } from '@cloudflare/next-on-pages';
 
 const ZODIACS = [
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
@@ -17,7 +18,13 @@ function getTodayKST(): string {
 // Authorization: Bearer {CRON_SECRET}
 // body: { date?: "2026-03-28", force?: true }  (force bypasses KV cache and regenerates)
 export async function POST(request: NextRequest) {
-  const secret = process.env.CRON_SECRET ?? '';
+  let secret: string;
+  try {
+    const { env } = getRequestContext();
+    secret = (env as Record<string, string>)['CRON_SECRET'] ?? process.env.CRON_SECRET ?? '';
+  } catch {
+    secret = process.env.CRON_SECRET ?? '';
+  }
   const auth = request.headers.get('Authorization') ?? '';
 
   if (!secret || auth !== `Bearer ${secret}`) {
