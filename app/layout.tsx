@@ -36,28 +36,21 @@ export const metadata: Metadata = {
     '今日の運勢', '占い', '無料占い', '星座占い', '誕生日占い', '十二支', '恋愛運', '金運', '仕事運', '総合運', 'AI占い', '毎日の運勢', '星占い', '今日の星座', '運勢診断', '無料星座占い',
     '今日运势', '免费占卜', '星座运势', '生肖运势', '星座', '免费星座', '每日运势', '爱情运', '财运', '工作运', 'AI占卜', '生日占卜', '十二生肖', '星座占卜',
   ],
-  metadataBase: new URL('https://www.starfate.day'),
+  metadataBase: new URL('https://starfate.day'),
   alternates: {
-    canonical: 'https://www.starfate.day',
-    languages: {
-      'x-default': 'https://www.starfate.day',
-      'ko': 'https://www.starfate.day',
-      'en': 'https://www.starfate.day',
-      'zh': 'https://www.starfate.day',
-      'ja': 'https://www.starfate.day',
-    },
+    canonical: 'https://starfate.day',
   },
   openGraph: {
     title: '오늘의 운세 ✨ | 별자리·띠 무료 운세',
     description: '생년월일로 별자리와 띠를 분석하는 AI 무료 운세 서비스. 오늘의 종합운, 연애운, 금전운, 직업운을 확인해보세요.',
     type: 'website',
-    url: 'https://www.starfate.day',
+    url: 'https://starfate.day',
     siteName: '오늘의 운세',
     locale: 'ko_KR',
     alternateLocale: ['en_US', 'ja_JP', 'zh_CN'],
     images: [
       {
-        url: 'https://www.starfate.day/og-image.png',
+        url: 'https://starfate.day/og-image.png',
         width: 1200,
         height: 630,
         alt: '오늘의 운세 - AI 무료 운세 서비스',
@@ -68,7 +61,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: '오늘의 운세 ✨ | 별자리·띠 무료 운세',
     description: '생년월일로 별자리와 띠를 분석하는 AI 무료 운세. 매일 업데이트!',
-    images: ['https://www.starfate.day/og-image.png'],
+    images: ['https://starfate.day/og-image.png'],
   },
   robots: {
     index: true,
@@ -97,8 +90,6 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${notoSansKR.variable} ${notoSansJP.variable} ${notoSansSC.variable}`}>
       <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="google-adsense-account" content="ca-pub-3314960461630607" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -111,8 +102,8 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'Organization',
               name: 'StarFate',
-              url: 'https://www.starfate.day',
-              logo: 'https://www.starfate.day/og-image.png',
+              url: 'https://starfate.day',
+              logo: 'https://starfate.day/og-image.png',
               description: '생년월일 기반 AI 무료 운세 서비스 — 별자리·띠 분석',
               contactPoint: {
                 '@type': 'ContactPoint',
@@ -130,7 +121,7 @@ export default function RootLayout({
               '@type': 'WebApplication',
               name: '오늘의 운세',
               alternateName: ['Today\'s Fortune', '今日运势', '今日の運勢'],
-              url: 'https://www.starfate.day',
+              url: 'https://starfate.day',
               description: '생년월일로 별자리와 띠를 분석하여 오늘의 운세를 AI가 알려드리는 무료 서비스',
               applicationCategory: 'LifestyleApplication',
               operatingSystem: 'Web',

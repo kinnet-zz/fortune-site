@@ -8,7 +8,7 @@ const content = {
   ko: {
     back: '← 홈으로',
     title: '개인정보처리방침',
-    lastUpdated: '최종 수정일: 2025년 3월 3일',
+    lastUpdated: '최종 수정일: 2026년 4월 5일',
     s1Title: '1. 개인정보 수집 항목 및 목적',
     s1Intro: '오늘의 운세(이하 "서비스")는 운세 서비스 제공을 위해 아래와 같이 최소한의 정보를 수집합니다.',
     s1Items: [
@@ -48,7 +48,7 @@ const content = {
   en: {
     back: '← Back to Home',
     title: 'Privacy Policy',
-    lastUpdated: 'Last updated: March 3, 2025',
+    lastUpdated: 'Last updated: April 5, 2026',
     s1Title: '1. Personal Information Collected and Purpose',
     s1Intro: 'Fortune Teller (hereinafter "Service") collects only the minimum necessary information to provide its fortune service.',
     s1Items: [
@@ -88,7 +88,7 @@ const content = {
   zh: {
     back: '← 返回首页',
     title: '隐私政策',
-    lastUpdated: '最后更新：2025年3月3日',
+    lastUpdated: '最后更新：2026年4月5日',
     s1Title: '1. 收集的个人信息及目的',
     s1Intro: '今日运势（以下简称"服务"）为提供运势服务，仅收集以下最少量信息。',
     s1Items: [
@@ -128,7 +128,7 @@ const content = {
   ja: {
     back: '← ホームへ',
     title: 'プライバシーポリシー',
-    lastUpdated: '最終更新日：2025年3月3日',
+    lastUpdated: '最終更新日：2026年4月5日',
     s1Title: '1. 収集する個人情報と目的',
     s1Intro: '今日の運勢（以下「サービス」）は、運勢サービスの提供のため、以下の最小限の情報を収集します。',
     s1Items: [

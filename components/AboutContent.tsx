@@ -115,7 +115,7 @@ export default function AboutContent() {
               </div>
               <div className="flex gap-4">
                 <dt className="text-white/40 w-24 flex-shrink-0">{tr.opLabels.serviceUrl}</dt>
-                <dd className="text-white/70">https://fortune-site-6dg.pages.dev</dd>
+                <dd className="text-white/70">https://starfate.day</dd>
               </div>
               <div className="flex gap-4">
                 <dt className="text-white/40 w-24 flex-shrink-0">{tr.opLabels.email}</dt>
