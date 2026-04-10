@@ -1,0 +1,54 @@
+name: Daily Horoscope Generation
+
+on:
+  # 매일 오전 0:05 KST (전날 15:05 UTC)
+  schedule:
+    - cron: '5 15 * * *'
+  # 수동 실행도 가능
+  workflow_dispatch:
+    inputs:
+      date:
+        description: '생성할 날짜 (YYYY-MM-DD, 비워두면 오늘 KST)'
+        required: false
+        default: ''
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate daily horoscopes
+        run: |
+          DATE="${{ github.event.inputs.date }}"
+          if [ -z "$DATE" ]; then
+            DATE=$(TZ=Asia/Seoul date '+%Y-%m-%d')
+          fi
+          echo "Generating horoscopes for $DATE"
+
+          BODY="{}"
+          if [ -n "$DATE" ]; then
+            BODY="{\"date\":\"$DATE\"}"
+          fi
+
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            "https://www.starfate.day/api/daily-horoscope/generate-all" \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d "$BODY")
+
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY_RESP=$(echo "$RESPONSE" | head -n-1)
+
+          echo "HTTP Status: $HTTP_CODE"
+          echo "Response: $BODY_RESP"
+
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "::error::생성 실패 (HTTP $HTTP_CODE)"
+            exit 1
+          fi
+
+          FAILED=$(echo "$BODY_RESP" | grep -o '"failed":[0-9]*' | grep -o '[0-9]*')
+          if [ "$FAILED" -gt "0" ]; then
+            echo "::warning::$FAILED개 별자리 생성 실패"
+          else
+            echo "12개 별자리 운세 생성 완료 ✅"
+          fi

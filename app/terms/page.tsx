@@ -8,7 +8,7 @@ const content = {
   ko: {
     back: '← 홈으로',
     title: '이용약관',
-    lastUpdated: '최종 수정일: 2025년 3월 3일',
+    lastUpdated: '최종 수정일: 2026년 4월 5일',
     sections: [
       { title: '제1조 (목적)', body: '본 약관은 오늘의 운세(이하 "서비스")가 제공하는 운세 서비스의 이용 조건 및 절차, 서비스 이용자와 서비스 간의 권리·의무 및 책임사항을 규정함을 목적으로 합니다.' },
       { title: '제2조 (서비스 내용)', body: '서비스는 이용자가 입력한 생년월일을 기반으로 별자리·띠를 계산하고, AI를 활용하여 오늘의 운세를 생성하여 제공합니다. 운세는 오락·참고 목적으로만 제공되며 어떠한 법적 책임도 지지 않습니다.' },
@@ -22,7 +22,7 @@ const content = {
   en: {
     back: '← Back to Home',
     title: 'Terms of Service',
-    lastUpdated: 'Last updated: March 3, 2025',
+    lastUpdated: 'Last updated: April 5, 2026',
     sections: [
       { title: 'Article 1 (Purpose)', body: 'These Terms govern the conditions and procedures for using the Fortune Teller service (hereinafter "Service"), and define the rights, obligations, and responsibilities between users and the Service.' },
       { title: 'Article 2 (Service Description)', body: 'The Service calculates your zodiac sign and Chinese zodiac based on your birth date, and uses AI to generate your daily fortune. Fortunes are provided for entertainment and reference purposes only; the Service bears no legal liability.' },
@@ -36,7 +36,7 @@ const content = {
   zh: {
     back: '← 返回首页',
     title: '使用条款',
-    lastUpdated: '最后更新：2025年3月3日',
+    lastUpdated: '最后更新：2026年4月5日',
     sections: [
       { title: '第1条（目的）', body: '本条款规定了今日运势（以下简称"服务"）提供的运势服务的使用条件及程序，以及用户与服务之间的权利、义务和责任事项。' },
       { title: '第2条（服务内容）', body: '服务根据用户输入的生日计算星座和生肖，并利用AI生成今日运势。运势仅供娱乐和参考目的提供，服务不承担任何法律责任。' },
@@ -50,7 +50,7 @@ const content = {
   ja: {
     back: '← ホームへ',
     title: '利用規約',
-    lastUpdated: '最終更新日：2025年3月3日',
+    lastUpdated: '最終更新日：2026年4月5日',
     sections: [
       { title: '第1条（目的）', body: '本規約は、今日の運勢（以下「サービス」）が提供する運勢サービスの利用条件および手続き、サービス利用者とサービス間の権利・義務および責任事項を規定することを目的とします。' },
       { title: '第2条（サービス内容）', body: 'サービスは、ユーザーが入力した生年月日をもとに星座・干支を計算し、AIを活用して今日の運勢を生成して提供します。運勢はエンターテインメント・参考目的のみで提供され、いかなる法的責任も負いません。' },
