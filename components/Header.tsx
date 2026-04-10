@@ -33,10 +33,17 @@ export default function Header() {
   const GUIDE_ITEMS: NavItem[] = [
     { href: '/zodiac', emoji: '⭐', label: lang === 'ko' ? '별자리 정보' : lang === 'en' ? 'Zodiac Info' : lang === 'zh' ? '星座信息' : '星座情報' },
     { href: '/chinese-zodiac', emoji: '🐉', label: lang === 'ko' ? '12띠 정보' : lang === 'en' ? 'Chinese Zodiac' : lang === 'zh' ? '生肖信息' : '十二支情報' },
+    { href: '/guide/zodiac-compatibility', emoji: '💑', label: lang === 'ko' ? '별자리 궁합' : lang === 'en' ? 'Compatibility' : lang === 'zh' ? '星座配对' : '星座相性' },
+    { href: '/guide/horoscope-history', emoji: '📜', label: lang === 'ko' ? '운세의 역사' : lang === 'en' ? 'Astrology History' : lang === 'zh' ? '占星历史' : '占星の歴史' },
+    { href: '/guide/tarot-guide', emoji: '🃏', label: lang === 'ko' ? '타로 가이드' : lang === 'en' ? 'Tarot Guide' : lang === 'zh' ? '塔罗指南' : 'タロットガイド' },
+    { href: '/guide/numerology', emoji: '🔢', label: lang === 'ko' ? '수비학' : lang === 'en' ? 'Numerology' : lang === 'zh' ? '数字命理' : '数秘術' },
+    { href: '/guide/past-life-culture', emoji: '🌀', label: lang === 'ko' ? '전생과 윤회' : lang === 'en' ? 'Past Lives' : lang === 'zh' ? '前世轮回' : '前世と輪廻' },
+    { href: '/guide/fortune-tips', emoji: '✨', label: lang === 'ko' ? '운세 활용법' : lang === 'en' ? 'Fortune Tips' : lang === 'zh' ? '运势技巧' : '運勢活用法' },
   ];
 
   const GAME_ITEMS: NavItem[] = [
     { href: '/number-game', emoji: '🔢', label: lang === 'ko' ? '숫자 게임' : lang === 'en' ? 'Number Game' : lang === 'zh' ? '数字游戏' : '数字ゲーム' },
+    { href: '/zodiac-memory', emoji: '🌟', label: lang === 'ko' ? '별자리 기억' : lang === 'en' ? 'Zodiac Memory' : lang === 'zh' ? '星座记忆' : '星座記憶' },
   ];
 
   const fortuneLabel = lang === 'ko' ? '운세/테스트' : lang === 'en' ? 'Fortune' : lang === 'zh' ? '运势' : '運勢';
