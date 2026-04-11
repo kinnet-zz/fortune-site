@@ -233,6 +233,63 @@ export default function PastLifeClient() {
         )}
 
         <p className="text-center text-white/20 text-xs mt-6">{t.footerText}</p>
+
+        {/* Educational content */}
+        <div className="space-y-5 mt-10">
+          <div
+            className="rounded-2xl p-6"
+            style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}
+          >
+            <h2 className="text-white font-bold text-base mb-3">🌀 전생이란 무엇인가?</h2>
+            <p className="text-white/55 text-sm leading-relaxed mb-3">
+              전생(前生, Past Life)은 현재 삶 이전에 다른 형태로 존재했던 생을 의미합니다. 윤회(輪廻, Reincarnation) 개념은 수천 년의 역사를 가지며, 힌두교·불교·자이나교 등 동양 종교는 물론 고대 그리스 철학과 켈트 문화에도 깊이 뿌리내리고 있습니다.
+            </p>
+            <p className="text-white/55 text-sm leading-relaxed mb-3">
+              불교에서는 삶과 죽음이 반복되는 윤회의 수레바퀴를 '삼사라(Samsara)'라고 부르며, 업(業, Karma)에 따라 다음 생의 형태가 결정된다고 봅니다. 힌두교에서는 불멸의 영혼 '아트만(Atman)'이 육체를 옮겨 다닌다고 설명합니다.
+            </p>
+            <p className="text-white/55 text-sm leading-relaxed">
+              서양에서는 고대 그리스 철학자 피타고라스와 플라톤이 영혼의 윤회를 언급했습니다. 현대 심리학에서도 최면 치료를 통한 전생 퇴행(Past Life Regression) 연구가 이루어지고 있으며, 일부 심리치료사들은 이를 트라우마 치유의 도구로 활용하기도 합니다.
+            </p>
+          </div>
+
+          <div
+            className="rounded-2xl p-6"
+            style={{ background: 'rgba(139,92,246,0.07)', border: '1px solid rgba(139,92,246,0.15)' }}
+          >
+            <h2 className="text-white font-bold text-base mb-3">⭐ 전생과 별자리의 연결</h2>
+            <p className="text-white/55 text-sm leading-relaxed mb-3">
+              점성술에서 출생 차트(Birth Chart)는 현생뿐 아니라 전생의 카르마를 반영한다고 해석하기도 합니다. 특히 달의 노드(South Node)는 전생에서 이어온 패턴과 재능을, 북쪽 노드(North Node)는 이번 생에서 발전시켜야 할 방향을 나타낸다고 봅니다.
+            </p>
+            <p className="text-white/55 text-sm leading-relaxed">
+              생년월일과 이름에 담긴 수비학적 에너지 역시 전생의 흔적을 담고 있다는 관점이 있습니다. 본 테스트는 이러한 점성술·수비학·동서양 신화의 상징을 결합하여 흥미로운 전생 이야기를 들려드립니다. 오락 목적의 콘텐츠로, 진지하게 받아들이기보다 자기 이해의 계기로 즐겨주세요.
+            </p>
+          </div>
+
+          <div
+            className="rounded-2xl p-5"
+            style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}
+          >
+            <h2 className="text-white font-bold text-sm mb-3">📚 전생 테스트 결과 유형 안내</h2>
+            <div className="grid grid-cols-2 gap-3 text-xs text-white/45">
+              {[
+                { e: '🎨', t: '예술가 계열', d: '화원, 음유시인, 조각가 등 감수성과 창의력이 뛰어났던 전생' },
+                { e: '🏛️', t: '성직자·학자 계열', d: '신관, 철학자, 점성가 등 지식과 영성을 추구했던 전생' },
+                { e: '⚔️', t: '전사·영웅 계열', d: '기사, 장군, 닌자 등 용기와 결단력으로 살았던 전생' },
+                { e: '🌿', t: '치유자·현자 계열', d: '무당, 약초사, 명상가 등 치유와 지혜를 나눴던 전생' },
+              ].map((item) => (
+                <div
+                  key={item.t}
+                  className="rounded-xl p-3"
+                  style={{ background: 'rgba(139,92,246,0.08)', border: '1px solid rgba(139,92,246,0.12)' }}
+                >
+                  <div className="text-xl mb-1">{item.e}</div>
+                  <div className="text-white/60 font-medium mb-1">{item.t}</div>
+                  <div className="leading-relaxed">{item.d}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
