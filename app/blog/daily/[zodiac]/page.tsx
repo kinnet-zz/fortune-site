@@ -169,6 +169,8 @@ export default function ZodiacDailyPage() {
     );
   }
 
+  const info = ZODIAC_INFO[zodiac];
+
   return (
     <div style={bgStyle}>
       <article className="max-w-2xl mx-auto px-6 py-16">
@@ -280,76 +282,70 @@ export default function ZodiacDailyPage() {
               </div>
             </nav>
 
-            {/* Static zodiac info section */}
-            {ZODIAC_INFO[zodiac] && (
-              <section className="mt-12 space-y-6">
-                <div
-                  className="rounded-2xl p-6"
-                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}
-                >
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="text-3xl">{ZODIAC_INFO[zodiac].symbol}</span>
-                    <div>
-                      <h2 className="text-white font-bold text-base">{ZODIAC_INFO[zodiac].ko} 별자리 소개</h2>
-                      <p className="text-white/40 text-xs">{ZODIAC_INFO[zodiac].dates} · {ZODIAC_INFO[zodiac].element}의 원소 · 지배 행성: {ZODIAC_INFO[zodiac].planet}</p>
-                    </div>
-                  </div>
-                  <p className="text-white/60 text-sm leading-relaxed mb-3">
-                    <strong className="text-purple-300">{ZODIAC_INFO[zodiac].trait}</strong>
-                  </p>
-                  <p className="text-white/55 text-sm leading-relaxed">
-                    {ZODIAC_INFO[zodiac].desc}
-                  </p>
-                  <div className="mt-4">
-                    <Link
-                      href={`/zodiac/${zodiac}`}
-                      className="text-purple-400 hover:text-purple-300 text-xs transition-colors"
-                    >
-                      {ZODIAC_INFO[zodiac].ko} 상세 가이드 보기 →
-                    </Link>
-                  </div>
-                </div>
-
-                <div
-                  className="rounded-2xl p-6"
-                  style={{ background: 'rgba(124,58,237,0.07)', border: '1px solid rgba(124,58,237,0.15)' }}
-                >
-                  <h2 className="text-white font-bold text-base mb-3">💡 {ZODIAC_INFO[zodiac].ko} 일일운세 활용 팁</h2>
-                  <p className="text-white/60 text-sm leading-relaxed mb-4">
-                    {ZODIAC_INFO[zodiac].tip}
-                  </p>
-                  <div className="space-y-2 text-sm text-white/50">
-                    <div className="flex gap-2">
-                      <span className="text-purple-400 flex-shrink-0">▸</span>
-                      <span><strong className="text-white/70">운세 점수 해석:</strong> 80점 이상은 에너지가 매우 좋은 날, 65~79점은 보통, 64점 이하는 신중하게 행동해야 하는 날입니다.</span>
-                    </div>
-                    <div className="flex gap-2">
-                      <span className="text-purple-400 flex-shrink-0">▸</span>
-                      <span><strong className="text-white/70">행운 아이템 활용:</strong> 오늘의 행운 색과 아이템을 일상에 작게 접목해보세요. 특정 색의 소품을 착용하거나, 행운 숫자를 기억하는 것만으로도 긍정적 의도를 설정하는 데 도움이 됩니다.</span>
-                    </div>
-                    <div className="flex gap-2">
-                      <span className="text-purple-400 flex-shrink-0">▸</span>
-                      <span><strong className="text-white/70">AI 생성 콘텐츠 안내:</strong> 본 운세는 Google Gemini AI가 별자리·띠·날짜를 기반으로 매일 새롭게 생성하는 오락 목적의 콘텐츠입니다. 실제 미래를 예측하지 않습니다.</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  className="rounded-2xl p-5 text-center"
-                  style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}
-                >
-                  <p className="text-white/40 text-xs mb-3">생년월일로 별자리·띠 종합 운세 보기</p>
-                  <Link
-                    href="/"
-                    className="inline-block px-6 py-3 rounded-full font-bold text-white text-sm"
-                    style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #9333ea 100%)' }}
-                  >
-                    🔮 나의 오늘 운세 무료로 보기 →
-                  </Link>
-                </div>
-              </section>
-            )}
           </>
+        )}
+
+        {/* Static zodiac info — always visible (SEO/AdSense) */}
+        {info && (
+          <section className="mt-12 space-y-6">
+            <div
+              className="rounded-2xl p-6"
+              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-3xl">{info.symbol}</span>
+                <div>
+                  <h2 className="text-white font-bold text-base">{info.ko} 별자리 소개</h2>
+                  <p className="text-white/40 text-xs">{info.dates} · {info.element}의 원소 · 지배 행성: {info.planet}</p>
+                </div>
+              </div>
+              <p className="text-white/60 text-sm leading-relaxed mb-3">
+                <strong className="text-purple-300">{info.trait}</strong>
+              </p>
+              <p className="text-white/55 text-sm leading-relaxed">{info.desc}</p>
+              <div className="mt-4">
+                <Link href={`/zodiac/${zodiac}`} className="text-purple-400 hover:text-purple-300 text-xs transition-colors">
+                  {info.ko} 상세 가이드 보기 →
+                </Link>
+              </div>
+            </div>
+
+            <div
+              className="rounded-2xl p-6"
+              style={{ background: 'rgba(124,58,237,0.07)', border: '1px solid rgba(124,58,237,0.15)' }}
+            >
+              <h2 className="text-white font-bold text-base mb-3">💡 {info.ko} 일일운세 활용 팁</h2>
+              <p className="text-white/60 text-sm leading-relaxed mb-4">{info.tip}</p>
+              <div className="space-y-2 text-sm text-white/50">
+                <div className="flex gap-2">
+                  <span className="text-purple-400 flex-shrink-0">▸</span>
+                  <span><strong className="text-white/70">운세 점수 해석:</strong> 80점 이상은 에너지가 매우 좋은 날, 65~79점은 보통, 64점 이하는 신중하게 행동해야 하는 날입니다.</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="text-purple-400 flex-shrink-0">▸</span>
+                  <span><strong className="text-white/70">행운 아이템 활용:</strong> 오늘의 행운 색과 아이템을 일상에 작게 접목해보세요. 긍정적 의도를 설정하는 데 도움이 됩니다.</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="text-purple-400 flex-shrink-0">▸</span>
+                  <span><strong className="text-white/70">AI 생성 콘텐츠 안내:</strong> 본 운세는 Google Gemini AI가 별자리·띠·날짜를 기반으로 매일 새롭게 생성하는 오락 목적의 콘텐츠입니다. 실제 미래를 예측하지 않습니다.</span>
+                </div>
+              </div>
+            </div>
+
+            <div
+              className="rounded-2xl p-5 text-center"
+              style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}
+            >
+              <p className="text-white/40 text-xs mb-3">생년월일로 별자리·띠 종합 운세 보기</p>
+              <Link
+                href="/"
+                className="inline-block px-6 py-3 rounded-full font-bold text-white text-sm"
+                style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #9333ea 100%)' }}
+              >
+                🔮 나의 오늘 운세 무료로 보기 →
+              </Link>
+            </div>
+          </section>
         )}
       </article>
     </div>
