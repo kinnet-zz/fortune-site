@@ -327,7 +327,7 @@ export default function ZodiacDailyPage() {
                 </div>
                 <div className="flex gap-2">
                   <span className="text-purple-400 flex-shrink-0">▸</span>
-                  <span><strong className="text-white/70">AI 생성 콘텐츠 안내:</strong> 본 운세는 Google Gemini AI가 별자리·띠·날짜를 기반으로 매일 새롭게 생성하는 오락 목적의 콘텐츠입니다. 실제 미래를 예측하지 않습니다.</span>
+                  <span><strong className="text-white/70">운세 안내:</strong> 본 운세는 별자리·띠·날짜를 기반으로 매일 새롭게 제공되는 오락 목적의 콘텐츠입니다. 실제 미래를 예측하지 않습니다.</span>
                 </div>
               </div>
             </div>

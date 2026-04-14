@@ -236,12 +236,12 @@ export default function BlogIndexPage() {
                   className="px-2 py-0.5 rounded-full text-xs font-bold"
                   style={{ background: 'rgba(124,58,237,0.5)', color: 'rgba(221,214,254,1)' }}
                 >
-                  ✨ 매일 AI 자동 생성
+                  ✨ 매일 새롭게 업데이트
                 </span>
               </div>
               <h2 className="text-white font-bold text-xl mb-1">오늘의 12별자리 일일 운세</h2>
               <p className="text-white/50 text-sm">
-                Gemini AI가 매일 새롭게 생성하는 별자리별 운세. 종합·사랑·금전·건강 운세와 행운 아이템까지 확인하세요.
+                매일 새롭게 업데이트되는 별자리별 운세. 종합·사랑·금전·건강 운세와 행운 아이템까지 확인하세요.
               </p>
             </div>
             <div className="text-purple-300 text-sm font-medium whitespace-nowrap">바로 보기 →</div>

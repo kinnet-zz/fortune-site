@@ -169,7 +169,7 @@ export default function AboutContent() {
               </div>
               <div className="flex gap-4">
                 <dt className="text-white/40 w-24 flex-shrink-0">{tr.opLabels.tech}</dt>
-                <dd className="text-white/70">Next.js, Google Gemini AI, Cloudflare Pages</dd>
+                <dd className="text-white/70">Next.js, Cloudflare Pages</dd>
               </div>
             </dl>
           </div>
