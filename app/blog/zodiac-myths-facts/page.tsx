@@ -24,7 +24,7 @@ export default function ZodiacMythsFactsPage() {
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={
+          dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'Article',
@@ -51,7 +51,7 @@ export default function ZodiacMythsFactsPage() {
                 '@id': 'https://www.starfate.day/blog/zodiac-myths-facts',
               },
             }),
-          }
+          }}
         />
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로
