@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AuthorBio from '@/components/AuthorBio';
 
 export const metadata: Metadata = {
   title: '12띠 궁합 완벽 가이드 — 나와 잘 맞는 띠는? | StarFate',
@@ -21,6 +22,37 @@ export default function ChineseZodiacCompatibilityPage() {
   return (
     <div style={bgStyle}>
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: '동양 12지 궁합 완벽 가이드',
+              description: '음양오행의 원리에 기반한 12지 동물별 궁합 분석.',
+              datePublished: '2025-03-12',
+              dateModified: '2025-03-12',
+              author: {
+                '@type': 'Organization',
+                name: 'StarFate 편집팀',
+                url: 'https://www.starfate.day/about',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'StarFate',
+                url: 'https://www.starfate.day',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://www.starfate.day/opengraph-image',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': 'https://www.starfate.day/blog/chinese-zodiac-compatibility',
+              },
+            }),
+          }
+        />
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
@@ -39,6 +71,8 @@ export default function ChineseZodiacCompatibilityPage() {
             수천 년 동양 철학의 정수인 12띠 궁합. 삼합·육합·상충의 원리를 이해하면 연애, 결혼, 우정, 비즈니스 파트너 관계를 보다 깊이 이해할 수 있습니다.
           </p>
         </header>
+
+        <AuthorBio date="2025년 3월 12일" readTime="10분" category="동양 점성술" />
 
         <div className="space-y-8 text-sm leading-relaxed">
 

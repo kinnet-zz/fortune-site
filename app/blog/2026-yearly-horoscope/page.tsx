@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AuthorBio from '@/components/AuthorBio';
 
 export const metadata: Metadata = {
   title: '2026년 별자리별 연간 운세 총정리 | StarFate',
@@ -21,6 +22,37 @@ export default function YearlyHoroscope2026Page() {
   return (
     <div style={bgStyle}>
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: '2026년 별자리별 연간 운세 — 12별자리 완벽 예측',
+              description: '2026년 주요 행성 이동과 천체 이벤트를 기반으로 한 12별자리 연간 운세 가이드.',
+              datePublished: '2025-12-30',
+              dateModified: '2025-12-30',
+              author: {
+                '@type': 'Organization',
+                name: 'StarFate 편집팀',
+                url: 'https://www.starfate.day/about',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'StarFate',
+                url: 'https://www.starfate.day',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://www.starfate.day/opengraph-image',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': 'https://www.starfate.day/blog/2026-yearly-horoscope',
+              },
+            }),
+          }
+        />
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
@@ -39,6 +71,8 @@ export default function YearlyHoroscope2026Page() {
             2026년은 목성의 게자리 진입과 토성의 물고기자리 완주 등 굵직한 행성 이동이 이어지는 역동적인 한 해입니다. 12별자리 각각에게 2026년이 어떤 의미를 지니는지, 원소별로 나누어 살펴봅니다.
           </p>
         </header>
+
+        <AuthorBio date="2025년 12월 30일" readTime="12분" category="연간 운세" />
 
         <div className="space-y-8 text-sm leading-relaxed">
 

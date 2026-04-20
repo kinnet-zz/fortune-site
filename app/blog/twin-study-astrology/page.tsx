@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AuthorBio from '@/components/AuthorBio';
 
 export const metadata: Metadata = {
   title: '같은 날 태어난 2,000명을 추적했다 — 쌍둥이 연구가 별자리에 던진 가장 불편한 질문 | StarFate',
@@ -21,6 +22,37 @@ export default function TwinStudyAstrologyPage() {
   return (
     <div style={bgStyle}>
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: '일란성 쌍둥이 연구로 본 별자리 성격론의 한계',
+              description: '같은 별자리를 가진 일란성 쌍둥이들의 삶이 왜 다른지 연구 데이터로 분석합니다.',
+              datePublished: '2025-08-05',
+              dateModified: '2025-08-05',
+              author: {
+                '@type': 'Organization',
+                name: 'StarFate 편집팀',
+                url: 'https://www.starfate.day/about',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'StarFate',
+                url: 'https://www.starfate.day',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://www.starfate.day/opengraph-image',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': 'https://www.starfate.day/blog/twin-study-astrology',
+              },
+            }),
+          }
+        />
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로 돌아가기
         </Link>
@@ -39,6 +71,8 @@ export default function TwinStudyAstrologyPage() {
             만약 별자리가 성격과 운명을 결정한다면, 같은 날 같은 시각에 태어난 사람들은 비슷한 삶을 살아야 합니다. 한 연구자가 수십 년간 2,000명 이상을 실제로 추적했습니다. 그 결과는 점성술에 대한 가장 불편한 질문을 남겼습니다.
           </p>
         </header>
+
+        <AuthorBio date="2025년 8월 5일" readTime="10분" category="데이터 분석" />
 
         <img
           src="https://images.unsplash.com/photo-1543722530-d2c3201371e6?w=800&auto=format&fit=crop&q=80"

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AuthorBio from '@/components/AuthorBio';
 
 export const metadata: Metadata = {
   title: '점성술이란 무엇인가? 서양 별자리의 역사와 기초 완벽 가이드 | StarFate',
@@ -21,6 +22,37 @@ export default function WhatIsAstrologyPage() {
   return (
     <div style={bgStyle}>
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: '점성술이란 무엇인가? 서양 별자리의 역사와 기초 완벽 가이드',
+              description: '수천 년의 역사를 가진 점성술의 기원부터 현대 별자리 해석법까지. 황도대 12별자리, 지배 행성, 원소의 관계를 체계적으로 설명합니다.',
+              datePublished: '2025-03-01',
+              dateModified: '2025-03-01',
+              author: {
+                '@type': 'Organization',
+                name: 'StarFate 편집팀',
+                url: 'https://www.starfate.day/about',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'StarFate',
+                url: 'https://www.starfate.day',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://www.starfate.day/opengraph-image',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': 'https://www.starfate.day/blog/what-is-astrology',
+              },
+            }),
+          }
+        />
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
@@ -39,6 +71,8 @@ export default function WhatIsAstrologyPage() {
             수천 년의 역사를 가진 점성술은 단순한 미신이 아닙니다. 천체의 움직임과 인간의 삶을 연결지어온 고대의 지혜를 탐구합니다.
           </p>
         </header>
+
+        <AuthorBio date="2025년 3월 1일" readTime="8분" category="점성술 기초" />
 
         <div className="space-y-8 text-sm leading-relaxed">
 

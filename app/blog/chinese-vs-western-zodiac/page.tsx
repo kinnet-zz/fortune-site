@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AuthorBio from '@/components/AuthorBio';
 
 export const metadata: Metadata = {
   title: '동양 12지와 서양 별자리의 차이점 — 두 전통의 지혜 비교 | StarFate',
@@ -21,6 +22,37 @@ export default function ChineseVsWesternPage() {
   return (
     <div style={bgStyle}>
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: '동양 12지와 서양 별자리의 차이점',
+              description: '음양오행에 기반한 동양 12지와 행성 에너지에 기반한 서양 별자리. 두 전통의 공통점과 차이점 분석.',
+              datePublished: '2025-03-10',
+              dateModified: '2025-03-10',
+              author: {
+                '@type': 'Organization',
+                name: 'StarFate 편집팀',
+                url: 'https://www.starfate.day/about',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'StarFate',
+                url: 'https://www.starfate.day',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://www.starfate.day/opengraph-image',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': 'https://www.starfate.day/blog/chinese-vs-western-zodiac',
+              },
+            }),
+          }
+        />
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
@@ -39,6 +71,8 @@ export default function ChineseVsWesternPage() {
             수천 년 동안 독립적으로 발전해온 동양의 12지지와 서양의 황도대 별자리. 두 체계가 인간과 우주의 관계를 어떻게 다르게, 또 비슷하게 바라보는지 탐구합니다.
           </p>
         </header>
+
+        <AuthorBio date="2025년 3월 10일" readTime="9분" category="동서양 비교" />
 
         <div className="space-y-8 text-sm leading-relaxed">
 

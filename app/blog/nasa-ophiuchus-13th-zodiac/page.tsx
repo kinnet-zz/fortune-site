@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AuthorBio from '@/components/AuthorBio';
 
 export const metadata: Metadata = {
   title: 'NASA도 인정한 황도 13번째 별자리 — 뱀주인자리가 공식 채택되지 못하는 진짜 이유 | StarFate',
@@ -21,6 +22,37 @@ export default function NasaOphiuchus13thZodiacPage() {
   return (
     <div style={bgStyle}>
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: 'NASA가 밝힌 13번째 별자리 뱀주인자리의 진실',
+              description: 'NASA의 뱀주인자리 발표로 별자리가 바뀌었다는 오해의 진실과 점성술 vs 천문학.',
+              datePublished: '2025-07-22',
+              dateModified: '2025-07-22',
+              author: {
+                '@type': 'Organization',
+                name: 'StarFate 편집팀',
+                url: 'https://www.starfate.day/about',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'StarFate',
+                url: 'https://www.starfate.day',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://www.starfate.day/opengraph-image',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': 'https://www.starfate.day/blog/nasa-ophiuchus-13th-zodiac',
+              },
+            }),
+          }
+        />
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로 돌아가기
         </Link>
@@ -39,6 +71,8 @@ export default function NasaOphiuchus13thZodiacPage() {
             2016년 NASA의 아동 교육 콘텐츠 한 줄이 전 세계를 뒤흔들었습니다. "당신의 별자리가 바뀌었습니다"라는 오보가 SNS를 달구었지만, 그 이면에는 황도 시스템의 근본적인 두 가지 세계관이 충돌하는 2,500년의 역사가 숨어 있습니다.
           </p>
         </header>
+
+        <AuthorBio date="2025년 7월 22일" readTime="9분" category="천문학 팩트" />
 
         <img
           src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=800&auto=format&fit=crop&q=80"

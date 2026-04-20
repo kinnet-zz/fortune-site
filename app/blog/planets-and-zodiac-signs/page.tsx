@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AuthorBio from '@/components/AuthorBio';
 
 export const metadata: Metadata = {
   title: '지배 행성과 별자리의 관계 — 화성, 금성, 목성이 성격에 미치는 영향 | StarFate',
@@ -114,6 +115,37 @@ export default function PlanetsAndZodiacPage() {
   return (
     <div style={bgStyle}>
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: '지배 행성과 별자리의 관계 — 화성, 금성, 목성이 성격에 미치는 영향',
+              description: '각 별자리를 지배하는 행성이 어떻게 성격과 운명을 형성하는지 탐구합니다.',
+              datePublished: '2025-03-20',
+              dateModified: '2025-03-20',
+              author: {
+                '@type': 'Organization',
+                name: 'StarFate 편집팀',
+                url: 'https://www.starfate.day/about',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'StarFate',
+                url: 'https://www.starfate.day',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://www.starfate.day/opengraph-image',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': 'https://www.starfate.day/blog/planets-and-zodiac-signs',
+              },
+            }),
+          }
+        />
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
@@ -132,6 +164,8 @@ export default function PlanetsAndZodiacPage() {
             별자리의 에너지는 지배 행성에서 비롯됩니다. 신화에서 탄생한 행성들의 상징이 어떻게 우리의 성격과 삶에 반영되는지 탐구합니다.
           </p>
         </header>
+
+        <AuthorBio date="2025년 3월 20일" readTime="11분" category="행성과 별자리" />
 
         <div className="space-y-8 text-sm leading-relaxed">
 

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AuthorBio from '@/components/AuthorBio';
 
 export const metadata: Metadata = {
   title: '오늘의 운세를 제대로 읽는 방법 — AI 점성술의 현명한 활용법 | StarFate',
@@ -21,6 +22,37 @@ export default function HowToReadFortunePage() {
   return (
     <div style={bgStyle}>
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: '오늘의 운세를 제대로 읽는 방법 — AI 점성술의 활용법',
+              description: '매일 접하는 운세를 어떻게 해석하고 실생활에 적용할 수 있을까요?',
+              datePublished: '2025-03-15',
+              dateModified: '2025-03-15',
+              author: {
+                '@type': 'Organization',
+                name: 'StarFate 편집팀',
+                url: 'https://www.starfate.day/about',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'StarFate',
+                url: 'https://www.starfate.day',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://www.starfate.day/opengraph-image',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': 'https://www.starfate.day/blog/how-to-read-daily-fortune',
+              },
+            }),
+          }
+        />
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
@@ -39,6 +71,8 @@ export default function HowToReadFortunePage() {
             운세는 맹목적으로 믿거나 완전히 무시하는 것이 아니라 현명하게 활용하는 것이 핵심입니다. 하루를 더 의미 있게 만드는 운세 활용법을 알아보세요.
           </p>
         </header>
+
+        <AuthorBio date="2025년 3월 15일" readTime="7분" category="운세 활용" />
 
         <div className="space-y-8 text-sm leading-relaxed">
 

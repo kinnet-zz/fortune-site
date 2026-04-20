@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AuthorBio from '@/components/AuthorBio';
 
 export const metadata: Metadata = {
   title: '별자리별 적성과 직업 가이드 — 내 운명의 커리어는? | StarFate',
@@ -21,6 +22,37 @@ export default function ZodiacCareerGuidePage() {
   return (
     <div style={bgStyle}>
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: '별자리별 최적 직업 가이드 — 나에게 맞는 커리어는?',
+              description: '각 별자리의 타고난 강점과 성향에 맞는 직업과 커리어 방향을 분석합니다.',
+              datePublished: '2025-03-18',
+              dateModified: '2025-03-18',
+              author: {
+                '@type': 'Organization',
+                name: 'StarFate 편집팀',
+                url: 'https://www.starfate.day/about',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'StarFate',
+                url: 'https://www.starfate.day',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://www.starfate.day/opengraph-image',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': 'https://www.starfate.day/blog/zodiac-career-guide',
+              },
+            }),
+          }
+        />
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
@@ -39,6 +71,8 @@ export default function ZodiacCareerGuidePage() {
             타고난 재능을 살리는 것이 가장 빠른 성공의 길입니다. 12개 별자리가 가진 고유한 강점과 에너지를 직업 선택에 어떻게 활용할 수 있는지 깊이 탐구합니다.
           </p>
         </header>
+
+        <AuthorBio date="2025년 3월 18일" readTime="10분" category="직업·커리어" />
 
         <div className="space-y-8 text-sm leading-relaxed">
 

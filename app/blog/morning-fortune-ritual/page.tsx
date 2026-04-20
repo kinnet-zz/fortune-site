@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AuthorBio from '@/components/AuthorBio';
 
 export const metadata: Metadata = {
   title: '운명을 바꾸는 아침 5분: StarFate가 제안하는 나만의 운세 활용법 | StarFate',
@@ -21,6 +22,37 @@ export default function MorningFortuneRitualPage() {
   return (
     <div style={bgStyle}>
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: '운명을 바꾸는 아침 5분: StarFate가 제안하는 나만의 운세 활용법',
+              description: '심리학이 밝혀낸 실행 의도와 점화 효과 원리로 보는 아침 운세 루틴.',
+              datePublished: '2025-07-15',
+              dateModified: '2025-07-15',
+              author: {
+                '@type': 'Organization',
+                name: 'StarFate 편집팀',
+                url: 'https://www.starfate.day/about',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'StarFate',
+                url: 'https://www.starfate.day',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://www.starfate.day/opengraph-image',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': 'https://www.starfate.day/blog/morning-fortune-ritual',
+              },
+            }),
+          }
+        />
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
@@ -39,6 +71,8 @@ export default function MorningFortuneRitualPage() {
             운세는 예언이 아니다. 심리학이 밝혀낸 &lsquo;실행 의도&rsquo;와 &lsquo;점화 효과&rsquo; 원리로 보면, 아침의 운세 확인은 하루의 방향을 의도적으로 설계하는 강력한 도구가 될 수 있다.
           </p>
         </header>
+
+        <AuthorBio date="2025년 7월 15일" readTime="8분" category="리추얼 라이프" />
 
         <img
           src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop&q=80"

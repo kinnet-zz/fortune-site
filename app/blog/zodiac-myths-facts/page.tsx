@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AuthorBio from '@/components/AuthorBio';
 
 export const metadata: Metadata = {
   title: '별자리에 대한 10가지 오해와 진실 | StarFate',
@@ -21,6 +22,37 @@ export default function ZodiacMythsFactsPage() {
   return (
     <div style={bgStyle}>
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: '별자리에 대한 오해와 진실 7가지',
+              description: '별자리 운세에 대한 흔한 오해들을 심리학과 역사적 관점에서 바로잡습니다.',
+              datePublished: '2025-03-25',
+              dateModified: '2025-03-25',
+              author: {
+                '@type': 'Organization',
+                name: 'StarFate 편집팀',
+                url: 'https://www.starfate.day/about',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'StarFate',
+                url: 'https://www.starfate.day',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://www.starfate.day/opengraph-image',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': 'https://www.starfate.day/blog/zodiac-myths-facts',
+              },
+            }),
+          }
+        />
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
@@ -39,6 +71,8 @@ export default function ZodiacMythsFactsPage() {
             "내 별자리가 바뀌었다고?", "13번째 별자리가 생겼다고?" 인터넷에 떠도는 별자리 관련 오해들은 수도 없이 많습니다. 혼란을 끝내고, 진실만을 이야기합니다.
           </p>
         </header>
+
+        <AuthorBio date="2025년 3월 25일" readTime="7분" category="점성술 기초" />
 
         <div className="space-y-8 text-sm leading-relaxed">
 

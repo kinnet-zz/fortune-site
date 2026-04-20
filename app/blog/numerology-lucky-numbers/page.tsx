@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AuthorBio from '@/components/AuthorBio';
 
 export const metadata: Metadata = {
   title: '수비학과 행운의 숫자 — 내 운명 숫자로 알아보는 운세 | StarFate',
@@ -21,6 +22,37 @@ export default function NumerologyLuckyNumbersPage() {
   return (
     <div style={bgStyle}>
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: '수비학과 행운의 숫자 — 생년월일로 알아보는 나의 숫자 에너지',
+              description: '수비학의 역사와 생년월일로 계산하는 운명 수, 생명 경로 수 분석.',
+              datePublished: '2025-03-22',
+              dateModified: '2025-03-22',
+              author: {
+                '@type': 'Organization',
+                name: 'StarFate 편집팀',
+                url: 'https://www.starfate.day/about',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'StarFate',
+                url: 'https://www.starfate.day',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://www.starfate.day/opengraph-image',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': 'https://www.starfate.day/blog/numerology-lucky-numbers',
+              },
+            }),
+          }
+        />
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
@@ -39,6 +71,8 @@ export default function NumerologyLuckyNumbersPage() {
             숫자 하나에 삶 전체가 담긴다고 하면 믿어지시나요? 수비학은 수천 년간 숫자에서 우주의 패턴과 인간의 운명을 읽어온 고대 학문입니다. 내 생년월일에 숨겨진 운명 숫자를 찾아보세요.
           </p>
         </header>
+
+        <AuthorBio date="2025년 3월 22일" readTime="9분" category="운세 심화" />
 
         <div className="space-y-8 text-sm leading-relaxed">
 

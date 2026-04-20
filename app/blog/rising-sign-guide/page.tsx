@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AuthorBio from '@/components/AuthorBio';
 
 export const metadata: Metadata = {
   title: '상승 별자리(어센던트) 완벽 가이드 — 타인이 보는 나 | StarFate',
@@ -21,6 +22,37 @@ export default function RisingSignGuidePage() {
   return (
     <div style={bgStyle}>
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: '상승 별자리(Rising Sign) 가이드 — 첫인상과 외면을 결정하는 어센던트',
+              description: '출생 시간을 기반으로 계산되는 상승 별자리가 외모, 첫인상, 사회적 페르소나에 미치는 영향.',
+              datePublished: '2025-04-05',
+              dateModified: '2025-04-05',
+              author: {
+                '@type': 'Organization',
+                name: 'StarFate 편집팀',
+                url: 'https://www.starfate.day/about',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'StarFate',
+                url: 'https://www.starfate.day',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://www.starfate.day/opengraph-image',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': 'https://www.starfate.day/blog/rising-sign-guide',
+              },
+            }),
+          }
+        />
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
@@ -39,6 +71,8 @@ export default function RisingSignGuidePage() {
             "왜 나는 내 별자리답지 않다는 말을 자주 들을까?" 그 답은 상승 별자리에 있을 수 있습니다. 출생 시간이 만드는 나의 사회적 가면, 상승 별자리의 모든 것을 탐구합니다.
           </p>
         </header>
+
+        <AuthorBio date="2025년 4월 5일" readTime="8분" category="점성술 심화" />
 
         <div className="space-y-8 text-sm leading-relaxed">
 

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AuthorBio from '@/components/AuthorBio';
 
 export const metadata: Metadata = {
   title: 'MBTI보다 정교한 \'운명의 알고리즘\': 왜 우리는 여전히 별자리에 열광하는가? | StarFate',
@@ -21,6 +22,37 @@ export default function BarnumEffectAstrologyPage() {
   return (
     <div style={bgStyle}>
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: '바넘 효과와 점성술 — 왜 운세가 나에게 딱 맞는 것처럼 느껴질까?',
+              description: '포러 효과(바넘 효과)를 통해 점성술의 심리적 원리를 분석합니다.',
+              datePublished: '2025-07-08',
+              dateModified: '2025-07-08',
+              author: {
+                '@type': 'Organization',
+                name: 'StarFate 편집팀',
+                url: 'https://www.starfate.day/about',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'StarFate',
+                url: 'https://www.starfate.day',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://www.starfate.day/opengraph-image',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': 'https://www.starfate.day/blog/barnum-effect-astrology',
+              },
+            }),
+          }
+        />
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
@@ -39,6 +71,8 @@ export default function BarnumEffectAstrologyPage() {
             12개의 짧은 문장이 어떻게 수십억 명을 각자의 이야기처럼 느끼게 만드는가. 1948년 한 심리학자의 실험이 그 답을 이미 알고 있었다.
           </p>
         </header>
+
+        <AuthorBio date="2025년 7월 8일" readTime="11분" category="심리 분석" />
 
         <img
           src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=80"

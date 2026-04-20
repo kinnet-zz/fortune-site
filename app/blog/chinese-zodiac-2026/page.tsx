@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AuthorBio from '@/components/AuthorBio';
 
 export const metadata: Metadata = {
   title: '2026년 말의 해 — 12띠별 연간 운세 완벽 가이드 | StarFate',
@@ -21,6 +22,37 @@ export default function ChineseZodiac2026Page() {
   return (
     <div style={bgStyle}>
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: '2026년 병오년(丙午年) 12지별 운세 — 말띠 해의 기운과 전략',
+              description: '2026년 병오년의 기운과 12지별 연간 운세. 말띠 해의 특성과 각 띠별 대응 전략.',
+              datePublished: '2025-12-31',
+              dateModified: '2025-12-31',
+              author: {
+                '@type': 'Organization',
+                name: 'StarFate 편집팀',
+                url: 'https://www.starfate.day/about',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'StarFate',
+                url: 'https://www.starfate.day',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://www.starfate.day/opengraph-image',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': 'https://www.starfate.day/blog/chinese-zodiac-2026',
+              },
+            }),
+          }
+        />
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
@@ -39,6 +71,8 @@ export default function ChineseZodiac2026Page() {
             2026년 병오년(丙午年), 불의 에너지를 지닌 말의 해가 밝아옵니다. 강인한 생명력과 자유를 상징하는 말의 해는 행동, 열정, 새로운 시작의 에너지로 가득합니다. 당신의 띠에게 2026년은 어떤 해가 될까요?
           </p>
         </header>
+
+        <AuthorBio date="2025년 12월 31일" readTime="12분" category="연간 운세" />
 
         <div className="space-y-8 text-sm leading-relaxed">
 

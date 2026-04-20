@@ -104,6 +104,7 @@ export interface Translations {
   footerPrivacy: string;
   footerTerms: string;
   footerContact: string;
+  footerDisclaimerLink: string;
   footerDisclaimer: string;
   // About page
   aboutTitle: string;
@@ -251,6 +252,7 @@ const translations: Record<Lang, Translations> = {
     footerPrivacy: '개인정보처리방침',
     footerTerms: '이용약관',
     footerContact: '문의하기',
+    footerDisclaimerLink: '면책조항',
     footerDisclaimer: '본 서비스의 운세는 AI가 생성한 오락적 콘텐츠입니다. 실제 미래를 예측하지 않습니다.',
   },
 
@@ -381,6 +383,7 @@ const translations: Record<Lang, Translations> = {
     footerPrivacy: 'Privacy Policy',
     footerTerms: 'Terms of Use',
     footerContact: 'Contact',
+    footerDisclaimerLink: 'Disclaimer',
     footerDisclaimer: 'The fortune in this service is AI-generated entertainment content. It does not predict actual future events.',
   },
 
@@ -511,6 +514,7 @@ const translations: Record<Lang, Translations> = {
     footerPrivacy: '隐私政策',
     footerTerms: '使用条款',
     footerContact: '联系我们',
+    footerDisclaimerLink: '免责声明',
     footerDisclaimer: '本服务的运势是AI生成的娱乐内容，不预测实际未来。',
   },
 
@@ -641,6 +645,7 @@ const translations: Record<Lang, Translations> = {
     footerPrivacy: 'プライバシーポリシー',
     footerTerms: '利用規約',
     footerContact: 'お問い合わせ',
+    footerDisclaimerLink: '免責事項',
     footerDisclaimer: '本サービスの運勢はAIが生成したエンターテインメントコンテンツです。実際の未来を予測するものではありません。',
   },
 };

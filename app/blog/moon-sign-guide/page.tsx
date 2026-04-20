@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AuthorBio from '@/components/AuthorBio';
 
 export const metadata: Metadata = {
   title: '달 별자리(Moon Sign) 완벽 가이드 — 숨겨진 나의 내면 | StarFate',
@@ -21,6 +22,37 @@ export default function MoonSignGuidePage() {
   return (
     <div style={bgStyle}>
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: '달 별자리(Moon Sign) 완벽 가이드 — 감정과 내면을 지배하는 달의 힘',
+              description: '태양 별자리보다 더 깊은 내면을 보여주는 달 별자리에 관한 체계적 분석.',
+              datePublished: '2025-04-01',
+              dateModified: '2025-04-01',
+              author: {
+                '@type': 'Organization',
+                name: 'StarFate 편집팀',
+                url: 'https://www.starfate.day/about',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'StarFate',
+                url: 'https://www.starfate.day',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://www.starfate.day/opengraph-image',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': 'https://www.starfate.day/blog/moon-sign-guide',
+              },
+            }),
+          }
+        />
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
@@ -39,6 +71,8 @@ export default function MoonSignGuidePage() {
             태양 별자리가 세상에 보여주는 나라면, 달 별자리는 혼자 있을 때의 진짜 나입니다. 감정의 언어, 무의식의 지도인 달 별자리를 통해 자신의 내면 세계를 새롭게 탐험해 보세요.
           </p>
         </header>
+
+        <AuthorBio date="2025년 4월 1일" readTime="9분" category="점성술 심화" />
 
         <div className="space-y-8 text-sm leading-relaxed">
 

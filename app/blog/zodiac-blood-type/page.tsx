@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AuthorBio from '@/components/AuthorBio';
 
 export const metadata: Metadata = {
   title: '별자리와 혈액형의 관계 — 성격 유형 완벽 분석 | StarFate',
@@ -21,6 +22,37 @@ export default function ZodiacBloodTypePage() {
   return (
     <div style={bgStyle}>
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: '별자리와 혈액형 성격론의 관계',
+              description: '서양 별자리 성격론과 동아시아 혈액형 성격론을 비교 분석합니다.',
+              datePublished: '2025-03-10',
+              dateModified: '2025-03-10',
+              author: {
+                '@type': 'Organization',
+                name: 'StarFate 편집팀',
+                url: 'https://www.starfate.day/about',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'StarFate',
+                url: 'https://www.starfate.day',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://www.starfate.day/opengraph-image',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': 'https://www.starfate.day/blog/zodiac-blood-type',
+              },
+            }),
+          }
+        />
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
@@ -39,6 +71,8 @@ export default function ZodiacBloodTypePage() {
             동아시아에서 수십 년간 사랑받아온 혈액형 성격론과 서양 점성술의 별자리. 두 체계를 결합하면 어떤 새로운 자기 이해가 가능할까요? 48가지 조합의 세계로 떠나봅니다.
           </p>
         </header>
+
+        <AuthorBio date="2025년 3월 10일" readTime="9분" category="성격 분석" />
 
         <div className="space-y-8 text-sm leading-relaxed">
 

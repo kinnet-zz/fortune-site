@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AuthorBio from '@/components/AuthorBio';
 
 export const metadata: Metadata = {
   title: '12 별자리 궁합 완벽 분석 — 나와 가장 잘 맞는 별자리는? | StarFate',
@@ -21,6 +22,37 @@ export default function ZodiacCompatibilityPage() {
   return (
     <div style={bgStyle}>
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: '12 별자리 궁합 완벽 분석 — 나와 가장 잘 맞는 별자리는?',
+              description: '별자리 간 궁합의 원리부터 실전 연애 궁합까지. 원소별 궁합 패턴과 행성 에너지를 기반으로 한 과학적 분석.',
+              datePublished: '2025-03-05',
+              dateModified: '2025-03-05',
+              author: {
+                '@type': 'Organization',
+                name: 'StarFate 편집팀',
+                url: 'https://www.starfate.day/about',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'StarFate',
+                url: 'https://www.starfate.day',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://www.starfate.day/opengraph-image',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': 'https://www.starfate.day/blog/zodiac-compatibility-guide',
+              },
+            }),
+          }
+        />
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
@@ -39,6 +71,8 @@ export default function ZodiacCompatibilityPage() {
             원소와 행성 에너지를 기반으로 12개 별자리 간의 궁합을 분석합니다. 왜 특정 별자리끼리 잘 맞고 어떤 별자리는 충돌하는지 그 원리를 알아보세요.
           </p>
         </header>
+
+        <AuthorBio date="2025년 3월 5일" readTime="10분" category="별자리 궁합" />
 
         <div className="space-y-8 text-sm leading-relaxed">
 

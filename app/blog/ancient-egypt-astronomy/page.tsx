@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import AuthorBio from '@/components/AuthorBio';
 
 export const metadata: Metadata = {
   title: '고대 이집트는 왜 별자리로 나일강 범람을 예측했나 — 천문학과 점성술이 갈라지기 전의 역사 | StarFate',
@@ -21,6 +22,37 @@ export default function AncientEgyptAstronomyPage() {
   return (
     <div style={bgStyle}>
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: '고대 이집트의 별자리와 천문학 — 별이 신이 되던 시대',
+              description: '나일강 범람을 예측하기 위해 별을 관측하던 이집트인들의 천문학과 점성술.',
+              datePublished: '2025-08-12',
+              dateModified: '2025-08-12',
+              author: {
+                '@type': 'Organization',
+                name: 'StarFate 편집팀',
+                url: 'https://www.starfate.day/about',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'StarFate',
+                url: 'https://www.starfate.day',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://www.starfate.day/opengraph-image',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': 'https://www.starfate.day/blog/ancient-egypt-astronomy',
+              },
+            }),
+          }
+        />
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로 돌아가기
         </Link>
@@ -39,6 +71,8 @@ export default function AncientEgyptAstronomyPage() {
             별자리를 보고 강이 언제 넘칠지 예측했다는 것이 미신처럼 들립니까? 5,000년 전 이집트인들에게 그것은 과학이었습니다. 그리고 그 관찰의 정밀함은 현대 천문학자들도 인정합니다. 천문학과 점성술이 하나였던 시대, 그 지식의 계보를 추적합니다.
           </p>
         </header>
+
+        <AuthorBio date="2025년 8월 12일" readTime="12분" category="별자리 역사" />
 
         <img
           src="https://images.unsplash.com/photo-1608178398319-48f814d0750c?w=800&auto=format&fit=crop&q=80"
