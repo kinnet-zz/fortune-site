@@ -223,9 +223,6 @@ const CHINESE_ZODIAC = [
   },
 ];
 
-export async function generateStaticParams() {
-  return CHINESE_ZODIAC.map((a) => ({ animal: a.slug }));
-}
 
 export async function generateMetadata({
   params,

@@ -283,9 +283,6 @@ const ZODIAC_SIGNS = [
   },
 ];
 
-export async function generateStaticParams() {
-  return ZODIAC_SIGNS.map((s) => ({ sign: s.slug }));
-}
 
 export async function generateMetadata({
   params,
