@@ -31,19 +31,27 @@ interface BackgroundStar {
   duration: number;
 }
 
+const STAR_COLORS = [
+  'rgba(255,255,255,0.9)',
+  'rgba(192,132,252,0.8)',
+  'rgba(240,171,252,0.7)',
+  'rgba(165,243,252,0.6)',
+  'rgba(255,255,255,0.7)',
+];
+
 function BackgroundStars() {
   const [stars, setStars] = useState<BackgroundStar[]>([]);
 
   useEffect(() => {
     setStars(
-      Array.from({ length: 80 }, (_, i) => ({
+      Array.from({ length: 120 }, (_, i) => ({
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 100,
-        size: Math.random() * 2.5 + 0.5,
-        opacity: Math.random() * 0.6 + 0.1,
-        delay: Math.random() * 4,
-        duration: Math.random() * 3 + 2,
+        size: Math.random() * 2 + 0.3,
+        opacity: Math.random() * 0.7 + 0.1,
+        delay: Math.random() * 6,
+        duration: Math.random() * 4 + 2,
       }))
     );
   }, []);
@@ -59,45 +67,52 @@ function BackgroundStars() {
             top: `${star.y}%`,
             width: `${star.size}px`,
             height: `${star.size}px`,
-            background: 'white',
+            background: STAR_COLORS[star.id % STAR_COLORS.length],
             opacity: star.opacity,
             animation: `twinkle ${star.duration}s ease-in-out infinite`,
             animationDelay: `${star.delay}s`,
+            boxShadow: star.size > 1.5
+              ? `0 0 ${star.size * 3}px ${STAR_COLORS[star.id % STAR_COLORS.length]}`
+              : 'none',
           }}
         />
       ))}
 
-      {[
-        { x: 15, y: 20, emoji: '✦' },
-        { x: 80, y: 15, emoji: '✦' },
-        { x: 5, y: 70, emoji: '✦' },
-        { x: 92, y: 60, emoji: '✦' },
-        { x: 50, y: 8, emoji: '✦' },
-      ].map((item, i) => (
+      {/* 떠다니는 별자리 기호 */}
+      {['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'].map((sign, i) => (
         <div
-          key={i}
-          className="absolute text-white/10 text-2xl select-none"
+          key={sign}
+          className="absolute select-none"
           style={{
-            left: `${item.x}%`,
-            top: `${item.y}%`,
-            animation: `twinkle ${3 + i * 0.5}s ease-in-out infinite`,
-            animationDelay: `${i * 0.7}s`,
+            left: `${(i * 8.5) % 95}%`,
+            top: `${(i * 13 + 5) % 90}%`,
+            fontSize: `${Math.random() * 14 + 10}px`,
+            color: 'rgba(192,132,252,0.06)',
+            animation: `float ${6 + i * 0.7}s ease-in-out infinite`,
+            animationDelay: `${i * 0.5}s`,
           }}
         >
-          {item.emoji}
+          {sign}
         </div>
       ))}
 
+      {/* 오로라 글로우 레이어들 */}
       <div
-        className="absolute inset-0 opacity-30"
+        className="absolute inset-0"
         style={{
-          background: 'radial-gradient(ellipse 60% 40% at 30% 50%, rgba(99,102,241,0.15) 0%, transparent 100%)',
+          background: 'radial-gradient(ellipse 70% 50% at 20% 40%, rgba(139,92,246,0.12) 0%, transparent 70%)',
         }}
       />
       <div
-        className="absolute inset-0 opacity-20"
+        className="absolute inset-0"
         style={{
-          background: 'radial-gradient(ellipse 40% 60% at 70% 30%, rgba(168,85,247,0.2) 0%, transparent 100%)',
+          background: 'radial-gradient(ellipse 50% 60% at 80% 20%, rgba(236,72,153,0.08) 0%, transparent 70%)',
+        }}
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background: 'radial-gradient(ellipse 60% 40% at 50% 90%, rgba(99,102,241,0.1) 0%, transparent 70%)',
         }}
       />
     </div>
@@ -210,19 +225,23 @@ export default function HomeClient() {
   };
 
   return (
-    <div
-      className="min-h-screen relative"
-      style={{
-        background: 'linear-gradient(160deg, #050520 0%, #0a0a2e 30%, #130a2e 60%, #1a0a3e 100%)',
-      }}
-    >
+    <div className="min-h-screen relative aurora-bg">
       <BackgroundStars />
 
+      {/* 상단 퍼플 글로우 */}
       <div
-        className="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] opacity-20 pointer-events-none"
+        className="fixed top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] opacity-25 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse, rgba(124,58,237,0.4) 0%, transparent 70%)',
-          filter: 'blur(40px)',
+          background: 'radial-gradient(ellipse, rgba(139,92,246,0.5) 0%, rgba(236,72,153,0.2) 50%, transparent 70%)',
+          filter: 'blur(60px)',
+        }}
+      />
+      {/* 좌측 핑크 글로우 */}
+      <div
+        className="fixed top-1/3 left-0 w-[400px] h-[600px] opacity-10 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse, rgba(240,171,252,0.6) 0%, transparent 70%)',
+          filter: 'blur(80px)',
         }}
       />
 
@@ -299,11 +318,12 @@ export default function HomeClient() {
         </div>
       </main>
 
+      {/* 우측 하단 인디고 글로우 */}
       <div
-        className="fixed bottom-0 right-0 w-[500px] h-[300px] opacity-15 pointer-events-none"
+        className="fixed bottom-0 right-0 w-[600px] h-[400px] opacity-12 pointer-events-none"
         style={{
           background: 'radial-gradient(ellipse, rgba(99,102,241,0.5) 0%, transparent 70%)',
-          filter: 'blur(50px)',
+          filter: 'blur(60px)',
         }}
       />
     </div>

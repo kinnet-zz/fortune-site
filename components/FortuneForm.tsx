@@ -39,39 +39,54 @@ export default function FortuneForm({ onSubmit, isLoading, lang }: FortuneFormPr
     <div className="w-full max-w-md mx-auto">
       {/* 헤더 영역 */}
       <div className="text-center mb-8">
-        {/* 장식 별들 */}
-        <div className="flex justify-center items-center gap-3 mb-4">
-          <span className="text-2xl animate-twinkle" style={{ animationDelay: '0s' }}>⭐</span>
-          <span className="text-3xl animate-twinkle" style={{ animationDelay: '0.4s' }}>🌙</span>
-          <span className="text-4xl animate-float">✨</span>
-          <span className="text-3xl animate-twinkle" style={{ animationDelay: '0.8s' }}>🌙</span>
-          <span className="text-2xl animate-twinkle" style={{ animationDelay: '0.2s' }}>⭐</span>
+        {/* 별자리 기호 장식 */}
+        <div className="flex justify-center items-center gap-4 mb-5">
+          {['♈','♓','♒'].map((sign, i) => (
+            <span
+              key={sign}
+              className="text-purple-300/40 font-light select-none"
+              style={{
+                fontSize: `${18 + i * 4}px`,
+                animation: `twinkle ${3 + i * 0.6}s ease-in-out infinite`,
+                animationDelay: `${i * 0.5}s`,
+              }}
+            >
+              {sign}
+            </span>
+          ))}
         </div>
 
-        <h1 className="text-4xl font-black mb-2 bg-gradient-to-r from-purple-300 via-pink-200 to-indigo-300 bg-clip-text text-transparent leading-tight">
+        <h1 className="font-serif-display text-4xl font-bold mb-2 shimmer-text leading-tight tracking-wide">
           {tr.formTitle}
         </h1>
       </div>
 
       {/* 카드 */}
       <div
-        className="relative rounded-3xl p-[1px] animate-pulse-glow"
+        className="relative rounded-3xl p-[1px]"
         style={{
-          background: 'linear-gradient(135deg, rgba(139,92,246,0.6), rgba(99,102,241,0.3), rgba(168,85,247,0.6))',
+          background: 'linear-gradient(135deg, rgba(192,132,252,0.4), rgba(99,102,241,0.2), rgba(236,72,153,0.3))',
+          boxShadow: '0 0 40px rgba(139,92,246,0.15), 0 0 80px rgba(139,92,246,0.08)',
         }}
       >
         <div
           className="rounded-3xl p-8"
           style={{
-            background: 'linear-gradient(135deg, rgba(15,10,40,0.95) 0%, rgba(25,10,60,0.95) 100%)',
-            backdropFilter: 'blur(20px)',
+            background: 'linear-gradient(135deg, rgba(10,0,20,0.96) 0%, rgba(20,5,45,0.96) 100%)',
+            backdropFilter: 'blur(24px)',
           }}
         >
-          {/* 카드 내부 장식 */}
-          <div className="absolute top-4 right-6 text-purple-400/30 text-5xl select-none pointer-events-none">
+          {/* 별자리 배경 기호 */}
+          <div
+            className="absolute top-4 right-6 select-none pointer-events-none font-serif-display"
+            style={{ fontSize: '56px', color: 'rgba(192,132,252,0.06)' }}
+          >
             ✦
           </div>
-          <div className="absolute bottom-4 left-6 text-indigo-400/20 text-3xl select-none pointer-events-none">
+          <div
+            className="absolute bottom-4 left-6 select-none pointer-events-none font-serif-display"
+            style={{ fontSize: '36px', color: 'rgba(99,102,241,0.06)' }}
+          >
             ✦
           </div>
 
@@ -158,45 +173,40 @@ export default function FortuneForm({ onSubmit, isLoading, lang }: FortuneFormPr
               disabled={!isValid || isLoading}
               className={`
                 w-full py-4 px-6 rounded-2xl font-bold text-lg
-                transition-all duration-300 transform
+                transition-all duration-300 transform ripple-btn
                 relative overflow-hidden
                 ${isValid && !isLoading
                   ? 'hover:scale-[1.02] active:scale-[0.98] cursor-pointer'
-                  : 'opacity-50 cursor-not-allowed'
+                  : 'opacity-40 cursor-not-allowed'
                 }
               `}
               style={{
                 background: isValid && !isLoading
-                  ? 'linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #6366f1 100%)'
-                  : 'linear-gradient(135deg, #4c1d95 0%, #3730a3 100%)',
+                  ? 'linear-gradient(135deg, #7c3aed 0%, #a855f7 40%, #ec4899 100%)'
+                  : 'linear-gradient(135deg, #3b1a6b 0%, #2d2060 100%)',
                 boxShadow: isValid && !isLoading
-                  ? '0 0 30px rgba(139, 92, 246, 0.5), 0 4px 15px rgba(0,0,0,0.3)'
+                  ? '0 0 30px rgba(168,85,247,0.4), 0 0 60px rgba(168,85,247,0.15), 0 4px 20px rgba(0,0,0,0.4)'
                   : 'none',
+                letterSpacing: '0.02em',
               }}
             >
-              {/* 버튼 shimmer 효과 */}
               {isValid && !isLoading && (
                 <div
-                  className="absolute inset-0 animate-shimmer opacity-30"
+                  className="absolute inset-0 animate-shimmer opacity-20"
                   style={{
-                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
+                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
                     backgroundSize: '200% 100%',
                   }}
                 />
               )}
-
-              <span className="relative z-10 flex items-center justify-center gap-2">
+              <span className="relative z-10 flex items-center justify-center gap-2 font-serif-display tracking-wide">
                 {isLoading ? (
                   <>
                     <span className="inline-block w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                     <span>{tr.loadingBtn}</span>
                   </>
                 ) : (
-                  <>
-                    <span>🔮</span>
-                    <span>{tr.submitBtn}</span>
-                    <span>✨</span>
-                  </>
+                  <span>{tr.submitBtn}</span>
                 )}
               </span>
             </button>

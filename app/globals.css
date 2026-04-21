@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -8,6 +8,13 @@
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 10, 10, 40;
   --background-end-rgb: 30, 10, 60;
+  --aurora-1: #0a0014;
+  --aurora-2: #0d0028;
+  --aurora-3: #150035;
+  --aurora-4: #0a0020;
+  --glow-purple: rgba(139, 92, 246, 0.4);
+  --glow-pink: rgba(236, 72, 153, 0.3);
+  --glow-indigo: rgba(99, 102, 241, 0.35);
 }
 
 * {
@@ -168,4 +175,136 @@ body {
 
 .animate-fade-in-up {
   animation: fadeInUp 0.5s ease-out;
+}
+
+/* 오로라 배경 애니메이션 */
+@keyframes aurora {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.aurora-bg {
+  background: linear-gradient(
+    -45deg,
+    #0a0014,
+    #0d0028,
+    #1a003a,
+    #0a0020,
+    #150035,
+    #0d001f
+  );
+  background-size: 400% 400%;
+  animation: aurora 20s ease infinite;
+}
+
+/* 스크롤 진입 fade-in */
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  animation: revealUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.reveal-visible {
+  animation: revealUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* shimmer 텍스트 효과 */
+@keyframes text-shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #c084fc 0%,
+    #f0abfc 25%,
+    #e879f9 50%,
+    #a78bfa 75%,
+    #c084fc 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: text-shimmer 4s linear infinite;
+}
+
+/* 버튼 ripple 효과 */
+@keyframes ripple {
+  0%   { transform: scale(0); opacity: 0.6; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+.ripple-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.25) 0%, transparent 70%);
+  transform: scale(0);
+  opacity: 0;
+  transition: none;
+}
+
+.ripple-btn:hover::after {
+  animation: ripple 0.6s ease-out forwards;
+}
+
+/* 카드 hover glow */
+.card-glow {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card-glow:hover {
+  box-shadow:
+    0 0 20px rgba(192, 132, 252, 0.15),
+    0 0 40px rgba(192, 132, 252, 0.08),
+    0 8px 32px rgba(0, 0, 0, 0.4);
+  transform: translateY(-3px);
+}
+
+/* 별자리 라인 */
+@keyframes line-draw {
+  from { stroke-dashoffset: 300; }
+  to   { stroke-dashoffset: 0; }
+}
+
+.constellation-line {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation: line-draw 2s ease forwards;
+}
+
+/* Playfair 헤딩 */
+.font-serif-display {
+  font-family: 'Playfair Display', 'Noto Serif KR', Georgia, serif;
+}
+
+/* 섹션 구분선 */
+@keyframes line-reveal {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+.section-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(192, 132, 252, 0.3), transparent);
+  animation: line-reveal 1.2s ease forwards;
 }
