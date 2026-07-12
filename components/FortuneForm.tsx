@@ -56,9 +56,9 @@ export default function FortuneForm({ onSubmit, isLoading, lang }: FortuneFormPr
           ))}
         </div>
 
-        <h1 className="font-serif-display text-4xl font-bold mb-2 shimmer-text leading-tight tracking-wide">
+        <h2 className="font-serif-display text-3xl font-bold mb-2 shimmer-text leading-tight tracking-wide">
           {tr.formTitle}
-        </h1>
+        </h2>
       </div>
 
       {/* 카드 */}

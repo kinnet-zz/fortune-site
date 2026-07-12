@@ -12,20 +12,20 @@ function getLang(param?: string): Lang {
 
 const ogData: Record<Lang, { title: string; description: string }> = {
   ko: {
-    title: '오늘의 운세 ✨ | 별자리·띠 무료 운세',
-    description: '생년월일로 별자리와 띠를 분석하는 AI 무료 운세. 종합운·연애운·금전운·직업운을 매일 확인하세요.',
+    title: 'StarFate | 별자리·12지 운세 해석 가이드',
+    description: '서양 별자리와 동양 12지를 함께 읽는 운세 해석 가이드. 오늘의 운세 도구, 별자리 백과, 12지 설명, 자기성찰용 해석 예시를 제공합니다.',
   },
   en: {
-    title: "Today's Fortune ✨ | Free AI Horoscope",
-    description: 'Free AI fortune analyzing your zodiac & Chinese zodiac. Check your daily Overall, Love, Money & Career fortune.',
+    title: 'StarFate | Zodiac and Chinese Zodiac Guide',
+    description: 'A guide to reading Western zodiac and Chinese zodiac traditions, with daily fortune tools, interpretation examples, and cultural context.',
   },
   ja: {
-    title: '今日の運勢 ✨ | 無料AI占い',
-    description: '生年月日で星座と十二支を分析する無料AI占い。毎日の総合運・恋愛運・金運・仕事運をチェック。',
+    title: 'StarFate | 星座と十二支の運勢ガイド',
+    description: '西洋占星術と十二支をあわせて読む運勢ガイド。今日の運勢ツール、解釈例、文化的な背景を紹介します。',
   },
   zh: {
-    title: '今日运势 ✨ | 免费AI占卜',
-    description: '根据生日分析星座和生肖的免费AI运势。每日查看综合运·爱情运·财运·事业运。',
+    title: 'StarFate | 星座与生肖运势解读指南',
+    description: '结合西方星座与东方生肖的运势解读指南，提供今日运势工具、解读示例与文化背景说明。',
   },
 };
 

@@ -28,8 +28,8 @@ const notoSansSC = Noto_Sans_SC({
 });
 
 export const metadata: Metadata = {
-  title: '오늘의 운세 ✨ | 별자리·띠 무료 AI 운세 — StarFate',
-  description: '생년월일을 입력하면 AI가 별자리와 띠를 분석해 오늘의 종합운·연애운·금전운·직업운을 알려드립니다. 매일 새롭게 생성되는 완전 무료 운세 서비스.',
+  title: 'StarFate | 별자리·12지 운세 해석 가이드',
+  description: '서양 별자리와 동양 12지를 함께 읽는 운세 해석 가이드입니다. 오늘의 운세 도구, 별자리 백과, 12지 설명, 자기성찰용 해석 예시를 제공합니다.',
   keywords: [
     '운세', '오늘의 운세', '별자리 운세', '띠 운세', '무료 운세', '연애운', '금전운', '직업운', '종합운', 'AI 운세', '사주', '별자리', '2025 운세', '2026 운세', '일일 운세',
     'fortune', 'horoscope', 'free horoscope', 'daily horoscope', 'zodiac fortune', 'AI fortune', 'zodiac sign', 'birth date fortune', 'free zodiac reading', 'horoscope today', 'Chinese zodiac', 'love horoscope', 'money horoscope', 'career horoscope', 'star sign', 'astrology', 'free astrology',
@@ -41,8 +41,8 @@ export const metadata: Metadata = {
     canonical: 'https://starfate.day',
   },
   openGraph: {
-    title: '오늘의 운세 ✨ | 별자리·띠 무료 운세',
-    description: '생년월일로 별자리와 띠를 분석하는 AI 무료 운세 서비스. 오늘의 종합운, 연애운, 금전운, 직업운을 확인해보세요.',
+    title: 'StarFate | 별자리·12지 운세 해석 가이드',
+    description: '서양 별자리와 동양 12지를 함께 읽는 운세 해석 가이드. 운세 도구와 별자리 백과, 12지 설명을 제공합니다.',
     type: 'website',
     url: 'https://starfate.day',
     siteName: '오늘의 운세',
@@ -59,8 +59,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '오늘의 운세 ✨ | 별자리·띠 무료 운세',
-    description: '생년월일로 별자리와 띠를 분석하는 AI 무료 운세. 매일 업데이트!',
+    title: 'StarFate | 별자리·12지 운세 해석 가이드',
+    description: '별자리와 12지를 문화적 맥락으로 읽는 운세 해석 가이드.',
     images: ['https://starfate.day/og-image.png'],
   },
   robots: {
@@ -114,7 +114,7 @@ gtag('config', 'G-5Q4N5V6BQK');`,
               name: 'StarFate',
               url: 'https://starfate.day',
               logo: 'https://starfate.day/og-image.png',
-              description: '생년월일 기반 AI 무료 운세 서비스 — 별자리·띠 분석',
+              description: '별자리와 동양 12지를 문화적 맥락으로 설명하는 운세 해석 가이드',
               contactPoint: {
                 '@type': 'ContactPoint',
                 email: 'dhcho0607@gmail.com',
@@ -132,7 +132,7 @@ gtag('config', 'G-5Q4N5V6BQK');`,
               name: '오늘의 운세',
               alternateName: ['Today\'s Fortune', '今日运势', '今日の運勢'],
               url: 'https://starfate.day',
-              description: '생년월일로 별자리와 띠를 분석하여 오늘의 운세를 AI가 알려드리는 무료 서비스',
+              description: '별자리와 동양 12지 해석을 바탕으로 오늘의 운세를 참고용으로 확인하는 무료 도구',
               applicationCategory: 'LifestyleApplication',
               operatingSystem: 'Web',
               inLanguage: ['ko', 'en', 'zh', 'ja'],
