@@ -51,7 +51,7 @@ export const metadata: Metadata = {
         url: 'https://starfate.day/og-image.png',
         width: 1200,
         height: 630,
-        alt: '오늘의 운세 - AI 무료 운세 서비스',
+        alt: '오늘의 운세 - 별자리·12지 무료 운세 가이드',
       },
     ],
   },

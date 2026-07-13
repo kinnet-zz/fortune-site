@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
-export const alt = '오늘의 운세 - AI 무료 운세 서비스';
+export const alt = '오늘의 운세 - 별자리·12지 무료 운세 가이드';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -39,7 +39,7 @@ export default function Image() {
             marginBottom: 40,
           }}
         >
-          별자리 · 띠로 알아보는 AI 무료 운세
+          별자리 · 띠로 알아보는 무료 오늘의 운세
         </div>
         <div
           style={{

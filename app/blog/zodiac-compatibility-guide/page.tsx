@@ -168,7 +168,7 @@ export default function ZodiacCompatibilityPage() {
         <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.3)' }}>
           <p className="text-white/60 mb-4 text-sm">오늘 나의 별자리 운세 확인하기</p>
           <Link href="/" className="inline-block px-6 py-3 rounded-full font-bold text-white text-sm" style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #9333ea 100%)' }}>
-            🔮 무료 운세 보기 →
+            🔮 무료 오늘의 운세 보기 →
           </Link>
         </div>
 
