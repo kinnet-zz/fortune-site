@@ -168,8 +168,11 @@ function getStaticFortune(
 }
 
 export async function POST(request: NextRequest) {
+  let requestBody: { birthDate?: string; gender?: string; language?: string } | null = null;
+
   try {
     const body = await request.json();
+    requestBody = body as { birthDate?: string; gender?: string; language?: string };
     const { birthDate, gender, language } = body as { birthDate: string; gender: string; language?: string };
 
     // birthDate 검증
@@ -350,7 +353,7 @@ ALL text fields must be written in ${outputLang}.
 
     // Any other server error → return static fortune so site never breaks
     try {
-      const body = await request.clone().json().catch(() => ({})) as { birthDate?: string; gender?: string; language?: string };
+      const body = requestBody ?? {};
       const zodiac = body.birthDate ? getZodiacSign(body.birthDate) : { korean: "양자리", english: "Aries" };
       const birthYear = body.birthDate ? new Date(body.birthDate).getFullYear() : 2000;
       const chineseZodiac = getChineseZodiac(birthYear);
