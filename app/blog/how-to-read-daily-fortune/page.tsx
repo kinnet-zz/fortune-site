@@ -2,11 +2,11 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: '오늘의 운세를 제대로 읽는 방법 — AI 점성술의 현명한 활용법 | StarFate',
-  description: '매일 접하는 운세를 어떻게 해석하고 실생활에 적용할 수 있을까요? 운세의 원리와 건강한 활용법, AI 점성술을 가장 효과적으로 사용하는 방법을 알려드립니다.',
+  title: '오늘의 운세를 제대로 읽는 방법 — 운세 해석의 현명한 활용법 | StarFate',
+  description: '매일 접하는 운세를 어떻게 해석하고 실생활에 적용할 수 있을까요? 운세의 원리와 건강하고 효과적으로 활용하는 방법을 알려드립니다.',
   alternates: { canonical: '/blog/how-to-read-daily-fortune' },
   openGraph: {
-    title: '오늘의 운세를 제대로 읽는 방법 — AI 점성술 활용법',
+    title: '오늘의 운세를 제대로 읽는 방법 — 운세 해석의 현명한 활용법',
     description: '매일의 운세를 실생활에 효과적으로 활용하는 방법',
     type: 'article',
   },
@@ -33,7 +33,7 @@ export default function HowToReadFortunePage() {
             <span className="text-white/30 text-xs">2025년 3월 15일 · 7분 읽기</span>
           </div>
           <h1 className="text-3xl font-bold text-white mb-4 leading-tight">
-            오늘의 운세를 제대로 읽는 방법 — AI 점성술의 현명한 활용법
+            오늘의 운세를 제대로 읽는 방법 — 운세 해석의 현명한 활용법
           </h1>
           <p className="text-white/50 text-base leading-relaxed">
             운세는 맹목적으로 믿거나 완전히 무시하는 것이 아니라 현명하게 활용하는 것이 핵심입니다. 하루를 더 의미 있게 만드는 운세 활용법을 알아보세요.
@@ -56,9 +56,9 @@ export default function HowToReadFortunePage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-4">AI 운세의 원리 — 어떻게 만들어지나?</h2>
+            <h2 className="text-xl font-bold text-white mb-4">오늘의 운세는 어떻게 구성되나?</h2>
             <p className="mb-3">
-              현대의 AI 운세는 생년월일을 기반으로 별자리와 띠를 계산하고, 오늘 날짜의 천문학적 데이터(천체의 위치, 달의 위상 등)와 전통 점성술 해석 체계를 결합하여 생성됩니다.
+              오늘의 운세는 생년월일을 기반으로 별자리와 띠를 계산하고, 오늘 날짜의 천문학적 데이터(천체의 위치, 달의 위상 등)와 전통 점성술 해석 체계를 결합하여 구성됩니다.
             </p>
             <p className="mb-3">
               StarFate에서 운세를 생성할 때는 다음 요소들이 고려됩니다:
@@ -70,7 +70,7 @@ export default function HowToReadFortunePage() {
               <li><strong className="text-white">성별:</strong> 음양의 원리에 따라 에너지의 방향성이 미묘하게 달라집니다.</li>
             </ul>
             <p>
-              AI는 이 데이터를 바탕으로 수천 년간 축적된 점성술 해석 체계를 학습하여 개인화된 운세를 생성합니다. 완전히 새로운 텍스트를 생성하기 때문에 같은 별자리라도 날마다 다른 내용이 나옵니다.
+              StarFate는 이 데이터를 수천 년간 축적된 점성술 해석 체계와 함께 분석하여 개인별 운세 문장을 구성합니다. 같은 별자리라도 날짜와 입력 정보에 따라 다른 내용이 제공됩니다.
             </p>
           </section>
 
@@ -155,7 +155,7 @@ export default function HowToReadFortunePage() {
           <section>
             <h2 className="text-xl font-bold text-white mb-4">운세 점수가 낮을 때 — 어떻게 대처할까?</h2>
             <p className="mb-3">
-              운세 점수가 낮은 날이라도 잘 대처하면 실제 영향을 최소화할 수 있습니다. StarFate의 AI 운세는 점수가 50 미만일 때 각 항목별 구체적인 대처법을 포함합니다. 이 내용을 꼼꼼히 읽고 적용해보세요.
+              운세 점수가 낮은 날이라도 잘 대처하면 실제 영향을 최소화할 수 있습니다. StarFate의 오늘의 운세는 점수가 50 미만일 때 각 항목별 구체적인 대처법을 포함합니다. 이 내용을 꼼꼼히 읽고 적용해보세요.
             </p>
             <div className="rounded-2xl p-5" style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.2)' }}>
               <h3 className="text-white font-semibold mb-3">낮은 운세 점수 날의 실전 대처법</h3>

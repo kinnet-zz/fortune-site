@@ -208,7 +208,7 @@ export default function ChineseVsWesternPage() {
             </Link>
             <Link href="/blog/how-to-read-daily-fortune" className="p-4 rounded-xl text-sm transition-colors" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
               <div className="text-white/70 font-medium">📅 오늘의 운세를 제대로 읽는 방법</div>
-              <div className="text-white/30 text-xs mt-1">AI 점성술의 활용법</div>
+              <div className="text-white/30 text-xs mt-1">운세 해석의 현명한 활용법</div>
             </Link>
           </div>
         </nav>

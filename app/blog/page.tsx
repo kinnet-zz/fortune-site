@@ -43,7 +43,7 @@ const ARTICLES = [
   },
   {
     slug: 'how-to-read-daily-fortune',
-    title: '오늘의 운세를 제대로 읽는 방법 — AI 점성술의 활용법',
+    title: '오늘의 운세를 제대로 읽는 방법 — 운세 해석의 현명한 활용법',
     description: '매일 접하는 운세를 어떻게 해석하고 실생활에 적용할 수 있을까요? 운세의 과학적 원리와 건강한 활용법을 알려드립니다.',
     date: '2025년 3월 15일',
     readTime: '7분',
