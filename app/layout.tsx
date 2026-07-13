@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Noto_Sans_KR, Noto_Sans_JP, Noto_Sans_SC } from 'next/font/google';
 import './globals.css';
 import CookieBanner from '../components/CookieBanner';
+import ConsentScripts from '../components/ConsentScripts';
 import ConditionalHeader from '../components/ConditionalHeader';
 import Footer from '../components/Footer';
 import { LangProvider } from '@/lib/LangContext';
@@ -90,21 +91,10 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${notoSansKR.variable} ${notoSansJP.variable} ${notoSansSC.variable}`}>
       <head>
-        {/* Google Analytics GA4 */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-5Q4N5V6BQK"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-5Q4N5V6BQK');`,
-          }}
-        />
         <meta name="google-adsense-account" content="ca-pub-3314960461630607" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔮</text></svg>" />
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3314960461630607" crossOrigin="anonymous"></script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -236,6 +226,7 @@ gtag('config', 'G-5Q4N5V6BQK');`,
           <ConditionalHeader />
           {children}
           <Footer />
+          <ConsentScripts />
           <CookieBanner />
         </LangProvider>
       </body>

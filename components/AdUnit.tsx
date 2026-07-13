@@ -1,6 +1,14 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import {
+  ADSENSE_READY_EVENT,
+  CONSENT_CHANGED_EVENT,
+  getCookieConsent,
+  isAdSensePath,
+  isNoIndexPage,
+} from '@/lib/adConsent';
 
 interface AdUnitProps {
   slot: string;
@@ -12,21 +20,45 @@ interface AdUnitProps {
 export default function AdUnit({ slot, format = 'auto', className = '', style }: AdUnitProps) {
   const adRef = useRef<HTMLModElement>(null);
   const initialized = useRef(false);
+  const pathname = usePathname();
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    if (initialized.current) return;
-    initialized.current = true;
+    const syncConsent = () => {
+      setEnabled(
+        getCookieConsent() === 'accepted' &&
+        isAdSensePath(pathname) &&
+        !isNoIndexPage()
+      );
+    };
+    syncConsent();
+    window.addEventListener(CONSENT_CHANGED_EVENT, syncConsent);
+    return () => window.removeEventListener(CONSENT_CHANGED_EVENT, syncConsent);
+  }, [pathname]);
 
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const adsbygoogle = (window as any).adsbygoogle;
-      if (adsbygoogle) {
-        adsbygoogle.push({});
+  useEffect(() => {
+    if (!enabled || initialized.current) return;
+
+    const initializeAd = () => {
+      if (initialized.current) return;
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const adsbygoogle = (window as any).adsbygoogle;
+        if (adsbygoogle) {
+          adsbygoogle.push({});
+          initialized.current = true;
+        }
+      } catch {
+        // AdSense may still be loading. The ready event will retry once.
       }
-    } catch {
-      // AdSense not loaded yet
-    }
-  }, []);
+    };
+
+    initializeAd();
+    window.addEventListener(ADSENSE_READY_EVENT, initializeAd);
+    return () => window.removeEventListener(ADSENSE_READY_EVENT, initializeAd);
+  }, [enabled]);
+
+  if (!enabled) return null;
 
   return (
     <div className={`ad-container overflow-hidden text-center ${className}`} style={style}>

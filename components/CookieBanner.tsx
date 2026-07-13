@@ -2,22 +2,32 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { CONSENT_CHANGED_EVENT, COOKIE_CONSENT_KEY } from '@/lib/adConsent';
 
 export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const consent = localStorage.getItem('cookie-consent');
+    const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
     if (!consent) setVisible(true);
   }, []);
 
   const accept = () => {
-    try { localStorage.setItem('cookie-consent', 'accepted'); } catch { /* QuotaExceededError 무시 */ }
+    try { localStorage.setItem(COOKIE_CONSENT_KEY, 'accepted'); } catch { /* QuotaExceededError 무시 */ }
+    window.dispatchEvent(new Event(CONSENT_CHANGED_EVENT));
     setVisible(false);
   };
 
   const decline = () => {
-    try { localStorage.setItem('cookie-consent', 'declined'); } catch { /* QuotaExceededError 무시 */ }
+    try { localStorage.setItem(COOKIE_CONSENT_KEY, 'declined'); } catch { /* QuotaExceededError 무시 */ }
+    for (const cookie of document.cookie.split(';')) {
+      const name = cookie.split('=')[0]?.trim();
+      if (name === '_ga' || name === '_gid' || name?.startsWith('_ga_')) {
+        document.cookie = `${name}=; Max-Age=0; Path=/; SameSite=Lax`;
+        document.cookie = `${name}=; Max-Age=0; Path=/; Domain=.starfate.day; SameSite=Lax`;
+      }
+    }
+    window.dispatchEvent(new Event(CONSENT_CHANGED_EVENT));
     setVisible(false);
   };
 
