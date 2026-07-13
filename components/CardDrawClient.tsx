@@ -17,7 +17,7 @@ const tr = {
     retryBtn: '다시 뽑기',
     shareBtn: '공유하기',
     shareText: (name: string, keyword: string) =>
-      `오늘 나의 타로 카드는 「${name}」— ${keyword}\n당신의 오늘을 알아보세요 👉 https://www.starfate.day/card-draw`,
+      `오늘 나의 타로 카드는 「${name}」— ${keyword}\n당신의 오늘을 알아보세요 👉 https://starfate.day/card-draw`,
     footerText: '✦ 오락 목적의 콘텐츠입니다 ✦',
   },
   en: {
@@ -30,7 +30,7 @@ const tr = {
     retryBtn: 'Draw Again',
     shareBtn: 'Share',
     shareText: (name: string, keyword: string) =>
-      `My tarot card today is "${name}" — ${keyword}\nDiscover yours 👉 https://www.starfate.day/card-draw?lang=en`,
+      `My tarot card today is "${name}" — ${keyword}\nDiscover yours 👉 https://starfate.day/card-draw?lang=en`,
     footerText: '✦ For entertainment purposes only ✦',
   },
   zh: {
@@ -43,7 +43,7 @@ const tr = {
     retryBtn: '重新抽牌',
     shareBtn: '分享',
     shareText: (name: string, keyword: string) =>
-      `我今日的塔罗牌是「${name}」— ${keyword}\n快来查看你的牌 👉 https://www.starfate.day/card-draw?lang=zh`,
+      `我今日的塔罗牌是「${name}」— ${keyword}\n快来查看你的牌 👉 https://starfate.day/card-draw?lang=zh`,
     footerText: '✦ 仅供娱乐目的 ✦',
   },
   ja: {
@@ -56,7 +56,7 @@ const tr = {
     retryBtn: 'もう一度引く',
     shareBtn: 'シェアする',
     shareText: (name: string, keyword: string) =>
-      `今日の私のタロットカードは「${name}」— ${keyword}\nあなたも調べてみよう 👉 https://www.starfate.day/card-draw?lang=ja`,
+      `今日の私のタロットカードは「${name}」— ${keyword}\nあなたも調べてみよう 👉 https://starfate.day/card-draw?lang=ja`,
     footerText: '✦ エンタメ目的のコンテンツです ✦',
   },
 };

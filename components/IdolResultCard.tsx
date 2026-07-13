@@ -39,7 +39,7 @@ export default function IdolResultCard({
   const tr = tIdol(lang);
   const top = result.topAgency;
   const colors = AGENCY_COLORS[top];
-  const shareUrl = lang === 'ko' ? 'https://www.starfate.day/idol' : `https://www.starfate.day/idol?lang=${lang}`;
+  const shareUrl = lang === 'ko' ? 'https://starfate.day/idol' : `https://starfate.day/idol?lang=${lang}`;
 
   const sorted = [...AGENCIES].sort((a, b) => result.scores[b] - result.scores[a]);
   const topScore = result.scores[top]; // 0.0 ~ 100.0

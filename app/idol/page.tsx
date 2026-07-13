@@ -23,8 +23,8 @@ export async function generateMetadata({
   const isEn = lang === 'en';
   const { title, description } = isEn ? ogData.en : ogData.ko;
   const url = isEn
-    ? 'https://www.starfate.day/idol?lang=en'
-    : 'https://www.starfate.day/idol';
+    ? 'https://starfate.day/idol?lang=en'
+    : 'https://starfate.day/idol';
 
   return {
     title,
@@ -37,7 +37,7 @@ export async function generateMetadata({
       siteName: 'StarFate',
       images: [
         {
-          url: 'https://www.starfate.day/og-image.png',
+          url: 'https://starfate.day/og-image.png',
           width: 1200,
           height: 630,
           alt: title,
@@ -48,13 +48,13 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title,
       description,
-      images: ['https://www.starfate.day/og-image.png'],
+      images: ['https://starfate.day/og-image.png'],
     },
     alternates: {
       canonical: url,
       languages: {
-        'ko': 'https://www.starfate.day/idol',
-        'en': 'https://www.starfate.day/idol?lang=en',
+        'ko': 'https://starfate.day/idol',
+        'en': 'https://starfate.day/idol?lang=en',
       },
     },
   };

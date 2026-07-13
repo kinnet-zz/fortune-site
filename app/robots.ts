@@ -29,6 +29,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: '/api/',
       },
     ],
-    sitemap: 'https://www.starfate.day/sitemap.xml',
+    sitemap: 'https://starfate.day/sitemap.xml',
   };
 }

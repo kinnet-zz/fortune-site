@@ -38,9 +38,6 @@ export const metadata: Metadata = {
     '今日运势', '免费占卜', '星座运势', '生肖运势', '星座', '免费星座', '每日运势', '爱情运', '财运', '工作运', 'AI占卜', '生日占卜', '十二生肖', '星座占卜',
   ],
   metadataBase: new URL('https://starfate.day'),
-  alternates: {
-    canonical: 'https://starfate.day',
-  },
   openGraph: {
     title: 'StarFate | 별자리·12지 운세 해석 가이드',
     description: '서양 별자리와 동양 12지를 함께 읽는 운세 해석 가이드. 운세 도구와 별자리 백과, 12지 설명을 제공합니다.',

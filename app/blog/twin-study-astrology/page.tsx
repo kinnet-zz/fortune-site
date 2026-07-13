@@ -4,7 +4,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: '같은 날 태어난 2,000명을 추적했다 — 쌍둥이 연구가 별자리에 던진 가장 불편한 질문 | StarFate',
   description: '제프리 딘의 2,101명 타임트윈 추적 연구, 숀 칼슨의 Nature 실험, 화성 효과 논란까지. 점성술 과학 검증의 모든 것을 데이터로 분석합니다.',
-  alternates: { canonical: 'https://www.starfate.day/blog/twin-study-astrology' },
+  alternates: { canonical: 'https://starfate.day/blog/twin-study-astrology' },
   openGraph: {
     title: '같은 날 태어난 2,000명을 추적했다 — 쌍둥이 연구가 별자리에 던진 가장 불편한 질문',
     description: '점성술을 수십 년에 걸쳐 과학적으로 검증한 연구들이 발견한 것, 그리고 발견하지 못한 것.',

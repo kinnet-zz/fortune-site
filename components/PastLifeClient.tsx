@@ -16,7 +16,7 @@ const tr = {
     traitsLabel: '전생의 특성',
     retryBtn: '다시 알아보기',
     shareBtn: '공유하기',
-    shareText: (title: string, era: string) => `나의 전생은 ${era}의 ${title}!\n나의 전생을 알아보세요 👉 https://www.starfate.day/past-life`,
+    shareText: (title: string, era: string) => `나의 전생은 ${era}의 ${title}!\n나의 전생을 알아보세요 👉 https://starfate.day/past-life`,
     footerText: '✦ 오락 목적의 콘텐츠입니다 ✦',
   },
   en: {
@@ -30,7 +30,7 @@ const tr = {
     traitsLabel: 'Past Life Traits',
     retryBtn: 'Try Again',
     shareBtn: 'Share',
-    shareText: (title: string, era: string) => `My past life was a ${title} in ${era}!\nDiscover yours 👉 https://www.starfate.day/past-life?lang=en`,
+    shareText: (title: string, era: string) => `My past life was a ${title} in ${era}!\nDiscover yours 👉 https://starfate.day/past-life?lang=en`,
     footerText: '✦ For entertainment purposes only ✦',
   },
   zh: {
@@ -44,7 +44,7 @@ const tr = {
     traitsLabel: '前世特质',
     retryBtn: '重新测试',
     shareBtn: '分享',
-    shareText: (title: string, era: string) => `我的前世是${era}的${title}！\n快来探索你的前世 👉 https://www.starfate.day/past-life?lang=zh`,
+    shareText: (title: string, era: string) => `我的前世是${era}的${title}！\n快来探索你的前世 👉 https://starfate.day/past-life?lang=zh`,
     footerText: '✦ 仅供娱乐目的 ✦',
   },
   ja: {
@@ -58,7 +58,7 @@ const tr = {
     traitsLabel: '前世の特性',
     retryBtn: 'もう一度調べる',
     shareBtn: 'シェアする',
-    shareText: (title: string, era: string) => `私の前世は${era}の${title}！\n前世を調べてみよう 👉 https://www.starfate.day/past-life?lang=ja`,
+    shareText: (title: string, era: string) => `私の前世は${era}の${title}！\n前世を調べてみよう 👉 https://starfate.day/past-life?lang=ja`,
     footerText: '✦ エンタメ目的のコンテンツです ✦',
   },
 };

@@ -164,7 +164,7 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
   }, []);
 
 
-  const shareUrl = lang === 'ko' ? 'https://www.starfate.day' : `https://www.starfate.day/?lang=${lang}`;
+  const shareUrl = lang === 'ko' ? 'https://starfate.day' : `https://starfate.day/?lang=${lang}`;
 
   const handleShare = async () => {
     const text = `🔮 ${tr.resultHeader} (${fortune.zodiacSign} / ${fortune.chineseZodiac})\n\n` +
@@ -191,7 +191,7 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
     }
 
     if (!navigator.clipboard) return;
-    await navigator.clipboard.writeText(text + '\nhttps://www.starfate.day');
+    await navigator.clipboard.writeText(text + '\nhttps://starfate.day');
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };

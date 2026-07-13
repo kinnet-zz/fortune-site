@@ -37,24 +37,24 @@ export async function generateMetadata({
   const lang = getLang(p);
   const { title, description } = ogData[lang];
   const url = lang === 'ko'
-    ? 'https://www.starfate.day/past-life'
-    : `https://www.starfate.day/past-life?lang=${lang}`;
+    ? 'https://starfate.day/past-life'
+    : `https://starfate.day/past-life?lang=${lang}`;
 
   return {
     title,
     description,
     openGraph: {
       title, description, type: 'website', url, siteName: 'StarFate',
-      images: [{ url: 'https://www.starfate.day/og-image.png', width: 1200, height: 630, alt: title }],
+      images: [{ url: 'https://starfate.day/og-image.png', width: 1200, height: 630, alt: title }],
     },
-    twitter: { card: 'summary_large_image', title, description, images: ['https://www.starfate.day/og-image.png'] },
+    twitter: { card: 'summary_large_image', title, description, images: ['https://starfate.day/og-image.png'] },
     alternates: {
       canonical: url,
       languages: {
-        ko: 'https://www.starfate.day/past-life',
-        en: 'https://www.starfate.day/past-life?lang=en',
-        zh: 'https://www.starfate.day/past-life?lang=zh',
-        ja: 'https://www.starfate.day/past-life?lang=ja',
+        ko: 'https://starfate.day/past-life',
+        en: 'https://starfate.day/past-life?lang=en',
+        zh: 'https://starfate.day/past-life?lang=zh',
+        ja: 'https://starfate.day/past-life?lang=ja',
       },
     },
   };

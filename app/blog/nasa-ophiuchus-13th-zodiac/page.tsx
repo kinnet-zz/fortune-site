@@ -4,7 +4,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'NASA도 인정한 황도 13번째 별자리 — 뱀주인자리가 공식 채택되지 못하는 진짜 이유 | StarFate',
   description: '2016년 NASA 발표로 촉발된 뱀주인자리 논란의 진실. 열대 황도대와 항성 황도대의 차이, 세차운동, IAU의 공식 입장까지 천문학 팩트로 정리합니다.',
-  alternates: { canonical: 'https://www.starfate.day/blog/nasa-ophiuchus-13th-zodiac' },
+  alternates: { canonical: 'https://starfate.day/blog/nasa-ophiuchus-13th-zodiac' },
   openGraph: {
     title: 'NASA도 인정한 황도 13번째 별자리 — 뱀주인자리가 공식 채택되지 못하는 진짜 이유',
     description: '2016년 NASA 발표로 촉발된 뱀주인자리 논란의 천문학적 진실을 팩트로 분석합니다.',

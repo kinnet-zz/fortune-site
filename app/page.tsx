@@ -37,11 +37,12 @@ export async function generateMetadata({
   const { lang: langParam } = await searchParams;
   const lang = getLang(langParam);
   const { title, description } = ogData[lang];
-  const url = lang === 'ko' ? 'https://www.starfate.day' : `https://www.starfate.day/?lang=${lang}`;
+  const url = lang === 'ko' ? 'https://starfate.day' : `https://starfate.day/?lang=${lang}`;
 
   return {
     title,
     description,
+    alternates: { canonical: url },
     openGraph: {
       title,
       description,
@@ -50,7 +51,7 @@ export async function generateMetadata({
       siteName: 'StarFate',
       images: [
         {
-          url: 'https://www.starfate.day/og-image.png',
+          url: 'https://starfate.day/og-image.png',
           width: 1200,
           height: 630,
           alt: title,
@@ -61,7 +62,7 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title,
       description,
-      images: ['https://www.starfate.day/og-image.png'],
+      images: ['https://starfate.day/og-image.png'],
     },
   };
 }

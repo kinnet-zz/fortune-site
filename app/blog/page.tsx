@@ -4,12 +4,12 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: '별자리·운세 가이드 블로그 | StarFate',
   description: '점성술, 별자리, 운세에 관한 깊이 있는 가이드. 서양 별자리와 동양 12지의 역사, 궁합, 해석법까지 전문적인 정보를 제공합니다.',
-  alternates: { canonical: 'https://www.starfate.day/blog' },
+  alternates: { canonical: 'https://starfate.day/blog' },
   openGraph: {
     title: '별자리·운세 가이드 블로그 | StarFate',
     description: '점성술, 별자리, 운세에 관한 깊이 있는 가이드 모음',
     type: 'website',
-    url: 'https://www.starfate.day/blog',
+    url: 'https://starfate.day/blog',
   },
 };
 

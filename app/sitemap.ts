@@ -43,7 +43,7 @@ const GUIDE_SLUGS = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://www.starfate.day';
+  const baseUrl = 'https://starfate.day';
   const now = new Date();
 
   const staticPages: MetadataRoute.Sitemap = [
