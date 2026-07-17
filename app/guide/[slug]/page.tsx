@@ -73,7 +73,7 @@ export default function GuidePage({ params }: { params: Promise<{ slug: string }
 
         <div className="mt-12 text-center">
           <Link
-            href="/"
+            href={guide.ctaHref}
             className="inline-block text-white font-semibold px-6 py-3 rounded-full text-sm transition-colors"
             style={{ background: 'rgba(124,58,237,0.7)', border: '1px solid rgba(167,139,250,0.4)' }}
           >

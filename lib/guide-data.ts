@@ -16,6 +16,7 @@ export interface GuideLang {
 export interface Guide {
   slug: string;
   icon: string;
+  ctaHref: string;
   ko: GuideLang;
   en: GuideLang;
   ja: GuideLang;
@@ -26,6 +27,7 @@ export const GUIDES: Guide[] = [
   {
     slug: 'zodiac-compatibility',
     icon: '💑',
+    ctaHref: '/',
     ko: {
       title: '별자리 궁합 완벽 가이드',
       subtitle: '원소와 에너지로 알아보는 12별자리 궁합. 당신의 별자리와 가장 잘 맞는 파트너를 찾아보세요.',
@@ -174,6 +176,7 @@ export const GUIDES: Guide[] = [
   {
     slug: 'horoscope-history',
     icon: '📜',
+    ctaHref: '/',
     ko: {
       title: '운세와 점성술의 역사',
       subtitle: '수천 년 인류와 함께한 별자리와 운세. 바빌론에서 현대 AI 운세까지의 긴 여정.',
@@ -310,6 +313,7 @@ export const GUIDES: Guide[] = [
   {
     slug: 'tarot-guide',
     icon: '🃏',
+    ctaHref: '/card-draw',
     ko: {
       title: '타로 카드 완벽 가이드',
       subtitle: '신비로운 타로의 세계로. 78장 카드의 역사와 의미, 올바른 타로 해석법을 알아보세요.',
@@ -434,6 +438,7 @@ export const GUIDES: Guide[] = [
   {
     slug: 'numerology',
     icon: '🔢',
+    ctaHref: '/number-game',
     ko: {
       title: '수비학: 숫자의 신비',
       subtitle: '당신의 이름과 생년월일 속에 숨겨진 수비학의 비밀. 생명수부터 운명수까지 완벽 해설.',
@@ -582,6 +587,7 @@ export const GUIDES: Guide[] = [
   {
     slug: 'past-life-culture',
     icon: '🌀',
+    ctaHref: '/past-life',
     ko: {
       title: '전생과 윤회: 동서양의 관점',
       subtitle: '인류는 왜 전생을 믿는가? 불교·힌두교·심리학으로 살펴보는 윤회론의 세계.',
@@ -706,6 +712,7 @@ export const GUIDES: Guide[] = [
   {
     slug: 'fortune-tips',
     icon: '✨',
+    ctaHref: '/',
     ko: {
       title: '운세 더 잘 활용하는 방법',
       subtitle: '운세를 통해 자기 자신을 더 깊이 이해하고, 매일을 더 의미 있게 만드는 실용적인 가이드.',
