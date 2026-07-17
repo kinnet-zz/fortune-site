@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import SourceList from '@/components/SourceList';
 
 export const metadata: Metadata = {
   title: '같은 날 태어난 2,000명을 추적했다 — 쌍둥이 연구가 별자리에 던진 가장 불편한 질문 | StarFate',
-  description: '제프리 딘의 2,101명 타임트윈 추적 연구, 숀 칼슨의 Nature 실험, 화성 효과 논란까지. 점성술 과학 검증의 모든 것을 데이터로 분석합니다.',
+  description: '제프리 딘이 분석한 2,101명의 타임트윈 자료, 숀 칼슨의 Nature 실험, 화성 효과 논란을 통해 점성술의 예측력을 검토합니다.',
   alternates: { canonical: 'https://starfate.day/blog/twin-study-astrology' },
   openGraph: {
     title: '같은 날 태어난 2,000명을 추적했다 — 쌍둥이 연구가 별자리에 던진 가장 불편한 질문',
@@ -52,13 +53,13 @@ export default function TwinStudyAstrologyPage() {
           <section>
             <h2 className="text-xl font-bold text-white mb-4">제프리 딘의 타임트윈 연구 — 2,101명, 수십 년의 추적</h2>
             <p className="mb-3">
-              심리학자이자 점성술 연구자인 제프리 딘(Geoffrey Dean)은 2003년 역사상 가장 야심 찬 점성술 검증 연구 결과를 발표했습니다. 그는 1950년대 런던에서 태어난 신생아 기록을 뒤져, 5분 이내의 차이로 태어난 2,101쌍의 '타임트윈(time twins)'을 식별했습니다.
+              심리학자이자 점성술 연구자인 제프리 딘(Geoffrey Dean)은 2003년 영국의 장기 추적 자료를 이용해 출생 시각이 매우 가까운 2,101명의 '타임트윈(time twins)'을 분석한 결과를 발표했습니다.
             </p>
             <p className="mb-3">
               출생 시각이 거의 동일하다는 것은 점성술적으로 거의 동일한 출생 차트를 가진다는 의미입니다. 태양 별자리는 물론이고, 달 별자리, 상승궁, 행성들의 위치, 하우스 배치 — 모든 것이 사실상 같습니다. 만약 점성술이 성격이나 운명에 실질적인 영향을 준다면, 이 타임트윈들은 통계적으로 유사한 특성을 보여야 합니다.
             </p>
             <p className="mb-3">
-              딘은 이들을 수십 년간 추적했습니다. 지능지수(IQ), 불안 수준, 직업, 결혼 여부, 이혼 기록, 교통사고 경험, 성격 검사 결과 등 100개 이상의 항목을 비교했습니다. 연구 결과는 단호했습니다. 통계적으로 유의미한 유사성은 발견되지 않았습니다. 타임트윈들의 삶의 패턴은 무작위로 선택한 같은 연령대의 두 사람만큼이나 달랐습니다.
+              연구진은 장기간 축적된 지능, 불안 수준, 직업, 결혼 여부, 사고 경험, 성격 검사 등의 항목을 비교했습니다. 분석에서는 출생 차트가 비슷한 사람들 사이에 점성술이 예측하는 일관된 유사성이 확인되지 않았습니다.
             </p>
             <p className="mb-3">
               딘은 이 연구를 통해 "출생 차트가 성격이나 삶의 사건을 결정한다는 주장은 지지되지 않는다"고 결론지었습니다. 그는 원래 점성술의 가능성을 믿었던 연구자였기에, 이 결론은 그 자신에게도 불편한 것이었다고 회고했습니다.
@@ -151,6 +152,20 @@ export default function TwinStudyAstrologyPage() {
             </p>
           </section>
 
+          <SourceList
+            sources={[
+              {
+                title: 'Shawn Carlson, “A double-blind test of astrology” (Nature, 1985)',
+                href: 'https://doi.org/10.1038/318419a0',
+                note: '전문 점성술사가 참여한 이중맹검 실험의 원문입니다.',
+              },
+              {
+                title: 'Geoffrey Dean & Ivan W. Kelly, “Is Astrology Relevant to Consciousness and Psi?” (2003)',
+                href: 'https://www.ingentaconnect.com/content/imp/jcs/2003/00000010/F0020006/art00010',
+                note: '타임트윈 자료와 점성술 검증 연구를 검토한 논문입니다.',
+              },
+            ]}
+          />
         </div>
 
         <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.3)' }}>
@@ -168,7 +183,7 @@ export default function TwinStudyAstrologyPage() {
           <h3 className="text-sm text-white/40 mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Link href="/blog/nasa-ophiuchus-13th-zodiac" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <div className="text-white/70 font-medium">NASA도 인정한 13번째 별자리</div>
+              <div className="text-white/70 font-medium">뱀주인자리와 황도 12궁 논쟁</div>
               <div className="text-white/30 text-xs mt-1">뱀주인자리가 채택되지 못하는 진짜 이유</div>
             </Link>
             <Link href="/blog/ancient-egypt-astronomy" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>

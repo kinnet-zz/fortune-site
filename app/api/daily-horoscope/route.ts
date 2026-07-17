@@ -90,7 +90,7 @@ async function generateWithGemini(zodiac: string, date: string): Promise<DailyHo
   const [year, month, day] = date.split('-');
   const dateLabel = `${year}년 ${parseInt(month)}월 ${parseInt(day)}일`;
 
-  const prompt = `당신은 전문 점성술사입니다. ${dateLabel} ${info.ko}(${zodiac})의 일일 운세 블로그 아티클을 JSON으로 작성해주세요.
+  const prompt = `당신은 오락 및 자기성찰용 운세 콘텐츠 작성자입니다. ${dateLabel} ${info.ko}(${zodiac})의 일일 운세를 JSON으로 작성해주세요.
 
 다음 JSON 형식으로 정확히 응답하세요 (JSON만, 마크다운 코드블록 없이):
 {

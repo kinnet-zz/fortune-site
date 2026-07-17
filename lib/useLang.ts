@@ -22,6 +22,7 @@ export function setLang(newLang: Lang) {
   if (!VALID_LANGS.includes(newLang)) return;
   _lang = newLang;
   if (typeof window !== 'undefined') {
+    document.documentElement.lang = newLang;
     try {
       localStorage.setItem('lang', newLang);
     } catch {
@@ -35,9 +36,14 @@ export function useLang() {
   const lang = useSyncExternalStore(subscribe, getSnapshot, () => 'ko' as Lang);
 
   useEffect(() => {
+    const requested = new URLSearchParams(window.location.search).get('lang') as Lang | null;
     const stored = localStorage.getItem('lang') as Lang | null;
-    if (stored && VALID_LANGS.includes(stored) && stored !== _lang) {
-      setLang(stored);
+    const initial = requested && VALID_LANGS.includes(requested) ? requested : stored;
+
+    if (initial && VALID_LANGS.includes(initial)) {
+      setLang(initial);
+    } else {
+      document.documentElement.lang = 'ko';
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 

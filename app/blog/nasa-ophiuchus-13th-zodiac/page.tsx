@@ -1,13 +1,14 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import SourceList from '@/components/SourceList';
 
 export const metadata: Metadata = {
-  title: 'NASA도 인정한 황도 13번째 별자리 — 뱀주인자리가 공식 채택되지 못하는 진짜 이유 | StarFate',
-  description: '2016년 NASA 발표로 촉발된 뱀주인자리 논란의 진실. 열대 황도대와 항성 황도대의 차이, 세차운동, IAU의 공식 입장까지 천문학 팩트로 정리합니다.',
+  title: '뱀주인자리는 왜 황도 12궁에 포함되지 않을까? 천문학과 점성술의 차이 | StarFate',
+  description: '뱀주인자리 논란을 통해 열대 황도대와 실제 별자리, 세차운동, 천문학과 점성술의 차이를 구분해 설명합니다.',
   alternates: { canonical: 'https://starfate.day/blog/nasa-ophiuchus-13th-zodiac' },
   openGraph: {
-    title: 'NASA도 인정한 황도 13번째 별자리 — 뱀주인자리가 공식 채택되지 못하는 진짜 이유',
-    description: '2016년 NASA 발표로 촉발된 뱀주인자리 논란의 천문학적 진실을 팩트로 분석합니다.',
+    title: '뱀주인자리는 왜 황도 12궁에 포함되지 않을까?',
+    description: '실제 별자리와 점성술의 황도 12궁이 서로 다른 체계인 이유를 설명합니다.',
     type: 'article',
   },
 };
@@ -33,7 +34,7 @@ export default function NasaOphiuchus13thZodiacPage() {
             <span className="text-white/30 text-xs">2025년 7월 22일 · 9분 읽기</span>
           </div>
           <h1 className="text-3xl font-bold text-white mb-4 leading-tight">
-            NASA도 인정한 황도 13번째 별자리 — 뱀주인자리가 공식 채택되지 못하는 진짜 이유
+            뱀주인자리는 왜 황도 12궁에 포함되지 않을까? 천문학과 점성술의 차이
           </h1>
           <p className="text-white/50 text-base leading-relaxed">
             2016년 NASA의 아동 교육 콘텐츠 한 줄이 전 세계를 뒤흔들었습니다. "당신의 별자리가 바뀌었습니다"라는 오보가 SNS를 달구었지만, 그 이면에는 황도 시스템의 근본적인 두 가지 세계관이 충돌하는 2,500년의 역사가 숨어 있습니다.
@@ -152,6 +153,15 @@ export default function NasaOphiuchus13thZodiacPage() {
             </p>
           </section>
 
+          <SourceList
+            sources={[
+              {
+                title: 'NASA Space Place, “What Are Constellations?”',
+                href: 'https://spaceplace.nasa.gov/starfinder2/en/',
+                note: '공식 별자리 88개와 천문학·점성술의 차이를 설명하는 NASA 교육 자료입니다.',
+              },
+            ]}
+          />
         </div>
 
         <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.3)' }}>

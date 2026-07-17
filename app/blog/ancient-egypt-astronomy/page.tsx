@@ -188,8 +188,8 @@ export default function AncientEgyptAstronomyPage() {
           <h3 className="text-sm text-white/40 mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Link href="/blog/nasa-ophiuchus-13th-zodiac" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <div className="text-white/70 font-medium">NASA도 인정한 13번째 별자리</div>
-              <div className="text-white/30 text-xs mt-1">뱀주인자리가 채택되지 못하는 진짜 이유</div>
+              <div className="text-white/70 font-medium">뱀주인자리와 황도 12궁 논쟁</div>
+              <div className="text-white/30 text-xs mt-1">천문학과 점성술의 별자리 체계가 다른 이유</div>
             </Link>
             <Link href="/blog/twin-study-astrology" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
               <div className="text-white/70 font-medium">같은 날 태어난 2,000명을 추적했다</div>

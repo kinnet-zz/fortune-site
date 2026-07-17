@@ -28,6 +28,7 @@ export async function generateMetadata({
     title: `${name} 오늘의 운세 | StarFate`,
     description: `${name}의 오늘 종합운, 연애운, 금전운, 직업운과 자기성찰 조언을 확인하세요.`,
     alternates: { canonical: `/blog/daily/${zodiac}` },
+    robots: { index: false, follow: true },
   };
 }
 

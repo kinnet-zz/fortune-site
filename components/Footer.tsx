@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useLang } from '@/lib/useLang';
 import { t } from '@/lib/i18n';
+import { CONSENT_CHANGED_EVENT, COOKIE_CONSENT_KEY } from '@/lib/adConsent';
 
 
 export default function Footer() {
@@ -15,6 +16,19 @@ export default function Footer() {
     { href: '/chinese-zodiac', label: tr.navChineseZodiac },
     { href: '/about', label: tr.navAbout },
   ];
+
+  const openCookieSettings = () => {
+    localStorage.removeItem(COOKIE_CONSENT_KEY);
+    window.dispatchEvent(new Event(CONSENT_CHANGED_EVENT));
+  };
+
+  const cookieSettingsLabel = lang === 'ko'
+    ? '쿠키 설정'
+    : lang === 'en'
+      ? 'Cookie settings'
+      : lang === 'zh'
+        ? 'Cookie设置'
+        : 'Cookie設定';
   return (
     <footer
       className="relative z-10 mt-16 py-10 px-6"
@@ -72,6 +86,15 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <button
+                  type="button"
+                  onClick={openCookieSettings}
+                  className="text-white/35 hover:text-white/60 text-xs transition-colors"
+                >
+                  {cookieSettingsLabel}
+                </button>
+              </li>
             </ul>
           </div>
         </div>

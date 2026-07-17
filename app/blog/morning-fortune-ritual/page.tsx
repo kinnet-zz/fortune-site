@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import SourceList from '@/components/SourceList';
 
 export const metadata: Metadata = {
   title: '운명을 바꾸는 아침 5분: StarFate가 제안하는 나만의 운세 활용법 | StarFate',
@@ -7,7 +8,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/blog/morning-fortune-ritual' },
   openGraph: {
     title: '운명을 바꾸는 아침 5분: StarFate가 제안하는 나만의 운세 활용법',
-    description: '심리학 연구로 검증된 아침 운세 루틴 — 하루의 프레임을 의도적으로 설계하는 법',
+    description: '실행 의도 연구를 참고해 구성한 아침 자기성찰 루틴 — 하루의 프레임을 의도적으로 설계하는 법',
     type: 'article',
   },
 };
@@ -161,6 +162,15 @@ export default function MorningFortuneRitualPage() {
             </p>
           </section>
 
+          <SourceList
+            sources={[
+              {
+                title: 'Peter M. Gollwitzer, “Implementation Intentions: Strong Effects of Simple Plans” (1999)',
+                href: 'https://doi.org/10.1037/0003-066X.54.7.493',
+                note: '목표 행동을 구체적인 상황과 연결하는 실행 의도 연구입니다.',
+              },
+            ]}
+          />
         </div>
 
         <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.3)' }}>

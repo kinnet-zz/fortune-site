@@ -37,7 +37,11 @@ export default function AdUnit({ slot, format = 'auto', className = '', style }:
   }, [pathname]);
 
   useEffect(() => {
-    if (!enabled || initialized.current) return;
+    if (!enabled) {
+      initialized.current = false;
+      return;
+    }
+    if (initialized.current) return;
 
     const initializeAd = () => {
       if (initialized.current) return;

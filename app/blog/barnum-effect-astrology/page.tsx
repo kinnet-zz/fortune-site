@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import SourceList from '@/components/SourceList';
 
 export const metadata: Metadata = {
   title: 'MBTI보다 정교한 \'운명의 알고리즘\': 왜 우리는 여전히 별자리에 열광하는가? | StarFate',
@@ -161,6 +162,15 @@ export default function BarnumEffectAstrologyPage() {
             </p>
           </section>
 
+          <SourceList
+            sources={[
+              {
+                title: 'Bertram R. Forer, “The Fallacy of Personal Validation” (1949)',
+                href: 'https://doi.org/10.1037/h0059240',
+                note: '동일한 성격 설명을 개인화된 결과로 평가하게 한 고전 실험의 원문입니다.',
+              },
+            ]}
+          />
         </div>
 
         <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.3)' }}>

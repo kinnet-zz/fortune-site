@@ -61,7 +61,7 @@ export default function ZodiacMythsFactsPage() {
           <section>
             <h2 className="text-xl font-bold text-white mb-4">오해 2 — &ldquo;13번째 별자리 뱀주인자리가 생겼다?&rdquo;</h2>
             <p className="mb-3">
-              2016년 NASA가 발표한 내용이 오해를 낳았습니다. 실제로 황도대(태양이 지나가는 하늘의 띠)에는 12개가 아닌 13개의 별자리 영역이 존재하며, 그 중 하나가 뱀주인자리(Ophiuchus, 11월 29일~12월 17일경)입니다.
+              2016년 NASA 교육 콘텐츠를 인용한 보도가 오해를 키웠습니다. 천문학적으로 태양이 지나가는 길에는 전통적인 황도 12궁 외에 뱀주인자리(Ophiuchus) 영역도 걸쳐 있습니다.
             </p>
             <p className="mb-3">
               <strong className="text-white">진실:</strong> 뱀주인자리는 새로 발견된 것이 아닙니다. 고대 바빌로니아인들도 이미 알고 있었지만, 12라는 수의 완결성(1년 12개월, 12시간 체계)과 체계의 간결함을 위해 의도적으로 제외했습니다. NASA는 천문학적 사실을 설명했을 뿐이지, 점성술 체계를 변경한다고 발표한 것이 아닙니다. NASA 자체도 "우리는 점성술이 아니라 천문학을 연구합니다"라고 명확히 선을 그었습니다.

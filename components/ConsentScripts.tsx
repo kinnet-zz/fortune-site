@@ -18,6 +18,22 @@ type GoogleWindow = Window & {
   gtag?: (...args: unknown[]) => void;
 };
 
+function setGoogleConsent(command: 'default' | 'update', granted: boolean) {
+  const googleWindow = window as GoogleWindow;
+  googleWindow.dataLayer = googleWindow.dataLayer || [];
+  googleWindow.gtag = googleWindow.gtag || function gtag(...args: unknown[]) {
+    googleWindow.dataLayer?.push(args);
+  };
+
+  const state = granted ? 'granted' : 'denied';
+  googleWindow.gtag('consent', command, {
+    ad_storage: state,
+    analytics_storage: state,
+    ad_user_data: state,
+    ad_personalization: state,
+  });
+}
+
 function loadAnalytics() {
   const googleWindow = window as GoogleWindow;
 
@@ -63,6 +79,7 @@ export default function ConsentScripts() {
   const [accepted, setAccepted] = useState(false);
 
   useEffect(() => {
+    setGoogleConsent('default', false);
     const syncConsent = () => setAccepted(getCookieConsent() === 'accepted');
     syncConsent();
     window.addEventListener(CONSENT_CHANGED_EVENT, syncConsent);
@@ -70,6 +87,7 @@ export default function ConsentScripts() {
   }, []);
 
   useEffect(() => {
+    setGoogleConsent('update', accepted);
     if (!accepted) return;
 
     loadAnalytics();

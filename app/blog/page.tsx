@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: '별자리·운세 가이드 블로그 | StarFate',
-  description: '점성술, 별자리, 운세에 관한 깊이 있는 가이드. 서양 별자리와 동양 12지의 역사, 궁합, 해석법까지 전문적인 정보를 제공합니다.',
+  description: '점성술, 별자리, 운세에 관한 가이드. 서양 별자리와 동양 12지의 역사, 궁합, 해석법을 문화적 배경과 함께 설명합니다.',
   alternates: { canonical: 'https://starfate.day/blog' },
   openGraph: {
     title: '별자리·운세 가이드 블로그 | StarFate',
@@ -26,7 +26,7 @@ const ARTICLES = [
   {
     slug: 'zodiac-compatibility-guide',
     title: '12 별자리 궁합 완벽 분석 — 나와 가장 잘 맞는 별자리는?',
-    description: '별자리 간 궁합의 원리부터 실전 연애 궁합까지. 원소별 궁합 패턴과 행성 에너지를 기반으로 한 과학적 분석을 제공합니다.',
+    description: '별자리 간 궁합의 원리부터 실전 연애 궁합까지. 원소별 궁합 패턴과 행성 상징을 점성술의 문화적 해석으로 소개합니다.',
     date: '2025년 3월 5일',
     readTime: '10분',
     category: '별자리 궁합',
@@ -44,7 +44,7 @@ const ARTICLES = [
   {
     slug: 'how-to-read-daily-fortune',
     title: '오늘의 운세를 제대로 읽는 방법 — 운세 해석의 현명한 활용법',
-    description: '매일 접하는 운세를 어떻게 해석하고 실생활에 적용할 수 있을까요? 운세의 과학적 원리와 건강한 활용법을 알려드립니다.',
+    description: '매일 접하는 운세를 어떻게 해석하고 실생활에 적용할 수 있을까요? 운세의 한계와 건강한 활용법을 알려드립니다.',
     date: '2025년 3월 15일',
     readTime: '7분',
     category: '운세 활용',
@@ -114,15 +114,6 @@ const ARTICLES = [
     emoji: '🩸',
   },
   {
-    slug: 'love-compatibility-guide',
-    title: '연애 궁합 심층 분석 — 별자리별 최고의 파트너를 찾는 방법',
-    description: '단순한 태양 별자리 궁합을 넘어 금성과 화성의 위치, 달 별자리까지 고려한 심층 연애 궁합 가이드. 실제 관계에서 작동하는 점성술의 원리를 설명합니다.',
-    date: '2025년 4월 25일',
-    readTime: '11분',
-    category: '연애 궁합',
-    emoji: '❤️',
-  },
-  {
     slug: 'zodiac-myths-facts',
     title: '별자리에 관한 오해와 진실 — 점성술의 과학적 사실 정리',
     description: '별자리 운세는 다 맞나요? 점성술은 미신일까요? 별자리에 관한 흔한 오해들을 과학적·역사적 관점에서 명확히 정리합니다.',
@@ -169,8 +160,8 @@ const ARTICLES = [
   },
   {
     slug: 'nasa-ophiuchus-13th-zodiac',
-    title: 'NASA도 인정한 황도 13번째 별자리 — 뱀주인자리가 공식 채택되지 못하는 진짜 이유',
-    description: '2016년 NASA 발언이 촉발한 "별자리가 바뀌었다" 논쟁의 실체. 열대 황도대 vs 항성 황도대, 세차운동, IAU 88개 별자리까지 팩트로만 정리.',
+    title: '뱀주인자리는 왜 황도 12궁에 포함되지 않을까? — 천문학과 점성술의 차이',
+    description: '“별자리가 바뀌었다” 논쟁의 배경과 열대 황도대, 실제 별자리, 세차운동의 차이를 구분해 설명합니다.',
     date: '2025년 7월 22일',
     readTime: '9분',
     category: '천문학 팩트',

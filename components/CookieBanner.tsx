@@ -8,8 +8,10 @@ export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
-    if (!consent) setVisible(true);
+    const syncVisibility = () => setVisible(!localStorage.getItem(COOKIE_CONSENT_KEY));
+    syncVisibility();
+    window.addEventListener(CONSENT_CHANGED_EVENT, syncVisibility);
+    return () => window.removeEventListener(CONSENT_CHANGED_EVENT, syncVisibility);
   }, []);
 
   const accept = () => {
