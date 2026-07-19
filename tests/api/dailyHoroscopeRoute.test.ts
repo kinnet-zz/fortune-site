@@ -2,8 +2,13 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { NextRequest } from 'next/server';
 import { buildFallbackHoroscope, getTodayKST } from '../../lib/dailyHoroscope';
 
-const { getDailyHoroscopeMock } = vi.hoisted(() => ({
+const { getDailyHoroscopeMock, getRequestContextMock } = vi.hoisted(() => ({
   getDailyHoroscopeMock: vi.fn(),
+  getRequestContextMock: vi.fn(),
+}));
+
+vi.mock('@cloudflare/next-on-pages', () => ({
+  getRequestContext: getRequestContextMock,
 }));
 
 vi.mock('@/lib/dailyHoroscopeServer', () => ({
@@ -15,11 +20,15 @@ import { GET } from '../../app/api/daily-horoscope/route';
 beforeEach(() => {
   vi.useFakeTimers();
   vi.setSystemTime(new Date('2026-07-19T15:30:00Z'));
+  getRequestContextMock.mockImplementation(() => {
+    throw new Error('Cloudflare request context is unavailable');
+  });
 });
 
 afterEach(() => {
   delete process.env.CRON_SECRET;
   getDailyHoroscopeMock.mockReset();
+  getRequestContextMock.mockReset();
   vi.useRealTimers();
 });
 
@@ -91,7 +100,9 @@ describe('daily horoscope API', () => {
   });
 
   it('lets the authenticated daily job generate only on a cache miss', async () => {
-    process.env.CRON_SECRET = 'cron-secret';
+    getRequestContextMock.mockReturnValue({
+      env: { CRON_SECRET: 'cloudflare-cron-secret' },
+    });
     const horoscope = buildFallbackHoroscope('taurus', getTodayKST());
     getDailyHoroscopeMock.mockResolvedValue({
       horoscope,
@@ -101,7 +112,7 @@ describe('daily horoscope API', () => {
 
     const response = await GET(new NextRequest(
       `https://starfate.day/api/daily-horoscope?zodiac=taurus&date=${getTodayKST()}`,
-      { headers: { Authorization: 'Bearer cron-secret' } },
+      { headers: { Authorization: 'Bearer cloudflare-cron-secret' } },
     ));
 
     expect(response.status).toBe(200);

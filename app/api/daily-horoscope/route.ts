@@ -1,6 +1,7 @@
 export const runtime = 'edge';
 
 import { NextRequest, NextResponse } from 'next/server';
+import { getRequestContext } from '@cloudflare/next-on-pages';
 import {
   getDailyZodiac,
   getTodayKST,
@@ -9,13 +10,27 @@ import {
 } from '@/lib/dailyHoroscope';
 import { getDailyHoroscope } from '@/lib/dailyHoroscopeServer';
 
+function getCronSecret(): string {
+  try {
+    const { env } = getRequestContext();
+    const cloudflareSecret = (env as Record<string, unknown>).CRON_SECRET;
+    if (typeof cloudflareSecret === 'string' && cloudflareSecret) {
+      return cloudflareSecret;
+    }
+  } catch {
+    // Next.js build/tests do not provide a Cloudflare request context.
+  }
+
+  return process.env.CRON_SECRET ?? '';
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const zodiac = (searchParams.get('zodiac') ?? '').toLowerCase();
   const today = getTodayKST();
   const date = searchParams.get('date') ?? today;
   const force = searchParams.get('force') === 'true';
-  const secret = process.env.CRON_SECRET ?? '';
+  const secret = getCronSecret();
   const auth = request.headers.get('Authorization') ?? '';
   const authorized = Boolean(secret) && auth === `Bearer ${secret}`;
 
