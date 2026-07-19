@@ -100,6 +100,10 @@ describe('daily horoscope server orchestration', () => {
     expect(result.source).toBe('ai');
     expect(result.horoscope.score).toBe(82);
     expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.stringContaining('/models/gemini-3.1-flash-lite:generateContent'),
+      expect.any(Object),
+    );
     expect(kv.get).toHaveBeenCalledTimes(1);
     expect(kv.put).toHaveBeenCalledWith(
       'horoscope:v3:2026-07-20:aries',
