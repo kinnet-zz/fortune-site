@@ -36,7 +36,13 @@ export async function POST(request: NextRequest) {
   }
 
   const origin = new URL(request.url).origin;
-  const results: { zodiac: string; status: 'ok' | 'error'; cached?: boolean; ai?: boolean }[] = [];
+  const results: {
+    zodiac: string;
+    status: 'ok' | 'error';
+    cached?: boolean;
+    ai?: boolean;
+    error?: string;
+  }[] = [];
 
   for (const { slug: zodiac } of DAILY_ZODIACS) {
     try {
@@ -51,12 +57,14 @@ export async function POST(request: NextRequest) {
       });
       const cacheStatus = res.headers.get('X-Cache');
       const contentSource = res.headers.get('X-Content-Source');
+      const generationError = res.headers.get('X-Generation-Error');
       await res.json();
       results.push({
         zodiac,
         status: res.ok && contentSource === 'ai' ? 'ok' : 'error',
         cached: cacheStatus === 'HIT',
         ai: contentSource === 'ai',
+        ...(generationError ? { error: generationError } : {}),
       });
     } catch {
       results.push({ zodiac, status: 'error' });

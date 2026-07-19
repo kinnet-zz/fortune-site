@@ -77,6 +77,7 @@ describe('daily horoscope generation job', () => {
       headers: {
         'X-Cache': 'HIT',
         'X-Content-Source': 'fallback',
+        'X-Generation-Error': 'missing-api-key',
       },
     })));
 
@@ -91,8 +92,13 @@ describe('daily horoscope generation job', () => {
         body: JSON.stringify({ date: '2026-07-20' }),
       },
     ));
-    const body = await response.json() as { generated: number; failed: number };
+    const body = await response.json() as {
+      generated: number;
+      failed: number;
+      results: { error?: string }[];
+    };
 
     expect(body).toMatchObject({ generated: 0, failed: 12 });
+    expect(body.results.every((result) => result.error === 'missing-api-key')).toBe(true);
   });
 });

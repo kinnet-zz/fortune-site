@@ -18,6 +18,19 @@ export interface DailyHoroscopeResult {
   horoscope: DailyHoroscope;
   cacheStatus: 'HIT' | 'MISS';
   source: 'ai' | 'fallback';
+  generationError?: DailyHoroscopeGenerationError;
+}
+
+export type DailyHoroscopeGenerationError =
+  | 'missing-api-key'
+  | 'timeout'
+  | 'upstream'
+  | 'invalid-response';
+
+class DailyHoroscopeGenerationFailure extends Error {
+  constructor(readonly code: DailyHoroscopeGenerationError) {
+    super(code);
+  }
 }
 
 const AI_CACHE_TTL_SECONDS = 86400;
@@ -49,7 +62,7 @@ async function generateWithGemini(
   if (!zodiac) throw new Error('Invalid zodiac sign');
 
   const apiKey = getGeminiKey();
-  if (!apiKey) throw new Error('Gemini API key unavailable');
+  if (!apiKey) throw new DailyHoroscopeGenerationFailure('missing-api-key');
 
   const [year, month, day] = date.split('-');
   const dateLabel = `${year}년 ${Number(month)}월 ${Number(day)}일`;
@@ -90,21 +103,35 @@ async function generateWithGemini(
         signal: controller.signal,
       },
     );
+  } catch (error) {
+    if (error instanceof Error && error.name === 'AbortError') {
+      throw new DailyHoroscopeGenerationFailure('timeout');
+    }
+    throw new DailyHoroscopeGenerationFailure('upstream');
   } finally {
     clearTimeout(timeout);
   }
-  const json = await response.json() as {
+  let json: {
     candidates?: { content?: { parts?: { text?: string }[] } }[];
     error?: { message?: string };
   };
+  try {
+    json = await response.json() as typeof json;
+  } catch {
+    throw new DailyHoroscopeGenerationFailure('invalid-response');
+  }
 
   if (!response.ok || json.error) {
-    throw new Error(json.error?.message ?? `Gemini HTTP ${response.status}`);
+    throw new DailyHoroscopeGenerationFailure('upstream');
   }
 
   const text = json.candidates?.[0]?.content?.parts?.[0]?.text?.trim() ?? '';
   const cleaned = text.replace(/^```json\n?/i, '').replace(/\n?```$/, '').trim();
-  return normalizeDailyHoroscope(JSON.parse(cleaned), zodiacSlug, date);
+  try {
+    return normalizeDailyHoroscope(JSON.parse(cleaned), zodiacSlug, date);
+  } catch {
+    throw new DailyHoroscopeGenerationFailure('invalid-response');
+  }
 }
 
 export async function getDailyHoroscope(
@@ -149,6 +176,7 @@ export async function getDailyHoroscope(
     }
   }
 
+  let generationError: DailyHoroscopeGenerationError | undefined;
   if (options.generate) {
     try {
       const horoscope = await generateWithGemini(zodiacSlug, date);
@@ -162,7 +190,10 @@ export async function getDailyHoroscope(
         }
       }
       return { horoscope, cacheStatus: 'MISS', source: 'ai' };
-    } catch {
+    } catch (error) {
+      generationError = error instanceof DailyHoroscopeGenerationFailure
+        ? error.code
+        : 'invalid-response';
       // Public pages still receive deterministic content when generation fails.
     }
   }
@@ -178,5 +209,5 @@ export async function getDailyHoroscope(
     }
   }
 
-  return { horoscope, cacheStatus: 'MISS', source: 'fallback' };
+  return { horoscope, cacheStatus: 'MISS', source: 'fallback', generationError };
 }
