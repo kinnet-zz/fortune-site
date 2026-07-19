@@ -30,7 +30,7 @@ jobs:
           fi
 
           RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
-            "https://www.starfate.day/api/daily-horoscope/generate-all" \
+            "https://fortune-site-6dg.pages.dev/api/daily-horoscope/generate-all" \
             -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
             -H "Content-Type: application/json" \
             -d "$BODY")
