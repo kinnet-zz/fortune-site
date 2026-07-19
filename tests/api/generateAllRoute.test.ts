@@ -1,32 +1,35 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { NextRequest } from 'next/server';
 
-const { getRequestContextMock } = vi.hoisted(() => ({
+const { getRequestContextMock, getDailyHoroscopeMock } = vi.hoisted(() => ({
   getRequestContextMock: vi.fn(),
+  getDailyHoroscopeMock: vi.fn(),
 }));
 
 vi.mock('@cloudflare/next-on-pages', () => ({
   getRequestContext: getRequestContextMock,
 }));
 
+vi.mock('@/lib/dailyHoroscopeServer', () => ({
+  getDailyHoroscope: getDailyHoroscopeMock,
+}));
+
 import { POST } from '../../app/api/daily-horoscope/generate-all/route';
 
 afterEach(() => {
   getRequestContextMock.mockReset();
+  getDailyHoroscopeMock.mockReset();
   vi.unstubAllGlobals();
 });
 
 describe('daily horoscope generation job', () => {
-  it('forwards authorization to all zodiac requests so cache misses can generate', async () => {
+  it('directly generates all zodiac signs after authenticating the job', async () => {
     getRequestContextMock.mockReturnValue({ env: { CRON_SECRET: 'cron-secret' } });
-    const fetchMock = vi.fn().mockImplementation(async () => new Response('{}', {
-      status: 200,
-      headers: {
-        'X-Cache': 'MISS',
-        'X-Content-Source': 'ai',
-      },
-    }));
-    vi.stubGlobal('fetch', fetchMock);
+    getDailyHoroscopeMock.mockResolvedValue({
+      horoscope: {},
+      cacheStatus: 'MISS',
+      source: 'ai',
+    });
 
     const response = await POST(new NextRequest(
       'https://starfate.day/api/daily-horoscope/generate-all',
@@ -43,16 +46,16 @@ describe('daily horoscope generation job', () => {
 
     expect(response.status).toBe(200);
     expect(body).toMatchObject({ generated: 12, failed: 0 });
-    expect(fetchMock).toHaveBeenCalledTimes(12);
-    for (const [, options] of fetchMock.mock.calls) {
-      expect(options.headers.Authorization).toBe('Bearer cron-secret');
+    expect(getDailyHoroscopeMock).toHaveBeenCalledTimes(12);
+    for (const [zodiac, date, options] of getDailyHoroscopeMock.mock.calls) {
+      expect(typeof zodiac).toBe('string');
+      expect(date).toBe('2026-07-20');
+      expect(options).toEqual({ force: false, generate: true });
     }
   });
 
   it('rejects invalid generation dates', async () => {
     getRequestContextMock.mockReturnValue({ env: { CRON_SECRET: 'cron-secret' } });
-    const fetchMock = vi.fn();
-    vi.stubGlobal('fetch', fetchMock);
 
     const response = await POST(new NextRequest(
       'https://starfate.day/api/daily-horoscope/generate-all',
@@ -67,19 +70,17 @@ describe('daily horoscope generation job', () => {
     ));
 
     expect(response.status).toBe(400);
-    expect(fetchMock).not.toHaveBeenCalled();
+    expect(getDailyHoroscopeMock).not.toHaveBeenCalled();
   });
 
   it('reports fallback responses as generation failures', async () => {
     getRequestContextMock.mockReturnValue({ env: { CRON_SECRET: 'cron-secret' } });
-    vi.stubGlobal('fetch', vi.fn().mockImplementation(async () => new Response('{}', {
-      status: 200,
-      headers: {
-        'X-Cache': 'HIT',
-        'X-Content-Source': 'fallback',
-        'X-Generation-Error': 'missing-api-key',
-      },
-    })));
+    getDailyHoroscopeMock.mockResolvedValue({
+      horoscope: {},
+      cacheStatus: 'MISS',
+      source: 'fallback',
+      generationError: 'missing-api-key',
+    });
 
     const response = await POST(new NextRequest(
       'https://starfate.day/api/daily-horoscope/generate-all',
