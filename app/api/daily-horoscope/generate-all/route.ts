@@ -3,6 +3,7 @@ export const runtime = 'edge';
 import { NextRequest, NextResponse } from 'next/server';
 import { getRequestContext } from '@cloudflare/next-on-pages';
 import { DAILY_ZODIACS, getTodayKST, isValidDailyDate } from '@/lib/dailyHoroscope';
+import { getDailyHoroscope } from '@/lib/dailyHoroscopeServer';
 
 // POST /api/daily-horoscope/generate-all
 // Authorization: Bearer {CRON_SECRET}
@@ -35,7 +36,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid date' }, { status: 400 });
   }
 
-  const origin = new URL(request.url).origin;
   const results: {
     zodiac: string;
     status: 'ok' | 'error';
@@ -46,28 +46,19 @@ export async function POST(request: NextRequest) {
 
   for (const { slug: zodiac } of DAILY_ZODIACS) {
     try {
-      const url = force
-        ? `${origin}/api/daily-horoscope?zodiac=${zodiac}&date=${date}&force=true`
-        : `${origin}/api/daily-horoscope?zodiac=${zodiac}&date=${date}`;
-      const res = await fetch(url, {
-        headers: {
-          'User-Agent': 'StarFate-CronBot/1.0',
-          Authorization: `Bearer ${secret}`,
-        },
+      const result = await getDailyHoroscope(zodiac, date, {
+        force,
+        generate: true,
       });
-      const cacheStatus = res.headers.get('X-Cache');
-      const contentSource = res.headers.get('X-Content-Source');
-      const generationError = res.headers.get('X-Generation-Error');
-      await res.json();
       results.push({
         zodiac,
-        status: res.ok && contentSource === 'ai' ? 'ok' : 'error',
-        cached: cacheStatus === 'HIT',
-        ai: contentSource === 'ai',
-        ...(generationError ? { error: generationError } : {}),
+        status: result.source === 'ai' ? 'ok' : 'error',
+        cached: result.cacheStatus === 'HIT',
+        ai: result.source === 'ai',
+        ...(result.generationError ? { error: result.generationError } : {}),
       });
     } catch {
-      results.push({ zodiac, status: 'error' });
+      results.push({ zodiac, status: 'error', error: 'internal' });
     }
   }
 
