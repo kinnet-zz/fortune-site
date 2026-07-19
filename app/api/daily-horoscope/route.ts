@@ -54,11 +54,16 @@ export async function GET(request: NextRequest) {
     force,
     generate: authorized,
   });
+  const headers: Record<string, string> = {
+    'Cache-Control': 'no-store',
+    'X-Cache': result.cacheStatus,
+    'X-Content-Source': result.source,
+  };
+  if (result.generationError) {
+    headers['X-Generation-Error'] = result.generationError;
+  }
+
   return NextResponse.json(result.horoscope, {
-    headers: {
-      'Cache-Control': 'no-store',
-      'X-Cache': result.cacheStatus,
-      'X-Content-Source': result.source,
-    },
+    headers,
   });
 }

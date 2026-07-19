@@ -123,11 +123,28 @@ describe('daily horoscope server orchestration', () => {
     });
 
     expect(result.source).toBe('fallback');
+    expect(result.generationError).toBe('upstream');
     expect(kv.get).not.toHaveBeenCalled();
     expect(kv.put).toHaveBeenCalledWith(
       'horoscope:fallback:v3:2026-07-20:pisces',
       expect.any(String),
       { expirationTtl: 300 },
     );
+  });
+
+  it('reports a missing Gemini key without calling the upstream API', async () => {
+    const kv = createKV();
+    getRequestContextMock.mockReturnValue({ env: { LEADERBOARD_KV: kv } });
+    const fetchMock = vi.fn();
+    vi.stubGlobal('fetch', fetchMock);
+
+    const result = await getDailyHoroscope('aquarius', '2026-07-20', {
+      force: true,
+      generate: true,
+    });
+
+    expect(result.source).toBe('fallback');
+    expect(result.generationError).toBe('missing-api-key');
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 });
