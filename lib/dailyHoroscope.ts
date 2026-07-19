@@ -43,6 +43,12 @@ export function getTodayKST(now = new Date()): string {
   return kst.toISOString().slice(0, 10);
 }
 
+export function isValidDailyDate(value: string): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const parsed = new Date(`${value}T00:00:00Z`);
+  return Number.isFinite(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
+}
+
 export function formatKoreanDate(dateString: string): string {
   const [year, month, day] = dateString.split('-').map(Number);
   const date = new Date(Date.UTC(year, month - 1, day));
@@ -133,25 +139,41 @@ export function buildFallbackHoroscope(zodiacSlug: DailyZodiacSlug, date: string
 
 function cleanText(value: unknown, fallback: string, maxLength: number): string {
   if (typeof value !== 'string') return fallback;
-  const cleaned = value.trim().slice(0, maxLength);
+  const cleaned = Array.from(value.trim()).slice(0, maxLength).join('');
   return cleaned || fallback;
+}
+
+function parseFiniteNumber(value: unknown): number | undefined {
+  if (typeof value === 'number') return Number.isFinite(value) ? value : undefined;
+  if (typeof value !== 'string' || value.trim() === '') return undefined;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : undefined;
+}
+
+function cleanGeneratedAt(value: unknown, fallback: string): string {
+  if (typeof value !== 'string') return fallback;
+  const timestamp = Date.parse(value);
+  return Number.isFinite(timestamp) && new Date(timestamp).toISOString() === value
+    ? value
+    : fallback;
 }
 
 export function normalizeDailyHoroscope(
   value: unknown,
   zodiacSlug: DailyZodiacSlug,
   date: string,
+  options: { preserveGeneratedAt?: boolean } = {},
 ): DailyHoroscope {
   const fallback = buildFallbackHoroscope(zodiacSlug, date);
   if (typeof value !== 'object' || value === null) return fallback;
 
   const candidate = value as Record<string, unknown>;
-  const score = Number(candidate.score);
-  const luckyNumber = Number(candidate.luckyNumber);
+  const score = parseFiniteNumber(candidate.score);
+  const luckyNumber = parseFiniteNumber(candidate.luckyNumber);
 
   return {
     ...fallback,
-    score: Number.isFinite(score) ? Math.max(55, Math.min(95, Math.round(score))) : fallback.score,
+    score: score !== undefined ? Math.max(55, Math.min(95, Math.round(score))) : fallback.score,
     summary: cleanText(candidate.summary, fallback.summary, 90),
     overall: cleanText(candidate.overall, fallback.overall, 500),
     love: cleanText(candidate.love, fallback.love, 350),
@@ -159,10 +181,13 @@ export function normalizeDailyHoroscope(
     work: cleanText(candidate.work, fallback.work, 350),
     health: cleanText(candidate.health, fallback.health, 300),
     luckyColor: cleanText(candidate.luckyColor, fallback.luckyColor, 20),
-    luckyNumber: Number.isFinite(luckyNumber)
+    luckyNumber: luckyNumber !== undefined
       ? Math.max(1, Math.min(99, Math.round(luckyNumber)))
       : fallback.luckyNumber,
     luckyItem: cleanText(candidate.luckyItem, fallback.luckyItem, 30),
     advice: cleanText(candidate.advice, fallback.advice, 120),
+    generatedAt: options.preserveGeneratedAt
+      ? cleanGeneratedAt(candidate.generatedAt, fallback.generatedAt)
+      : fallback.generatedAt,
   };
 }

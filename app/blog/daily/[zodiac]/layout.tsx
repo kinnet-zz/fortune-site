@@ -7,7 +7,8 @@ export async function generateMetadata({
 }: {
   params: Promise<{ zodiac: string }>;
 }): Promise<Metadata> {
-  const { zodiac } = await params;
+  const { zodiac: zodiacParam } = await params;
+  const zodiac = zodiacParam.toLowerCase();
   const info = getDailyZodiac(zodiac);
   if (!info) return { robots: { index: false, follow: false } };
 

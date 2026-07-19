@@ -5,6 +5,7 @@ import {
   buildFallbackHoroscope,
   formatKoreanDate,
   getTodayKST,
+  isValidDailyDate,
   normalizeDailyHoroscope,
 } from '../../lib/dailyHoroscope';
 import { normalizeFortuneResult } from '../../lib/fortuneResult';
@@ -152,6 +153,13 @@ describe('daily horoscope SEO content', () => {
     expect(formatKoreanDate('2026-07-20')).toBe('2026년 7월 20일 (월요일)');
   });
 
+  it('accepts only real ISO calendar dates', () => {
+    expect(isValidDailyDate('2026-07-20')).toBe(true);
+    expect(isValidDailyDate('2026-02-29')).toBe(false);
+    expect(isValidDailyDate('2026-7-20')).toBe(false);
+    expect(isValidDailyDate('not-a-date')).toBe(false);
+  });
+
   it('creates deterministic but date-specific fallback content', () => {
     const today = buildFallbackHoroscope('aries', '2026-07-19');
     const todayAgain = buildFallbackHoroscope('aries', '2026-07-19');
@@ -177,5 +185,31 @@ describe('daily horoscope SEO content', () => {
     expect(normalized.score).toBe(95);
     expect(normalized.luckyNumber).toBe(1);
     expect(normalized.overall.length).toBeGreaterThan(100);
+  });
+
+  it('does not coerce blank numeric values and preserves trusted cache timestamps', () => {
+    const fallback = buildFallbackHoroscope('aries', '2026-07-20');
+    const generatedAt = '2026-07-20T00:10:00.000Z';
+    const normalized = normalizeDailyHoroscope(
+      { score: ' ', luckyNumber: null, generatedAt },
+      'aries',
+      '2026-07-20',
+      { preserveGeneratedAt: true },
+    );
+
+    expect(normalized.score).toBe(fallback.score);
+    expect(normalized.luckyNumber).toBe(fallback.luckyNumber);
+    expect(normalized.generatedAt).toBe(generatedAt);
+  });
+
+  it('truncates text without splitting emoji surrogate pairs', () => {
+    const normalized = normalizeDailyHoroscope(
+      { luckyColor: `${'가'.repeat(19)}😀뒤` },
+      'aries',
+      '2026-07-20',
+    );
+
+    expect(normalized.luckyColor).toBe(`${'가'.repeat(19)}😀`);
+    expect(normalized.luckyColor).not.toContain('�');
   });
 });

@@ -2,17 +2,7 @@ export const runtime = 'edge';
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getRequestContext } from '@cloudflare/next-on-pages';
-
-const ZODIACS = [
-  'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
-  'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
-];
-
-function getTodayKST(): string {
-  const now = new Date();
-  const kst = new Date(now.getTime() + 9 * 60 * 60 * 1000);
-  return kst.toISOString().slice(0, 10);
-}
+import { DAILY_ZODIACS, getTodayKST, isValidDailyDate } from '@/lib/dailyHoroscope';
 
 // POST /api/daily-horoscope/generate-all
 // Authorization: Bearer {CRON_SECRET}
@@ -41,10 +31,14 @@ export async function POST(request: NextRequest) {
     date = getTodayKST();
   }
 
+  if (!isValidDailyDate(date)) {
+    return NextResponse.json({ error: 'Invalid date' }, { status: 400 });
+  }
+
   const origin = new URL(request.url).origin;
   const results: { zodiac: string; status: 'ok' | 'error'; cached?: boolean; ai?: boolean }[] = [];
 
-  for (const zodiac of ZODIACS) {
+  for (const { slug: zodiac } of DAILY_ZODIACS) {
     try {
       const url = force
         ? `${origin}/api/daily-horoscope?zodiac=${zodiac}&date=${date}&force=true`
@@ -52,13 +46,18 @@ export async function POST(request: NextRequest) {
       const res = await fetch(url, {
         headers: {
           'User-Agent': 'StarFate-CronBot/1.0',
-          ...(force ? { Authorization: `Bearer ${secret}` } : {}),
+          Authorization: `Bearer ${secret}`,
         },
       });
       const cacheStatus = res.headers.get('X-Cache');
-      const data = await res.json() as { generatedAt?: string };
-      // fallback 여부 판별: generatedAt이 없거나 fallback 특유의 score 범위
-      results.push({ zodiac, status: 'ok', cached: cacheStatus === 'HIT', ai: !!data.generatedAt });
+      const contentSource = res.headers.get('X-Content-Source');
+      await res.json();
+      results.push({
+        zodiac,
+        status: res.ok && contentSource === 'ai' ? 'ok' : 'error',
+        cached: cacheStatus === 'HIT',
+        ai: contentSource === 'ai',
+      });
     } catch {
       results.push({ zodiac, status: 'error' });
     }
@@ -68,9 +67,9 @@ export async function POST(request: NextRequest) {
   return NextResponse.json({
     date,
     force,
-    total: ZODIACS.length,
+    total: DAILY_ZODIACS.length,
     generated: ok,
-    failed: ZODIACS.length - ok,
+    failed: DAILY_ZODIACS.length - ok,
     results,
   });
 }

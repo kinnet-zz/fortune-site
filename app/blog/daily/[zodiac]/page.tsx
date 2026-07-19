@@ -113,7 +113,7 @@ export default async function ZodiacDailyPage({
   if (!catalogEntry || !info) notFound();
 
   const today = getTodayKST();
-  const data = await getDailyHoroscope(zodiac as DailyZodiacSlug, today);
+  const { horoscope: data } = await getDailyHoroscope(zodiac as DailyZodiacSlug, today);
   const formattedDate = formatKoreanDate(data.date);
   const pageUrl = `https://starfate.day/blog/daily/${zodiac}`;
   const structuredData = [
@@ -338,7 +338,7 @@ export default async function ZodiacDailyPage({
           </div>
         </section>
 
-        <footer className="mt-8 border-t border-white/10 pt-5 text-xs leading-relaxed text-white/40">
+        <footer className="mt-8 border-t border-white/10 pt-5 text-sm leading-relaxed text-white/70">
           <p>업데이트: {formattedDate} · 작성 및 검토: StarFate 편집팀</p>
           <p className="mt-2">
             별자리 운세는 오락과 자기성찰을 위한 참고 콘텐츠입니다. 건강·금전·법률 등 중요한 결정은 실제 정보와 전문가의 조언을 기준으로 판단하세요.
