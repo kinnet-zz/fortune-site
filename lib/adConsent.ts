@@ -12,10 +12,6 @@ export function getCookieConsent(): CookieConsent {
 }
 
 export function isAdSensePath(pathname: string): boolean {
-  if (pathname === '/blog/daily' || pathname.startsWith('/blog/daily/')) {
-    return false;
-  }
-
   return (
     pathname === '/' ||
     pathname === '/blog' ||
