@@ -1,6 +1,12 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { getCookieConsent, isAdSensePath } from '../../lib/adConsent';
 import { trackEvent } from '../../lib/analytics';
+import {
+  buildFallbackHoroscope,
+  formatKoreanDate,
+  getTodayKST,
+  normalizeDailyHoroscope,
+} from '../../lib/dailyHoroscope';
 import { normalizeFortuneResult } from '../../lib/fortuneResult';
 import { decodeSharedResult, encodeSharedResult, MAX_SHARED_TOKEN_LENGTH } from '../../lib/sharedFortune';
 import { getChineseZodiac, getZodiacSign } from '../../lib/zodiac';
@@ -63,11 +69,11 @@ describe('AdSense consent and path rules', () => {
     expect(getCookieConsent()).toBeNull();
   });
 
-  it('allows editorial pages and excludes noindex daily pages', () => {
+  it('allows substantial editorial and daily horoscope pages', () => {
     expect(isAdSensePath('/blog/2026-yearly-horoscope')).toBe(true);
     expect(isAdSensePath('/guide/zodiac-compatibility')).toBe(true);
-    expect(isAdSensePath('/blog/daily')).toBe(false);
-    expect(isAdSensePath('/blog/daily/taurus')).toBe(false);
+    expect(isAdSensePath('/blog/daily')).toBe(true);
+    expect(isAdSensePath('/blog/daily/taurus')).toBe(true);
   });
 });
 
@@ -137,5 +143,39 @@ describe('fortune response validation', () => {
 
     expect(normalizeFortuneResult(valid)).toMatchObject({ luckyNumber: 99, score: 1 });
     expect(normalizeFortuneResult({ ...valid, zodiacSign: null })).toBeNull();
+  });
+});
+
+describe('daily horoscope SEO content', () => {
+  it('uses the Korean calendar date across the UTC day boundary', () => {
+    expect(getTodayKST(new Date('2026-07-19T15:30:00Z'))).toBe('2026-07-20');
+    expect(formatKoreanDate('2026-07-20')).toBe('2026년 7월 20일 (월요일)');
+  });
+
+  it('creates deterministic but date-specific fallback content', () => {
+    const today = buildFallbackHoroscope('aries', '2026-07-19');
+    const todayAgain = buildFallbackHoroscope('aries', '2026-07-19');
+    const tomorrow = buildFallbackHoroscope('aries', '2026-07-20');
+
+    expect({ ...today, generatedAt: '' }).toEqual({ ...todayAgain, generatedAt: '' });
+    expect([tomorrow.score, tomorrow.luckyNumber, tomorrow.summary]).not.toEqual([
+      today.score,
+      today.luckyNumber,
+      today.summary,
+    ]);
+    expect(tomorrow.generatedAt).toBeTypeOf('string');
+  });
+
+  it('fills incomplete AI output and clamps unsafe numeric values', () => {
+    const normalized = normalizeDailyHoroscope(
+      { summary: '  오늘의 요약  ', score: 999, luckyNumber: -5, overall: '' },
+      'taurus',
+      '2026-07-20',
+    );
+
+    expect(normalized.summary).toBe('오늘의 요약');
+    expect(normalized.score).toBe(95);
+    expect(normalized.luckyNumber).toBe(1);
+    expect(normalized.overall.length).toBeGreaterThan(100);
   });
 });

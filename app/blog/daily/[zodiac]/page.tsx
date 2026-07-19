@@ -1,20 +1,21 @@
-'use client';
-
 export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { notFound } from 'next/navigation';
+import {
+  DAILY_ZODIACS,
+  formatKoreanDate,
+  getDailyZodiac,
+  getTodayKST,
+  type DailyZodiacSlug,
+} from '@/lib/dailyHoroscope';
+import { getDailyHoroscope } from '@/lib/dailyHoroscopeServer';
 
 const bgStyle = {
   background: 'linear-gradient(160deg, #050520 0%, #0a0a2e 30%, #130a2e 60%, #1a0a3e 100%)',
   minHeight: '100vh',
 };
-
-const ZODIAC_SLUGS = [
-  'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
-  'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
-];
 
 const ZODIAC_INFO: Record<string, {
   ko: string; symbol: string; element: string; planet: string;
@@ -58,37 +59,6 @@ const ZODIAC_INFO: Record<string, {
     tip: '물고기자리 일일운세는 감정·직관·영성의 흐름을 반영합니다. 점수가 높은 날에는 예술 작업이나 명상, 상담 등 감수성이 필요한 활동에 에너지를 쏟으세요. 낮은 날에는 현실적인 경계를 설정하고 감정 소진을 방지하는 데 집중하세요.' },
 };
 
-interface DailyHoroscope {
-  zodiac: string;
-  zodiacKo: string;
-  date: string;
-  emoji: string;
-  score: number;
-  summary: string;
-  overall: string;
-  love: string;
-  money: string;
-  work: string;
-  health: string;
-  luckyColor: string;
-  luckyNumber: number;
-  luckyItem: string;
-  advice: string;
-}
-
-function getTodayKST(): string {
-  const now = new Date();
-  const kst = new Date(now.getTime() + 9 * 60 * 60 * 1000);
-  return kst.toISOString().slice(0, 10);
-}
-
-function formatDate(dateStr: string): string {
-  const [year, month, day] = dateStr.split('-');
-  const date = new Date(dateStr);
-  const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
-  return `${year}년 ${parseInt(month)}월 ${parseInt(day)}일 (${weekdays[date.getDay()]}요일)`;
-}
-
 function ScoreRing({ score }: { score: number }) {
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
@@ -131,66 +101,58 @@ function Section({ emoji, title, content }: { emoji: string; title: string; cont
   );
 }
 
-export default function ZodiacDailyPage() {
-  const params = useParams();
-  const zodiac = (params?.zodiac as string ?? '').toLowerCase();
-  const today = getTodayKST();
-
-  const [data, setData] = useState<DailyHoroscope | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    if (!ZODIAC_SLUGS.includes(zodiac)) {
-      setError(true);
-      setLoading(false);
-      return;
-    }
-    fetch(`/api/daily-horoscope?zodiac=${zodiac}&date=${today}`)
-      .then((r) => {
-        if (!r.ok) throw new Error('fetch failed');
-        return r.json() as Promise<DailyHoroscope>;
-      })
-      .then((d) => { setData(d); setLoading(false); })
-      .catch(() => { setError(true); setLoading(false); });
-  }, [zodiac, today]);
-
-  if (error) {
-    return (
-      <div style={bgStyle} className="flex items-center justify-center">
-        <div className="text-center text-white/50">
-          <div className="text-4xl mb-4">🔮</div>
-          <p>운세를 불러오는 데 문제가 생겼어요.</p>
-          <Link href="/blog/daily" className="text-purple-400 hover:text-purple-300 text-sm mt-4 inline-block">
-            ← 목록으로 돌아가기
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
+export default async function ZodiacDailyPage({
+  params,
+}: {
+  params: Promise<{ zodiac: string }>;
+}) {
+  const { zodiac: zodiacParam } = await params;
+  const zodiac = zodiacParam.toLowerCase();
+  const catalogEntry = getDailyZodiac(zodiac);
   const info = ZODIAC_INFO[zodiac];
+  if (!catalogEntry || !info) notFound();
+
+  const today = getTodayKST();
+  const data = await getDailyHoroscope(zodiac as DailyZodiacSlug, today);
+  const formattedDate = formatKoreanDate(data.date);
+  const pageUrl = `https://starfate.day/blog/daily/${zodiac}`;
+  const structuredData = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: `${formattedDate} ${data.zodiacKo} 오늘의 운세`,
+      description: data.summary,
+      datePublished: `${data.date}T00:00:00+09:00`,
+      dateModified: data.generatedAt,
+      mainEntityOfPage: pageUrl,
+      author: { '@type': 'Organization', name: 'StarFate 편집팀' },
+      publisher: { '@type': 'Organization', name: 'StarFate', url: 'https://starfate.day' },
+      about: [data.zodiacKo, '오늘의 운세', '별자리 운세'],
+      inLanguage: 'ko-KR',
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '홈', item: 'https://starfate.day/' },
+        { '@type': 'ListItem', position: 2, name: '오늘의 별자리 운세', item: 'https://starfate.day/blog/daily' },
+        { '@type': 'ListItem', position: 3, name: `${data.zodiacKo} 오늘의 운세`, item: pageUrl },
+      ],
+    },
+  ];
 
   return (
     <div style={bgStyle}>
       <article className="max-w-2xl mx-auto px-6 py-16">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }}
+        />
         <Link href="/blog/daily" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 오늘의 전체 운세
         </Link>
 
-        {loading || !data ? (
-          <div className="space-y-4 animate-pulse">
-            <div className="h-8 rounded-xl bg-white/5 w-3/4" />
-            <div className="h-4 rounded-xl bg-white/5 w-1/2" />
-            <div className="h-32 rounded-2xl bg-white/5 mt-8" />
-            <div className="grid grid-cols-2 gap-4">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="h-28 rounded-2xl bg-white/5" />
-              ))}
-            </div>
-          </div>
-        ) : (
-          <>
+        <>
             {/* Header */}
             <header className="mb-10">
               <div className="flex items-center gap-2 mb-4 flex-wrap">
@@ -200,13 +162,13 @@ export default function ZodiacDailyPage() {
                 >
                   일일 운세
                 </span>
-                <span className="text-white/30 text-xs">{formatDate(data.date)}</span>
+                <span className="text-white/50 text-xs">{formattedDate}</span>
               </div>
 
               <div className="flex items-center gap-4 mb-6">
                 <div className="text-6xl">{data.emoji}</div>
                 <div>
-                  <h1 className="text-3xl font-bold text-white">{data.zodiacKo}</h1>
+                  <h1 className="text-3xl font-bold text-white">{data.zodiacKo} 오늘의 운세</h1>
                   <p className="text-white/50 text-sm mt-1">{data.summary}</p>
                 </div>
               </div>
@@ -265,25 +227,24 @@ export default function ZodiacDailyPage() {
             <nav className="mt-10">
               <p className="text-white/30 text-xs mb-4 text-center">다른 별자리 운세 보기</p>
               <div className="flex flex-wrap gap-2 justify-center">
-                {['aries','taurus','gemini','cancer','leo','virgo','libra','scorpio','sagittarius','capricorn','aquarius','pisces'].map((s) => (
+                {DAILY_ZODIACS.map((other) => (
                   <Link
-                    key={s}
-                    href={`/blog/daily/${s}`}
+                    key={other.slug}
+                    href={`/blog/daily/${other.slug}`}
                     className={`px-3 py-1.5 rounded-full text-xs transition-colors ${
-                      s === zodiac
+                      other.slug === zodiac
                         ? 'text-white'
                         : 'text-white/40 hover:text-white/70'
                     }`}
-                    style={s === zodiac ? { background: 'rgba(124,58,237,0.4)' } : { background: 'rgba(255,255,255,0.05)' }}
+                    style={other.slug === zodiac ? { background: 'rgba(124,58,237,0.4)' } : { background: 'rgba(255,255,255,0.05)' }}
                   >
-                    {s}
+                    {other.ko}
                   </Link>
                 ))}
               </div>
             </nav>
 
           </>
-        )}
 
         {/* Static zodiac info — always visible (SEO/AdSense) */}
         {info && (
@@ -347,6 +308,42 @@ export default function ZodiacDailyPage() {
             </div>
           </section>
         )}
+
+        <section className="mt-10" aria-labelledby="daily-related-title">
+          <h2 id="daily-related-title" className="text-white font-bold text-lg mb-4">
+            {data.zodiacKo} 운세와 함께 보기
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <Link
+              href="/card-draw"
+              className="rounded-xl p-4 text-sm text-white/70 hover:text-white transition-colors"
+              style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+            >
+              🃏 오늘의 타로 한 장
+            </Link>
+            <Link
+              href="/guide/zodiac-compatibility"
+              className="rounded-xl p-4 text-sm text-white/70 hover:text-white transition-colors"
+              style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+            >
+              💞 별자리 궁합 알아보기
+            </Link>
+            <Link
+              href="/blog/how-to-read-daily-fortune"
+              className="rounded-xl p-4 text-sm text-white/70 hover:text-white transition-colors"
+              style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+            >
+              📖 운세를 건강하게 읽는 법
+            </Link>
+          </div>
+        </section>
+
+        <footer className="mt-8 border-t border-white/10 pt-5 text-xs leading-relaxed text-white/40">
+          <p>업데이트: {formattedDate} · 작성 및 검토: StarFate 편집팀</p>
+          <p className="mt-2">
+            별자리 운세는 오락과 자기성찰을 위한 참고 콘텐츠입니다. 건강·금전·법률 등 중요한 결정은 실제 정보와 전문가의 조언을 기준으로 판단하세요.
+          </p>
+        </footer>
       </article>
     </div>
   );

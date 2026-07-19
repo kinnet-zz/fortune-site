@@ -1,20 +1,6 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-
-const ZODIAC_NAMES: Record<string, string> = {
-  aries: '양자리',
-  taurus: '황소자리',
-  gemini: '쌍둥이자리',
-  cancer: '게자리',
-  leo: '사자자리',
-  virgo: '처녀자리',
-  libra: '천칭자리',
-  scorpio: '전갈자리',
-  sagittarius: '사수자리',
-  capricorn: '염소자리',
-  aquarius: '물병자리',
-  pisces: '물고기자리',
-};
+import { formatKoreanDate, getDailyZodiac, getTodayKST } from '@/lib/dailyHoroscope';
 
 export async function generateMetadata({
   params,
@@ -22,13 +8,37 @@ export async function generateMetadata({
   params: Promise<{ zodiac: string }>;
 }): Promise<Metadata> {
   const { zodiac } = await params;
-  const name = ZODIAC_NAMES[zodiac] ?? zodiac;
+  const info = getDailyZodiac(zodiac);
+  if (!info) return { robots: { index: false, follow: false } };
+
+  const date = formatKoreanDate(getTodayKST()).replace(/ \(.+\)$/, '');
+  const title = `${date} ${info.ko} 오늘의 운세 | StarFate`;
+  const description = `${date} ${info.ko}의 종합운, 연애운, 금전운, 직업운과 오늘 실천할 자기성찰 조언을 무료로 확인하세요.`;
+  const url = `/blog/daily/${zodiac}`;
 
   return {
-    title: `${name} 오늘의 운세 | StarFate`,
-    description: `${name}의 오늘 종합운, 연애운, 금전운, 직업운과 자기성찰 조언을 확인하세요.`,
-    alternates: { canonical: `/blog/daily/${zodiac}` },
-    robots: { index: false, follow: true },
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url,
+      type: 'article',
+      locale: 'ko_KR',
+      siteName: 'StarFate',
+    },
+    twitter: { card: 'summary_large_image', title, description },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
   };
 }
 

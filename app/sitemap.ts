@@ -1,9 +1,5 @@
 import { MetadataRoute } from 'next';
-
-const ZODIAC_SLUGS = [
-  'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
-  'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
-];
+import { DAILY_ZODIACS } from '@/lib/dailyHoroscope';
 
 const CHINESE_ZODIAC_SLUGS = [
   'rat', 'ox', 'tiger', 'rabbit', 'dragon', 'snake',
@@ -48,6 +44,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified: now, changeFrequency: 'daily', priority: 1 },
     { url: `${baseUrl}/blog`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${baseUrl}/blog/daily`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
     { url: `${baseUrl}/zodiac`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/chinese-zodiac`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/card-draw`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
@@ -68,11 +65,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const zodiacPages: MetadataRoute.Sitemap = ZODIAC_SLUGS.map((slug) => ({
-    url: `${baseUrl}/zodiac/${slug}`,
+  const zodiacPages: MetadataRoute.Sitemap = DAILY_ZODIACS.map((zodiac) => ({
+    url: `${baseUrl}/zodiac/${zodiac.slug}`,
     lastModified: now,
     changeFrequency: 'monthly' as const,
     priority: 0.8,
+  }));
+
+  const dailyHoroscopePages: MetadataRoute.Sitemap = DAILY_ZODIACS.map((zodiac) => ({
+    url: `${baseUrl}/blog/daily/${zodiac.slug}`,
+    lastModified: now,
+    changeFrequency: 'daily' as const,
+    priority: 0.9,
   }));
 
   const chineseZodiacPages: MetadataRoute.Sitemap = CHINESE_ZODIAC_SLUGS.map((slug) => ({
@@ -89,5 +93,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticPages, ...blogPages, ...zodiacPages, ...chineseZodiacPages, ...guidePages];
+  return [
+    ...staticPages,
+    ...dailyHoroscopePages,
+    ...blogPages,
+    ...zodiacPages,
+    ...chineseZodiacPages,
+    ...guidePages,
+  ];
 }
