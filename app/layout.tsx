@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Noto_Sans_KR, Noto_Sans_JP, Noto_Sans_SC } from 'next/font/google';
+import { Playfair_Display } from 'next/font/google';
 import './globals.css';
 import CookieBanner from '../components/CookieBanner';
 import ConsentScripts from '../components/ConsentScripts';
@@ -7,25 +7,11 @@ import ConditionalHeader from '../components/ConditionalHeader';
 import Footer from '../components/Footer';
 import { LangProvider } from '@/lib/LangContext';
 
-const notoSansKR = Noto_Sans_KR({
+const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '900'],
+  weight: ['400', '600', '700'],
   display: 'swap',
-  variable: '--font-noto-sans-kr',
-});
-
-const notoSansJP = Noto_Sans_JP({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '900'],
-  display: 'swap',
-  variable: '--font-noto-sans-jp',
-});
-
-const notoSansSC = Noto_Sans_SC({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '900'],
-  display: 'swap',
-  variable: '--font-noto-sans-sc',
+  variable: '--font-playfair-display',
 });
 
 export const metadata: Metadata = {
@@ -86,11 +72,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" className={`${notoSansKR.variable} ${notoSansJP.variable} ${notoSansSC.variable}`}>
+    <html lang="ko" className={playfairDisplay.variable}>
       <head>
         <meta name="google-adsense-account" content="ca-pub-3314960461630607" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔮</text></svg>" />
         <script
           type="application/ld+json"
@@ -132,7 +116,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${notoSansKR.className} ${notoSansJP.className} ${notoSansSC.className} antialiased`}>
+      <body className="antialiased">
         <LangProvider>
           <ConditionalHeader />
           {children}

@@ -1,7 +1,9 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { trackEvent } from '@/lib/analytics';
 import { type Lang, t } from '@/lib/i18n';
+import { encodeSharedResult } from '@/lib/sharedFortune';
 
 interface FortuneResult {
   zodiacSign: string;
@@ -19,8 +21,6 @@ interface FortuneCardProps {
   fortune: FortuneResult;
   onReset: () => void;
   lang: Lang;
-  birthDate: string;
-  gender: string;
 }
 
 interface SectionProps {
@@ -126,7 +126,7 @@ function ScoreBar({ score }: { score: number }) {
   );
 }
 
-export default function FortuneCard({ fortune, onReset, lang, birthDate, gender }: FortuneCardProps) {
+export default function FortuneCard({ fortune, onReset, lang }: FortuneCardProps) {
   const [copied, setCopied] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
   const [imageSharing, setImageSharing] = useState(false);
@@ -163,8 +163,9 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
     return () => clearTimeout(timer);
   }, []);
 
-
-  const shareUrl = lang === 'ko' ? 'https://starfate.day' : `https://starfate.day/?lang=${lang}`;
+  const shareParams = new URLSearchParams({ r: encodeSharedResult(fortune) });
+  if (lang !== 'ko') shareParams.set('lang', lang);
+  const shareUrl = `https://starfate.day/?${shareParams.toString()}`;
 
   const handleShare = async () => {
     const text = `🔮 ${tr.resultHeader} (${fortune.zodiacSign} / ${fortune.chineseZodiac})\n\n` +
@@ -183,6 +184,7 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
           text,
           url: shareUrl,
         });
+        trackEvent('fortune_share', { method: 'native_text', language: lang });
         return;
       } catch (err) {
         if ((err as Error).name === 'AbortError') return;
@@ -191,7 +193,8 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
     }
 
     if (!navigator.clipboard) return;
-    await navigator.clipboard.writeText(text + '\nhttps://starfate.day');
+    await navigator.clipboard.writeText(`${text}\n${shareUrl}`);
+    trackEvent('fortune_share', { method: 'clipboard_text', language: lang });
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
@@ -203,6 +206,7 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
           title: tr.resultHeader,
           url: shareUrl,
         });
+        trackEvent('fortune_share', { method: 'native_link', language: lang });
         return;
       } catch (err) {
         if ((err as Error).name === 'AbortError') return;
@@ -211,6 +215,7 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
 
     if (!navigator.clipboard) return;
     await navigator.clipboard.writeText(shareUrl);
+    trackEvent('fortune_share', { method: 'clipboard_link', language: lang });
     setLinkCopied(true);
     setTimeout(() => setLinkCopied(false), 2500);
   };
@@ -246,6 +251,7 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
           title: tr.resultHeader,
           url: shareUrl,
         });
+        trackEvent('fortune_share', { method: 'native_image', language: lang });
         setImageSaved(true);
         setTimeout(() => setImageSaved(false), 3500);
         return;
@@ -267,6 +273,7 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
           text: tr.imageShareText,
           url: shareUrl,
         });
+        trackEvent('fortune_share', { method: 'download_and_native', language: lang });
         setImageSaved(true);
         setTimeout(() => setImageSaved(false), 3500);
         return;
@@ -282,6 +289,7 @@ export default function FortuneCard({ fortune, onReset, lang, birthDate, gender 
       document.body.removeChild(a);
       URL.revokeObjectURL(objectUrl);
 
+      trackEvent('fortune_share', { method: 'image_download', language: lang });
       setImageSaved(true);
       setTimeout(() => setImageSaved(false), 3500);
     } catch (err) {

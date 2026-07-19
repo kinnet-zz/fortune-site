@@ -2,11 +2,13 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import Link from 'next/link';
-import FortuneForm from '../components/FortuneForm';
 import FortuneCard from '../components/FortuneCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import AdUnit from '../components/AdUnit';
 import InfoSection from '../components/InfoSection';
+import { HomeConversionHero, ResultNextSteps } from '../components/RevenuePath';
+import { trackEvent } from '@/lib/analytics';
+import { decodeSharedResult } from '@/lib/sharedFortune';
 import { t } from '@/lib/i18n';
 import { useLang } from '@/lib/useLang';
 
@@ -41,6 +43,7 @@ const STAR_COLORS = [
 ];
 
 const FLOATING_SYMBOL_SIZES = [18, 21, 15, 20, 17, 14, 19, 22, 16, 18, 15, 21];
+const SCORE_BUCKET_SIZE = 20;
 
 const EDITORIAL_POINTS = [
   {
@@ -173,7 +176,6 @@ function BackgroundStars() {
 export default function HomeClient() {
   const { lang } = useLang();
   const [birthDate, setBirthDate] = useState('');
-  const [gender, setGender] = useState('');
   const [fortune, setFortune] = useState<FortuneResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -185,38 +187,16 @@ export default function HomeClient() {
     const params = new URLSearchParams(window.location.search);
     const r = params.get('r');
     if (!r) return;
+    const decoded = decodeSharedResult(r);
+    if (!decoded) return;
+
     try {
-      const raw = JSON.parse(decodeURIComponent(atob(r)));
-      if (
-        typeof raw !== 'object' || raw === null ||
-        typeof raw.zodiacSign !== 'string' ||
-        typeof raw.chineseZodiac !== 'string' ||
-        typeof raw.overall !== 'string' ||
-        typeof raw.love !== 'string' ||
-        typeof raw.money !== 'string' ||
-        typeof raw.work !== 'string' ||
-        typeof raw.luckyColor !== 'string' ||
-        typeof raw.luckyNumber !== 'number' ||
-        typeof raw.score !== 'number'
-      ) {
-        return;
-      }
-      const decoded: FortuneResult = {
-        zodiacSign: String(raw.zodiacSign).slice(0, 50),
-        chineseZodiac: String(raw.chineseZodiac).slice(0, 50),
-        overall: String(raw.overall).slice(0, 500),
-        love: String(raw.love).slice(0, 500),
-        money: String(raw.money).slice(0, 500),
-        work: String(raw.work).slice(0, 500),
-        luckyColor: String(raw.luckyColor).slice(0, 30),
-        luckyNumber: Math.max(1, Math.min(99, Number(raw.luckyNumber))),
-        score: Math.max(1, Math.min(100, Number(raw.score))),
-      };
       const bd = params.get('bd') ?? '';
       const g = params.get('g') ?? '';
       setFortune(decoded);
       if (bd) setBirthDate(bd);
-      if (g) { setGender(g); lastGenderRef.current = g; }
+      if (g) lastGenderRef.current = g;
+      trackEvent('shared_fortune_view', { language: lang });
     } catch {
       // 잘못된 URL 파라미터는 무시
     }
@@ -228,13 +208,19 @@ export default function HomeClient() {
     }
   }, [fortune]);
 
-  const handleSubmit = useCallback(async (date: string, genderInput: string) => {
+  const handleSubmit = useCallback(async (
+    date: string,
+    genderInput: string,
+    source: 'user' | 'language-change' = 'user',
+  ) => {
+    const shouldTrackConversion = source === 'user';
+    const startedAt = performance.now();
     setBirthDate(date);
-    setGender(genderInput);
     lastGenderRef.current = genderInput;
     setIsLoading(true);
     setError(null);
     setFortune(null);
+    if (shouldTrackConversion) trackEvent('fortune_start', { language: lang });
 
     try {
       const response = await fetch('/api/fortune', {
@@ -253,8 +239,21 @@ export default function HomeClient() {
 
       const data: FortuneResult = await response.json();
       setFortune(data);
+      if (shouldTrackConversion) {
+        trackEvent('fortune_result', {
+          language: lang,
+          zodiac_sign: data.zodiacSign,
+          chinese_zodiac: data.chineseZodiac,
+          score_bucket: Math.floor(data.score / SCORE_BUCKET_SIZE) * SCORE_BUCKET_SIZE,
+          response_time_ms: Math.round(performance.now() - startedAt),
+        });
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'GENERAL_ERROR');
+      const errorType = err instanceof Error ? err.message : 'GENERAL_ERROR';
+      setError(errorType);
+      if (shouldTrackConversion) {
+        trackEvent('fortune_error', { language: lang, error_type: errorType });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -264,11 +263,12 @@ export default function HomeClient() {
     if (prevLangRef.current === lang) return;
     prevLangRef.current = lang;
     if (fortune && birthDate && lastGenderRef.current) {
-      handleSubmit(birthDate, lastGenderRef.current);
+      handleSubmit(birthDate, lastGenderRef.current, 'language-change');
     }
   }, [lang]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleReset = () => {
+    trackEvent('fortune_reset', { language: lang });
     setFortune(null);
     setError(null);
     setBirthDate('');
@@ -299,6 +299,10 @@ export default function HomeClient() {
       <main className="relative z-10 min-h-screen flex flex-col">
         <div className="flex-1 flex flex-col items-center justify-start px-4 py-8 pb-16">
           {!fortune && !isLoading && (
+            <HomeConversionHero onSubmit={handleSubmit} isLoading={isLoading} lang={lang} />
+          )}
+
+          {!fortune && !isLoading && (
             <section className="w-full max-w-4xl mx-auto mb-10" aria-labelledby="home-guide-heading">
               <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-6 items-start">
                 <div
@@ -313,9 +317,9 @@ export default function HomeClient() {
                   <p className="text-purple-300/70 text-xs font-semibold tracking-[0.22em] uppercase mb-4">
                     Zodiac and self-reflection guide
                   </p>
-                  <h1 id="home-guide-heading" className="font-serif-display text-3xl sm:text-4xl font-bold text-white/92 leading-tight mb-4">
+                  <h2 id="home-guide-heading" className="font-serif-display text-2xl sm:text-3xl font-bold text-white/92 leading-tight mb-4">
                     StarFate는 별자리와 12지를 하루의 자기성찰 언어로 풀어 쓰는 운세 가이드입니다.
-                  </h1>
+                  </h2>
                   <p className="text-white/56 text-sm sm:text-base leading-8 mb-6">
                     생년월일 기반 운세 도구는 빠른 확인을 위한 기능이고, 사이트의 핵심은 별자리·동양 12지·수비학·타로를 문화적 배경과 함께 설명하는 해석 콘텐츠입니다. 운세는 예언이 아니라 오늘의 감정, 관계, 선택을 돌아보는 가벼운 참고 자료로 제공합니다.
                   </p>
@@ -429,15 +433,12 @@ export default function HomeClient() {
           )}
 
           {fortune && !isLoading && (
-            <div ref={resultRef} className="w-full flex justify-center">
-              <FortuneCard fortune={fortune} onReset={handleReset} lang={lang} birthDate={birthDate} gender={gender} />
-            </div>
-          )}
-
-          {!fortune && !isLoading && (
-            <div className="w-full flex justify-center">
-              <FortuneForm onSubmit={handleSubmit} isLoading={isLoading} lang={lang} />
-            </div>
+            <>
+              <div ref={resultRef} className="w-full flex justify-center">
+                <FortuneCard fortune={fortune} onReset={handleReset} lang={lang} />
+              </div>
+              <ResultNextSteps lang={lang} />
+            </>
           )}
 
           {fortune && !isLoading && (
@@ -445,7 +446,7 @@ export default function HomeClient() {
               <div className="mt-8 text-center">
                 <p className="text-white/20 text-xs">{t(lang).retryHint}</p>
               </div>
-              <div className="w-full max-w-lg mx-auto mt-6">
+              <div className="w-full max-w-lg mx-auto mt-8">
                 <AdUnit slot="4511932122" format="auto" />
               </div>
             </>

@@ -4,18 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { getZodiacSign, getChineseZodiac } from "@/lib/zodiac";
 import { VALID_LANGS } from "@/lib/i18n";
-
-interface FortuneResponse {
-  zodiacSign: string;
-  chineseZodiac: string;
-  overall: string;
-  love: string;
-  money: string;
-  work: string;
-  luckyColor: string;
-  luckyNumber: number;
-  score: number;
-}
+import { normalizeFortuneResult, type FortuneResult as FortuneResponse } from "@/lib/fortuneResult";
 
 function getTodayKorean(): string {
   const today = new Date();
@@ -313,24 +302,19 @@ ALL text fields must be written in ${outputLang}.
         .replace(/\s*```$/i, "")
         .trim();
 
-      fortuneData = JSON.parse(cleanedText);
+      const normalizedFortune = normalizeFortuneResult(JSON.parse(cleanedText));
+      if (!normalizedFortune) {
+        return NextResponse.json(
+          getStaticFortune(zodiac.korean, chineseZodiac, gender, language || "ko"),
+          { status: 200 }
+        );
+      }
+      fortuneData = normalizedFortune;
     } catch {
       // Parse failure → fall back to static
       const staticFortune = getStaticFortune(zodiac.korean, chineseZodiac, gender, language || "ko");
       return NextResponse.json(staticFortune, { status: 200 });
     }
-
-    // 숫자 범위 보정
-    fortuneData.luckyNumber = Math.max(1, Math.min(99, Number(fortuneData.luckyNumber)));
-    fortuneData.score = Math.max(1, Math.min(100, Number(fortuneData.score)));
-
-    // 텍스트 필드 길이 제한 (프롬프트 인젝션 방지)
-    const MAX_TEXT_LENGTH = 300;
-    fortuneData.overall = String(fortuneData.overall).slice(0, MAX_TEXT_LENGTH);
-    fortuneData.love = String(fortuneData.love).slice(0, MAX_TEXT_LENGTH);
-    fortuneData.money = String(fortuneData.money).slice(0, MAX_TEXT_LENGTH);
-    fortuneData.work = String(fortuneData.work).slice(0, MAX_TEXT_LENGTH);
-    fortuneData.luckyColor = String(fortuneData.luckyColor).slice(0, 20);
 
     return NextResponse.json(fortuneData, { status: 200 });
   } catch (error: unknown) {
