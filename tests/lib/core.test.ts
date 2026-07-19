@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { getCookieConsent, isAdSensePath } from '../../lib/adConsent';
 import { trackEvent } from '../../lib/analytics';
+import { normalizeFortuneResult } from '../../lib/fortuneResult';
 import { decodeSharedResult, encodeSharedResult, MAX_SHARED_TOKEN_LENGTH } from '../../lib/sharedFortune';
 import { getChineseZodiac, getZodiacSign } from '../../lib/zodiac';
 
@@ -117,5 +118,24 @@ describe('shared fortune links', () => {
       score: 10_000,
     }));
     expect(decodeSharedResult(unsafe)).toBeNull();
+  });
+});
+
+describe('fortune response validation', () => {
+  it('normalizes numeric ranges and rejects missing labels', () => {
+    const valid = {
+      zodiacSign: '황소자리',
+      chineseZodiac: '말띠',
+      overall: '종합운',
+      love: '연애운',
+      money: '금전운',
+      work: '직업운',
+      luckyColor: '노란색',
+      luckyNumber: 999,
+      score: -10,
+    };
+
+    expect(normalizeFortuneResult(valid)).toMatchObject({ luckyNumber: 99, score: 1 });
+    expect(normalizeFortuneResult({ ...valid, zodiacSign: null })).toBeNull();
   });
 });
