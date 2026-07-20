@@ -36,6 +36,7 @@ class DailyHoroscopeGenerationFailure extends Error {
 const AI_CACHE_TTL_SECONDS = 86400;
 const FALLBACK_CACHE_TTL_SECONDS = 300;
 const GEMINI_TIMEOUT_MS = 6000;
+const GEMINI_MODEL = 'gemini-3.1-flash-lite';
 
 function getCloudflareEnv(): Record<string, unknown> | undefined {
   try {
@@ -95,7 +96,7 @@ async function generateWithGemini(
   let response: Response;
   try {
     response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
