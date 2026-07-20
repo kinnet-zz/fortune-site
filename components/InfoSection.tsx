@@ -47,36 +47,8 @@ export default function InfoSection() {
 
   return (
     <>
-      {/* 이용 방법 */}
-      <section className="w-full max-w-2xl mx-auto px-4 mt-20" aria-labelledby="how-to-heading">
-        <div className="section-line mb-8" />
-        <h2
-          id="how-to-heading"
-          className="text-center text-white/35 text-xs tracking-[0.2em] uppercase font-medium mb-8 font-serif-display"
-        >
-          {tr.howToTitle}
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {tr.howToSteps.map(({ title, desc }, i) => (
-            <div key={i} className="rounded-2xl p-6 text-center card-glow" style={glassCard}>
-              <div
-                className="inline-flex items-center justify-center w-9 h-9 rounded-full text-xs font-bold text-purple-300 mb-4 font-serif-display"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(139,92,246,0.3), rgba(236,72,153,0.2))',
-                  border: '1px solid rgba(192,132,252,0.2)',
-                }}
-              >
-                {String(i + 1).padStart(2, '0')}
-              </div>
-              <h3 className="text-white/85 text-sm font-semibold mb-2 tracking-wide">{title}</h3>
-              <p className="text-white/40 text-xs leading-relaxed">{desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* 서양 별자리 — bento grid */}
-      <section className="w-full max-w-2xl mx-auto px-4 mt-14" aria-labelledby="zodiac-heading">
+      <section className="w-full max-w-2xl mx-auto px-4 mt-20" aria-labelledby="zodiac-heading">
         <div className="section-line mb-8" />
         <h2
           id="zodiac-heading"
