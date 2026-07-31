@@ -1,15 +1,33 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+const pageUrl = 'https://starfate.day/blog/zodiac-myths-facts';
+const pageTitle = '별자리, 안 믿는다면서 왜 자꾸 보게 될까?';
+const pageDescription = '별자리 이야기가 오래 살아남은 이유를 밤하늘의 역사, 바넘 효과, 연애와 관계의 실제 장면을 통해 위트 있게 풀어봅니다.';
+
 export const metadata: Metadata = {
-  title: '별자리 궁금한 이야기 5가지 | StarFate',
-  description: '내 별자리가 바뀌었는지, 뱀주인자리는 무엇인지 등 별자리와 관련해 자주 궁금한 내용을 가볍게 정리했습니다.',
+  title: `${pageTitle} | StarFate`,
+  description: pageDescription,
   alternates: { canonical: '/blog/zodiac-myths-facts' },
   openGraph: {
-    title: '별자리 궁금한 이야기 5가지',
-    description: '별자리 날짜와 뱀주인자리처럼 한 번쯤 궁금한 내용을 짧고 편하게 읽어보세요.',
+    title: pageTitle,
+    description: pageDescription,
     type: 'article',
+    url: pageUrl,
   },
+};
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: pageTitle,
+  description: pageDescription,
+  datePublished: '2025-05-01',
+  dateModified: '2026-08-01',
+  mainEntityOfPage: pageUrl,
+  author: { '@type': 'Organization', name: 'StarFate' },
+  publisher: { '@type': 'Organization', name: 'StarFate', url: 'https://starfate.day' },
+  inLanguage: 'ko-KR',
 };
 
 const bgStyle = {
@@ -17,112 +35,171 @@ const bgStyle = {
   minHeight: '100vh',
 };
 
-const STORIES = [
-  {
-    title: '내 별자리가 바뀌었다는 말, 사실일까?',
-    body: '인터넷에서 별자리 날짜가 달라졌다는 이야기를 본 적이 있을 거예요. 실제 별자리의 위치를 보는 천문학과 생일을 기준으로 읽는 서양 점성술은 기준이 다릅니다. StarFate에서 사용하는 12별자리 날짜는 익숙한 점성술 기준을 따르므로, 평소 알고 있던 별자리를 그대로 보면 됩니다.',
-    takeaway: '한 줄 요약: 생일로 보는 별자리는 그대로예요.',
-  },
-  {
-    title: '뱀주인자리가 생기면 13번째 별자리일까?',
-    body: '뱀주인자리는 태양이 지나가는 하늘 영역 중 하나라서 가끔 화제가 됩니다. 다만 12궁 점성술에 새 별자리가 추가됐다는 뜻은 아닙니다. 천문학에서 말하는 별자리와 점성술에서 사용하는 12궁은 서로 다른 분류 방식이니까요.',
-    takeaway: '한 줄 요약: 새로운 별자리가 생긴 것이 아니라, 다른 기준을 소개한 이야기예요.',
-  },
-  {
-    title: '쌍둥이는 같은 별자리인데 왜 다를까?',
-    body: '별자리는 사람을 한 문장으로 정해주는 이름표가 아닙니다. 태어난 계절과 상징을 바탕으로 성향을 생각해보는 출발점에 가깝습니다. 같은 별자리라도 자란 환경, 관계, 그날의 기분에 따라 전혀 다른 모습을 보일 수 있어요.',
-    takeaway: '한 줄 요약: 같은 별자리라도 사람마다 이야기는 달라요.',
-  },
-  {
-    title: '같은 별자리끼리는 정말 안 맞을까?',
-    body: '같은 별자리라서 무조건 잘 맞거나, 반대로 꼭 부딪히는 것은 아닙니다. 서로 비슷한 점을 편하게 느낄 수도 있고, 같은 성향이 겹쳐 다툴 수도 있습니다. 궁합은 별자리 하나보다 실제 대화와 배려가 더 크게 좌우합니다.',
-    takeaway: '한 줄 요약: 궁합은 별자리보다 서로 맞춰가는 방식이 중요해요.',
-  },
-  {
-    title: '별자리는 과학일까, 재미일까?',
-    body: '별자리는 미래를 정확히 맞히는 공식이라기보다 상징을 통해 나를 돌아보는 문화적 놀이에 가깝습니다. 마음에 드는 문장은 오늘의 힌트로 활용하고, 중요한 건강·금전·법률 결정은 실제 정보와 전문가의 조언을 기준으로 판단하세요.',
-    takeaway: '한 줄 요약: 가볍게 읽고, 내게 맞는 부분만 챙기면 충분해요.',
-  },
-];
-
 export default function ZodiacMythsFactsPage() {
   return (
     <div style={bgStyle}>
       <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd).replace(/</g, '\\u003c') }}
+        />
+
         <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
 
-        <header className="mb-10">
+        <header className="mb-12">
           <div className="flex items-center gap-2 mb-4 flex-wrap">
             <span
               className="px-2 py-0.5 rounded-full text-xs font-medium"
               style={{ background: 'rgba(124,58,237,0.3)', color: 'rgba(196,181,253,1)' }}
             >
-              별자리 이야기
+              별자리 문화
             </span>
-            <span className="text-white/30 text-xs">가볍게 읽는 3분</span>
+            <span className="text-white/35 text-xs">2026년 8월 1일 업데이트 · 5분 읽기</span>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-4 leading-tight">
-            별자리 궁금한 이야기 5가지
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-5 leading-tight">
+            별자리, 안 믿는다면서 왜 자꾸 보게 될까?
           </h1>
-          <p className="text-white/50 text-base leading-relaxed">
-            “내 별자리가 바뀌었나?”, “뱀주인자리는 뭐지?” 한 번쯤 궁금했던 내용을 짧고 편하게 정리했습니다. 재미로 읽고, 마음에 드는 부분만 챙겨가세요.
+          <p className="text-white/55 text-base sm:text-lg leading-8">
+            “저 별자리 같은 건 안 믿어요.” 그렇게 말한 사람이 3분 뒤 상대의 생일을 묻는 장면은 드물지 않습니다. 별자리는 정답표라기보다 대화 카드에 가깝습니다. 맞히지 못해도, 꺼내는 순간 이야기가 시작되니까요.
           </p>
         </header>
 
-        <div className="space-y-4">
-          {STORIES.map((story, index) => (
-            <section
-              key={story.title}
-              className="rounded-2xl p-6"
-              style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
-            >
-              <p className="text-purple-300/70 text-xs font-semibold tracking-[0.16em] uppercase mb-2">
-                이야기 {index + 1}
+        <div className="space-y-12 text-sm sm:text-[15px] leading-8">
+          <section>
+            <h2 className="text-2xl font-bold text-white mb-4">밤하늘에는 선이 없는데, 우리는 자꾸 그림을 본다</h2>
+            <p className="mb-4">
+              오리온의 허리띠는 가죽도 아니고, 물병자리에서 물이 새지도 않습니다. 별 사이에 선을 그은 쪽은 하늘이 아니라 사람입니다. 그런데 그 선 하나 덕분에 밤하늘은 외우기 어려운 점들의 집합에서 기억할 수 있는 이야기로 바뀝니다.
+            </p>
+            <p className="mb-4">
+              국제천문연맹(IAU)은 문화마다 자연환경과 생활 방식에 따라 서로 다른 별자리 이야기를 만들었다고 설명합니다. 계절을 짐작하고, 방향을 찾고, 경험을 다음 세대에 전하기 위한 생활의 지도였습니다. 현대 천문학은 밤하늘 전체를 88개 별자리 구역으로 나누지만, 우리가 익숙하게 보는 막대기 모양의 그림까지 공식으로 정해두지는 않습니다.
+            </p>
+            <p>
+              그러니 별자리는 처음부터 ‘하늘에 숨겨진 성격검사’라기보다, 사람들이 별을 보고 만든 오래된 스토리텔링에 가깝습니다. 재미의 출발점도 바로 거기 있습니다.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-bold text-white mb-4">뱀주인자리가 등장해도 별자리 주민등록증은 그대로다</h2>
+            <p className="mb-4">
+              몇 년마다 “당신의 별자리가 바뀌었다”는 소식이 돌아옵니다. 주인공은 대개 뱀주인자리입니다. 천문학에서 뱀주인자리는 실제로 존재하는 공식 별자리입니다. 다만 이것이 곧 점성술의 12궁에 새 멤버가 긴급 합류했다는 뜻은 아닙니다.
+            </p>
+            <p className="mb-4">
+              천문학의 별자리는 경계가 제각각인 하늘의 구역이고, 서양 점성술의 12궁은 황도를 30도씩 나눈 상징 체계입니다. 둘은 같은 하늘을 보지만 쓰는 지도가 다릅니다. 지하철 노선도에 한강의 실제 폭이 표시되지 않는다고 해서 노선도가 틀린 것은 아닌 것과 비슷합니다.
+            </p>
+            <div className="rounded-2xl p-5" style={{ background: 'rgba(124,58,237,0.08)', border: '1px solid rgba(167,139,250,0.18)' }}>
+              <p className="text-purple-100/85">
+                결론은 간단합니다. 천문학 기사를 읽을 때는 하늘의 실제 위치를, 별자리 운세를 볼 때는 문화적으로 만들어진 12궁의 언어를 보고 있다는 차이만 기억하면 됩니다.
               </p>
-              <h2 className="text-xl font-bold text-white mb-3">{story.title}</h2>
-              <p className="text-white/60 text-sm leading-relaxed">{story.body}</p>
-              <p className="mt-4 text-purple-200/80 text-sm font-medium">{story.takeaway}</p>
-            </section>
-          ))}
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-bold text-white mb-4">“이거 완전 나잖아”에는 꽤 인간적인 이유가 있다</h2>
+            <p className="mb-4">
+              1949년 심리학자 버트럼 포러는 학생들에게 성격검사 결과라고 소개한 뒤, 사실상 모두에게 같은 성격 설명을 건넸습니다. 학생들은 그 문장이 자신을 꽤 정확하게 묘사한다고 평가했습니다. 이후 이런 현상은 포러 효과 또는 바넘 효과로 널리 알려졌습니다.
+            </p>
+            <p className="mb-4">
+              “사람들과 어울리는 걸 좋아하지만 가끔은 혼자 있고 싶다” 같은 문장은 거의 인류 전체의 단체 공지에 가깝습니다. 좋은 면과 조심스러운 면을 함께 담고, 해석할 여백을 남기면 우리는 현재의 경험을 그 문장 안에 자연스럽게 채워 넣습니다.
+            </p>
+            <p>
+              그렇다고 읽는 시간이 전부 헛된 것은 아닙니다. 더 재미있는 질문은 “이 설명이 정말 나인가?”보다 “나는 왜 오늘 이 문장에 유독 멈췄을까?”입니다. 운세가 미래를 비추는 거울은 아니더라도, 지금 내 관심사를 슬쩍 보여주는 거울은 될 수 있습니다.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-bold text-white mb-4">궁합표보다 더 정확한 건 다툰 뒤의 행동이다</h2>
+            <p className="mb-4">
+              사자자리 둘이 만났다고 반드시 주도권 싸움이 벌어지는 것도 아니고, 물과 불 별자리가 만났다고 연애가 자동 종료되는 것도 아닙니다. 실제 관계에서는 별자리보다 답장이 늦었을 때 어떻게 해석하는지, 서운할 때 말하는지 참는지, 사과를 누가 먼저 시작하는지가 훨씬 많은 것을 설명합니다.
+            </p>
+            <p className="mb-5">
+              별자리 궁합을 판결문처럼 읽으면 사람을 열두 칸에 밀어 넣게 됩니다. 반대로 대화의 예고편처럼 쓰면 꽤 쓸모가 있습니다. “넌 전갈자리라 원래 그래”에서 멈추지 말고, 아래처럼 한 번 더 묻는 식입니다.
+            </p>
+            <ul className="space-y-3">
+              <li className="rounded-xl px-4 py-3" style={{ background: 'rgba(255,255,255,0.035)', border: '1px solid rgba(255,255,255,0.07)' }}>
+                나는 불편할 때 설명이 길어지는 편일까, 조용해지는 편일까?
+              </li>
+              <li className="rounded-xl px-4 py-3" style={{ background: 'rgba(255,255,255,0.035)', border: '1px solid rgba(255,255,255,0.07)' }}>
+                상대의 느린 답장을 바쁨으로 읽을까, 무관심으로 읽을까?
+              </li>
+              <li className="rounded-xl px-4 py-3" style={{ background: 'rgba(255,255,255,0.035)', border: '1px solid rgba(255,255,255,0.07)' }}>
+                관심을 말, 시간, 행동 중 무엇으로 확인하고 싶을까?
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-bold text-white mb-4">별자리 운세를 잘 읽는 사람은 전부 믿지 않는다</h2>
+            <p className="mb-4">
+              “오늘 먼저 연락하면 흐름이 좋아진다”는 문장을 봤다면 우주의 허락을 기다리기보다 미뤄둔 안부가 있는지 떠올려보면 됩니다. “정리의 날”이라면 서랍 하나나 일정 하나를 정리해도 충분합니다. 추상적인 문장을 작은 행동으로 번역할 때 운세는 비로소 생활에 닿습니다.
+            </p>
+            <p className="mb-4">
+              단, 돈과 건강 앞에서는 갑자기 현실주의자가 되는 편이 좋습니다. 재물운이 좋다는 날에도 별이 매수 버튼을 대신 눌러주지는 않습니다. 컨디션이 떨어진다는 운세는 휴식의 계기로 삼을 수 있지만, 실제 증상은 운세가 아니라 의료 정보와 전문가에게 물어야 합니다.
+            </p>
+            <p>
+              좋은 별자리 콘텐츠는 “당신은 이런 사람”이라고 못 박지 않습니다. 오늘 무엇을 관찰해볼지, 누구에게 말을 걸어볼지, 어떤 습관을 한 번 의심해볼지 제안합니다. 판결문보다 첫 문장에 가까운 셈입니다.
+            </p>
+          </section>
+
+          <section className="rounded-3xl p-6 sm:p-7" style={{ background: 'linear-gradient(135deg, rgba(124,58,237,0.14), rgba(76,29,149,0.08))', border: '1px solid rgba(167,139,250,0.22)' }}>
+            <h2 className="text-xl font-bold text-white mb-3">그래서 우리는 내일도 별자리를 본다</h2>
+            <p className="text-white/65 leading-8">
+              별자리가 미래를 정확히 예측한다는 과학적 근거는 부족합니다. 하지만 사람이 밤하늘에서 패턴을 찾고, 그 패턴으로 서로의 이야기를 시작해온 역사는 아주 깁니다. 어쩌면 별자리가 오래 살아남은 이유는 미래를 맞혀서가 아니라, 어색한 침묵과 복잡한 마음 사이에 꽤 괜찮은 질문 하나를 놓아주기 때문인지도 모릅니다.
+            </p>
+          </section>
         </div>
 
-        <section
-          className="mt-8 rounded-2xl p-6"
-          style={{ background: 'rgba(124,58,237,0.09)', border: '1px solid rgba(167,139,250,0.2)' }}
-        >
-          <h2 className="text-lg font-bold text-white mb-3">별자리는 이렇게 즐겨보세요</h2>
-          <p className="text-white/60 text-sm leading-relaxed">
-            별자리 해석은 정답을 맞히는 시험보다, 오늘의 기분과 선택을 잠깐 돌아보는 질문에 가깝습니다. 가볍게 읽고 지금의 나에게 도움이 되는 문장만 골라보세요.
-          </p>
-          <p className="mt-3 text-white/35 text-xs leading-relaxed">
-            본 콘텐츠는 오락과 자기성찰을 위한 참고 자료이며 미래를 확정하거나 전문적인 판단을 대신하지 않습니다.
-          </p>
-        </section>
+        <aside className="mt-10 border-t border-white/10 pt-6" aria-labelledby="sources-title">
+          <h2 id="sources-title" className="text-sm font-semibold text-white/65 mb-3">사실 확인에 참고한 자료</h2>
+          <ul className="space-y-2 text-xs leading-6 text-white/40">
+            <li>
+              <a
+                href="https://www.iau.org/IAU/IAU/Astronomy-FAQs/Constellations.aspx?hkey=bb9dc841-0618-41b5-ac70-149741062141"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-purple-300 transition-colors"
+              >
+                국제천문연맹(IAU), The Constellations
+              </a>
+              {' '}— 별자리의 문화적 형성과 현대 천문학의 88개 별자리 경계
+            </li>
+            <li>
+              <a
+                href="https://doi.org/10.1037/h0059240"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-purple-300 transition-colors"
+              >
+                Bertram R. Forer (1949), The fallacy of personal validation
+              </a>
+              {' '}— 개인화된 성격 설명을 받아들이는 경향을 다룬 고전 실험
+            </li>
+          </ul>
+        </aside>
 
         <div className="mt-10 p-6 rounded-2xl text-center" style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.3)' }}>
-          <p className="text-white/60 mb-4 text-sm">오늘의 별자리와 띠 운세가 궁금하다면?</p>
+          <p className="text-white/60 mb-4 text-sm">오늘의 운세에서 지금 마음에 걸리는 문장을 찾아보세요.</p>
           <Link
             href="/"
             className="inline-block px-6 py-3 rounded-full font-bold text-white text-sm"
             style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #9333ea 100%)' }}
           >
-            🔮 오늘의 운세 무료로 보기 →
+            🔮 오늘의 운세 보기 →
           </Link>
         </div>
 
         <nav className="mt-10" aria-label="관련 콘텐츠">
-          <h2 className="text-sm text-white/40 mb-3 font-semibold uppercase tracking-widest">더 읽어보기</h2>
+          <h2 className="text-sm text-white/40 mb-3 font-semibold uppercase tracking-widest">이어서 읽기</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <Link href="/zodiac" className="p-4 rounded-xl text-sm text-white/70 hover:border-purple-400 transition-colors" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              ✨ 12별자리 백과
+            <Link href="/blog/barnum-effect-astrology" className="p-4 rounded-xl text-sm text-white/70 hover:border-purple-400 transition-colors" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              🪞 운세가 나만의 이야기처럼 느껴지는 이유
             </Link>
-            <Link href="/chinese-zodiac" className="p-4 rounded-xl text-sm text-white/70 hover:border-purple-400 transition-colors" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              🐉 12지 띠 백과
+            <Link href="/blog/nasa-ophiuchus-13th-zodiac" className="p-4 rounded-xl text-sm text-white/70 hover:border-purple-400 transition-colors" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              🐍 뱀주인자리 소문의 전말
             </Link>
             <Link href="/blog/how-to-read-daily-fortune" className="p-4 rounded-xl text-sm text-white/70 hover:border-purple-400 transition-colors" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              📖 운세를 읽는 가벼운 방법
+              📖 운세를 생활에 쓰는 방법
             </Link>
           </div>
         </nav>

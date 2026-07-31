@@ -179,8 +179,8 @@ export default function NasaOphiuchus13thZodiacPage() {
           <h3 className="text-sm text-white/40 mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Link href="/blog/zodiac-myths-facts" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <div className="text-white/70 font-medium">별자리에 대한 10가지 오해와 진실</div>
-              <div className="text-white/30 text-xs mt-1">팩트로 검증하는 별자리 미신들</div>
+              <div className="text-white/70 font-medium">별자리, 왜 자꾸 보게 될까?</div>
+              <div className="text-white/30 text-xs mt-1">천문학·심리학·관계로 다시 읽는 별자리</div>
             </Link>
             <Link href="/blog/twin-study-astrology" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
               <div className="text-white/70 font-medium">같은 날 태어난 2,000명을 추적했다</div>

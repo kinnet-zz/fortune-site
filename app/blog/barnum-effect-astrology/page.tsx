@@ -188,8 +188,8 @@ export default function BarnumEffectAstrologyPage() {
           <h3 className="text-sm text-white/40 mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Link href="/blog/zodiac-myths-facts" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <div className="text-white/70 font-medium">별자리에 관한 오해와 진실</div>
-              <div className="text-white/30 text-xs mt-1">과학과 미신 사이 어딘가</div>
+              <div className="text-white/70 font-medium">별자리, 왜 자꾸 보게 될까?</div>
+              <div className="text-white/30 text-xs mt-1">별자리 이야기가 오래 살아남은 이유</div>
             </Link>
             <Link href="/blog/morning-fortune-ritual" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
               <div className="text-white/70 font-medium">운명을 바꾸는 아침 5분 루틴</div>

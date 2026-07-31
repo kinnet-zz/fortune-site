@@ -68,8 +68,8 @@ const GUIDE_LINKS = [
   },
   {
     href: '/blog/zodiac-myths-facts',
-    label: '별자리 궁금한 이야기',
-    desc: '별자리 날짜와 뱀주인자리처럼 한 번쯤 궁금한 내용을 가볍게 읽어보세요',
+    label: '별자리, 왜 자꾸 보게 될까?',
+    desc: '밤하늘의 역사와 바넘 효과, 연애의 실제 장면으로 풀어본 별자리 이야기',
   },
   {
     href: '/blog/chinese-vs-western-zodiac',

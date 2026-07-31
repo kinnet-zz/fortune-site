@@ -115,12 +115,12 @@ const ARTICLES = [
   },
   {
     slug: 'zodiac-myths-facts',
-    title: '별자리에 관한 오해와 진실 — 점성술의 과학적 사실 정리',
-    description: '별자리 운세는 다 맞나요? 점성술은 미신일까요? 별자리에 관한 흔한 오해들을 과학적·역사적 관점에서 명확히 정리합니다.',
-    date: '2025년 5월 1일',
-    readTime: '6분',
-    category: '별자리 상식',
-    emoji: '❓',
+    title: '별자리, 안 믿는다면서 왜 자꾸 보게 될까?',
+    description: '별자리 이야기가 오래 살아남은 이유를 밤하늘의 역사, 바넘 효과, 연애와 관계의 실제 장면을 통해 읽어봅니다.',
+    date: '2026년 8월 1일',
+    readTime: '5분',
+    category: '별자리 문화',
+    emoji: '🌌',
   },
   {
     slug: 'chinese-zodiac-2026',
