@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { DAILY_ZODIACS } from '@/lib/dailyHoroscope';
+import { DAILY_ZODIACS, getTodayKST } from '@/lib/dailyHoroscope';
 
 const CHINESE_ZODIAC_SLUGS = [
   'rat', 'ox', 'tiger', 'rabbit', 'dragon', 'snake',
@@ -39,56 +39,55 @@ const GUIDE_SLUGS = [
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://starfate.day';
-  const now = new Date();
+  // Only daily pages change on a schedule. Omitting lastModified from
+  // evergreen pages prevents every sitemap request from claiming that all
+  // content changed just now.
+  const dailyLastModified = new Date(`${getTodayKST()}T00:00:00+09:00`);
 
   const staticPages: MetadataRoute.Sitemap = [
-    { url: baseUrl, lastModified: now, changeFrequency: 'daily', priority: 1 },
-    { url: `${baseUrl}/blog`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
-    { url: `${baseUrl}/blog/daily`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
-    { url: `${baseUrl}/zodiac`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/chinese-zodiac`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/card-draw`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${baseUrl}/past-life`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${baseUrl}/number-game`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${baseUrl}/zodiac-memory`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${baseUrl}/idol`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${baseUrl}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
-    { url: `${baseUrl}/contact`, lastModified: now, changeFrequency: 'monthly', priority: 0.4 },
-    { url: `${baseUrl}/privacy`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
-    { url: `${baseUrl}/terms`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
+    { url: baseUrl, changeFrequency: 'daily', priority: 1 },
+    { url: `${baseUrl}/blog`, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${baseUrl}/blog/daily`, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${baseUrl}/zodiac`, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/chinese-zodiac`, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/card-draw`, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/past-life`, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/number-game`, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${baseUrl}/zodiac-memory`, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${baseUrl}/idol`, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${baseUrl}/about`, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${baseUrl}/contact`, changeFrequency: 'monthly', priority: 0.4 },
+    { url: `${baseUrl}/privacy`, changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${baseUrl}/terms`, changeFrequency: 'monthly', priority: 0.3 },
   ];
 
   const blogPages: MetadataRoute.Sitemap = BLOG_SLUGS.map((slug) => ({
     url: `${baseUrl}/blog/${slug}`,
-    lastModified: now,
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }));
 
   const zodiacPages: MetadataRoute.Sitemap = DAILY_ZODIACS.map((zodiac) => ({
     url: `${baseUrl}/zodiac/${zodiac.slug}`,
-    lastModified: now,
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }));
 
   const dailyHoroscopePages: MetadataRoute.Sitemap = DAILY_ZODIACS.map((zodiac) => ({
     url: `${baseUrl}/blog/daily/${zodiac.slug}`,
-    lastModified: now,
+    lastModified: dailyLastModified,
     changeFrequency: 'daily' as const,
     priority: 0.9,
   }));
 
   const chineseZodiacPages: MetadataRoute.Sitemap = CHINESE_ZODIAC_SLUGS.map((slug) => ({
     url: `${baseUrl}/chinese-zodiac/${slug}`,
-    lastModified: now,
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }));
 
   const guidePages: MetadataRoute.Sitemap = GUIDE_SLUGS.map((slug) => ({
     url: `${baseUrl}/guide/${slug}`,
-    lastModified: now,
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }));

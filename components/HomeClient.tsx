@@ -68,8 +68,8 @@ const GUIDE_LINKS = [
   },
   {
     href: '/blog/zodiac-myths-facts',
-    label: '별자리에 관한 오해와 진실',
-    desc: '점성술, 천문학, 심리 효과를 구분해서 읽는 기본 기준',
+    label: '별자리 궁금한 이야기',
+    desc: '별자리 날짜와 뱀주인자리처럼 한 번쯤 궁금한 내용을 가볍게 읽어보세요',
   },
   {
     href: '/blog/chinese-vs-western-zodiac',
@@ -329,6 +329,9 @@ export default function HomeClient() {
                     </Link>
                     <Link href="/zodiac" className="px-4 py-2 rounded-xl text-sm font-semibold text-purple-100/80 border border-purple-300/20 hover:border-purple-300/40 transition-colors">
                       12별자리 백과
+                    </Link>
+                    <Link href="/chinese-zodiac" className="px-4 py-2 rounded-xl text-sm font-semibold text-purple-100/80 border border-purple-300/20 hover:border-purple-300/40 transition-colors">
+                      12지 띠 백과
                     </Link>
                     <Link href="/about" className="px-4 py-2 rounded-xl text-sm font-semibold text-purple-100/80 border border-purple-300/20 hover:border-purple-300/40 transition-colors">
                       편집 기준
