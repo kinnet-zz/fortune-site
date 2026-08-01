@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import { useState } from 'react';
 import { useLang } from '@/lib/useLang';
-import { t } from '@/lib/i18n';
+import { t, type Lang } from '@/lib/i18n';
 
 const ZODIAC_EMOJIS = ['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
 const ZODIAC_PERIODS = ['3/21~4/19','4/20~5/20','5/21~6/21','6/22~7/22','7/23~8/22','8/23~9/22','9/23~10/23','10/24~11/22','11/23~12/21','12/22~1/19','1/20~2/18','2/19~3/20'];
@@ -29,6 +30,18 @@ const BLOG_PICKS = [
   { slug: '2026-yearly-horoscope', title: '2026년 별자리 연간 운세', emoji: '⭐' },
 ];
 
+const DISCLOSURE_COPY: Record<Lang, {
+  zodiacOpen: string;
+  zodiacClose: string;
+  chineseOpen: string;
+  chineseClose: string;
+}> = {
+  ko: { zodiacOpen: '12별자리 전체 보기', zodiacClose: '별자리 접기', chineseOpen: '12지 전체 보기', chineseClose: '12지 접기' },
+  en: { zodiacOpen: 'Show all 12 signs', zodiacClose: 'Collapse zodiac signs', chineseOpen: 'Show all 12 animals', chineseClose: 'Collapse Chinese zodiac' },
+  zh: { zodiacOpen: '查看全部十二星座', zodiacClose: '收起星座', chineseOpen: '查看全部十二生肖', chineseClose: '收起生肖' },
+  ja: { zodiacOpen: '12星座をすべて表示', zodiacClose: '星座を閉じる', chineseOpen: '十二支をすべて表示', chineseClose: '十二支を閉じる' },
+};
+
 const cardStyle = {
   background: 'rgba(255,255,255,0.03)',
   border: '1px solid rgba(255,255,255,0.07)',
@@ -36,31 +49,35 @@ const cardStyle = {
 };
 
 const glassCard = {
-  background: 'rgba(139,92,246,0.04)',
-  border: '1px solid rgba(192,132,252,0.12)',
-  backdropFilter: 'blur(16px)',
+  background: 'rgba(255,255,255,0.035)',
+  border: '1px solid rgba(216,180,254,0.14)',
+  backdropFilter: 'blur(12px)',
 };
 
 export default function InfoSection() {
   const { lang } = useLang();
   const tr = t(lang);
+  const disclosureCopy = DISCLOSURE_COPY[lang];
+  const [zodiacExpanded, setZodiacExpanded] = useState(false);
+  const [chineseZodiacExpanded, setChineseZodiacExpanded] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   return (
     <>
       {/* 서양 별자리 — bento grid */}
-      <section className="w-full max-w-2xl mx-auto px-4 mt-20" aria-labelledby="zodiac-heading">
+      <section className="w-full max-w-6xl mx-auto px-4 mt-20" aria-labelledby="zodiac-heading">
         <div className="section-line mb-8" />
         <h2
           id="zodiac-heading"
-          className="text-center text-white/35 text-xs tracking-[0.2em] uppercase font-medium mb-8 font-serif-display"
+          className="text-left text-white/85 text-xl sm:text-2xl font-semibold mb-6 font-serif-display"
         >
           {tr.zodiacGuideTitle}
         </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+        <div id="zodiac-list" className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
           {tr.zodiacSigns.map((sign, i) => (
             <div
               key={i}
-              className="rounded-xl p-3 card-glow group"
+              className={`rounded-xl min-h-24 p-3 group ${i >= 4 && !zodiacExpanded ? 'hidden lg:block' : ''}`}
               style={glassCard}
             >
               <div className="flex items-center gap-2 mb-1">
@@ -72,15 +89,24 @@ export default function InfoSection() {
                 </span>
                 <span className="text-white/80 text-sm font-semibold">{sign}</span>
               </div>
-              <p className="text-purple-300/50 text-xs">{ZODIAC_PERIODS[i]}</p>
-              <p className="text-white/30 text-xs mt-1 leading-relaxed">{tr.zodiacGuideTraits[i]}</p>
+              <p className="text-purple-200/80 text-xs">{ZODIAC_PERIODS[i]}</p>
+              <p className="text-white/65 text-xs mt-1 leading-relaxed text-keep-all">{tr.zodiacGuideTraits[i]}</p>
             </div>
           ))}
         </div>
-        <div className="mt-5 text-center">
+        <button
+          type="button"
+          className="lg:hidden mt-4 min-h-11 w-full rounded-xl border border-purple-300/25 text-purple-100 text-base font-semibold"
+          aria-expanded={zodiacExpanded}
+          aria-controls="zodiac-list"
+          onClick={() => setZodiacExpanded((open) => !open)}
+        >
+          {zodiacExpanded ? disclosureCopy.zodiacClose : disclosureCopy.zodiacOpen}
+        </button>
+        <div className="mt-5 text-right">
           <Link
             href="/zodiac"
-            className="text-purple-400/70 hover:text-purple-300 text-xs tracking-widest uppercase transition-colors"
+            className="inline-flex min-h-11 items-center text-purple-200 hover:text-white text-sm font-semibold transition-colors"
           >
             12별자리 상세 가이드 →
           </Link>
@@ -88,29 +114,38 @@ export default function InfoSection() {
       </section>
 
       {/* 동양 12지 */}
-      <section className="w-full max-w-2xl mx-auto px-4 mt-14" aria-labelledby="chinese-zodiac-heading">
+      <section className="w-full max-w-6xl mx-auto px-4 mt-14 py-6 rounded-3xl bg-white/[0.02]" aria-labelledby="chinese-zodiac-heading">
         <div className="section-line mb-8" />
         <h2
           id="chinese-zodiac-heading"
-          className="text-center text-white/35 text-xs tracking-[0.2em] uppercase font-medium mb-8 font-serif-display"
+          className="text-left text-white/85 text-xl sm:text-2xl font-semibold mb-6 font-serif-display"
         >
           동양 12지 띠 안내
         </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+        <div id="chinese-zodiac-list" className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
           {CHINESE_ZODIAC.map((item, i) => (
-            <div key={i} className="rounded-xl p-3 card-glow group" style={glassCard}>
+            <div key={i} className={`rounded-xl min-h-20 p-3 group ${i >= 4 && !chineseZodiacExpanded ? 'hidden lg:block' : ''}`} style={glassCard}>
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-base transition-transform group-hover:scale-110">{item.emoji}</span>
                 <span className="text-white/80 text-sm font-semibold">{item.name}</span>
               </div>
-              <p className="text-purple-300/40 text-xs leading-relaxed">{item.years}</p>
+              <p className="text-purple-100/65 text-xs leading-relaxed">{item.years}</p>
             </div>
           ))}
         </div>
-        <div className="mt-5 text-center">
+        <button
+          type="button"
+          className="lg:hidden mt-4 min-h-11 w-full rounded-xl border border-purple-300/25 text-purple-100 text-base font-semibold"
+          aria-expanded={chineseZodiacExpanded}
+          aria-controls="chinese-zodiac-list"
+          onClick={() => setChineseZodiacExpanded((open) => !open)}
+        >
+          {chineseZodiacExpanded ? disclosureCopy.chineseClose : disclosureCopy.chineseOpen}
+        </button>
+        <div className="mt-5 text-right">
           <Link
             href="/chinese-zodiac"
-            className="text-purple-400/70 hover:text-purple-300 text-xs tracking-widest uppercase transition-colors"
+            className="inline-flex min-h-11 items-center text-purple-200 hover:text-white text-sm font-semibold transition-colors"
           >
             12지 상세 가이드 →
           </Link>
@@ -118,20 +153,20 @@ export default function InfoSection() {
       </section>
 
       {/* 블로그 추천 */}
-      <section className="w-full max-w-2xl mx-auto px-4 mt-14" aria-labelledby="blog-picks-heading">
+      <section className="w-full max-w-4xl mx-auto px-4 mt-16" aria-labelledby="blog-picks-heading">
         <div className="section-line mb-8" />
         <h2
           id="blog-picks-heading"
-          className="text-center text-white/35 text-xs tracking-[0.2em] uppercase font-medium mb-8 font-serif-display"
+          className="text-left text-white/85 text-xl sm:text-2xl font-semibold mb-6 font-serif-display"
         >
           별자리 &amp; 운세 가이드
         </h2>
-        <div className="grid grid-cols-2 gap-3">
-          {BLOG_PICKS.map((post) => (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {BLOG_PICKS.map((post, index) => (
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="rounded-xl p-5 card-glow group block"
+              className={`rounded-xl p-5 card-glow group block min-h-28 ${index === 0 ? 'sm:col-span-3 sm:min-h-40' : ''}`}
               style={glassCard}
             >
               <span
@@ -140,16 +175,16 @@ export default function InfoSection() {
               >
                 {post.emoji}
               </span>
-              <p className="text-white/65 text-sm font-medium leading-snug group-hover:text-white/90 transition-colors">
+              <p className={`${index === 0 ? 'text-xl sm:text-2xl font-serif-display' : 'text-base'} text-white/85 font-semibold leading-snug group-hover:text-white transition-colors text-keep-all`}>
                 {post.title}
               </p>
             </Link>
           ))}
         </div>
-        <div className="mt-5 text-center">
+        <div className="mt-5 text-right">
           <Link
             href="/blog"
-            className="text-purple-400/70 hover:text-purple-300 text-xs tracking-widest uppercase transition-colors"
+            className="inline-flex min-h-11 items-center text-purple-200 hover:text-white text-sm font-semibold transition-colors"
           >
             전체 가이드 블로그 →
           </Link>
@@ -157,11 +192,11 @@ export default function InfoSection() {
       </section>
 
       {/* FAQ */}
-      <section className="w-full max-w-2xl mx-auto px-4 mt-14" aria-labelledby="faq-section-heading">
+      <section className="w-full max-w-3xl mx-auto px-4 mt-16" aria-labelledby="faq-section-heading">
         <div className="section-line mb-8" />
         <h2
           id="faq-section-heading"
-          className="text-center text-white/35 text-xs tracking-[0.2em] uppercase font-medium mb-8 font-serif-display"
+          className="text-left text-white/85 text-xl sm:text-2xl font-semibold mb-6 font-serif-display"
         >
           자주 묻는 질문
         </h2>
@@ -187,20 +222,32 @@ export default function InfoSection() {
               q: '서비스는 무료인가요?',
               a: '네, 완전 무료입니다. 생년월일과 성별만 입력하면 종합운·연애운·금전운·직업운·행운의 색·행운의 숫자를 바로 확인할 수 있습니다.',
             },
-          ].map(({ q, a }, i) => (
-            <div key={i} className="rounded-xl p-5 card-glow" style={glassCard}>
-              <p className="text-white/70 text-sm font-semibold mb-2 flex items-start gap-2">
+          ].map(({ q, a }, i) => {
+            const isOpen = openFaq === i;
+            const answerId = `faq-answer-${i}`;
+            return (
+            <div key={i} className="rounded-xl" style={glassCard}>
+              <button
+                type="button"
+                className="min-h-14 w-full px-5 py-4 text-white/90 text-left text-base font-semibold flex items-start gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-purple-300 rounded-xl"
+                aria-expanded={isOpen}
+                aria-controls={answerId}
+                onClick={() => setOpenFaq(isOpen ? null : i)}
+              >
                 <span style={{ color: 'rgba(192,132,252,0.6)' }}>Q.</span>
                 {q}
-              </p>
-              <p className="text-white/38 text-xs leading-relaxed pl-5">{a}</p>
+                <span className={`ml-auto text-purple-200 transition-transform ${isOpen ? 'rotate-45' : ''}`} aria-hidden="true">＋</span>
+              </button>
+              <div id={answerId} hidden={!isOpen}>
+                <p className="text-white/78 text-base leading-7 px-5 pb-5 pl-10 text-keep-all">{a}</p>
+              </div>
             </div>
-          ))}
+          );})}
         </div>
       </section>
 
       {/* 서비스 소개 */}
-      <section className="w-full max-w-2xl mx-auto px-4 mt-14" aria-labelledby="about-heading">
+      <section className="w-full max-w-3xl mx-auto px-4 mt-14" aria-labelledby="about-heading">
         <div
           className="rounded-2xl p-6"
           style={{
@@ -208,15 +255,14 @@ export default function InfoSection() {
             border: '1px solid rgba(192,132,252,0.08)',
           }}
         >
-          <h2 id="about-heading" className="text-white/60 text-sm font-semibold mb-3 font-serif-display">
+          <h2 id="about-heading" className="text-white/90 text-base font-semibold mb-3 font-serif-display">
             {tr.serviceIntroTitle}
           </h2>
-          <p className="text-white/35 text-xs leading-relaxed mb-3">{tr.serviceIntroText}</p>
-          <p className="text-white/25 text-xs leading-relaxed">
-            starfate.day는 별자리(서양 점성술)와 띠(동양 12지)를 함께 읽는 무료 운세 해석 가이드입니다.
-            4개 언어(한국어·영어·일본어·중국어)를 지원하며, 오늘의 운세 외에도 타로 카드 운세, 전생 테스트,
-            별자리 궁합, 숫자 게임 등 다양한 콘텐츠를 제공합니다.
-            본 서비스의 모든 운세 콘텐츠는 오락 목적이며 실제 미래를 예측하지 않습니다.
+          <p className="text-white/78 text-base leading-7 mb-3 text-keep-all">{tr.serviceIntroText}</p>
+          <p className="text-white/70 text-base leading-7 text-keep-all">
+            starfate.day는 별자리와 동양 12지를 함께 읽는 무료 운세 가이드입니다.
+            한국어·영어·일본어·중국어를 지원하고, 타로와 별자리 궁합 등 가볍게 즐길 콘텐츠를 제공합니다.
+            모든 운세는 오락과 자기성찰을 위한 참고 자료입니다.
           </p>
         </div>
       </section>

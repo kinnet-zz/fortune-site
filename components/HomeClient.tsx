@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import Link from 'next/link';
 import FortuneCard from '../components/FortuneCard';
-import LoadingSpinner from '../components/LoadingSpinner';
 import AdUnit from '../components/AdUnit';
 import InfoSection from '../components/InfoSection';
 import { HomeConversionHero, ResultNextSteps } from '../components/RevenuePath';
@@ -11,6 +10,17 @@ import { trackEvent } from '@/lib/analytics';
 import { decodeSharedResult } from '@/lib/sharedFortune';
 import { t } from '@/lib/i18n';
 import { useLang } from '@/lib/useLang';
+import {
+  FortuneRequestError,
+  getFortuneErrorCode,
+  isAbortError,
+  isLatestFortuneRequest,
+  makeFortuneRequestKey,
+  shouldStartFortuneRequest,
+  type FortuneErrorState,
+  type FortuneInputSnapshot,
+  type FortuneRequestSnapshot,
+} from '@/lib/homeFortune';
 
 interface FortuneResult {
   zodiacSign: string;
@@ -44,6 +54,13 @@ const STAR_COLORS = [
 
 const FLOATING_SYMBOL_SIZES = [18, 21, 15, 20, 17, 14, 19, 22, 16, 18, 15, 21];
 const SCORE_BUCKET_SIZE = 20;
+
+const REQUEST_STATUS_COPY = {
+  ko: { refreshing: '언어에 맞춰 운세를 다시 읽는 중입니다.', refreshed: '선택한 언어로 운세를 업데이트했습니다.', refreshError: '기존 운세는 그대로 두었습니다. 잠시 후 언어 변경을 다시 시도해 주세요.', ready: '오늘의 운세 결과가 준비되었습니다.' },
+  en: { refreshing: 'Updating your reading for the selected language.', refreshed: 'Your reading has been updated.', refreshError: 'Your previous reading is still here. Please try changing the language again shortly.', ready: 'Your daily fortune is ready.' },
+  zh: { refreshing: '正在按所选语言更新运势。', refreshed: '运势已按所选语言更新。', refreshError: '已保留原有运势，请稍后重试语言切换。', ready: '今日运势已生成。' },
+  ja: { refreshing: '選択した言語で運勢を更新しています。', refreshed: '選択した言語で運勢を更新しました。', refreshError: '元の運勢はそのまま表示しています。しばらくしてから再度お試しください。', ready: '今日の運勢ができました。' },
+} as const;
 
 const EDITORIAL_POINTS = [
   {
@@ -98,7 +115,7 @@ function BackgroundStars() {
 
   useEffect(() => {
     setStars(
-      Array.from({ length: 120 }, (_, i) => ({
+      Array.from({ length: 64 }, (_, i) => ({
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 100,
@@ -178,10 +195,20 @@ export default function HomeClient() {
   const [birthDate, setBirthDate] = useState('');
   const [fortune, setFortune] = useState<FortuneResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [error, setError] = useState<FortuneErrorState | null>(null);
+  const [resultStatus, setResultStatus] = useState('');
   const resultRef = useRef<HTMLDivElement>(null);
   const lastGenderRef = useRef('');
   const prevLangRef = useRef(lang);
+  const currentLangRef = useRef(lang);
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const requestIdRef = useRef(0);
+  const inFlightRef = useRef<string | null>(null);
+  const latestInputRef = useRef<FortuneInputSnapshot>({ birthDate: '', gender: '' });
+  const shouldScrollResultRef = useRef(false);
+
+  currentLangRef.current = lang;
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -203,23 +230,55 @@ export default function HomeClient() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (fortune && resultRef.current) {
-      resultRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (fortune && resultRef.current && shouldScrollResultRef.current) {
+      shouldScrollResultRef.current = false;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      resultRef.current.focus({ preventScroll: true });
+      resultRef.current.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
     }
   }, [fortune]);
+
+  useEffect(() => () => {
+    requestIdRef.current += 1;
+    const controller = abortControllerRef.current;
+    abortControllerRef.current = null;
+    inFlightRef.current = null;
+    controller?.abort();
+  }, []);
 
   const handleSubmit = useCallback(async (
     date: string,
     genderInput: string,
     source: 'user' | 'language-change' = 'user',
   ) => {
+    const input = { birthDate: date, gender: genderInput };
+    const requestKey = makeFortuneRequestKey(lang, input);
+    if (!shouldStartFortuneRequest(inFlightRef.current, requestKey)) return;
+
+    abortControllerRef.current?.abort();
+    const controller = new AbortController();
+    const request: FortuneRequestSnapshot = {
+      id: requestIdRef.current + 1,
+      lang,
+      birthDate: date,
+      gender: genderInput,
+    };
+    requestIdRef.current = request.id;
+    abortControllerRef.current = controller;
+    inFlightRef.current = requestKey;
+    latestInputRef.current = input;
+
     const shouldTrackConversion = source === 'user';
+    const hasExistingFortune = fortune !== null;
     const startedAt = performance.now();
     setBirthDate(date);
     lastGenderRef.current = genderInput;
-    setIsLoading(true);
+    setIsLoading(source === 'user' || !hasExistingFortune);
+    setIsRefreshing(source === 'language-change' && hasExistingFortune);
     setError(null);
-    setFortune(null);
+    setResultStatus('');
+    if (source === 'user') setFortune(null);
+    shouldScrollResultRef.current = source === 'user' || !hasExistingFortune;
     if (shouldTrackConversion) trackEvent('fortune_start', { language: lang });
 
     try {
@@ -227,18 +286,23 @@ export default function HomeClient() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ birthDate: date, gender: genderInput, language: lang }),
+        signal: controller.signal,
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        if (response.status === 429 || errorData.error === 'QUOTA_EXCEEDED') {
-          throw new Error('QUOTA_EXCEEDED');
-        }
-        throw new Error('GENERAL_ERROR');
+        const errorData: unknown = await response.json().catch(() => null);
+        const isQuotaError = response.status === 429 || (
+          typeof errorData === 'object' && errorData !== null &&
+          'error' in errorData && errorData.error === 'QUOTA_EXCEEDED'
+        );
+        throw new FortuneRequestError(isQuotaError ? 'QUOTA_EXCEEDED' : 'GENERAL_ERROR');
       }
 
       const data: FortuneResult = await response.json();
+      if (!isLatestFortuneRequest(requestIdRef.current, request, currentLangRef.current, latestInputRef.current)) return;
+
       setFortune(data);
+      setResultStatus(source === 'language-change' && hasExistingFortune ? REQUEST_STATUS_COPY[lang].refreshed : '');
       if (shouldTrackConversion) {
         trackEvent('fortune_result', {
           language: lang,
@@ -249,30 +313,49 @@ export default function HomeClient() {
         });
       }
     } catch (err) {
-      const errorType = err instanceof Error ? err.message : 'GENERAL_ERROR';
-      setError(errorType);
+      if (isAbortError(err)) return;
+      if (!isLatestFortuneRequest(requestIdRef.current, request, currentLangRef.current, latestInputRef.current)) return;
+
+      const errorCode = getFortuneErrorCode(err);
+      const scope = source === 'language-change' && hasExistingFortune ? 'refresh' : 'form';
+      setError({ code: errorCode, scope });
+      setResultStatus('');
       if (shouldTrackConversion) {
-        trackEvent('fortune_error', { language: lang, error_type: errorType });
+        trackEvent('fortune_error', { language: lang, error_type: errorCode });
       }
     } finally {
-      setIsLoading(false);
+      if (requestIdRef.current === request.id) {
+        abortControllerRef.current = null;
+        inFlightRef.current = null;
+        setIsLoading(false);
+        setIsRefreshing(false);
+      }
     }
-  }, [lang]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [fortune, lang]);
 
   useEffect(() => {
     if (prevLangRef.current === lang) return;
     prevLangRef.current = lang;
-    if (fortune && birthDate && lastGenderRef.current) {
+    if (birthDate && lastGenderRef.current) {
       handleSubmit(birthDate, lastGenderRef.current, 'language-change');
     }
   }, [lang]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleReset = () => {
+    abortControllerRef.current?.abort();
+    abortControllerRef.current = null;
+    requestIdRef.current += 1;
+    inFlightRef.current = null;
+    latestInputRef.current = { birthDate: '', gender: '' };
     trackEvent('fortune_reset', { language: lang });
     setFortune(null);
     setError(null);
     setBirthDate('');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setIsLoading(false);
+    setIsRefreshing(false);
+    setResultStatus('');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
   };
 
   return (
@@ -297,13 +380,13 @@ export default function HomeClient() {
       />
 
       <main className="relative z-10 min-h-screen flex flex-col">
-        <div className="flex-1 flex flex-col items-center justify-start px-4 py-8 pb-16">
-          {!fortune && !isLoading && (
-            <HomeConversionHero onSubmit={handleSubmit} isLoading={isLoading} lang={lang} />
+        <div className="flex-1 flex flex-col items-center justify-start px-4 py-6 sm:py-8 pb-16">
+          {!fortune && (
+            <HomeConversionHero onSubmit={handleSubmit} isLoading={isLoading} lang={lang} error={error} />
           )}
 
           {!fortune && !isLoading && (
-            <section className="w-full max-w-4xl mx-auto mb-10" aria-labelledby="home-guide-heading">
+            <section className="w-full max-w-6xl mx-auto mb-10" aria-labelledby="home-guide-heading">
               <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-6 items-start">
                 <div
                   className="rounded-3xl p-7 sm:p-8"
@@ -320,20 +403,20 @@ export default function HomeClient() {
                   <h2 id="home-guide-heading" className="font-serif-display text-2xl sm:text-3xl font-bold text-white/92 leading-tight mb-4">
                     StarFate는 별자리와 12지를 하루의 자기성찰 언어로 풀어 쓰는 운세 가이드입니다.
                   </h2>
-                  <p className="text-white/56 text-sm sm:text-base leading-8 mb-6">
+                  <p className="text-white/76 text-base leading-8 mb-6 text-keep-all">
                     생년월일 기반 운세 도구는 빠른 확인을 위한 기능이고, 사이트의 핵심은 별자리·동양 12지·수비학·타로를 문화적 배경과 함께 설명하는 해석 콘텐츠입니다. 운세는 예언이 아니라 오늘의 감정, 관계, 선택을 돌아보는 가벼운 참고 자료로 제공합니다.
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    <Link href="/blog" className="px-4 py-2 rounded-xl text-sm font-semibold text-white bg-purple-600/75 hover:bg-purple-500 transition-colors">
+                    <Link href="/blog" className="inline-flex min-h-11 items-center px-4 py-2 rounded-xl text-base font-semibold text-white bg-purple-600/75 hover:bg-purple-500 transition-colors">
                       가이드 블로그 보기
                     </Link>
-                    <Link href="/zodiac" className="px-4 py-2 rounded-xl text-sm font-semibold text-purple-100/80 border border-purple-300/20 hover:border-purple-300/40 transition-colors">
+                    <Link href="/zodiac" className="inline-flex min-h-11 items-center px-4 py-2 rounded-xl text-base font-semibold text-purple-100 border border-purple-300/20 hover:border-purple-300/40 transition-colors">
                       12별자리 백과
                     </Link>
-                    <Link href="/chinese-zodiac" className="px-4 py-2 rounded-xl text-sm font-semibold text-purple-100/80 border border-purple-300/20 hover:border-purple-300/40 transition-colors">
+                    <Link href="/chinese-zodiac" className="inline-flex min-h-11 items-center px-4 py-2 rounded-xl text-base font-semibold text-purple-100 border border-purple-300/20 hover:border-purple-300/40 transition-colors">
                       12지 띠 백과
                     </Link>
-                    <Link href="/about" className="px-4 py-2 rounded-xl text-sm font-semibold text-purple-100/80 border border-purple-300/20 hover:border-purple-300/40 transition-colors">
+                    <Link href="/about" className="inline-flex min-h-11 items-center px-4 py-2 rounded-xl text-base font-semibold text-purple-100 border border-purple-300/20 hover:border-purple-300/40 transition-colors">
                       편집 기준
                     </Link>
                   </div>
@@ -343,21 +426,19 @@ export default function HomeClient() {
                   {EDITORIAL_POINTS.map((item) => (
                     <article
                       key={item.title}
-                      className="rounded-2xl p-5"
+                      className="py-5 border-b border-white/10 last:border-b-0"
                       style={{
-                        background: 'rgba(255,255,255,0.035)',
-                        border: '1px solid rgba(255,255,255,0.08)',
-                        backdropFilter: 'blur(14px)',
+                        background: 'transparent',
                       }}
                     >
-                      <h2 className="text-white/82 text-sm font-semibold mb-2">{item.title}</h2>
-                      <p className="text-white/42 text-xs leading-6">{item.body}</p>
+                      <h2 className="text-white/90 text-base font-semibold mb-2">{item.title}</h2>
+                      <p className="text-white/68 text-sm leading-7 text-keep-all">{item.body}</p>
                     </article>
                   ))}
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-5">
+              <div className="grid grid-cols-1 md:grid-cols-[1.35fr_1fr_1fr] gap-3 mt-6">
                 {GUIDE_LINKS.map((guide) => (
                   <Link
                     key={guide.href}
@@ -369,8 +450,8 @@ export default function HomeClient() {
                       backdropFilter: 'blur(16px)',
                     }}
                   >
-                    <h2 className="text-white/82 text-sm font-semibold mb-2">{guide.label}</h2>
-                    <p className="text-white/40 text-xs leading-6">{guide.desc}</p>
+                    <h2 className="text-white/90 text-base font-semibold mb-2">{guide.label}</h2>
+                    <p className="text-white/68 text-sm leading-7 text-keep-all">{guide.desc}</p>
                   </Link>
                 ))}
               </div>
@@ -381,15 +462,15 @@ export default function HomeClient() {
                     <p className="text-purple-300/60 text-xs font-semibold tracking-[0.18em] uppercase mb-2">Readable without form input</p>
                     <h2 id="sample-reading-heading" className="font-serif-display text-white/86 text-xl font-bold">입력 없이도 읽을 수 있는 해석 예시</h2>
                   </div>
-                  <p className="text-white/32 text-xs leading-5 max-w-md">
+                  <p className="text-white/65 text-sm leading-6 max-w-md text-keep-all">
                     개인화 결과는 폼 뒤에 있지만, 심사자와 방문자가 바로 읽을 수 있도록 고정 해석 콘텐츠를 함께 제공합니다.
                   </p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {SAMPLE_READINGS.map((sample) => (
-                    <article key={sample.title} className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                      <h3 className="text-white/75 text-sm font-semibold mb-2">{sample.title}</h3>
-                      <p className="text-white/38 text-xs leading-6">{sample.body}</p>
+                    <article key={sample.title} className="py-4 md:px-4 border-t md:border-t-0 md:border-l first:border-l-0 border-white/10">
+                      <h3 className="text-white/85 text-sm font-semibold mb-2">{sample.title}</h3>
+                      <p className="text-white/65 text-sm leading-7 text-keep-all">{sample.body}</p>
                     </article>
                   ))}
                 </div>
@@ -397,57 +478,27 @@ export default function HomeClient() {
             </section>
           )}
 
-          {error && !isLoading && (
-            <div
-              className="w-full max-w-md mb-6 px-5 py-4 rounded-2xl flex items-start gap-3"
-              style={{
-                background: error === 'QUOTA_EXCEEDED' ? 'rgba(251,191,36,0.1)' : 'rgba(239,68,68,0.1)',
-                border: error === 'QUOTA_EXCEEDED' ? '1px solid rgba(251,191,36,0.3)' : '1px solid rgba(239,68,68,0.3)',
-              }}
-            >
-              <span className="text-xl flex-shrink-0">{error === 'QUOTA_EXCEEDED' ? '🌙' : '⚠️'}</span>
-              <div>
-                {error === 'QUOTA_EXCEEDED' ? (
-                  <>
-                    <p className="text-yellow-300 text-sm font-semibold mb-1">{t(lang).quotaTitle}</p>
-                    <p className="text-yellow-300/70 text-sm">{t(lang).quotaMsg1}<br />{t(lang).quotaMsg2}</p>
-                  </>
-                ) : (
-                  <>
-                    <p className="text-red-300 text-sm font-semibold mb-1">{t(lang).errorTitle}</p>
-                    <p className="text-red-300/70 text-sm">{t(lang).generalError}</p>
-                  </>
-                )}
-                <button
-                  onClick={handleReset}
-                  className="mt-2 text-xs underline transition-colors"
-                  style={{ color: error === 'QUOTA_EXCEEDED' ? 'rgba(251,191,36,0.5)' : 'rgba(239,68,68,0.5)' }}
-                >
-                  {t(lang).back}
-                </button>
-              </div>
-            </div>
-          )}
-
-          {isLoading && (
-            <div className="w-full flex justify-center py-8">
-              <LoadingSpinner />
-            </div>
-          )}
-
-          {fortune && !isLoading && (
+          {fortune && (
             <>
-              <div ref={resultRef} className="w-full flex justify-center">
+              {(isRefreshing || error?.scope === 'refresh' || resultStatus) && (
+                <div
+                  className={`w-full max-w-2xl mb-4 rounded-xl px-4 py-3 text-sm sm:text-base leading-6 ${error?.scope === 'refresh' ? 'border border-amber-300/30 bg-amber-300/10 text-amber-100' : 'border border-purple-300/25 bg-purple-300/10 text-purple-100'}`}
+                  role={error?.scope === 'refresh' ? 'alert' : 'status'}
+                >
+                  {error?.scope === 'refresh' ? REQUEST_STATUS_COPY[lang].refreshError : isRefreshing ? REQUEST_STATUS_COPY[lang].refreshing : resultStatus}
+                </div>
+              )}
+              <div ref={resultRef} className="w-full flex justify-center scroll-mt-6 focus:outline-none" tabIndex={-1}>
                 <FortuneCard fortune={fortune} onReset={handleReset} lang={lang} />
               </div>
               <ResultNextSteps lang={lang} />
             </>
           )}
 
-          {fortune && !isLoading && (
+          {fortune && (
             <>
               <div className="mt-8 text-center">
-                <p className="text-white/20 text-xs">{t(lang).retryHint}</p>
+                <p className="text-white/65 text-sm">{t(lang).retryHint}</p>
               </div>
               <div className="w-full max-w-lg mx-auto mt-8">
                 <AdUnit slot="4511932122" format="auto" />

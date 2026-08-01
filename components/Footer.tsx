@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useLang } from '@/lib/useLang';
 import { t } from '@/lib/i18n';
-import { CONSENT_CHANGED_EVENT, COOKIE_CONSENT_KEY } from '@/lib/adConsent';
+import { clearCookieConsent, CONSENT_CHANGED_EVENT } from '@/lib/adConsent';
 
 
 export default function Footer() {
@@ -18,7 +18,7 @@ export default function Footer() {
   ];
 
   const openCookieSettings = () => {
-    localStorage.removeItem(COOKIE_CONSENT_KEY);
+    clearCookieConsent();
     window.dispatchEvent(new Event(CONSENT_CHANGED_EVENT));
   };
 
