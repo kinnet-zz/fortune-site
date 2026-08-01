@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import {
   ADSENSE_READY_EVENT,
-  CONSENT_CHANGED_EVENT,
   getCookieConsent,
   isAdSensePath,
   isNoIndexPage,
+  subscribeToConsentChanges,
 } from '@/lib/adConsent';
 
 const GA_ID = 'G-5Q4N5V6BQK';
@@ -82,8 +82,7 @@ export default function ConsentScripts() {
     setGoogleConsent('default', false);
     const syncConsent = () => setAccepted(getCookieConsent() === 'accepted');
     syncConsent();
-    window.addEventListener(CONSENT_CHANGED_EVENT, syncConsent);
-    return () => window.removeEventListener(CONSENT_CHANGED_EVENT, syncConsent);
+    return subscribeToConsentChanges(syncConsent);
   }, []);
 
   useEffect(() => {

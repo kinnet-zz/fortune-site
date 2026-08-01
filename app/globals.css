@@ -13,6 +13,8 @@
   --glow-purple: rgba(139, 92, 246, 0.4);
   --glow-pink: rgba(236, 72, 153, 0.3);
   --glow-indigo: rgba(99, 102, 241, 0.35);
+  --surface-strong: rgba(13, 7, 31, 0.96);
+  --text-muted: rgba(255, 255, 255, 0.72);
 }
 
 * {
@@ -38,9 +40,19 @@ body {
   min-height: 100vh;
 }
 
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid #d8b4fe;
+  outline-offset: 3px;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .text-keep-all {
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
 
   .scrollbar-hide {
@@ -50,6 +62,39 @@ body {
 
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+}
+
+.home-ritual-grid {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+  padding: 1.25rem 0 0;
+}
+
+.home-ritual-copy {
+  max-width: 40rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.home-ritual-form {
+  width: 100%;
+  max-width: 28rem;
+  margin-inline: auto;
+}
+
+@media (min-width: 1024px) {
+  .home-ritual-grid {
+    grid-template-columns: minmax(0, 1.08fr) minmax(22rem, 0.92fr);
+    gap: 4.5rem;
+    min-height: 34rem;
+    padding: 2rem 1rem;
+  }
+
+  .home-ritual-copy {
+    margin-inline: 0;
+    text-align: left;
   }
 }
 
@@ -305,4 +350,15 @@ body {
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(192, 132, 252, 0.3), transparent);
   animation: line-reveal 1.2s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

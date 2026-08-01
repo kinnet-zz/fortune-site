@@ -22,6 +22,7 @@ export default function Header() {
   const fortuneRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<HTMLDivElement>(null);
   const guideRef = useRef<HTMLDivElement>(null);
+  const lastMenuTriggerRef = useRef<HTMLButtonElement | null>(null);
 
   const FORTUNE_ITEMS: NavItem[] = [
     { href: '/', emoji: '✨', label: lang === 'ko' ? '오늘의 운세' : lang === 'en' ? 'Daily Fortune' : lang === 'zh' ? '今日运势' : '今日の運勢' },
@@ -67,6 +68,20 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
+  useEffect(() => {
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      const hadOpenMenu = mobileOpen || fortuneOpen || guideOpen || gameOpen;
+      setMobileOpen(false);
+      setFortuneOpen(false);
+      setGuideOpen(false);
+      setGameOpen(false);
+      if (hadOpenMenu) requestAnimationFrame(() => lastMenuTriggerRef.current?.focus());
+    };
+    document.addEventListener('keydown', closeOnEscape);
+    return () => document.removeEventListener('keydown', closeOnEscape);
+  }, [fortuneOpen, gameOpen, guideOpen, mobileOpen]);
+
   return (
     <header
       className="relative z-50 w-full"
@@ -76,15 +91,15 @@ export default function Header() {
         backdropFilter: 'blur(12px)',
       }}
     >
-      <div className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between gap-3">
+      <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-3">
 
         {/* 로고 */}
         <Link
           href="/"
-          className="flex items-center gap-2 text-white/90 font-bold text-base hover:text-white transition-colors flex-shrink-0"
+          className="flex min-h-11 items-center gap-2 text-white font-bold text-base hover:text-purple-100 transition-colors flex-shrink-0"
         >
           <span className="text-xl">🔮</span>
-          <span className="hidden sm:inline">StarFate</span>
+          <span>StarFate</span>
         </Link>
 
         {/* 데스크탑 드롭다운 메뉴 */}
@@ -93,8 +108,16 @@ export default function Header() {
           {/* 운세 드롭다운 */}
           <div ref={fortuneRef} className="relative">
             <button
-              onClick={() => { setFortuneOpen(o => !o); setGameOpen(false); }}
-              className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-all"
+              onClick={(event) => {
+                const nextOpen = !fortuneOpen;
+                setFortuneOpen(nextOpen);
+                setGuideOpen(false);
+                setGameOpen(false);
+                if (nextOpen) lastMenuTriggerRef.current = event.currentTarget;
+              }}
+              aria-expanded={fortuneOpen}
+              aria-controls="fortune-menu"
+              className="flex min-h-11 items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-all"
               style={{
                 color: isFortuneActive ? '#c084fc' : 'rgba(255,255,255,0.55)',
                 background: isFortuneActive ? 'rgba(124,58,237,0.15)' : 'transparent',
@@ -107,7 +130,8 @@ export default function Header() {
             </button>
             {fortuneOpen && (
               <div
-                className="absolute top-full left-0 mt-1 w-44 rounded-xl overflow-hidden shadow-xl"
+                id="fortune-menu"
+                className="absolute top-full left-0 mt-1 w-44 rounded-xl overflow-visible p-1 shadow-xl"
                 style={{ background: 'rgba(10,10,40,0.97)', border: '1px solid rgba(255,255,255,0.1)' }}
               >
                 {FORTUNE_ITEMS.map(({ href, emoji, label }) => (
@@ -115,7 +139,7 @@ export default function Header() {
                     key={href}
                     href={href}
                     onClick={() => setFortuneOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2.5 text-sm transition-colors hover:bg-white/5"
+                    className="flex min-h-11 items-center gap-2 px-4 py-2.5 rounded-lg text-sm transition-colors hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-purple-300"
                     style={{ color: pathname === href ? '#c084fc' : 'rgba(255,255,255,0.65)' }}
                   >
                     <span>{emoji}</span>
@@ -129,8 +153,16 @@ export default function Header() {
           {/* 백과 드롭다운 */}
           <div ref={guideRef} className="relative">
             <button
-              onClick={() => { setGuideOpen(o => !o); setFortuneOpen(false); setGameOpen(false); }}
-              className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-all"
+              onClick={(event) => {
+                const nextOpen = !guideOpen;
+                setGuideOpen(nextOpen);
+                setFortuneOpen(false);
+                setGameOpen(false);
+                if (nextOpen) lastMenuTriggerRef.current = event.currentTarget;
+              }}
+              aria-expanded={guideOpen}
+              aria-controls="guide-menu"
+              className="flex min-h-11 items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-all"
               style={{
                 color: isGuideActive ? '#c084fc' : 'rgba(255,255,255,0.55)',
                 background: isGuideActive ? 'rgba(124,58,237,0.15)' : 'transparent',
@@ -143,7 +175,8 @@ export default function Header() {
             </button>
             {guideOpen && (
               <div
-                className="absolute top-full left-0 mt-1 w-52 rounded-xl overflow-hidden shadow-xl"
+                id="guide-menu"
+                className="absolute top-full left-0 mt-1 w-52 rounded-xl overflow-visible p-1 shadow-xl"
                 style={{ background: 'rgba(10,10,40,0.97)', border: '1px solid rgba(255,255,255,0.1)' }}
               >
                 {GUIDE_ITEMS.map(({ href, emoji, label }) => (
@@ -151,7 +184,7 @@ export default function Header() {
                     key={href}
                     href={href}
                     onClick={() => setGuideOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2.5 text-sm transition-colors hover:bg-white/5"
+                    className="flex min-h-11 items-center gap-2 px-4 py-2.5 rounded-lg text-sm transition-colors hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-purple-300"
                     style={{ color: pathname === href ? '#c084fc' : 'rgba(255,255,255,0.65)' }}
                   >
                     <span>{emoji}</span>
@@ -165,8 +198,16 @@ export default function Header() {
           {/* 게임/테스트 드롭다운 */}
           <div ref={gameRef} className="relative">
             <button
-              onClick={() => { setGameOpen(o => !o); setFortuneOpen(false); setGuideOpen(false); }}
-              className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-all"
+              onClick={(event) => {
+                const nextOpen = !gameOpen;
+                setGameOpen(nextOpen);
+                setFortuneOpen(false);
+                setGuideOpen(false);
+                if (nextOpen) lastMenuTriggerRef.current = event.currentTarget;
+              }}
+              aria-expanded={gameOpen}
+              aria-controls="game-menu"
+              className="flex min-h-11 items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-all"
               style={{
                 color: isGameActive ? '#c084fc' : 'rgba(255,255,255,0.55)',
                 background: isGameActive ? 'rgba(124,58,237,0.15)' : 'transparent',
@@ -179,7 +220,8 @@ export default function Header() {
             </button>
             {gameOpen && (
               <div
-                className="absolute top-full left-0 mt-1 w-44 rounded-xl overflow-hidden shadow-xl"
+                id="game-menu"
+                className="absolute top-full left-0 mt-1 w-44 rounded-xl overflow-visible p-1 shadow-xl"
                 style={{ background: 'rgba(10,10,40,0.97)', border: '1px solid rgba(255,255,255,0.1)' }}
               >
                 {GAME_ITEMS.map(({ href, emoji, label }) => (
@@ -187,7 +229,7 @@ export default function Header() {
                     key={href}
                     href={href}
                     onClick={() => setGameOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2.5 text-sm transition-colors hover:bg-white/5"
+                    className="flex min-h-11 items-center gap-2 px-4 py-2.5 rounded-lg text-sm transition-colors hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-purple-300"
                     style={{ color: pathname === href ? '#c084fc' : 'rgba(255,255,255,0.65)' }}
                   >
                     <span>{emoji}</span>
@@ -211,7 +253,8 @@ export default function Header() {
               <button
                 key={code}
                 onClick={() => setLang(code)}
-                className="px-2.5 py-1 rounded-full text-xs font-medium transition-all"
+                aria-pressed={lang === code}
+                className="min-h-11 min-w-11 px-2.5 py-1 rounded-full text-xs font-medium transition-all"
                 style={{
                   background: lang === code ? 'rgba(124,58,237,0.6)' : 'transparent',
                   color: lang === code ? '#e9d5ff' : 'rgba(255,255,255,0.4)',
@@ -225,9 +268,15 @@ export default function Header() {
 
           {/* 모바일 햄버거 */}
           <button
-            className="sm:hidden text-white/60 hover:text-white/90 transition-colors p-2"
-            onClick={() => setMobileOpen(o => !o)}
-            aria-label="메뉴 열기"
+            className="sm:hidden min-w-11 min-h-11 text-white/75 hover:text-white transition-colors p-2"
+            onClick={(event) => {
+              const nextOpen = !mobileOpen;
+              setMobileOpen(nextOpen);
+              if (nextOpen) lastMenuTriggerRef.current = event.currentTarget;
+            }}
+            aria-label={mobileOpen ? '메뉴 닫기' : '메뉴 열기'}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-navigation"
           >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
               {mobileOpen ? (
@@ -243,6 +292,7 @@ export default function Header() {
       {/* 모바일 메뉴 */}
       {mobileOpen && (
         <div
+          id="mobile-navigation"
           className="sm:hidden border-t"
           style={{ background: 'rgba(5,5,32,0.98)', borderColor: 'rgba(255,255,255,0.07)' }}
         >
@@ -254,7 +304,7 @@ export default function Header() {
                 key={href}
                 href={href}
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-2 py-2.5 px-2 text-sm border-b transition-colors"
+                className="flex min-h-11 items-center gap-2 py-2.5 px-2 text-sm border-b transition-colors"
                 style={{
                   color: pathname === href ? '#c084fc' : 'rgba(255,255,255,0.6)',
                   borderColor: 'rgba(255,255,255,0.04)',
@@ -274,7 +324,7 @@ export default function Header() {
                 key={href}
                 href={href}
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-2 py-2.5 px-2 text-sm border-b transition-colors"
+                className="flex min-h-11 items-center gap-2 py-2.5 px-2 text-sm border-b transition-colors"
                 style={{
                   color: pathname === href ? '#c084fc' : 'rgba(255,255,255,0.6)',
                   borderColor: 'rgba(255,255,255,0.04)',
@@ -294,7 +344,7 @@ export default function Header() {
                 key={href}
                 href={href}
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-2 py-2.5 px-2 text-sm border-b transition-colors"
+                className="flex min-h-11 items-center gap-2 py-2.5 px-2 text-sm border-b transition-colors"
                 style={{
                   color: pathname === href ? '#c084fc' : 'rgba(255,255,255,0.6)',
                   borderColor: 'rgba(255,255,255,0.04)',
@@ -312,7 +362,8 @@ export default function Header() {
               <button
                 key={code}
                 onClick={() => { setLang(code); setMobileOpen(false); }}
-                className="px-3 py-1.5 rounded-full text-xs font-medium transition-all"
+                aria-pressed={lang === code}
+                className="min-h-11 min-w-11 px-3 py-1.5 rounded-full text-xs font-medium transition-all"
                 style={{
                   background: lang === code ? 'rgba(124,58,237,0.6)' : 'rgba(255,255,255,0.04)',
                   color: lang === code ? '#e9d5ff' : 'rgba(255,255,255,0.4)',

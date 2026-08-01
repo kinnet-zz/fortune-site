@@ -4,10 +4,10 @@ import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import {
   ADSENSE_READY_EVENT,
-  CONSENT_CHANGED_EVENT,
   getCookieConsent,
   isAdSensePath,
   isNoIndexPage,
+  subscribeToConsentChanges,
 } from '@/lib/adConsent';
 
 interface AdUnitProps {
@@ -32,8 +32,7 @@ export default function AdUnit({ slot, format = 'auto', className = '', style }:
       );
     };
     syncConsent();
-    window.addEventListener(CONSENT_CHANGED_EVENT, syncConsent);
-    return () => window.removeEventListener(CONSENT_CHANGED_EVENT, syncConsent);
+    return subscribeToConsentChanges(syncConsent);
   }, [pathname]);
 
   useEffect(() => {

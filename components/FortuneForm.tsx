@@ -2,29 +2,26 @@
 
 import { useState, useEffect, FormEvent } from 'react';
 import { type Lang, t } from '@/lib/i18n';
+import { getLocalDateInputValue, type FortuneErrorState } from '@/lib/homeFortune';
 
 interface FortuneFormProps {
   onSubmit: (birthDate: string, gender: string) => void;
   isLoading: boolean;
   lang: Lang;
+  error?: FortuneErrorState | null;
 }
 
-export default function FortuneForm({ onSubmit, isLoading, lang }: FortuneFormProps) {
+export default function FortuneForm({ onSubmit, isLoading, lang, error }: FortuneFormProps) {
   const [birthDate, setBirthDate] = useState('');
   const [gender, setGender] = useState('');
-  const [isFocused, setIsFocused] = useState(false);
   const [today, setToday] = useState('');
-  const [shuffledSigns, setShuffledSigns] = useState<string[]>([]);
 
   const minDate = '1900-01-01';
   const tr = t(lang);
 
   useEffect(() => {
-    setToday(new Date().toISOString().split('T')[0]);
-    const signs = tr.zodiacSigns;
-    const shuffled = [...signs].sort(() => Math.random() - 0.5);
-    setShuffledSigns(shuffled.slice(0, 4));
-  }, [lang]); // eslint-disable-line react-hooks/exhaustive-deps
+    setToday(getLocalDateInputValue());
+  }, []);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,66 +34,26 @@ export default function FortuneForm({ onSubmit, isLoading, lang }: FortuneFormPr
 
   return (
     <div className="w-full max-w-md mx-auto">
-      {/* 헤더 영역 */}
-      <div className="text-center mb-8">
-        {/* 별자리 기호 장식 */}
-        <div className="flex justify-center items-center gap-4 mb-5">
-          {['♈','♓','♒'].map((sign, i) => (
-            <span
-              key={sign}
-              className="text-purple-300/40 font-light select-none"
-              style={{
-                fontSize: `${18 + i * 4}px`,
-                animation: `twinkle ${3 + i * 0.6}s ease-in-out infinite`,
-                animationDelay: `${i * 0.5}s`,
-              }}
-            >
-              {sign}
-            </span>
-          ))}
-        </div>
-
-        <h2 className="font-serif-display text-3xl font-bold mb-2 shimmer-text leading-tight tracking-wide">
-          {tr.formTitle}
-        </h2>
-      </div>
-
-      {/* 카드 */}
       <div
-        className="relative rounded-3xl p-[1px]"
+        className="relative rounded-[1.75rem] p-[1px]"
         style={{
-          background: 'linear-gradient(135deg, rgba(192,132,252,0.4), rgba(99,102,241,0.2), rgba(236,72,153,0.3))',
-          boxShadow: '0 0 40px rgba(139,92,246,0.15), 0 0 80px rgba(139,92,246,0.08)',
+          background: 'linear-gradient(145deg, rgba(216,180,254,0.45), rgba(129,140,248,0.16), rgba(244,114,182,0.24))',
+          boxShadow: '0 24px 80px rgba(3,0,18,0.48)',
         }}
       >
         <div
-          className="rounded-3xl p-8"
+          className="rounded-[1.7rem] p-5 sm:p-7"
           style={{
-            background: 'linear-gradient(135deg, rgba(10,0,20,0.96) 0%, rgba(20,5,45,0.96) 100%)',
-            backdropFilter: 'blur(24px)',
+            background: 'linear-gradient(145deg, rgba(13,7,31,0.98), rgba(27,12,52,0.96))',
+            backdropFilter: 'blur(20px)',
           }}
         >
-          {/* 별자리 배경 기호 */}
-          <div
-            className="absolute top-4 right-6 select-none pointer-events-none font-serif-display"
-            style={{ fontSize: '56px', color: 'rgba(192,132,252,0.06)' }}
-          >
-            ✦
-          </div>
-          <div
-            className="absolute bottom-4 left-6 select-none pointer-events-none font-serif-display"
-            style={{ fontSize: '36px', color: 'rgba(99,102,241,0.06)' }}
-          >
-            ✦
-          </div>
-
           <form onSubmit={handleSubmit} className="relative z-10">
-            {/* 안내 텍스트 */}
-            <div className="mb-6 text-center">
-              <p className="text-white/80 text-base font-medium leading-relaxed">
+            <div className="mb-6">
+              <p className="text-white text-lg font-semibold leading-relaxed text-keep-all">
                 {tr.formSubtitle}
               </p>
-              <p className="text-purple-300/60 text-sm mt-1">
+              <p className="text-purple-200/80 text-sm mt-1.5 text-keep-all">
                 {tr.formHint}
               </p>
             </div>
@@ -113,7 +70,8 @@ export default function FortuneForm({ onSubmit, isLoading, lang }: FortuneFormPr
                     type="button"
                     onClick={() => setGender(value)}
                     disabled={isLoading}
-                    className="py-3 rounded-2xl font-semibold text-base transition-all duration-200 border"
+                    aria-pressed={gender === value}
+                    className="min-h-11 py-3 rounded-xl font-semibold text-base transition-all duration-200 border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#130a2c]"
                     style={{
                       background: gender === value
                         ? 'linear-gradient(135deg, #7c3aed 0%, #6366f1 100%)'
@@ -121,7 +79,7 @@ export default function FortuneForm({ onSubmit, isLoading, lang }: FortuneFormPr
                       borderColor: gender === value
                         ? 'rgba(139,92,246,0.8)'
                         : 'rgba(255,255,255,0.1)',
-                      color: gender === value ? '#fff' : 'rgba(255,255,255,0.4)',
+                      color: gender === value ? '#fff' : 'rgba(255,255,255,0.72)',
                       boxShadow: gender === value ? '0 0 20px rgba(139,92,246,0.4)' : 'none',
                     }}
                   >
@@ -139,28 +97,20 @@ export default function FortuneForm({ onSubmit, isLoading, lang }: FortuneFormPr
               >
                 {tr.dateLabel}
               </label>
-              <div
-                className={`relative rounded-2xl p-[1px] transition-all duration-300 ${
-                  isFocused
-                    ? 'bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500'
-                    : 'bg-gradient-to-r from-purple-800/50 to-indigo-800/50'
-                }`}
-              >
+              <div className="relative rounded-xl p-[1px] bg-gradient-to-r from-purple-700/70 to-indigo-700/70 focus-within:from-purple-400 focus-within:to-pink-400 transition-colors">
                 <input
                   id="birthDate"
                   type="date"
                   value={birthDate}
                   onChange={(e) => setBirthDate(e.target.value)}
-                  onFocus={() => setIsFocused(true)}
-                  onBlur={() => setIsFocused(false)}
                   min={minDate}
                   max={today}
                   required
                   disabled={isLoading}
-                  className="w-full rounded-2xl px-4 py-4 text-white text-base font-medium
+                  className="w-full min-h-12 rounded-xl px-4 py-3 text-white text-base font-medium
                     bg-gray-900/80 outline-none cursor-pointer
                     disabled:opacity-50 disabled:cursor-not-allowed
-                    transition-all duration-300
+                    transition-all duration-200 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-purple-200
                     [color-scheme:dark]"
                   style={{ colorScheme: 'dark' }}
                 />
@@ -172,33 +122,24 @@ export default function FortuneForm({ onSubmit, isLoading, lang }: FortuneFormPr
               type="submit"
               disabled={!isValid || isLoading}
               className={`
-                w-full py-4 px-6 rounded-2xl font-bold text-lg
+                w-full min-h-12 py-3.5 px-6 rounded-xl font-bold text-lg
                 transition-all duration-300 transform ripple-btn
-                relative overflow-hidden
+                relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-200 focus-visible:ring-offset-2 focus-visible:ring-offset-[#130a2c]
                 ${isValid && !isLoading
                   ? 'hover:scale-[1.02] active:scale-[0.98] cursor-pointer'
-                  : 'opacity-40 cursor-not-allowed'
+                  : 'opacity-70 cursor-not-allowed'
                 }
               `}
               style={{
                 background: isValid && !isLoading
                   ? 'linear-gradient(135deg, #7c3aed 0%, #a855f7 40%, #ec4899 100%)'
-                  : 'linear-gradient(135deg, #3b1a6b 0%, #2d2060 100%)',
+                  : 'linear-gradient(135deg, #4c2c75 0%, #37306f 100%)',
                 boxShadow: isValid && !isLoading
                   ? '0 0 30px rgba(168,85,247,0.4), 0 0 60px rgba(168,85,247,0.15), 0 4px 20px rgba(0,0,0,0.4)'
                   : 'none',
                 letterSpacing: '0.02em',
               }}
             >
-              {isValid && !isLoading && (
-                <div
-                  className="absolute inset-0 animate-shimmer opacity-20"
-                  style={{
-                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
-                    backgroundSize: '200% 100%',
-                  }}
-                />
-              )}
               <span className="relative z-10 flex items-center justify-center gap-2 font-serif-display tracking-wide">
                 {isLoading ? (
                   <>
@@ -210,24 +151,25 @@ export default function FortuneForm({ onSubmit, isLoading, lang }: FortuneFormPr
                 )}
               </span>
             </button>
-          </form>
 
-          {/* 하단 장식 */}
-          <div className="mt-6 pt-4 border-t border-white/5 flex justify-center gap-6">
-            {shuffledSigns.map((sign, i) => (
-              <span key={sign} className="text-purple-400/40 text-xs font-medium animate-twinkle"
-                style={{ animationDelay: `${i * 0.3}s` }}>
-                {sign}
-              </span>
-            ))}
-          </div>
+            {isLoading && (
+              <p className="mt-4 text-center text-purple-100 text-sm leading-6" role="status" aria-live="polite">
+                {tr.loadingTitle} · {tr.loadingMessages[0]}
+              </p>
+            )}
+            {error?.scope === 'form' && !isLoading && (
+              <div
+                role="alert"
+                aria-live="assertive"
+                className={`mt-4 rounded-xl px-4 py-3 text-sm leading-6 ${error.code === 'QUOTA_EXCEEDED' ? 'text-yellow-100 bg-yellow-400/10 border border-yellow-300/30' : 'text-red-100 bg-red-400/10 border border-red-300/30'}`}
+              >
+                <p className="font-semibold">{error.code === 'QUOTA_EXCEEDED' ? tr.quotaTitle : tr.errorTitle}</p>
+                <p className="mt-1 opacity-90">{error.code === 'QUOTA_EXCEEDED' ? `${tr.quotaMsg1} ${tr.quotaMsg2}` : tr.generalError}</p>
+              </div>
+            )}
+          </form>
         </div>
       </div>
-
-      {/* 하단 문구 */}
-      <p className="text-center text-white/20 text-xs mt-6 leading-relaxed">
-        {tr.footerText}
-      </p>
     </div>
   );
 }

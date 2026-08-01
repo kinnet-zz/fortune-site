@@ -1,14 +1,17 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import FortuneForm from '@/components/FortuneForm';
 import { trackEvent } from '@/lib/analytics';
 import type { Lang } from '@/lib/i18n';
+import type { FortuneErrorState } from '@/lib/homeFortune';
 
 interface ConversionHeroProps {
   onSubmit: (birthDate: string, gender: string) => void;
   isLoading: boolean;
   lang: Lang;
+  error?: FortuneErrorState | null;
 }
 
 const COPY: Record<Lang, {
@@ -86,9 +89,10 @@ const RELATED_ITEMS = [
 ] as const;
 
 function RelatedLinks({ lang, location }: { lang: Lang; location: 'home' | 'result' }) {
+  const isHome = location === 'home';
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-      {RELATED_ITEMS.map((item) => {
+    <div className={isHome ? 'grid grid-cols-1 md:grid-cols-[1.25fr_0.75fr] gap-3' : 'grid grid-cols-1 sm:grid-cols-3 gap-3'}>
+      {RELATED_ITEMS.map((item, index) => {
         const [title, description] = item[lang];
         return (
           <Link
@@ -99,15 +103,15 @@ function RelatedLinks({ lang, location }: { lang: Lang; location: 'home' | 'resu
               click_location: location,
               language: lang,
             })}
-            className="group rounded-2xl p-4 text-left transition-all duration-200 hover:-translate-y-1"
+            className={`group rounded-2xl text-left transition-all duration-200 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-purple-300 ${isHome && index === 0 ? 'p-6 md:row-span-2 md:min-h-48' : 'p-5'}`}
             style={{
-              background: 'rgba(139,92,246,0.07)',
-              border: '1px solid rgba(192,132,252,0.16)',
+              background: isHome && index === 0 ? 'linear-gradient(145deg, rgba(124,58,237,0.18), rgba(236,72,153,0.08))' : 'rgba(255,255,255,0.035)',
+              border: isHome && index === 0 ? '1px solid rgba(216,180,254,0.3)' : '1px solid rgba(255,255,255,0.1)',
             }}
           >
             <span className="text-2xl" aria-hidden="true">{item.emoji}</span>
-            <h3 className="text-white/90 text-base font-bold mt-3 mb-1 group-hover:text-purple-200">{title}</h3>
-            <p className="text-white/62 text-base leading-6">{description}</p>
+            <h3 className={`${isHome && index === 0 ? 'text-xl sm:text-2xl font-serif-display' : 'text-base'} text-white/95 font-bold mt-3 mb-1 group-hover:text-purple-200 text-keep-all`}>{title}</h3>
+            <p className={`${isHome && index > 0 ? 'text-sm' : 'text-base'} text-white/72 leading-6 text-keep-all`}>{description}</p>
           </Link>
         );
       })}
@@ -115,25 +119,59 @@ function RelatedLinks({ lang, location }: { lang: Lang; location: 'home' | 'resu
   );
 }
 
-export function HomeConversionHero({ onSubmit, isLoading, lang }: ConversionHeroProps) {
+export function HomeConversionHero({ onSubmit, isLoading, lang, error }: ConversionHeroProps) {
   const copy = COPY[lang];
+  const [today, setToday] = useState('');
+
+  useEffect(() => {
+    setToday(new Intl.DateTimeFormat(lang === 'ko' ? 'ko-KR' : lang === 'ja' ? 'ja-JP' : lang === 'zh' ? 'zh-CN' : 'en-US', {
+      month: 'long',
+      day: 'numeric',
+      weekday: 'long',
+    }).format(new Date()));
+  }, [lang]);
+
+  const trustItems = lang === 'ko'
+    ? ['무료', '입력정보 저장 안 함', '매일 갱신']
+    : lang === 'ja'
+      ? ['無料', '入力情報を保存しない', '毎日更新']
+      : lang === 'zh'
+        ? ['免费', '不保存输入信息', '每日更新']
+        : ['Free', 'No profile storage', 'Updated daily'];
 
   return (
-    <section className="w-full max-w-4xl mx-auto mb-10" aria-labelledby="fortune-first-heading">
-      <div className="text-center max-w-2xl mx-auto mb-7">
-        <p className="text-purple-300/75 text-xs font-bold tracking-[0.22em] uppercase mb-3">{copy.eyebrow}</p>
-        <h1 id="fortune-first-heading" className="font-serif-display text-3xl sm:text-4xl font-bold text-white/95 leading-tight mb-3">
-          {copy.title}
-        </h1>
-        <p className="text-white/68 text-base leading-7">{copy.description}</p>
+    <section className="w-full max-w-6xl mx-auto mb-14" aria-labelledby="fortune-first-heading">
+      <div className="home-ritual-grid">
+        <div className="home-ritual-copy">
+          <p className="min-h-6 text-purple-200 text-sm font-semibold tracking-[0.14em] mb-5">{today}</p>
+          <p className="text-purple-300 text-xs font-bold tracking-[0.22em] uppercase mb-4">{copy.eyebrow}</p>
+          <h1 id="fortune-first-heading" className="font-serif-display text-[2.35rem] sm:text-5xl lg:text-[3.6rem] font-bold text-white leading-[1.13] mb-5 text-keep-all">
+            {copy.title}
+          </h1>
+          <p className="text-white/75 text-base sm:text-lg leading-8 max-w-xl text-keep-all">{copy.description}</p>
+
+          <div className="hidden lg:flex flex-wrap items-center gap-x-5 gap-y-2 mt-8" aria-label={copy.privacy}>
+            {trustItems.map((item) => (
+              <span key={item} className="inline-flex items-center gap-2 text-sm text-white/70">
+                <span className="w-1.5 h-1.5 rounded-full bg-purple-300" aria-hidden="true" />
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="home-ritual-form">
+          <FortuneForm onSubmit={onSubmit} isLoading={isLoading} lang={lang} error={error} />
+          <div className="flex lg:hidden flex-wrap justify-center gap-x-4 gap-y-2 mt-5" aria-label={copy.privacy}>
+            {trustItems.map((item) => (
+              <span key={item} className="text-sm sm:text-base text-white/80">{item}</span>
+            ))}
+          </div>
+        </div>
       </div>
 
-      <FortuneForm onSubmit={onSubmit} isLoading={isLoading} lang={lang} />
-
-      <p className="text-center text-white/58 text-sm sm:text-base leading-6 mt-4">🔒 {copy.privacy}</p>
-
-      <div className="mt-8">
-        <h2 className="text-white/78 text-base font-semibold text-center mb-4">{copy.moreTitle}</h2>
+      <div className="mt-12 border-t border-white/10 pt-8">
+        <h2 className="text-white/85 text-base font-semibold mb-4">{copy.moreTitle}</h2>
         <RelatedLinks lang={lang} location="home" />
       </div>
     </section>

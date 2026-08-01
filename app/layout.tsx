@@ -122,10 +122,10 @@ export default function RootLayout({
       <body className="antialiased">
         <LangProvider>
           <ConditionalHeader />
+          <CookieBanner />
           {children}
           <Footer />
           <ConsentScripts />
-          <CookieBanner />
         </LangProvider>
       </body>
     </html>
