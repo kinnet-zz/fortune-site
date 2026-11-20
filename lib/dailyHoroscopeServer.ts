@@ -35,7 +35,10 @@ class DailyHoroscopeGenerationFailure extends Error {
 
 const AI_CACHE_TTL_SECONDS = 86400;
 const FALLBACK_CACHE_TTL_SECONDS = 300;
-const GEMINI_TIMEOUT_MS = 6000;
+// The model returns eleven Korean fields in one JSON body. At 6s a large part
+// of the daily batch was aborted mid-generation and every zodiac fell back to
+// the same static template, so the timeout leaves room for a full response.
+const GEMINI_TIMEOUT_MS = 25000;
 const GEMINI_MODEL = 'gemini-3.1-flash-lite';
 
 function getCloudflareEnv(): Record<string, unknown> | undefined {
