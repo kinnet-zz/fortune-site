@@ -459,11 +459,11 @@ export default function HomeClient() {
               <section className="mt-5 rounded-3xl p-6" style={{ background: 'rgba(5,5,32,0.52)', border: '1px solid rgba(255,255,255,0.07)' }} aria-labelledby="sample-reading-heading">
                 <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 mb-5">
                   <div>
-                    <p className="text-purple-300/60 text-xs font-semibold tracking-[0.18em] uppercase mb-2">Readable without form input</p>
-                    <h2 id="sample-reading-heading" className="font-serif-display text-white/86 text-xl font-bold">입력 없이도 읽을 수 있는 해석 예시</h2>
+                    <p className="text-purple-300/60 text-xs font-semibold tracking-[0.18em] uppercase mb-2">Reading examples</p>
+                    <h2 id="sample-reading-heading" className="font-serif-display text-white/86 text-xl font-bold">해석 예시로 먼저 살펴보기</h2>
                   </div>
                   <p className="text-white/65 text-sm leading-6 max-w-md text-keep-all">
-                    개인화 결과는 폼 뒤에 있지만, 심사자와 방문자가 바로 읽을 수 있도록 고정 해석 콘텐츠를 함께 제공합니다.
+                    생년월일을 입력하기 전에 아래 세 가지 예시로 해석의 결을 먼저 볼 수 있습니다. 입력하면 같은 항목이 내 별자리와 오늘 날짜에 맞춰 채워집니다.
                   </p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">

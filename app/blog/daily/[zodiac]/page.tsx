@@ -246,7 +246,7 @@ export default async function ZodiacDailyPage({
 
           </>
 
-        {/* Static zodiac info — always visible (SEO/AdSense) */}
+        {/* Static zodiac info — shown before the personalized daily result */}
         {info && (
           <section className="mt-12 space-y-6">
             <div

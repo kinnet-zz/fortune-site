@@ -27,6 +27,11 @@ const BLOG_SLUGS = [
   'nasa-ophiuchus-13th-zodiac',
   'twin-study-astrology',
   'ancient-egypt-astronomy',
+  'zodiac-in-medieval-art',
+  'lunar-calendar-rule',
+  'saturn-return-psychology',
+  'star-name-etymology',
+  'islamic-astronomy-legacy',
 ];
 
 const GUIDE_SLUGS = [
