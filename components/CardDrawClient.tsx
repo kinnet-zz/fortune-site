@@ -118,13 +118,14 @@ export default function CardDrawClient() {
         <div className="absolute inset-0" style={{
           background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(59,91,219,0.08) 0%, transparent 70%)',
         }} />
-        <div className="relative z-10 mx-auto max-w-xl px-4 pb-6 pt-12 text-center">
-          <h1 className="mb-2 text-[2.2rem] font-bold tracking-[-0.045em] text-[#0f172a]">{t.pageTitle}</h1>
+        <div className="relative z-10 mx-auto max-w-2xl px-4 pb-6 pt-12 text-center">
+          <span className="eyebrow eyebrow-center mx-auto">Tarot · daily card</span>
+          <h1 className="mb-2 mt-4 text-[2.2rem] font-bold tracking-[-0.045em] text-[#0f172a]">{t.pageTitle}</h1>
           <p className="text-[#64748b] text-sm">{t.pageSubtitle}</p>
         </div>
       </div>
 
-      <div className="mx-auto w-full max-w-xl px-4 pb-20">
+      <div className="mx-auto w-full max-w-2xl px-4 pb-20 lg:max-w-5xl">
 
         {/* 카드 스프레드 */}
         {!revealed && spreadIndices.length > 0 && (
@@ -132,9 +133,9 @@ export default function CardDrawClient() {
             <p className="mb-7 text-center text-[0.64rem] font-medium tracking-[0.16em] uppercase text-[#64748b]">
               {t.instruction}
             </p>
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="flex flex-wrap justify-center gap-2.5">
               {spreadIndices.map((cardIdx, i) => (
-                <div key={i} style={{ width: 'calc(25% - 9px)', flexShrink: 0 }}>
+                <div key={i} className="w-[calc(25%-0.5rem)] flex-shrink-0 lg:w-[calc(14.285%-0.65rem)]">
                   <TarotCardBack
                     card={TAROT_CARDS[cardIdx]}
                     isSelected={selectedCard === TAROT_CARDS[cardIdx]}

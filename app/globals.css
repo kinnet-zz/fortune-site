@@ -340,8 +340,11 @@ body {
 .btn-gold:disabled,
 .btn-primary:disabled {
   cursor: not-allowed;
-  opacity: 0.45;
+  background: #eef2ff;
+  border-color: #dfe6ff;
+  color: #8fa3f2;
   box-shadow: none;
+  opacity: 1;
 }
 
 .btn-gold-warm {
@@ -367,7 +370,9 @@ body {
 }
 
 .btn-gold-warm:disabled {
-  opacity: 0.45;
+  background: #eef2ff;
+  border-color: #dfe6ff;
+  color: #8fa3f2;
   box-shadow: none;
   transform: none;
 }
