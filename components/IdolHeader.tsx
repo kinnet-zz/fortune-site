@@ -30,7 +30,7 @@ export default function IdolHeader() {
   };
 
   return (
-    <header className="relative z-50 w-full" style={{ background: '#0a0a0a', borderBottom: '1px solid rgba(20,23,43,0.05)' }}>
+    <header className="sticky top-0 z-50 w-full border-b border-[#e8eaef] bg-white/85 backdrop-blur-xl">
       <div className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
         {/* 로고 */}
         <Link href="/idol" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
@@ -39,7 +39,7 @@ export default function IdolHeader() {
               <div key={i} className="w-1.5 h-5 rounded-full" style={{ background: c }} />
             ))}
           </div>
-          <span className="text-white font-black text-sm tracking-tight ml-1">
+          <span className="text-[#0f172a] font-black text-sm tracking-tight ml-1">
             {lang === 'ko' ? '소속사 테스트' : 'K-Idol Type'}
           </span>
         </Link>
@@ -48,22 +48,22 @@ export default function IdolHeader() {
           {/* 운세로 돌아가기 */}
           <Link
             href="/"
-            className="text-xs px-3 py-1.5 rounded-full transition-all hover:opacity-80"
-            style={{ color: 'rgba(255,255,255,0.3)', border: '1px solid rgba(20,23,43,0.06)' }}
+            className="rounded-full border border-[#e8eaef] px-3 py-1.5 text-xs font-medium text-[#475569] transition-all hover:border-[#dcdfe6] hover:text-[#0f172a]"
           >
             {lang === 'ko' ? '🔮 오늘의 운세' : '🔮 Fortune'}
           </Link>
 
           {/* 언어 토글 */}
-          <div className="flex rounded-lg overflow-hidden" style={{ border: '1px solid rgba(20,23,43,0.06)' }}>
+          <div className="flex overflow-hidden rounded-full border border-[#e8eaef] bg-[#f8f9fb] p-0.5">
             {(['ko', 'en', 'zh', 'ja'] as IdolLang[]).map((l) => (
               <button
                 key={l}
                 onClick={() => switchLang(l)}
                 className="px-2.5 py-1.5 text-xs font-bold transition-colors"
                 style={{
-                  background: lang === l ? 'rgba(255,255,255,0.12)' : 'transparent',
-                  color: lang === l ? 'white' : 'rgba(255,255,255,0.3)',
+                  background: lang === l ? '#ffffff' : 'transparent',
+                  color: lang === l ? '#0f172a' : '#64748b',
+                  boxShadow: lang === l ? '0 1px 4px rgba(15,23,42,0.1)' : 'none',
                 }}
               >
                 {l === 'ko' ? '한국어' : l === 'en' ? 'EN' : l === 'zh' ? '中文' : '日本語'}

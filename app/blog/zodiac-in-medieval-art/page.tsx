@@ -13,29 +13,29 @@ export const metadata: Metadata = {
 };
 
 const bgStyle = {
-  background: 'linear-gradient(160deg, rgba(250,246,238,0.6) 0%, rgba(247,242,232,0.4) 45%, rgba(241,233,218,0.5) 100%)',
+  background: '#ffffff',
   minHeight: '100vh',
 };
 
 export default function ZodiacInMedievalArtPage() {
   return (
     <div style={bgStyle}>
-      <article className="max-w-3xl mx-auto px-6 py-16 text-[#1a1c2e]/80">
-        <Link href="/blog" className="text-[#8a6a2f] hover:text-[#6f5223] text-sm mb-8 inline-block">
+      <article className="max-w-3xl mx-auto px-6 py-16 text-[#0f172a]/80">
+        <Link href="/blog" className="text-[#3b5bdb] hover:text-[#3b5bdb] text-sm mb-8 inline-block">
           ← 블로그 목록으로 돌아가기
         </Link>
 
         <header className="mb-10">
           <div className="flex items-center gap-2 mb-4 flex-wrap">
-            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(169,128,63,0.14)', color: '#6f5223' }}>
+            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(59,91,219,0.14)', color: '#3b5bdb' }}>
               별자리 역사
             </span>
-            <span className="text-[#1a1c2e]/38 text-xs">2026년 11월 2일 · 10분 읽기</span>
+            <span className="text-[#64748b] text-xs">2026년 11월 2일 · 10분 읽기</span>
           </div>
-          <h1 className="text-3xl font-bold text-[#14172b] mb-4 leading-tight">
+          <h1 className="text-3xl font-bold text-[#0f172a] mb-4 leading-tight">
             중세 기도서 달력에는 왜 별자리가 함께 그려졌나 — 성무일도서와 황도대 미술
           </h1>
-          <p className="text-[#1a1c2e]/55 text-base leading-relaxed">
+          <p className="text-[#475569] text-base leading-relaxed">
             미술관에서 중세 기도서를 넘기다 보면 달력 장면 옆에 작은 게자리나 염소자리가 그려져 있는 걸 발견하게 됩니다. 장식이 아니라 그 시대 사람들에게는 시간을 읽는 장치였습니다. 그림 속 황도대가 어떤 역할을 했는지, 몇 점의 작품을 통해 따라가 봅니다.
           </p>
         </header>
@@ -50,7 +50,7 @@ export default function ZodiacInMedievalArtPage() {
         <div className="space-y-8 text-sm leading-relaxed">
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">달력 그림 한 장에 들어간 세 가지 정보</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">달력 그림 한 장에 들어간 세 가지 정보</h2>
             <p className="mb-3">
               15세기 초 프랑스에서 만들어진 <em>베리 공작의 성무일도서(Les Très Riches Heures du Duc de Berry)</em>는 중세 채색 필사본 가운데 가장 유명한 작품 중 하나입니다. 림부르크 형제가 1411년 무렵 시작해 1416년 세 형제가 모두 죽으면서 미완성으로 남았고, 이후 다른 화가들이 손을 봤습니다. 이 책의 달력 부분에는 열두 달을 각각 한 장면으로 그린 큰 그림이 들어 있습니다.
             </p>
@@ -63,7 +63,7 @@ export default function ZodiacInMedievalArtPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">12달의 노동 — 시간은 곧 일의 순서였다</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">12달의 노동 — 시간은 곧 일의 순서였다</h2>
             <p className="mb-3">
               이런 달력 그림을 미술사에서는 &lsquo;12달의 노동(Labors of the Months)&rsquo;이라고 부릅니다. 12세기 이후 유럽 교회의 조각과 스테인드글라스에 자주 등장했고, 14~15세기에는 기도서의 표지급 장식이 되었습니다. 농사일, 사냥, 수확, 돼지 도축, 실내에서 불을 쬐는 겨울 장면 — 달마다 다른 풍경이 이어집니다.
             </p>
@@ -76,7 +76,7 @@ export default function ZodiacInMedievalArtPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">지오토가 그린 별 — 혜성인가, 베들레헴의 별인가</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">지오토가 그린 별 — 혜성인가, 베들레헴의 별인가</h2>
             <p className="mb-3">
               파도바 스크로베니 예배당의 <em>동방박사의 경배</em>(1305년 무렵)에는 지붕 위에 꼬리를 단 밝은 별이 그려져 있습니다. 오늘날 많은 천문학자와 미술사가들은 이 별이 1301년 유럽에서 관측된 핼리 혜성의 인상을 옮긴 것이라고 봅니다. 지오토는 혜성을 성서의 별로 바꿔 그린 셈입니다.
             </p>
@@ -86,7 +86,7 @@ export default function ZodiacInMedievalArtPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">뒤러의 천구도 — 예술가가 하늘 지도를 새기다</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">뒤러의 천구도 — 예술가가 하늘 지도를 새기다</h2>
             <p className="mb-3">
               1515년, 알브레히트 뒤러는 인쇄술의 시대에 맞춰 두 장의 천구도를 목판으로 새겼습니다. 북반구와 남반구를 각각 그린 이 지도에는 프톨레마이오스 이래 전해진 48개 별자리가 인물과 동물의 모습으로 배치되어 있습니다. 하늘을 &lsquo;지도&rsquo;로 만든다는 발상은 이때 이미 인쇄물로 대량 복제되고 있었습니다.
             </p>
@@ -99,7 +99,7 @@ export default function ZodiacInMedievalArtPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">그림을 읽는 순서 — 장식이 아니라 문법</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">그림을 읽는 순서 — 장식이 아니라 문법</h2>
             <p className="mb-3">
               이런 작품을 볼 때 두 가지만 기억하면 훨씬 많은 것이 보입니다. 첫째, 별자리는 대개 &lsquo;달력의 일부&rsquo;로 등장합니다. 그러니 별자리 그림이 있다면 옆에 날짜, 절기, 계절 노동이 함께 있는지 확인해 보세요. 둘째, 별자리의 모습은 당시 유행한 도상집의 영향을 받았습니다. 같은 사자자리라도 14세기 프랑스와 16세기 이탈리아의 그림이 다른 이유입니다.
             </p>
@@ -110,27 +110,27 @@ export default function ZodiacInMedievalArtPage() {
 
         </div>
 
-        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(169,128,63,0.1)', border: '1px solid rgba(169,128,63,0.14)' }}>
-          <p className="text-[#1a1c2e]/64 mb-4 text-sm">오늘 내 별자리의 흐름이 궁금하다면?</p>
+        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(59,91,219,0.1)', border: '1px solid rgba(59,91,219,0.14)' }}>
+          <p className="text-[#475569] mb-4 text-sm">오늘 내 별자리의 흐름이 궁금하다면?</p>
           <Link
             href="/"
-            className="inline-block px-6 py-3 rounded-full font-bold text-[#f7f0e1] text-sm"
-            style={{ background: 'linear-gradient(135deg, #1a2144 0%, #111730 100%)' }}
+            className="inline-block px-6 py-3 rounded-full font-bold text-[#ffffff] text-sm"
+            style={{ background: 'linear-gradient(135deg, #3b5bdb 0%, #2f4bc7 100%)' }}
           >
             오늘의 운세 무료로 보기 →
           </Link>
         </div>
 
         <nav className="mt-10">
-          <h3 className="text-sm text-[#1a1c2e]/45 mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
+          <h3 className="text-sm text-[#64748b] mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <Link href="/blog/ancient-egypt-astronomy" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
-              <div className="text-[#1a1c2e]/72 font-medium">천문학과 점성술이 갈라지기 전</div>
-              <div className="text-[#1a1c2e]/38 text-xs mt-1">시리우스, 덴데라 조디악, 케플러까지</div>
+            <Link href="/blog/ancient-egypt-astronomy" className="p-4 rounded-xl text-sm hover:border-[#c7d0f7] transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
+              <div className="text-[#0f172a]/72 font-medium">천문학과 점성술이 갈라지기 전</div>
+              <div className="text-[#64748b] text-xs mt-1">시리우스, 덴데라 조디악, 케플러까지</div>
             </Link>
-            <Link href="/blog/star-name-etymology" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
-              <div className="text-[#1a1c2e]/72 font-medium">별 이름은 누가 지었나</div>
-              <div className="text-[#1a1c2e]/38 text-xs mt-1">아랍어 어원과 28수</div>
+            <Link href="/blog/star-name-etymology" className="p-4 rounded-xl text-sm hover:border-[#c7d0f7] transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
+              <div className="text-[#0f172a]/72 font-medium">별 이름은 누가 지었나</div>
+              <div className="text-[#64748b] text-xs mt-1">아랍어 어원과 28수</div>
             </Link>
           </div>
         </nav>

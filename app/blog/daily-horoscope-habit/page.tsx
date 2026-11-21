@@ -13,29 +13,29 @@ export const metadata: Metadata = {
 };
 
 const bgStyle = {
-  background: 'linear-gradient(160deg, rgba(250,246,238,0.6) 0%, rgba(247,242,232,0.4) 45%, rgba(241,233,218,0.5) 100%)',
+  background: '#ffffff',
   minHeight: '100vh',
 };
 
 export default function DailyHoroscopeHabitPage() {
   return (
     <div style={bgStyle}>
-      <article className="max-w-3xl mx-auto px-6 py-16 text-[#1a1c2e]/80">
-        <Link href="/blog" className="text-[#8a6a2f] hover:text-[#6f5223] text-sm mb-8 inline-block">
+      <article className="max-w-3xl mx-auto px-6 py-16 text-[#0f172a]/80">
+        <Link href="/blog" className="text-[#3b5bdb] hover:text-[#3b5bdb] text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
 
         <header className="mb-10">
           <div className="flex items-center gap-2 mb-4 flex-wrap">
-            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(169,128,63,0.14)', color: '#6f5223' }}>
+            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(59,91,219,0.14)', color: '#3b5bdb' }}>
               운세 습관
             </span>
-            <span className="text-[#1a1c2e]/38 text-xs">2025년 6월 3일 · 10분 읽기</span>
+            <span className="text-[#64748b] text-xs">2025년 6월 3일 · 10분 읽기</span>
           </div>
-          <h1 className="text-3xl font-bold text-[#14172b] mb-4 leading-tight">
+          <h1 className="text-3xl font-bold text-[#0f172a] mb-4 leading-tight">
             운세를 4년간 매일 확인했더니 생긴 일 — 습관이 된 운세의 심리학
           </h1>
-          <p className="text-[#1a1c2e]/55 text-base leading-relaxed">
+          <p className="text-[#475569] text-base leading-relaxed">
             맞아서 계속한 게 아니었다. 틀릴 때 오히려 더 많은 것을 배웠다. 4년간 하루도 빠짐없이 운세를 확인한 사람의 솔직한 기록.
           </p>
         </header>
@@ -43,7 +43,7 @@ export default function DailyHoroscopeHabitPage() {
         <div className="space-y-8 text-sm leading-relaxed">
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">시작은 우연이었다</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">시작은 우연이었다</h2>
             <p className="mb-3">
               2021년 초였다. 당시 나는 이직을 준비하면서 마음이 굉장히 불안정했다. 재직 중인 회사에서의 평가는 나쁘지 않았지만, 3년 넘게 같은 일을 반복하는 것에 지쳐 있었고, 새로운 곳으로 옮겼다가 잘 적응하지 못하면 어떡하나 하는 걱정이 늘 따라다녔다.
             </p>
@@ -62,11 +62,11 @@ export default function DailyHoroscopeHabitPage() {
               className="w-full object-cover"
               style={{ maxHeight: 360 }}
             />
-            <p className="text-[#1a1c2e]/38 text-xs mt-2 px-1">매일 아침의 루틴 — 커피 한 잔과 함께 시작하는 하루</p>
+            <p className="text-[#64748b] text-xs mt-2 px-1">매일 아침의 루틴 — 커피 한 잔과 함께 시작하는 하루</p>
           </div>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">처음 6개월 — 확증 편향의 함정</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">처음 6개월 — 확증 편향의 함정</h2>
             <p className="mb-3">
               초반에는 솔직히 '맞는 것만 기억하는' 패턴에 빠졌다. 운세에서 "오늘 예상치 못한 좋은 소식이 있을 것"이라고 했는데, 점심에 팀장님이 커피를 사줬다. 나는 그걸 맞았다고 기록했다. 반대로 "재물운이 좋지 않으니 지출을 줄이라"고 했는데 지하철에서 지갑을 잃어버렸을 때는 소름이 돋는다고 생각했다.
             </p>
@@ -79,7 +79,7 @@ export default function DailyHoroscopeHabitPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">1년 치 데이터를 분석해보니</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">1년 치 데이터를 분석해보니</h2>
             <p className="mb-3">
               1년간 운세를 기록하고 나서 분석해봤다. 결론부터 말하면, 운세가 "맞은" 확률은 내가 기대했던 것보다 낮았고, 그게 오히려 좋았다.
             </p>
@@ -95,7 +95,7 @@ export default function DailyHoroscopeHabitPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">틀렸을 때가 더 유용했다</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">틀렸을 때가 더 유용했다</h2>
             <p className="mb-3">
               가장 기억에 남는 건 2022년 9월이었다. 당시 중요한 프레젠테이션이 있었는데, 운세는 "오늘 커뮤니케이션 운이 좋지 않으니 중요한 발표나 계약은 미루는 것이 좋다"고 했다. 나는 잠깐 흔들렸다. 미뤄야 하나? 근데 이미 일정이 잡혀 있었고, 상대는 해외에서 온 사람들이었다.
             </p>
@@ -114,11 +114,11 @@ export default function DailyHoroscopeHabitPage() {
               className="w-full object-cover"
               style={{ maxHeight: 340 }}
             />
-            <p className="text-[#1a1c2e]/38 text-xs mt-2 px-1">운세와 실제 하루를 비교 기록한 노트 — 4년이 쌓이면 패턴이 보인다</p>
+            <p className="text-[#64748b] text-xs mt-2 px-1">운세와 실제 하루를 비교 기록한 노트 — 4년이 쌓이면 패턴이 보인다</p>
           </div>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">4년이 지난 지금 내가 생각하는 것</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">4년이 지난 지금 내가 생각하는 것</h2>
             <p className="mb-3">
               4년간 매일 운세를 봤지만, 나는 여전히 운세가 과학적으로 검증된 예측 도구라고 생각하지 않는다. 별자리와 천체의 위치가 내 금전운을 직접적으로 결정한다는 인과관계는 없다고 본다. 적어도 내가 아는 물리학의 범위 안에서는.
             </p>
@@ -134,33 +134,33 @@ export default function DailyHoroscopeHabitPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">실용적인 운세 활용 팁 — 4년의 경험에서</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">실용적인 운세 활용 팁 — 4년의 경험에서</h2>
             <ul className="space-y-4">
               <li className="flex gap-3">
-                <span className="text-[#8a6a2f] font-bold flex-shrink-0">01.</span>
+                <span className="text-[#3b5bdb] font-bold flex-shrink-0">01.</span>
                 <div>
-                  <strong className="text-[#14172b] block mb-1">아침에 확인하라</strong>
+                  <strong className="text-[#0f172a] block mb-1">아침에 확인하라</strong>
                   저녁에 확인하면 하루가 이미 끝난 뒤라 의미가 없다. 운세는 그날의 태도를 잡아주는 것이기 때문에 반드시 아침에 봐야 한다.
                 </div>
               </li>
               <li className="flex gap-3">
-                <span className="text-[#8a6a2f] font-bold flex-shrink-0">02.</span>
+                <span className="text-[#3b5bdb] font-bold flex-shrink-0">02.</span>
                 <div>
-                  <strong className="text-[#14172b] block mb-1">나쁜 운세를 두려워하지 마라</strong>
+                  <strong className="text-[#0f172a] block mb-1">나쁜 운세를 두려워하지 마라</strong>
                   나쁜 운세는 '조심하라'는 신호가 아니라 '더 준비하라'는 신호다. 운이 좋은 날은 도전하고, 운이 나쁜 날은 철저히 준비하라.
                 </div>
               </li>
               <li className="flex gap-3">
-                <span className="text-[#8a6a2f] font-bold flex-shrink-0">03.</span>
+                <span className="text-[#3b5bdb] font-bold flex-shrink-0">03.</span>
                 <div>
-                  <strong className="text-[#14172b] block mb-1">운세를 이유로 삼지 마라</strong>
+                  <strong className="text-[#0f172a] block mb-1">운세를 이유로 삼지 마라</strong>
                   "오늘 운이 나빠서 못했다"는 말은 금지다. 운세는 핑계가 되어선 안 된다. 책임은 항상 자신에게 있다.
                 </div>
               </li>
               <li className="flex gap-3">
-                <span className="text-[#8a6a2f] font-bold flex-shrink-0">04.</span>
+                <span className="text-[#3b5bdb] font-bold flex-shrink-0">04.</span>
                 <div>
-                  <strong className="text-[#14172b] block mb-1">기록하면 패턴이 보인다</strong>
+                  <strong className="text-[#0f172a] block mb-1">기록하면 패턴이 보인다</strong>
                   3개월 이상 운세와 실제 일을 함께 기록하면, 어떤 운세 표현이 자신의 삶과 더 잘 맞는지 감이 생긴다. 그게 진짜 개인화된 운세다.
                 </div>
               </li>
@@ -169,10 +169,10 @@ export default function DailyHoroscopeHabitPage() {
 
         </div>
 
-        <div className="mt-12 pt-8 border-t border-[#14172b]/12">
+        <div className="mt-12 pt-8 border-t border-[#0f172a]/12">
           <Link
             href="/blog"
-            className="text-[#8a6a2f] hover:text-[#6f5223] text-sm"
+            className="text-[#3b5bdb] hover:text-[#3b5bdb] text-sm"
           >
             ← 블로그 목록으로 돌아가기
           </Link>

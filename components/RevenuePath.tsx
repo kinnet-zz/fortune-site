@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import FortuneForm from '@/components/FortuneForm';
+import { CardArtwork, type ArtworkVariant } from '@/components/Artwork';
 import { trackEvent } from '@/lib/analytics';
 import type { Lang } from '@/lib/i18n';
 import type { FortuneErrorState } from '@/lib/homeFortune';
@@ -25,7 +26,9 @@ const COPY: Record<Lang, {
   relatedTitle: string;
   relatedDescription: string;
   formKicker: string;
-  statLabels: [string, string, string];
+  browse: string;
+  statLabels: string[];
+  trust: string[];
 }> = {
   ko: {
     eyebrow: 'StarFate · 오늘의 리딩',
@@ -38,7 +41,9 @@ const COPY: Record<Lang, {
     relatedTitle: '결과와 함께 보면 더 재미있는 콘텐츠',
     relatedDescription: '한 번의 운세 확인으로 끝내지 말고, 궁합과 타로까지 이어서 확인해보세요.',
     formKicker: 'Birth chart reading',
-    statLabels: ['12 별자리', '4개 언어', '매일 갱신'],
+    browse: '둘러보기',
+    statLabels: ['12개 별자리 해석', '4개 언어 지원', '매일 갱신'],
+    trust: ['무료', '입력정보 저장 안 함', '매일 갱신'],
   },
   en: {
     eyebrow: 'StarFate · Daily reading',
@@ -51,7 +56,9 @@ const COPY: Record<Lang, {
     relatedTitle: 'Continue your reading',
     relatedDescription: 'Explore compatibility, tarot, and today’s zodiac readings next.',
     formKicker: 'Birth chart reading',
-    statLabels: ['12 signs', '4 languages', 'Daily'],
+    browse: 'Browse all',
+    statLabels: ['12 sign guides', '4 languages', 'Updated daily'],
+    trust: ['Free', 'No profile storage', 'Updated daily'],
   },
   zh: {
     eyebrow: 'StarFate · 今日运势',
@@ -64,7 +71,9 @@ const COPY: Record<Lang, {
     relatedTitle: '继续探索你的运势',
     relatedDescription: '接着查看星座配对、塔罗牌和今日星座运势。',
     formKicker: 'Birth chart reading',
-    statLabels: ['12星座', '4种语言', '每日更新'],
+    browse: '浏览全部',
+    statLabels: ['12星座解读', '4种语言', '每日更新'],
+    trust: ['免费', '不保存输入信息', '每日更新'],
   },
   ja: {
     eyebrow: 'StarFate · 今日のリーディング',
@@ -77,14 +86,25 @@ const COPY: Record<Lang, {
     relatedTitle: '運勢をさらに楽しむ',
     relatedDescription: '星座相性、タロット、今日の星座運勢も続けて確認できます。',
     formKicker: 'Birth chart reading',
-    statLabels: ['12星座', '4言語', '毎日更新'],
+    browse: 'すべて見る',
+    statLabels: ['12星座の解説', '4言語対応', '毎日更新'],
+    trust: ['無料', '入力情報を保存しない', '毎日更新'],
   },
 };
 
-const RELATED_ITEMS = [
+const RELATED_ITEMS: {
+  href: string;
+  variant: ArtworkVariant;
+  tag: Record<Lang, string>;
+  ko: [string, string];
+  en: [string, string];
+  zh: [string, string];
+  ja: [string, string];
+}[] = [
   {
     href: '/card-draw',
-    index: '01',
+    variant: 'tarot',
+    tag: { ko: '타로', en: 'Tarot', zh: '塔罗', ja: 'タロット' },
     ko: ['그 사람에게 연락 올까?', '오늘의 타로 한 장 뽑기'],
     en: ['Will they contact me?', 'Draw today’s tarot card'],
     zh: ['对方会联系我吗？', '抽取今日塔罗牌'],
@@ -92,7 +112,8 @@ const RELATED_ITEMS = [
   },
   {
     href: '/guide/zodiac-compatibility',
-    index: '02',
+    variant: 'compatibility',
+    tag: { ko: '궁합', en: 'Compatibility', zh: '配对', ja: '相性' },
     ko: ['우리 둘은 얼마나 잘 맞을까?', '12별자리 궁합 분석'],
     en: ['How compatible are we?', 'Zodiac compatibility guide'],
     zh: ['我们有多般配？', '十二星座配对指南'],
@@ -100,91 +121,82 @@ const RELATED_ITEMS = [
   },
   {
     href: '/blog/2026-yearly-horoscope',
-    index: '03',
+    variant: 'yearly',
+    tag: { ko: '연간 운세', en: 'Yearly', zh: '年度运势', ja: '年間運勢' },
     ko: ['2026년 하반기, 내 별자리 운은?', '연애·재물·직업운 미리 보기'],
     en: ['What does late 2026 hold for your sign?', 'Preview love, money, and career trends'],
     zh: ['2026年下半年，你的星座运势如何？', '提前查看爱情、财运与事业趋势'],
     ja: ['2026年後半、あなたの星座運は？', '恋愛・金運・仕事運を先取り'],
   },
-] as const;
+];
 
-/** Fine line-art zodiac wheel for the cream hero. */
-function LineArtWheel({ className = '' }: { className?: string }) {
-  const ticks = Array.from({ length: 72 }, (_, i) => i);
+function HeroBackdrop() {
   return (
-    <svg viewBox="0 0 400 400" className={className} aria-hidden="true" fill="none">
-      <circle cx="200" cy="200" r="186" stroke="rgba(20,23,43,0.14)" strokeWidth="0.8" />
-      <circle cx="200" cy="200" r="158" stroke="rgba(169,128,63,0.28)" strokeWidth="0.7" strokeDasharray="1 8" />
-      {ticks.map((i) => {
-        const angle = (i / ticks.length) * Math.PI * 2;
-        const long = i % 6 === 0;
-        const r1 = long ? 176 : 181;
-        return (
-          <line
-            key={i}
-            x1={200 + Math.cos(angle) * r1}
-            y1={200 + Math.sin(angle) * r1}
-            x2={200 + Math.cos(angle) * 186}
-            y2={200 + Math.sin(angle) * 186}
-            stroke={long ? 'rgba(20,23,43,0.3)' : 'rgba(20,23,43,0.14)'}
-            strokeWidth={long ? 0.9 : 0.6}
-          />
-        );
-      })}
-      <path
-        d="M118 238 L160 204 L194 214 L230 166 L266 180 L294 140"
-        stroke="rgba(20,23,43,0.34)"
-        strokeWidth="0.9"
-        strokeLinecap="round"
+    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse 46% 52% at 88% 2%, rgba(59,91,219,0.07) 0%, transparent 68%), radial-gradient(ellipse 38% 40% at 2% 96%, rgba(15,23,42,0.035) 0%, transparent 70%)',
+        }}
       />
-      {[[118, 238], [160, 204], [194, 214], [230, 166], [266, 180], [294, 140]].map(([x, y], i) => (
-        <circle key={i} cx={x} cy={y} r={i === 5 ? 2.4 : 1.6} fill="rgba(20,23,43,0.55)" />
-      ))}
-      <circle cx="200" cy="200" r="120" stroke="rgba(20,23,43,0.08)" strokeWidth="0.7" />
-    </svg>
+      <svg className="absolute -right-24 -top-28 hidden h-[32rem] w-[32rem] text-[#3b5bdb] opacity-[0.16] md:block" viewBox="0 0 400 400" fill="none">
+        <circle cx="200" cy="200" r="188" stroke="currentColor" strokeWidth="0.7" />
+        <circle cx="200" cy="200" r="150" stroke="currentColor" strokeWidth="0.7" strokeDasharray="1 8" />
+        <circle cx="200" cy="200" r="104" stroke="currentColor" strokeWidth="0.6" />
+        <path d="M96 246L150 208l44 12 40-52 46 16 38-40" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" />
+        {[[96, 246], [150, 208], [194, 220], [234, 168], [280, 184], [318, 144]].map(([cx, cy], i) => (
+          <circle key={i} cx={cx} cy={cy} r={i === 5 ? 2.6 : 1.7} fill="currentColor" />
+        ))}
+      </svg>
+    </div>
+  );
+}
+
+function RelatedCard({
+  item,
+  lang,
+  location,
+}: {
+  item: (typeof RELATED_ITEMS)[number];
+  lang: Lang;
+  location: 'home' | 'result';
+}) {
+  const [title, description] = item[lang];
+  return (
+    <Link
+      href={item.href}
+      onClick={() => trackEvent('related_content_click', {
+        content_path: item.href,
+        click_location: location,
+        language: lang,
+      })}
+      className="group flex flex-col overflow-hidden rounded-2xl border border-[#e8eaef] bg-white p-2 transition-all duration-300 hover:-translate-y-1 hover:border-[#dcdfe6] hover:shadow-[0_18px_40px_-26px_rgba(15,23,42,0.28)]"
+    >
+      <CardArtwork variant={item.variant} />
+      <div className="flex flex-1 flex-col px-2.5 pb-2 pt-3.5">
+        <div className="mb-2 flex items-center gap-2">
+          <span className="tag">{item.tag[lang]}</span>
+        </div>
+        <h3 className="text-[0.95rem] font-semibold leading-snug tracking-[-0.02em] text-[#0f172a] text-keep-all">
+          {title}
+        </h3>
+        <p className="mt-1.5 line-clamp-2 text-[0.76rem] leading-5 text-[#64748b] text-keep-all">{description}</p>
+        <span className="mt-3 flex items-center gap-1.5 text-[0.72rem] font-medium text-[#3b5bdb] opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          보기
+          <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+        </span>
+      </div>
+    </Link>
   );
 }
 
 function RelatedLinks({ lang, location }: { lang: Lang; location: 'home' | 'result' }) {
-  const isHome = location === 'home';
   return (
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-      {RELATED_ITEMS.map((item, index) => {
-        const [title, description] = item[lang];
-        const isLead = isHome && index === 0;
-        return (
-          <Link
-            key={item.href}
-            href={item.href}
-            onClick={() => trackEvent('related_content_click', {
-              content_path: item.href,
-              click_location: location,
-              language: lang,
-            })}
-            className={`group relative flex flex-col justify-between p-6 transition-all duration-500 hover:-translate-y-1 focus-visible:outline-none ${
-              isLead
-                ? 'border border-[rgba(226,205,162,0.22)] bg-[linear-gradient(155deg,#141a35,#0e142b)] text-[#f7f0e1]'
-                : 'card-lux hover:border-[rgba(169,128,63,0.45)]'
-            }`}
-            style={{ borderRadius: '0.5rem' }}
-          >
-            <div className="flex items-start justify-between gap-3">
-              <span className={`font-display text-[1.5rem] italic leading-none ${isLead ? 'text-[rgba(226,205,162,0.75)]' : 'text-[rgba(169,128,63,0.55)]'}`}>
-                {item.index}
-              </span>
-              <span className={`text-[0.8rem] transition-transform duration-300 group-hover:translate-x-1 ${isLead ? 'text-[rgba(226,205,162,0.7)]' : 'text-[var(--gold)]'}`}>
-                →
-              </span>
-            </div>
-            <div className="mt-8">
-              <h3 className={`font-display font-semibold leading-snug text-keep-all ${isLead ? 'text-[1.25rem]' : 'text-[1.02rem]'} ${isLead ? '' : 'text-[var(--ink)]'}`}>
-                {title}
-              </h3>
-              <p className={`mt-2 text-[0.76rem] leading-6 text-keep-all ${isLead ? 'text-[rgba(247,240,225,0.6)]' : 'text-[var(--muted)]'}`}>{description}</p>
-            </div>
-          </Link>
-        );
-      })}
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {RELATED_ITEMS.map((item) => (
+        <RelatedCard key={item.href} item={item} lang={lang} location={location} />
+      ))}
     </div>
   );
 }
@@ -208,58 +220,52 @@ export function HomeConversionHero({ onSubmit, isLoading, lang, error }: Convers
     setNumericDate(`${y}.${m}.${d}`);
   }, [lang]);
 
-  const trustItems = lang === 'ko'
-    ? ['무료', '입력정보 저장 안 함', '매일 갱신']
-    : lang === 'ja'
-      ? ['無料', '入力情報を保存しない', '毎日更新']
-      : lang === 'zh'
-        ? ['免费', '不保存输入信息', '每日更新']
-        : ['Free', 'No profile storage', 'Updated daily'];
-
   return (
-    <section className="relative mx-auto mb-16 w-full max-w-6xl" aria-labelledby="fortune-first-heading">
-      <div className="pointer-events-none absolute -right-10 -top-16 hidden w-[30rem] opacity-70 md:block">
-        <LineArtWheel className="h-auto w-full" />
-      </div>
+    <section className="relative mb-20 w-full" aria-labelledby="fortune-first-heading">
+      <HeroBackdrop />
 
       <div className="home-ritual-grid relative">
         <div className="home-ritual-copy relative">
-          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 lg:justify-start">
-            <span className="eyebrow">{copy.eyebrow}</span>
-          </div>
-
-          <div className="mt-6 flex items-center justify-center gap-3 text-[0.66rem] tracking-[0.24em] text-[var(--muted-2)] lg:justify-start">
-            <span className="font-display text-[0.92rem] italic tracking-[0.12em] text-[var(--gold)]">{numericDate}</span>
-            <span className="h-3 w-px bg-[rgba(169,128,63,0.4)]" />
-            <span className="min-h-4">{today}</span>
+          <div className="flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#e8eaef] bg-white px-3 py-1.5 text-[0.68rem] font-medium text-[#475569] shadow-[0_1px_3px_rgba(15,23,42,0.04)]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#3b5bdb]" aria-hidden="true" />
+              {copy.eyebrow}
+            </span>
+            <span className="flex items-center gap-2 text-[0.7rem] text-[#64748b]">
+              <span className="tabular-nums tracking-[0.06em]">{numericDate}</span>
+              <span className="h-3 w-px bg-[#e2e5eb]" />
+              <span>{today}</span>
+            </span>
           </div>
 
           <h1
             id="fortune-first-heading"
-            className="mt-5 font-display text-[2.4rem] font-semibold leading-[1.12] text-[var(--ink)] text-keep-all sm:text-[3.3rem] lg:text-[3.85rem]"
+            className="mt-7 text-[2.5rem] font-bold leading-[1.08] tracking-[-0.04em] text-[#0f172a] text-keep-all sm:text-[3.3rem] lg:text-[3.65rem]"
           >
             <span className="block">{copy.titleLead}</span>
-            <span className="block italic text-[var(--gold)]">{copy.titleAccent}</span>
+            <span className="block font-display font-semibold italic tracking-[-0.02em] text-[#3b5bdb]">{copy.titleAccent}</span>
             <span className="block">{copy.titleTail}</span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-xl text-[0.92rem] leading-8 text-[var(--muted)] text-keep-all sm:text-[0.98rem] lg:mx-0">
+          <p className="mx-auto mt-6 max-w-lg text-[0.95rem] leading-8 text-[#64748b] text-keep-all lg:mx-0">
             {copy.description}
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 lg:justify-start" aria-label={copy.privacy}>
-            {trustItems.map((item) => (
-              <span key={item} className="inline-flex items-center gap-2 text-[0.72rem] tracking-[0.05em] text-[var(--muted)]">
-                <span className="h-1 w-1 rotate-45 bg-[var(--gold)]" aria-hidden="true" />
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-2 lg:justify-start" aria-label={copy.privacy}>
+            {copy.trust.map((item) => (
+              <span key={item} className="inline-flex items-center gap-1.5 rounded-full border border-[#e8eaef] bg-white/80 px-2.5 py-1 text-[0.7rem] text-[#64748b]">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="text-[#3b5bdb]">
+                  <path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
                 {item}
               </span>
             ))}
           </div>
 
-          <div className="mt-10 hidden items-center gap-8 border-t border-[var(--line)] pt-5 lg:flex">
+          <div className="mt-9 hidden items-center gap-5 border-t border-[#e8eaef] pt-5 lg:flex">
             {copy.statLabels.map((label, i) => (
-              <div key={label} className={i > 0 ? 'border-l border-[var(--line)] pl-8' : ''}>
-                <p className="font-display text-[1.05rem] font-semibold text-[var(--ink)]">{label}</p>
+              <div key={label} className={`flex items-baseline gap-2 ${i > 0 ? 'border-l border-[#e8eaef] pl-5' : ''}`}>
+                <span className="text-[0.78rem] font-medium text-[#475569]">{label}</span>
               </div>
             ))}
           </div>
@@ -267,23 +273,27 @@ export function HomeConversionHero({ onSubmit, isLoading, lang, error }: Convers
 
         <div className="home-ritual-form">
           <div className="mb-3 flex items-center justify-between px-1">
-            <span className="text-[0.58rem] font-semibold uppercase tracking-[0.3em] text-[var(--gold)]">
+            <span className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-[#64748b]">
               {copy.formKicker}
             </span>
-            <span className="text-[0.58rem] uppercase tracking-[0.2em] text-[var(--muted-2)]">01 / 01</span>
+            <span className="text-[0.62rem] tabular-nums tracking-[0.12em] text-[#64748b]">01 / 01</span>
           </div>
           <FortuneForm onSubmit={onSubmit} isLoading={isLoading} lang={lang} error={error} />
         </div>
       </div>
 
-      <div className="mt-16 border-t border-[var(--line)] pt-8">
+      <div className="mt-20 border-t border-[#e8eaef] pt-9">
         <div className="mb-6 flex items-end justify-between gap-4">
-          <h2 className="font-display text-[1.15rem] font-semibold text-[var(--ink)]">
-            {copy.moreTitle}
-          </h2>
-          <span className="hidden text-[0.58rem] uppercase tracking-[0.3em] text-[var(--muted-2)] sm:block">
-            Explore
-          </span>
+          <div>
+            <span className="eyebrow">{copy.browse}</span>
+            <h2 className="mt-3 text-[1.3rem] font-bold tracking-[-0.03em] text-[#0f172a]">
+              {copy.moreTitle}
+            </h2>
+          </div>
+          <Link href="/blog" className="hidden min-h-9 items-center gap-1.5 text-[0.78rem] font-medium text-[#3b5bdb] hover:text-[#2741b3] sm:inline-flex">
+            전체 보기
+            <span aria-hidden="true">→</span>
+          </Link>
         </div>
         <RelatedLinks lang={lang} location="home" />
       </div>
@@ -296,13 +306,15 @@ export function ResultNextSteps({ lang }: { lang: Lang }) {
 
   return (
     <section
-      className="card-lux mx-auto mt-8 w-full max-w-2xl p-5 sm:p-7"
+      className="mx-auto mt-10 w-full max-w-3xl"
       aria-labelledby="result-next-heading"
     >
       <div className="mb-6 text-center">
-        <span className="eyebrow eyebrow-center mx-auto">Next</span>
-        <h2 id="result-next-heading" className="mt-3 font-display text-xl font-semibold text-[var(--ink)]">{copy.relatedTitle}</h2>
-        <p className="mt-2 text-[0.82rem] leading-6 text-[var(--muted)]">{copy.relatedDescription}</p>
+        <span className="eyebrow eyebrow-center mx-auto">{copy.relatedTitle.split(' ')[0]}</span>
+        <h2 id="result-next-heading" className="mt-3 text-[1.35rem] font-bold tracking-[-0.03em] text-[#0f172a]">
+          {copy.relatedTitle}
+        </h2>
+        <p className="mt-2 text-[0.84rem] leading-6 text-[#64748b]">{copy.relatedDescription}</p>
       </div>
       <RelatedLinks lang={lang} location="result" />
     </section>

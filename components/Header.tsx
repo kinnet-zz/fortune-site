@@ -49,16 +49,15 @@ export default function Header() {
     { href: '/zodiac-memory', emoji: '✦', label: lang === 'ko' ? '별자리 기억' : lang === 'en' ? 'Zodiac Memory' : lang === 'zh' ? '星座记忆' : '星座記憶' },
   ];
 
-  const fortuneLabel = lang === 'ko' ? '운세/테스트' : lang === 'en' ? 'Fortune' : lang === 'zh' ? '运势' : '運勢';
+  const fortuneLabel = lang === 'ko' ? '운세·테스트' : lang === 'en' ? 'Fortune' : lang === 'zh' ? '运势' : '運勢';
   const guideLabel = lang === 'ko' ? '블로그·백과' : lang === 'en' ? 'Blog & Guide' : lang === 'zh' ? '博客·百科' : 'ブログ·図鑑';
   const gameLabel = lang === 'ko' ? '게임' : lang === 'en' ? 'Game' : lang === 'zh' ? '游戏' : 'ゲーム';
   const homeLabel = lang === 'ko' ? '홈' : lang === 'en' ? 'Home' : lang === 'zh' ? '首页' : 'ホーム';
 
-  const isFortuneActive = FORTUNE_ITEMS.some(i => i.href === pathname);
-  const isGuideActive = GUIDE_ITEMS.some(i => i.href === pathname) || pathname.startsWith('/blog');
-  const isGameActive = GAME_ITEMS.some(i => i.href === pathname);
+  const isFortuneActive = FORTUNE_ITEMS.some((i) => i.href === pathname);
+  const isGuideActive = GUIDE_ITEMS.some((i) => i.href === pathname) || pathname.startsWith('/blog');
+  const isGameActive = GAME_ITEMS.some((i) => i.href === pathname);
 
-  // 드롭다운 외부 클릭 시 닫기
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (fortuneRef.current && !fortuneRef.current.contains(e.target as Node)) setFortuneOpen(false);
@@ -84,22 +83,46 @@ export default function Header() {
   }, [fortuneOpen, gameOpen, guideOpen, mobileOpen]);
 
   const triggerClass = (active: boolean, open: boolean) =>
-    `relative flex min-h-11 items-center gap-1.5 px-3 py-1.5 text-[0.8rem] font-medium tracking-[0.02em] transition-colors ${
-      active || open ? 'text-[#f7f0e1]' : 'text-[rgba(247,240,225,0.62)] hover:text-[#f7f0e1]'
+    `relative flex min-h-10 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[0.82rem] font-medium tracking-[-0.01em] transition-colors ${
+      active || open
+        ? 'bg-[#eef2ff] text-[#3b5bdb]'
+        : 'text-[#475569] hover:bg-[#f4f5f8] hover:text-[#0f172a]'
     }`;
 
-  const menuPanel = 'absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 rounded-2xl p-1.5 shadow-2xl';
+  const menuPanel =
+    'absolute top-full left-1/2 -translate-x-1/2 mt-3 w-60 rounded-2xl border border-[#e8eaef] bg-white p-1.5 shadow-[0_20px_50px_-24px_rgba(15,23,42,0.28)]';
+
+  const renderMenu = (
+    id: string,
+    items: NavItem[],
+    close: () => void,
+    wide = false,
+  ) => (
+    <div id={id} className={`${menuPanel} ${wide ? '!w-68' : ''}`} style={wide ? { width: '17rem' } : undefined}>
+      {items.map(({ href, label }, index) => {
+        const active = pathname === href;
+        return (
+          <Link
+            key={href}
+            href={href}
+            onClick={close}
+            className={`flex min-h-10 items-center gap-3 rounded-xl px-3 py-2 text-[0.82rem] transition-colors ${
+              active ? 'bg-[#eef2ff] text-[#3b5bdb]' : 'text-[#475569] hover:bg-[#f4f5f8] hover:text-[#0f172a]'
+            }`}
+          >
+            <span className="w-5 text-[0.62rem] tabular-nums tracking-[0.08em] text-[#64748b]">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <span className="font-medium">{label}</span>
+          </Link>
+        );
+      })}
+    </div>
+  );
 
   return (
-    <header
-      className="sticky top-0 z-50 w-full"
-      style={{
-        background: 'linear-gradient(180deg, #111730 0%, #0e142b 100%)',
-        borderBottom: '1px solid rgba(226,205,162,0.28)',
-        backdropFilter: 'blur(16px)',
-      }}
-    >
-      <div className="mx-auto flex h-[4.25rem] max-w-6xl items-center justify-between gap-3 px-4">
+    <header className="sticky top-0 z-50 w-full border-b border-[#e8eaef] bg-white/85 backdrop-blur-xl backdrop-saturate-150">
+      <div className="mx-auto flex h-[4.5rem] max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
 
         {/* 로고 */}
         <Link
@@ -107,25 +130,21 @@ export default function Header() {
           className="group flex min-h-11 flex-shrink-0 items-center gap-2.5"
           aria-label={`StarFate ${homeLabel}`}
         >
-          <span className="relative grid h-9 w-9 place-items-center rounded-full border border-[rgba(226,205,162,0.5)] bg-[radial-gradient(circle_at_30%_25%,rgba(226,205,162,0.22),rgba(37,45,85,0.4)_65%,transparent_78%)]">
+          <span className="grid h-9 w-9 place-items-center rounded-xl border border-[#e8eaef] bg-white shadow-[0_2px_10px_rgba(15,23,42,0.05)] transition-transform duration-300 group-hover:-translate-y-0.5">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M12 2.5l1.6 6.1 6.1 1.6-6.1 1.6-1.6 6.1-1.6-6.1L4.3 10.2l6.1-1.6L12 2.5z" fill="#e2cda2" opacity="0.95" />
-              <circle cx="19.4" cy="5.4" r="1" fill="#f7f0e1" opacity="0.85" />
-              <circle cx="5" cy="18.6" r="0.8" fill="#c3a165" opacity="0.9" />
+              <path d="M12 2.6c.7 4.9 3.5 7.7 8.4 8.4-4.9.7-7.7 3.5-8.4 8.4-.7-4.9-3.5-7.7-8.4-8.4 4.9-.7 7.7-3.5 8.4-8.4z" fill="#3b5bdb" />
             </svg>
           </span>
           <span className="flex flex-col leading-none">
-            <span className="font-display text-[1.05rem] font-semibold tracking-[0.16em] text-[#f7f0e1]">
-              STARFATE
-            </span>
-            <span className="mt-1 text-[0.55rem] tracking-[0.34em] text-[rgba(226,205,162,0.75)]">
+            <span className="text-[1.02rem] font-bold tracking-[-0.02em] text-[#0f172a]">StarFate</span>
+            <span className="mt-1 text-[0.58rem] font-medium tracking-[0.08em] text-[#64748b]">
               별자리 · 운세
             </span>
           </span>
         </Link>
 
-        {/* 데스크탑 드롭다운 메뉴 */}
-        <nav className="hidden flex-1 items-center justify-center gap-1 sm:flex" aria-label="주요 메뉴">
+        {/* 데스크탑 메뉴 */}
+        <nav className="hidden flex-1 items-center justify-center gap-1 lg:flex" aria-label="주요 메뉴">
 
           <div ref={fortuneRef} className="relative">
             <button
@@ -144,30 +163,8 @@ export default function Header() {
               <svg width="10" height="10" viewBox="0 0 12 12" fill="none" className={`transition-transform duration-300 ${fortuneOpen ? 'rotate-180' : ''}`}>
                 <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
               </svg>
-              {isFortuneActive && <span className="absolute inset-x-3 -bottom-[1px] h-px bg-gradient-to-r from-transparent via-[#d9b877] to-transparent" />}
             </button>
-            {fortuneOpen && (
-              <div
-                id="fortune-menu"
-                className={menuPanel}
-                style={{ background: '#fbf7ee', border: '1px solid rgba(169,128,63,0.3)', boxShadow: '0 30px 60px -34px rgba(20,23,43,0.45)' }}
-              >
-                {FORTUNE_ITEMS.map(({ href, label }, index) => (
-                  <Link
-                    key={href}
-                    href={href}
-                    onClick={() => setFortuneOpen(false)}
-                    className="flex min-h-11 items-center gap-3 px-3 py-2.5 text-[0.82rem] transition-colors hover:bg-[rgba(17,23,48,0.045)]"
-                    style={{ color: pathname === href ? '#a9803f' : 'rgba(20,23,43,0.72)' }}
-                  >
-                    <span className="text-[0.6rem] tracking-[0.2em] text-[rgba(169,128,63,0.55)]">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                    <span>{label}</span>
-                  </Link>
-                ))}
-              </div>
-            )}
+            {fortuneOpen && renderMenu('fortune-menu', FORTUNE_ITEMS, () => setFortuneOpen(false))}
           </div>
 
           <div ref={guideRef} className="relative">
@@ -187,30 +184,8 @@ export default function Header() {
               <svg width="10" height="10" viewBox="0 0 12 12" fill="none" className={`transition-transform duration-300 ${guideOpen ? 'rotate-180' : ''}`}>
                 <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
               </svg>
-              {isGuideActive && <span className="absolute inset-x-3 -bottom-[1px] h-px bg-gradient-to-r from-transparent via-[#d9b877] to-transparent" />}
             </button>
-            {guideOpen && (
-              <div
-                id="guide-menu"
-                className="absolute left-1/2 top-full mt-2 w-64 -translate-x-1/2 rounded-2xl p-1.5 shadow-2xl"
-                style={{ background: '#fbf7ee', border: '1px solid rgba(169,128,63,0.3)', boxShadow: '0 30px 60px -34px rgba(20,23,43,0.45)' }}
-              >
-                {GUIDE_ITEMS.map(({ href, label }, index) => (
-                  <Link
-                    key={href}
-                    href={href}
-                    onClick={() => setGuideOpen(false)}
-                    className="flex min-h-11 items-center gap-3 px-3 py-2.5 text-[0.82rem] transition-colors hover:bg-[rgba(17,23,48,0.045)]"
-                    style={{ color: pathname === href ? '#a9803f' : 'rgba(20,23,43,0.72)' }}
-                  >
-                    <span className="text-[0.6rem] tracking-[0.2em] text-[rgba(169,128,63,0.55)]">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                    <span>{label}</span>
-                  </Link>
-                ))}
-              </div>
-            )}
+            {guideOpen && renderMenu('guide-menu', GUIDE_ITEMS, () => setGuideOpen(false), true)}
           </div>
 
           <div ref={gameRef} className="relative">
@@ -230,56 +205,36 @@ export default function Header() {
               <svg width="10" height="10" viewBox="0 0 12 12" fill="none" className={`transition-transform duration-300 ${gameOpen ? 'rotate-180' : ''}`}>
                 <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
               </svg>
-              {isGameActive && <span className="absolute inset-x-3 -bottom-[1px] h-px bg-gradient-to-r from-transparent via-[#d9b877] to-transparent" />}
             </button>
-            {gameOpen && (
-              <div
-                id="game-menu"
-                className={menuPanel}
-                style={{ background: '#fbf7ee', border: '1px solid rgba(169,128,63,0.3)', boxShadow: '0 30px 60px -34px rgba(20,23,43,0.45)' }}
-              >
-                {GAME_ITEMS.map(({ href, label }, index) => (
-                  <Link
-                    key={href}
-                    href={href}
-                    onClick={() => setGameOpen(false)}
-                    className="flex min-h-11 items-center gap-3 px-3 py-2.5 text-[0.82rem] transition-colors hover:bg-[rgba(17,23,48,0.045)]"
-                    style={{ color: pathname === href ? '#a9803f' : 'rgba(20,23,43,0.72)' }}
-                  >
-                    <span className="text-[0.6rem] tracking-[0.2em] text-[rgba(169,128,63,0.55)]">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                    <span>{label}</span>
-                  </Link>
-                ))}
-              </div>
-            )}
+            {gameOpen && renderMenu('game-menu', GAME_ITEMS, () => setGameOpen(false))}
           </div>
 
         </nav>
 
-        {/* 언어 선택 + 모바일 햄버거 */}
-        <div className="flex flex-shrink-0 items-center gap-1.5">
-          <div className="hidden items-center gap-0.5 sm:flex">
-            {(Object.entries(LANG_LABELS) as [Lang, string][]).map(([code, label]) => (
-              <button
-                key={code}
-                onClick={() => setLang(code)}
-                aria-pressed={lang === code}
-                className="min-h-11 min-w-11 rounded-full px-2 py-1 text-[0.68rem] font-medium tracking-[0.06em] transition-all"
-                style={{
-                  color: lang === code ? '#e2cda2' : 'rgba(247,240,225,0.45)',
-                  borderBottom: lang === code ? '1px solid rgba(226,205,162,0.8)' : '1px solid transparent',
-                  borderRadius: 0,
-                }}
-              >
-                {label}
-              </button>
-            ))}
+        {/* 언어 선택 + 모바일 메뉴 */}
+        <div className="flex flex-shrink-0 items-center gap-2">
+          <div className="hidden items-center gap-0.5 rounded-full border border-[#e8eaef] bg-[#f8f9fb] p-1 md:flex">
+            {(Object.entries(LANG_LABELS) as [Lang, string][]).map(([code, label]) => {
+              const selected = lang === code;
+              return (
+                <button
+                  key={code}
+                  onClick={() => setLang(code)}
+                  aria-pressed={selected}
+                  className={`min-h-8 rounded-full px-2.5 py-1 text-[0.68rem] font-medium transition-all ${
+                    selected
+                      ? 'bg-white text-[#0f172a] shadow-[0_1px_4px_rgba(15,23,42,0.1)]'
+                      : 'text-[#64748b] hover:text-[#475569]'
+                  }`}
+                >
+                  {label}
+                </button>
+              );
+            })}
           </div>
 
           <button
-            className="min-h-11 min-w-11 p-2 text-[rgba(247,240,225,0.72)] transition-colors hover:text-[#f7f0e1] sm:hidden"
+            className="grid min-h-11 min-w-11 place-items-center rounded-full text-[#475569] transition-colors hover:bg-[#f4f5f8] hover:text-[#0f172a] lg:hidden"
             onClick={(event) => {
               const nextOpen = !mobileOpen;
               setMobileOpen(nextOpen);
@@ -289,11 +244,11 @@ export default function Header() {
             aria-expanded={mobileOpen}
             aria-controls="mobile-navigation"
           >
-            <svg width="22" height="22" viewBox="0 0 20 20" fill="currentColor">
+            <svg width="21" height="21" viewBox="0 0 20 20" fill="none" aria-hidden="true">
               {mobileOpen ? (
-                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
               ) : (
-                <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
               )}
             </svg>
           </button>
@@ -304,53 +259,55 @@ export default function Header() {
       {mobileOpen && (
         <div
           id="mobile-navigation"
-          className="max-h-[calc(100vh-4.25rem)] overflow-y-auto border-t sm:hidden"
-          style={{ background: '#0e142b', borderColor: 'rgba(226,205,162,0.22)' }}
+          className="max-h-[calc(100vh-4.5rem)] overflow-y-auto border-t border-[#e8eaef] bg-white lg:hidden"
         >
           {[
             { title: fortuneLabel, items: FORTUNE_ITEMS },
             { title: guideLabel, items: GUIDE_ITEMS },
             { title: gameLabel, items: GAME_ITEMS },
           ].map((section) => (
-            <div key={section.title} className="px-5 pt-5">
-              <p className="mb-2 flex items-center gap-2 text-[0.6rem] font-semibold uppercase tracking-[0.32em] text-[rgba(226,205,162,0.7)]">
-                <span className="h-px w-4 bg-[rgba(226,205,162,0.55)]" />
+            <div key={section.title} className="px-5 pt-6">
+              <p className="mb-2.5 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[#64748b]">
                 {section.title}
               </p>
-              {section.items.map(({ href, label }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  onClick={() => setMobileOpen(false)}
-                  className="flex min-h-12 items-center justify-between gap-2 border-b py-2.5 text-[0.95rem] transition-colors"
-                  style={{
-                    color: pathname === href ? '#e2cda2' : 'rgba(247,240,225,0.75)',
-                    borderColor: 'rgba(226,205,162,0.14)',
-                  }}
-                >
-                  <span>{label}</span>
-                  <span className="text-[rgba(226,205,162,0.5)]">→</span>
-                </Link>
-              ))}
+              <div className="grid gap-0.5">
+                {section.items.map(({ href, label }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    onClick={() => setMobileOpen(false)}
+                    className={`flex min-h-11 items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-[0.92rem] transition-colors ${
+                      pathname === href
+                        ? 'bg-[#eef2ff] font-medium text-[#3b5bdb]'
+                        : 'text-[#334155] hover:bg-[#f4f5f8]'
+                    }`}
+                  >
+                    <span>{label}</span>
+                    <span className="text-[#64748b]">→</span>
+                  </Link>
+                ))}
+              </div>
             </div>
           ))}
 
-          <div className="flex items-center gap-2 px-5 py-5">
-            {(Object.entries(LANG_LABELS) as [Lang, string][]).map(([code, label]) => (
-              <button
-                key={code}
-                onClick={() => { setLang(code); setMobileOpen(false); }}
-                aria-pressed={lang === code}
-                className="min-h-11 min-w-11 rounded-full px-3 py-1.5 text-xs font-medium transition-all"
-                style={{
-                  background: lang === code ? 'rgba(226,205,162,0.16)' : 'rgba(20,23,43,0.03)',
-                  color: lang === code ? '#f7f0e1' : 'rgba(247,240,225,0.45)',
-                  border: lang === code ? '1px solid rgba(226,205,162,0.5)' : '1px solid rgba(226,205,162,0.16)',
-                }}
-              >
-                {label}
-              </button>
-            ))}
+          <div className="mt-6 border-t border-[#e8eaef] px-5 py-5">
+            <div className="flex items-center gap-1 rounded-full border border-[#e8eaef] bg-[#f8f9fb] p-1">
+              {(Object.entries(LANG_LABELS) as [Lang, string][]).map(([code, label]) => {
+                const selected = lang === code;
+                return (
+                  <button
+                    key={code}
+                    onClick={() => { setLang(code); setMobileOpen(false); }}
+                    aria-pressed={selected}
+                    className={`min-h-9 flex-1 rounded-full px-3 py-1.5 text-xs font-medium transition-all ${
+                      selected ? 'bg-white text-[#0f172a] shadow-[0_1px_4px_rgba(15,23,42,0.1)]' : 'text-[#64748b]'
+                    }`}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       )}

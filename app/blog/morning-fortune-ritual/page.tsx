@@ -14,29 +14,29 @@ export const metadata: Metadata = {
 };
 
 const bgStyle = {
-  background: 'linear-gradient(160deg, rgba(250,246,238,0.6) 0%, rgba(247,242,232,0.4) 45%, rgba(241,233,218,0.5) 100%)',
+  background: '#ffffff',
   minHeight: '100vh',
 };
 
 export default function MorningFortuneRitualPage() {
   return (
     <div style={bgStyle}>
-      <article className="max-w-3xl mx-auto px-6 py-16 text-[#1a1c2e]/80">
-        <Link href="/blog" className="text-[#8a6a2f] hover:text-[#6f5223] text-sm mb-8 inline-block">
+      <article className="max-w-3xl mx-auto px-6 py-16 text-[#0f172a]/80">
+        <Link href="/blog" className="text-[#3b5bdb] hover:text-[#3b5bdb] text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
 
         <header className="mb-10">
           <div className="flex items-center gap-2 mb-4 flex-wrap">
-            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(169,128,63,0.14)', color: '#6f5223' }}>
+            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(59,91,219,0.14)', color: '#3b5bdb' }}>
               리추얼 라이프
             </span>
-            <span className="text-[#1a1c2e]/38 text-xs">2025년 7월 15일 · 8분 읽기</span>
+            <span className="text-[#64748b] text-xs">2025년 7월 15일 · 8분 읽기</span>
           </div>
-          <h1 className="text-3xl font-bold text-[#14172b] mb-4 leading-tight">
+          <h1 className="text-3xl font-bold text-[#0f172a] mb-4 leading-tight">
             운명을 바꾸는 아침 5분: StarFate가 제안하는 나만의 운세 활용법
           </h1>
-          <p className="text-[#1a1c2e]/55 text-base leading-relaxed">
+          <p className="text-[#475569] text-base leading-relaxed">
             운세는 예언이 아니다. 심리학이 밝혀낸 &lsquo;실행 의도&rsquo;와 &lsquo;점화 효과&rsquo; 원리로 보면, 아침의 운세 확인은 하루의 방향을 의도적으로 설계하는 강력한 도구가 될 수 있다.
           </p>
         </header>
@@ -51,7 +51,7 @@ export default function MorningFortuneRitualPage() {
         <div className="space-y-8 text-sm leading-relaxed">
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">아침은 왜 특별한가: 인지 부하와 하루의 프레임</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">아침은 왜 특별한가: 인지 부하와 하루의 프레임</h2>
             <p className="mb-3">
               심리학자 로이 바우마이스터(Roy Baumeister)의 &lsquo;자아 고갈(Ego Depletion)&rsquo; 이론에 따르면 인간의 의사결정 능력은 하루 동안 사용할수록 소진된다. 오전에는 인지 자원이 가득 찬 상태다. 이때 설정한 의도와 프레임은 하루 전체에 걸쳐 영향을 미친다.
             </p>
@@ -64,9 +64,9 @@ export default function MorningFortuneRitualPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">실행 의도: &ldquo;X 상황에서 Y를 할 것이다&rdquo;</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">실행 의도: &ldquo;X 상황에서 Y를 할 것이다&rdquo;</h2>
             <p className="mb-3">
-              심리학자 피터 골위처(Peter Gollwitzer)는 1999년 목표 달성 연구에서 흥미로운 패턴을 발견했다. 단순히 &ldquo;운동을 더 하겠다&rdquo;고 결심한 사람보다, &ldquo;월요일 아침 7시에 집 앞 공원에서 30분 달리겠다&rdquo;처럼 구체적인 상황과 행동을 연결한 사람의 목표 달성률이 <strong className="text-[#14172b]">2~3배 높았다</strong>. 그는 이것을 &lsquo;실행 의도(Implementation Intention)&rsquo;라고 불렀다.
+              심리학자 피터 골위처(Peter Gollwitzer)는 1999년 목표 달성 연구에서 흥미로운 패턴을 발견했다. 단순히 &ldquo;운동을 더 하겠다&rdquo;고 결심한 사람보다, &ldquo;월요일 아침 7시에 집 앞 공원에서 30분 달리겠다&rdquo;처럼 구체적인 상황과 행동을 연결한 사람의 목표 달성률이 <strong className="text-[#0f172a]">2~3배 높았다</strong>. 그는 이것을 &lsquo;실행 의도(Implementation Intention)&rsquo;라고 불렀다.
             </p>
             <p className="mb-3">
               아침 운세 확인은 이 메커니즘과 구조적으로 유사하다. &ldquo;오늘은 인간관계에서 신중함이 필요한 날&rdquo;이라는 운세를 읽은 사람은 무의식적으로 &ldquo;누군가와 충돌할 것 같은 상황에서 나는 한 번 더 생각하겠다&rdquo;는 실행 의도를 형성한다. 별자리가 그 계기를 만든다.
@@ -77,7 +77,7 @@ export default function MorningFortuneRitualPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">점화 효과: 아침에 읽은 한 단어가 하루를 바꾼다</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">점화 효과: 아침에 읽은 한 단어가 하루를 바꾼다</h2>
             <p className="mb-3">
               인지심리학의 &lsquo;점화 효과(Priming Effect)&rsquo;는 특정 단어나 개념에 노출되면 그와 관련된 생각과 행동이 증가하는 현상을 말한다. 실험에서 &ldquo;따뜻함&rdquo;과 관련된 단어를 읽은 피험자들은 이후 낯선 사람을 더 친절하게 대했고, &ldquo;경쟁&rdquo;과 관련된 단어에 노출된 피험자들은 이후 게임에서 더 공격적으로 행동했다.
             </p>
@@ -90,43 +90,43 @@ export default function MorningFortuneRitualPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">StarFate와 함께하는 5단계 아침 운세 루틴</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">StarFate와 함께하는 5단계 아침 운세 루틴</h2>
             <p className="mb-3">
               위의 심리학적 원리를 바탕으로, 운세를 단순 소비가 아닌 의도 설정 도구로 활용하는 구체적인 루틴을 제안한다. 총 5분이면 충분하다.
             </p>
 
             <div className="space-y-3">
-              <div className="rounded-2xl p-5" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
+              <div className="rounded-2xl p-5" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
                 <div className="flex items-start gap-3">
-                  <span className="text-[#8a6a2f] font-bold text-base shrink-0">① 전날 밤</span>
+                  <span className="text-[#3b5bdb] font-bold text-base shrink-0">① 전날 밤</span>
                   <p>기기를 침실 밖에 두어라. 기상 직후 스마트폰을 확인하면 알림과 뉴스의 &ldquo;소음&rdquo;에 즉시 노출된다. 아침의 인지 자원이 수동적 정보 소비로 먼저 소진된다. 침실을 디지털 자극 없는 공간으로 만드는 것이 아침 루틴의 전제 조건이다.</p>
                 </div>
               </div>
 
-              <div className="rounded-2xl p-5" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
+              <div className="rounded-2xl p-5" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
                 <div className="flex items-start gap-3">
-                  <span className="text-[#8a6a2f] font-bold text-base shrink-0">② 기상 후</span>
+                  <span className="text-[#3b5bdb] font-bold text-base shrink-0">② 기상 후</span>
                   <p>물 한 잔을 마셔라. 수면 중 탈수된 신체를 깨우는 가장 간단한 방법이다. 물을 마시는 이 30초가 &ldquo;나는 지금 하루를 의도적으로 시작하고 있다&rdquo;는 신호를 뇌에 보낸다. 작은 의식(ritual)이 의도를 강화한다.</p>
                 </div>
               </div>
 
-              <div className="rounded-2xl p-5" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
+              <div className="rounded-2xl p-5" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
                 <div className="flex items-start gap-3">
-                  <span className="text-[#8a6a2f] font-bold text-base shrink-0">③ 3분</span>
-                  <p><a href="https://starfate.day" className="text-[#8a6a2f] hover:text-[#6f5223] underline underline-offset-2">StarFate</a>에서 오늘의 운세를 확인하라. 빠르게 스크롤하지 마라. 천천히 읽으며 &ldquo;이 중 오늘 나에게 가장 울림이 있는 한 문장은 무엇인가&rdquo;를 찾아라. 전체 내용을 수동적으로 흡수하는 것이 아니라 능동적으로 선택하는 과정이다.</p>
+                  <span className="text-[#3b5bdb] font-bold text-base shrink-0">③ 3분</span>
+                  <p><a href="https://starfate.day" className="text-[#3b5bdb] hover:text-[#3b5bdb] underline underline-offset-2">StarFate</a>에서 오늘의 운세를 확인하라. 빠르게 스크롤하지 마라. 천천히 읽으며 &ldquo;이 중 오늘 나에게 가장 울림이 있는 한 문장은 무엇인가&rdquo;를 찾아라. 전체 내용을 수동적으로 흡수하는 것이 아니라 능동적으로 선택하는 과정이다.</p>
                 </div>
               </div>
 
-              <div className="rounded-2xl p-5" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
+              <div className="rounded-2xl p-5" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
                 <div className="flex items-start gap-3">
-                  <span className="text-[#8a6a2f] font-bold text-base shrink-0">④ 키워드</span>
+                  <span className="text-[#3b5bdb] font-bold text-base shrink-0">④ 키워드</span>
                   <p>오늘의 키워드 하나를 노트에 적어라. 단어 하나면 충분하다. &ldquo;인내&rdquo;, &ldquo;소통&rdquo;, &ldquo;용기&rdquo;, &ldquo;집중&rdquo;. 적는 행위가 점화를 강화한다. 디지털 메모도 좋지만, 손으로 쓰는 것이 기억에 더 깊이 남는다는 연구 결과가 있다. 이 한 단어가 오늘의 실행 의도의 씨앗이 된다.</p>
                 </div>
               </div>
 
-              <div className="rounded-2xl p-5" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
+              <div className="rounded-2xl p-5" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
                 <div className="flex items-start gap-3">
-                  <span className="text-[#8a6a2f] font-bold text-base shrink-0">⑤ 시작</span>
+                  <span className="text-[#3b5bdb] font-bold text-base shrink-0">⑤ 시작</span>
                   <p>하루를 시작하라. 별도의 명상이나 긴 준비 시간이 필요 없다. 이미 오늘의 프레임이 설정되었다. 이 키워드를 스마트폰 잠금화면에 적어두거나, 손목에 가볍게 써두는 것도 점화 효과를 하루 내내 유지하는 방법이다.</p>
                 </div>
               </div>
@@ -134,7 +134,7 @@ export default function MorningFortuneRitualPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">저녁의 반추: 하루를 거울로 보는 법</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">저녁의 반추: 하루를 거울로 보는 법</h2>
             <p className="mb-3">
               아침 루틴의 완성은 저녁에 있다. 하루를 마치며 아침에 적은 키워드와 실제 하루를 비교하는 5분이다. 이것은 점성술의 정확성을 검증하는 시간이 아니다. 자기 인식(self-awareness)을 높이는 시간이다.
             </p>
@@ -150,7 +150,7 @@ export default function MorningFortuneRitualPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">운세를 &lsquo;예언&rsquo;이 아닌 &lsquo;의도 설정&rsquo;으로 읽는다는 것</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">운세를 &lsquo;예언&rsquo;이 아닌 &lsquo;의도 설정&rsquo;으로 읽는다는 것</h2>
             <p className="mb-3">
               &ldquo;오늘 재정적으로 좋은 일이 생긴다&rdquo;는 운세를 수동적으로 기다리는 것과, &ldquo;오늘은 재정 감각을 키우기 좋은 날&rdquo;로 읽고 지출을 한 번 더 검토하거나 재테크 관련 기사 하나를 읽는 것은 같은 운세의 완전히 다른 활용이다.
             </p>
@@ -173,27 +173,27 @@ export default function MorningFortuneRitualPage() {
           />
         </div>
 
-        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(169,128,63,0.1)', border: '1px solid rgba(169,128,63,0.14)' }}>
-          <p className="text-[#1a1c2e]/64 mb-4 text-sm">오늘의 키워드를 찾아보세요</p>
+        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(59,91,219,0.1)', border: '1px solid rgba(59,91,219,0.14)' }}>
+          <p className="text-[#475569] mb-4 text-sm">오늘의 키워드를 찾아보세요</p>
           <Link
             href="/"
-            className="inline-block px-6 py-3 rounded-full font-bold text-[#f7f0e1] text-sm"
-            style={{ background: 'linear-gradient(135deg, #1a2144 0%, #111730 100%)' }}
+            className="inline-block px-6 py-3 rounded-full font-bold text-[#ffffff] text-sm"
+            style={{ background: 'linear-gradient(135deg, #3b5bdb 0%, #2f4bc7 100%)' }}
           >
             StarFate에서 오늘의 운세 보기 →
           </Link>
         </div>
 
         <nav className="mt-10">
-          <h3 className="text-sm text-[#1a1c2e]/45 mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
+          <h3 className="text-sm text-[#64748b] mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <Link href="/blog/barnum-effect-astrology" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
-              <div className="text-[#1a1c2e]/72 font-medium">왜 우리는 별자리에 열광하는가?</div>
-              <div className="text-[#1a1c2e]/38 text-xs mt-1">바넘 효과와 자기 확증적 예언의 심리학</div>
+            <Link href="/blog/barnum-effect-astrology" className="p-4 rounded-xl text-sm hover:border-[#c7d0f7] transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
+              <div className="text-[#0f172a]/72 font-medium">왜 우리는 별자리에 열광하는가?</div>
+              <div className="text-[#64748b] text-xs mt-1">바넘 효과와 자기 확증적 예언의 심리학</div>
             </Link>
-            <Link href="/blog/daily-horoscope-habit" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
-              <div className="text-[#1a1c2e]/72 font-medium">매일 운세를 보는 습관의 효과</div>
-              <div className="text-[#1a1c2e]/38 text-xs mt-1">꾸준함이 만드는 자기 인식의 변화</div>
+            <Link href="/blog/daily-horoscope-habit" className="p-4 rounded-xl text-sm hover:border-[#c7d0f7] transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
+              <div className="text-[#0f172a]/72 font-medium">매일 운세를 보는 습관의 효과</div>
+              <div className="text-[#64748b] text-xs mt-1">꾸준함이 만드는 자기 인식의 변화</div>
             </Link>
           </div>
         </nav>

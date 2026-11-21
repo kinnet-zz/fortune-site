@@ -74,15 +74,15 @@ export default function TermsPage() {
   }, [lang, c.title]);
 
   return (
-    <div style={{ background: 'linear-gradient(160deg, rgba(250,246,238,0.6) 0%, rgba(247,242,232,0.4) 45%, rgba(241,233,218,0.5) 100%)', minHeight: '100vh' }}>
-      <div className="max-w-3xl mx-auto px-6 py-16 text-[#1a1c2e]/80">
-        <Link href="/" className="text-[#8a6a2f] hover:text-[#6f5223] text-sm mb-8 inline-block">{c.back}</Link>
-        <h1 className="text-3xl font-bold text-[#14172b] mb-2">{c.title}</h1>
-        <p className="text-[#1a1c2e]/45 text-sm mb-10">{c.lastUpdated}</p>
+    <div style={{ background: '#ffffff', minHeight: '100vh' }}>
+      <div className="max-w-3xl mx-auto px-6 py-16 text-[#0f172a]/80">
+        <Link href="/" className="text-[#3b5bdb] hover:text-[#3b5bdb] text-sm mb-8 inline-block">{c.back}</Link>
+        <h1 className="text-3xl font-bold text-[#0f172a] mb-2">{c.title}</h1>
+        <p className="text-[#64748b] text-sm mb-10">{c.lastUpdated}</p>
         <div className="space-y-10 text-sm leading-relaxed">
           {c.sections.map((section, i) => (
             <section key={i}>
-              <h2 className="text-lg font-semibold text-[#14172b] mb-3">{section.title}</h2>
+              <h2 className="text-lg font-semibold text-[#0f172a] mb-3">{section.title}</h2>
               <p>{section.body}</p>
             </section>
           ))}

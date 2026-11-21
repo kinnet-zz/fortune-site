@@ -255,24 +255,24 @@ export const AGENCY_COLORS: Record<Agency, { primary: string; bg: string; border
     primary: '#00A0E9',
     bg: 'rgba(0,160,233,0.15)',
     border: 'rgba(0,160,233,0.4)',
-    text: '#60cbff',
+    text: '#0369a1',
   },
   JYP: {
     primary: '#FF5C00',
     bg: 'rgba(255,92,0,0.15)',
     border: 'rgba(255,92,0,0.4)',
-    text: '#ff8c4a',
+    text: '#b45309',
   },
   YG: {
     primary: '#D4AF37',
     bg: 'rgba(212,175,55,0.15)',
     border: 'rgba(212,175,55,0.4)',
-    text: '#f0cc5a',
+    text: '#8a6d1f',
   },
   HYBE: {
     primary: '#9B59B6',
     bg: 'rgba(155,89,182,0.15)',
     border: 'rgba(155,89,182,0.4)',
-    text: '#c77dff',
+    text: '#7e3aa0',
   },
 };

@@ -76,39 +76,39 @@ export default function LeaderboardClient() {
   return (
     <div
       className="min-h-screen flex flex-col items-center"
-      style={{ background: 'linear-gradient(135deg, #f7f2e8 0%, #f3ecdf 50%, #f7f2e8 100%)' }}
+      style={{ background: 'linear-gradient(135deg, #f8f9fb 0%, #f4f5f8 50%, #f8f9fb 100%)' }}
     >
       <div className="w-full max-w-lg px-4 pt-6 pb-12">
         <div className="flex items-center justify-between mb-6">
-          <Link href="/number-game" className="text-[#1a1c2e]/45 hover:text-[#1a1c2e]/72 text-sm transition-colors">
+          <Link href="/number-game" className="text-[#64748b] hover:text-[#0f172a]/72 text-sm transition-colors">
             {t.back}
           </Link>
         </div>
 
         <div className="text-center mb-6">
           <div className="text-5xl mb-2">🏆</div>
-          <h1 className="text-2xl font-bold text-[#14172b]">{t.title}</h1>
-          <p className="text-[#1a1c2e]/45 text-sm mt-1">{t.subtitle}</p>
+          <h1 className="text-2xl font-bold text-[#0f172a]">{t.title}</h1>
+          <p className="text-[#64748b] text-sm mt-1">{t.subtitle}</p>
         </div>
 
         {loading && (
           <div className="flex flex-col items-center gap-3 mt-12">
             <div
               className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
-              style={{ borderColor: 'rgba(167,139,250,0.3)', borderTopColor: '#a855f7' }}
+              style={{ borderColor: 'rgba(167,139,250,0.3)', borderTopColor: '#8fa3f2' }}
             />
-            <p className="text-[#1a1c2e]/38 text-sm">{t.loading}</p>
+            <p className="text-[#64748b] text-sm">{t.loading}</p>
           </div>
         )}
 
         {!loading && entries.length === 0 && (
           <div className="text-center mt-12">
-            <p className="text-[#1a1c2e]/38">{t.empty}</p>
-            <p className="text-[#1a1c2e]/30 text-sm mt-1">{t.emptyDesc}</p>
+            <p className="text-[#64748b]">{t.empty}</p>
+            <p className="text-[#0f172a]/30 text-sm mt-1">{t.emptyDesc}</p>
             <Link
               href="/number-game"
-              className="inline-block mt-4 px-6 py-2.5 rounded-xl font-bold text-[#14172b] text-sm"
-              style={{ background: 'linear-gradient(135deg, #7c3aed, #6d28d9)' }}
+              className="inline-block mt-4 px-6 py-2.5 rounded-xl font-bold text-[#0f172a] text-sm"
+              style={{ background: 'linear-gradient(135deg, #3b5bdb, #2f4bc7)' }}
             >
               {t.startGame}
             </Link>
@@ -124,24 +124,24 @@ export default function LeaderboardClient() {
                   key={i}
                   className="flex items-center gap-3 px-4 py-3 rounded-xl"
                   style={{
-                    background: rank <= 3 ? 'rgba(124,58,237,0.12)' : 'rgba(20,23,43,0.03)',
-                    border: rank <= 3 ? '1px solid rgba(169,128,63,0.14)' : '1px solid rgba(20,23,43,0.05)',
+                    background: rank <= 3 ? 'rgba(59,91,219,0.12)' : 'rgba(15,23,42,0.03)',
+                    border: rank <= 3 ? '1px solid rgba(59,91,219,0.14)' : '1px solid rgba(15,23,42,0.05)',
                   }}
                 >
                   <div className="w-8 text-center flex-shrink-0">
                     {MEDALS[rank] ? (
                       <span className="text-xl">{MEDALS[rank]}</span>
                     ) : (
-                      <span className="text-[#1a1c2e]/38 font-mono text-sm">{rank}</span>
+                      <span className="text-[#64748b] font-mono text-sm">{rank}</span>
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[#14172b] font-medium truncate">{e.name}</p>
-                    <p className="text-[#1a1c2e]/38 text-xs">{e.date}</p>
+                    <p className="text-[#0f172a] font-medium truncate">{e.name}</p>
+                    <p className="text-[#64748b] text-xs">{e.date}</p>
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <p className="text-[#8a6a2f] font-bold">{t.level(e.level)}</p>
-                    <p className="text-[#1a1c2e]/45 text-xs">{t.secPerRound(e.avgTime)}</p>
+                    <p className="text-[#3b5bdb] font-bold">{t.level(e.level)}</p>
+                    <p className="text-[#64748b] text-xs">{t.secPerRound(e.avgTime)}</p>
                   </div>
                 </div>
               );
@@ -152,8 +152,8 @@ export default function LeaderboardClient() {
         {!loading && entries.length > 0 && (
           <Link
             href="/number-game"
-            className="block mt-6 w-full py-3 rounded-xl font-bold text-[#14172b] text-center transition-all active:scale-95"
-            style={{ background: 'linear-gradient(135deg, #7c3aed, #6d28d9)' }}
+            className="block mt-6 w-full py-3 rounded-xl font-bold text-[#0f172a] text-center transition-all active:scale-95"
+            style={{ background: 'linear-gradient(135deg, #3b5bdb, #2f4bc7)' }}
           >
             {t.challenge}
           </Link>

@@ -88,7 +88,7 @@ export default function IdolResultCard({
       try {
         const html2canvas = (await import('html2canvas')).default;
         const canvas = await html2canvas(cardRef.current, {
-          backgroundColor: '#0a0a0a', scale: 2, useCORS: true, allowTaint: true, logging: false,
+          backgroundColor: '#ffffff', scale: 2, useCORS: true, allowTaint: true, logging: false,
         });
         canvas.toBlob((b) => { preBlobRef.current = b; }, 'image/png');
       } catch { /* silent */ }
@@ -103,7 +103,7 @@ export default function IdolResultCard({
       if (!blob && cardRef.current) {
         const html2canvas = (await import('html2canvas')).default;
         const canvas = await html2canvas(cardRef.current, {
-          backgroundColor: '#0a0a0a', scale: 2, useCORS: true, allowTaint: true, logging: false,
+          backgroundColor: '#ffffff', scale: 2, useCORS: true, allowTaint: true, logging: false,
         });
         blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, 'image/png'));
       }
@@ -139,7 +139,7 @@ export default function IdolResultCard({
       <div
         ref={cardRef}
         className="rounded-3xl overflow-hidden"
-        style={{ background: '#0f0f0f', border: `1px solid ${colors.border}` }}
+        style={{ background: '#ffffff', border: `1px solid ${colors.border}` }}
       >
         {/* 상단 컬러 배너 */}
         <div
@@ -162,7 +162,7 @@ export default function IdolResultCard({
             >
               {top} Entertainment
             </div>
-            <p className="text-white/40 text-xs">{tr.agencyTagline[top]}</p>
+            <p className="text-[#64748b] text-xs">{tr.agencyTagline[top]}</p>
           </div>
         </div>
 
@@ -182,19 +182,19 @@ export default function IdolResultCard({
               return (
                 <div key={agency}>
                   <div className="flex justify-between text-xs mb-1">
-                    <span className="font-bold" style={{ color: isTop ? colors.text : 'rgba(255,255,255,0.3)' }}>
+                    <span className="font-bold" style={{ color: isTop ? colors.text : '#64748b' }}>
                       {isTop && '👑 '}{agency}
                     </span>
-                    <span style={{ color: isTop ? colors.text : 'rgba(255,255,255,0.25)' }}>
+                    <span style={{ color: isTop ? colors.text : '#94a3b8' }}>
                       {score.toFixed(1)}%
                     </span>
                   </div>
-                  <div className="h-2 rounded-full" style={{ background: 'rgba(20,23,43,0.04)' }}>
+                  <div className="h-2 rounded-full" style={{ background: 'rgba(15,23,42,0.04)' }}>
                     <div
                       className="h-full rounded-full transition-all duration-1000 ease-out"
                       style={{
                         width: animated ? `${score}%` : '0%',
-                        background: isTop ? `linear-gradient(90deg, ${colors.primary}88, ${colors.primary})` : 'rgba(20,23,43,0.08)',
+                        background: isTop ? `linear-gradient(90deg, ${colors.primary}88, ${colors.primary})` : 'rgba(15,23,42,0.08)',
                         boxShadow: isTop ? `0 0 8px ${colors.primary}50` : 'none',
                       }}
                     />
@@ -206,19 +206,19 @@ export default function IdolResultCard({
         </div>
 
         {/* 구분선 */}
-        <div style={{ height: '1px', background: 'rgba(20,23,43,0.04)', margin: '0 20px' }} />
+        <div style={{ height: '1px', background: 'rgba(15,23,42,0.04)', margin: '0 20px' }} />
 
         {/* 종합 분析 + 데뷔 멘트 */}
         <div className="px-5 py-4">
-          <p className="text-white/25 text-xs uppercase tracking-widest mb-2">{tr.summaryLabel}</p>
-          <p className="text-white/75 text-sm leading-relaxed mb-3">{result.summary}</p>
+          <p className="text-[#64748b] text-xs uppercase tracking-widest mb-2">{tr.summaryLabel}</p>
+          <p className="text-[#334155] text-sm leading-relaxed mb-3">{result.summary}</p>
           <p className="text-sm font-black leading-relaxed" style={{ color: colors.text }}>
             {debutComment}
           </p>
         </div>
 
         {/* 구분선 */}
-        <div style={{ height: '1px', background: 'rgba(20,23,43,0.04)', margin: '0 20px 16px' }} />
+        <div style={{ height: '1px', background: 'rgba(15,23,42,0.04)', margin: '0 20px 16px' }} />
 
         {/* 부위별 */}
         <div className="px-5 pb-4 grid grid-cols-2 gap-2">
@@ -228,9 +228,9 @@ export default function IdolResultCard({
             { label: tr.lips, val: result.features.lips, e: '💋' },
             { label: tr.overall, val: result.features.overall, e: '✨' },
           ].map(({ label, val, e }) => (
-            <div key={label} className="rounded-xl p-3" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.04)' }}>
-              <p className="text-white/30 text-xs mb-1">{e} {label}</p>
-              <p className="text-white/60 text-xs leading-relaxed">{val}</p>
+            <div key={label} className="rounded-xl p-3" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.04)' }}>
+              <p className="text-[#64748b] text-xs mb-1">{e} {label}</p>
+              <p className="text-[#475569] text-xs leading-relaxed">{val}</p>
             </div>
           ))}
         </div>
@@ -240,13 +240,13 @@ export default function IdolResultCard({
           style={{ background: colors.bg, border: `1px solid ${colors.border}` }}>
           <span className="text-xl">🌟</span>
           <div>
-            <p className="text-white/30 text-xs mb-0.5">{tr.similarIdolLabel}</p>
+            <p className="text-[#64748b] text-xs mb-0.5">{tr.similarIdolLabel}</p>
             <p className="font-black text-sm" style={{ color: colors.text }}>{result.similarIdol}</p>
           </div>
         </div>
 
         {/* 워터마크 */}
-        <p className="text-center text-white/10 text-xs pb-4">starfate.day/idol</p>
+        <p className="text-center text-[#64748b] text-xs pb-4">starfate.day/idol</p>
       </div>
 
       {/* ── 버튼 ── */}
@@ -254,21 +254,21 @@ export default function IdolResultCard({
         <button
           onClick={handleShare}
           disabled={sharing}
-          className="flex-1 py-4 rounded-2xl font-black text-sm transition-all hover:opacity-90 active:scale-[0.98] disabled:opacity-40"
+          className="flex-1 rounded-full py-3.5 text-sm font-semibold transition-all hover:opacity-95 active:scale-[0.99] disabled:opacity-40"
           style={{ background: `linear-gradient(90deg, ${colors.primary}, ${colors.primary}bb)`, color: '#fff' }}
         >
           {sharing ? '⏳' : shared ? '✅' : '📸'} {sharing ? tr.analyzing : shared ? '공유 완료!' : tr.shareBtn}
         </button>
         <button
           onClick={onRetry}
-          className="flex-1 py-4 rounded-2xl font-black text-sm transition-all hover:opacity-80 active:scale-[0.98]"
-          style={{ background: 'rgba(20,23,43,0.05)', border: '1px solid rgba(20,23,43,0.08)', color: 'rgba(255,255,255,0.6)' }}
+          className="flex-1 rounded-full border border-[#e8eaef] bg-white py-3.5 text-sm font-semibold text-[#475569] transition-all hover:border-[#dcdfe6] hover:text-[#0f172a] active:scale-[0.99]"
+          
         >
           🔄 {tr.retryBtn}
         </button>
       </div>
 
-      <p className="text-center text-white/15 text-xs">{tr.disclaimer}</p>
+      <p className="text-center text-[#64748b] text-xs">{tr.disclaimer}</p>
     </div>
   );
 }

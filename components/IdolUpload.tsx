@@ -78,8 +78,8 @@ export default function IdolUpload({ onImageReady, lang }: IdolUploadProps) {
         onClick={() => fileRef.current?.click()}
         className="relative cursor-pointer rounded-3xl overflow-hidden transition-all duration-200"
         style={{
-          border: `2px dashed ${dragOver ? 'rgba(255,255,255,0.3)' : 'rgba(20,23,43,0.06)'}`,
-          background: dragOver ? 'rgba(20,23,43,0.03)' : 'rgba(20,23,43,0.025)',
+          border: `1.5px dashed ${dragOver ? 'rgba(59,91,219,0.5)' : '#e2e5eb'}`,
+          background: dragOver ? '#eef2ff' : '#f8f9fb',
           minHeight: '240px',
           display: 'flex',
           alignItems: 'center',
@@ -92,15 +92,15 @@ export default function IdolUpload({ onImageReady, lang }: IdolUploadProps) {
             <img src={preview} alt="preview" className="w-full object-cover" style={{ maxHeight: '320px' }} />
             <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity"
               style={{ background: 'rgba(0,0,0,0.6)' }}>
-              <p className="text-white text-sm font-bold">사진 변경</p>
+              <p className="text-white text-sm font-semibold">사진 변경</p>
             </div>
           </div>
         ) : (
           <div className="text-center px-8 py-10">
             <div className="text-5xl mb-3">🤳</div>
-            <p className="text-white/60 font-bold mb-1">{tr.uploadTitle}</p>
-            <p className="text-white/25 text-xs">{tr.uploadDesc}</p>
-            {processing && <p className="text-white/40 text-xs mt-3 animate-pulse">처리 중...</p>}
+            <p className="text-[#475569] font-bold mb-1">{tr.uploadTitle}</p>
+            <p className="text-[#64748b] text-xs">{tr.uploadDesc}</p>
+            {processing && <p className="text-[#64748b] text-xs mt-3 animate-pulse">처리 중...</p>}
           </div>
         )}
       </div>
@@ -110,21 +110,21 @@ export default function IdolUpload({ onImageReady, lang }: IdolUploadProps) {
       <div className="flex gap-2">
         <button
           onClick={() => fileRef.current?.click()}
-          className="flex-1 py-3.5 rounded-2xl text-sm font-bold transition-all hover:opacity-90"
-          style={{ background: 'rgba(20,23,43,0.05)', border: '1px solid rgba(20,23,43,0.08)', color: 'rgba(255,255,255,0.8)' }}
+          className="flex-1 rounded-full py-3.5 text-sm font-semibold transition-all hover:border-[#dcdfe6] hover:text-[#0f172a]"
+          style={{ background: '#ffffff', border: '1px solid #e8eaef', color: '#334155' }}
         >
           📁 {tr.uploadBtn}
         </button>
         <button
           onClick={() => camRef.current?.click()}
-          className="flex-1 py-3.5 rounded-2xl text-sm font-bold transition-all hover:opacity-90"
-          style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.05)', color: 'rgba(255,255,255,0.5)' }}
+          className="flex-1 rounded-full py-3.5 text-sm font-semibold transition-all hover:border-[#dcdfe6] hover:text-[#0f172a]"
+          style={{ background: '#ffffff', border: '1px solid #e8eaef', color: '#334155' }}
         >
           📷 {tr.cameraBtn}
         </button>
       </div>
 
-      <p className="text-center text-white/20 text-xs">{tr.privacyNote}</p>
+      <p className="text-center text-[#64748b] text-xs">{tr.privacyNote}</p>
 
       <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={handleChange} />
       <input ref={camRef} type="file" accept="image/*" capture="user" className="hidden" onChange={handleChange} />

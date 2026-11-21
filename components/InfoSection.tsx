@@ -3,8 +3,9 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { useLang } from '@/lib/useLang';
-import { t, type Lang } from '@/lib/i18n';
-import ConstellationIcon, { ZODIAC_SLUGS } from '@/components/Constellation';
+import { t } from '@/lib/i18n';
+import { ZODIAC_SLUGS } from '@/components/Constellation';
+import { CardArtwork, ZodiacArtwork, type ArtworkVariant } from '@/components/Artwork';
 import { stripLeadingEmoji } from '@/lib/text';
 
 const ZODIAC_PERIODS = ['3/21~4/19','4/20~5/20','5/21~6/21','6/22~7/22','7/23~8/22','8/23~9/22','9/23~10/23','10/24~11/22','11/23~12/21','12/22~1/19','1/20~2/18','2/19~3/20'];
@@ -24,36 +25,31 @@ const CHINESE_ZODIAC = [
   { emoji: '🐖', name: '돼지띠', years: '1935, 1947, 1959, 1971, 1983, 1995, 2007, 2019, 2031' },
 ];
 
-const BLOG_PICKS = [
-  { slug: 'what-is-astrology', title: '점성술의 역사와 기초', emoji: '🔮' },
-  { slug: 'zodiac-compatibility-guide', title: '12별자리 궁합 분석', emoji: '💞' },
-  { slug: 'moon-sign-guide', title: '달 별자리 완벽 가이드', emoji: '🌙' },
-  { slug: '2026-yearly-horoscope', title: '2026년 별자리 연간 운세', emoji: '⭐' },
+const BLOG_PICKS: { slug: string; title: string; tag: string; variant: ArtworkVariant }[] = [
+  { slug: 'what-is-astrology', title: '점성술의 역사와 기초', tag: '점성술 기초', variant: 'history' },
+  { slug: 'zodiac-compatibility-guide', title: '12별자리 궁합 분석', tag: '궁합', variant: 'compatibility' },
+  { slug: 'moon-sign-guide', title: '달 별자리 완벽 가이드', tag: '달 별자리', variant: 'moon' },
+  { slug: '2026-yearly-horoscope', title: '2026년 별자리 연간 운세', tag: '연간 운세', variant: 'yearly' },
 ];
 
-const DISCLOSURE_COPY: Record<Lang, {
-  zodiacOpen: string;
-  zodiacClose: string;
-  chineseOpen: string;
-  chineseClose: string;
-}> = {
+const DISCLOSURE_COPY = {
   ko: { zodiacOpen: '12별자리 전체 보기', zodiacClose: '별자리 접기', chineseOpen: '12지 전체 보기', chineseClose: '12지 접기' },
   en: { zodiacOpen: 'Show all 12 signs', zodiacClose: 'Collapse zodiac signs', chineseOpen: 'Show all 12 animals', chineseClose: 'Collapse Chinese zodiac' },
   zh: { zodiacOpen: '查看全部十二星座', zodiacClose: '收起星座', chineseOpen: '查看全部十二生肖', chineseClose: '收起生肖' },
   ja: { zodiacOpen: '12星座をすべて表示', zodiacClose: '星座を閉じる', chineseOpen: '十二支をすべて表示', chineseClose: '十二支を閉じる' },
-};
+} as const;
 
-function SectionHead({ eyebrow, title, href, linkLabel, light = false }: { eyebrow: string; title: string; href?: string; linkLabel?: string; light?: boolean }) {
+function SectionHead({ eyebrow, title, href, linkLabel, id }: { eyebrow: string; title: string; href?: string; linkLabel?: string; id?: string }) {
   return (
-    <div className="mb-7 flex flex-wrap items-end justify-between gap-3">
+    <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
       <div>
-        <span className={light ? 'eyebrow eyebrow-light' : 'eyebrow'}>{eyebrow}</span>
-        <h2 className={`mt-3 font-display text-[1.45rem] font-semibold sm:text-[1.8rem] ${light ? 'text-[#f7f0e1]' : 'text-[var(--ink)]'}`}>{title}</h2>
+        <span className="eyebrow">{eyebrow}</span>
+        <h2 id={id} className="mt-3 text-[1.4rem] font-bold tracking-[-0.03em] text-[#0f172a] sm:text-[1.7rem]">{title}</h2>
       </div>
       {href && linkLabel && (
         <Link
           href={href}
-          className={`group inline-flex min-h-11 items-center gap-2 text-[0.76rem] font-medium transition-colors ${light ? 'text-[rgba(226,205,162,0.85)] hover:text-[#f7f0e1]' : 'text-[var(--gold)] hover:text-[var(--ink)]'}`}
+          className="group inline-flex min-h-9 items-center gap-1.5 text-[0.78rem] font-medium text-[#3b5bdb] transition-colors hover:text-[#2741b3]"
         >
           {linkLabel}
           <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
@@ -74,35 +70,35 @@ export default function InfoSection() {
   return (
     <>
       {/* 서양 별자리 */}
-      <section className="mx-auto mt-24 w-full max-w-6xl px-4" aria-labelledby="zodiac-heading">
-        <div className="section-line mb-9" />
+      <section className="mx-auto mt-20 w-full max-w-6xl" aria-labelledby="zodiac-heading">
         <SectionHead
+          id="zodiac-heading"
           eyebrow="The twelve signs"
           title={tr.zodiacGuideTitle}
           href="/zodiac"
           linkLabel="12별자리 상세 가이드"
         />
-        <div id="zodiac-list" className="stagger grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 lg:grid-cols-6">
+        <div id="zodiac-list" className="stagger grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
           {tr.zodiacSigns.map((sign, i) => (
             <div
               key={i}
-              className={`zodiac-card group relative min-h-[9.5rem] rounded-[0.4rem] border border-[var(--line)] bg-[#fffdf8] p-4 transition-all duration-500 hover:-translate-y-0.5 hover:border-[rgba(169,128,63,0.45)] hover:shadow-[0_20px_40px_-36px_rgba(20,23,43,0.5)] ${i >= 4 && !zodiacExpanded ? 'hidden lg:block' : ''}`}
+              className={`zodiac-card group overflow-hidden rounded-2xl border border-[#e8eaef] bg-white p-2 transition-all duration-300 hover:-translate-y-1 hover:border-[#dcdfe6] hover:shadow-[0_18px_40px_-26px_rgba(15,23,42,0.28)] ${i >= 4 && !zodiacExpanded ? 'hidden lg:block' : ''}`}
             >
-              <div className="flex items-start justify-between">
-                <span className="text-[var(--ink)]">
-                  <ConstellationIcon slug={ZODIAC_SLUGS[i]} size={44} strokeWidth={1.15} />
-                </span>
-                <span className="font-display text-[0.62rem] italic text-[var(--muted-2)]">{String(i + 1).padStart(2, '0')}</span>
+              <ZodiacArtwork slug={ZODIAC_SLUGS[i]} />
+              <div className="px-2 pb-1.5 pt-3">
+                <div className="flex items-baseline justify-between gap-2">
+                  <p className="text-[0.88rem] font-semibold tracking-[-0.02em] text-[#0f172a]">{sign}</p>
+                  <span className="text-[0.6rem] tabular-nums text-[#64748b]">{String(i + 1).padStart(2, '0')}</span>
+                </div>
+                <p className="mt-0.5 text-[0.62rem] tabular-nums tracking-[0.02em] text-[#64748b]">{ZODIAC_PERIODS[i]}</p>
+                <p className="mt-2 line-clamp-2 text-[0.7rem] leading-5 text-[#64748b] text-keep-all">{tr.zodiacGuideTraits[i]}</p>
               </div>
-              <p className="mt-3 text-[0.92rem] font-semibold text-[var(--ink)]">{sign}</p>
-              <p className="mt-0.5 text-[0.64rem] tracking-[0.08em] text-[var(--gold)]">{ZODIAC_PERIODS[i]}</p>
-              <p className="mt-2 text-[0.7rem] leading-5 text-[var(--muted)] text-keep-all">{tr.zodiacGuideTraits[i]}</p>
             </div>
           ))}
         </div>
         <button
           type="button"
-          className="mt-4 min-h-11 w-full rounded-[0.2rem] border border-[var(--line)] text-[0.8rem] font-medium text-[var(--ink-soft)] transition-colors hover:border-[var(--gold)] lg:hidden"
+          className="mt-3 min-h-11 w-full rounded-full border border-[#e8eaef] bg-white text-[0.8rem] font-medium text-[#475569] transition-colors hover:border-[#dcdfe6] hover:text-[#0f172a] lg:hidden"
           aria-expanded={zodiacExpanded}
           aria-controls="zodiac-list"
           onClick={() => setZodiacExpanded((open) => !open)}
@@ -111,34 +107,34 @@ export default function InfoSection() {
         </button>
       </section>
 
-      {/* 동양 12지 — 다크 밴드 */}
-      <section className="mx-auto mt-20 w-full max-w-6xl px-4" aria-labelledby="chinese-zodiac-heading">
-        <div className="relative overflow-hidden rounded-[0.6rem] border border-[rgba(226,205,162,0.18)] bg-[linear-gradient(165deg,#141a35_0%,#0f1529_100%)] px-6 py-9 text-[#f7f0e1] sm:px-9 sm:py-10">
-          <span className="eyebrow eyebrow-light">The twelve animals</span>
-          <div className="mt-3 mb-7 flex flex-wrap items-end justify-between gap-3">
-            <h2 id="chinese-zodiac-heading" className="font-display text-[1.45rem] font-semibold text-[#f7f0e1] sm:text-[1.8rem]">동양 12지 띠 안내</h2>
-            <Link href="/chinese-zodiac" className="group inline-flex min-h-11 items-center gap-2 text-[0.76rem] font-medium text-[rgba(226,205,162,0.85)] transition-colors hover:text-[#f7f0e1]">
+      {/* 동양 12지 */}
+      <section className="mx-auto mt-16 w-full max-w-6xl" aria-labelledby="chinese-zodiac-heading">
+        <div className="rounded-[24px] border border-[#e8eaef] bg-[#f8f9fb] px-5 py-8 sm:px-8 sm:py-9">
+          <span className="eyebrow">The twelve animals</span>
+          <div className="mb-6 mt-3 flex flex-wrap items-end justify-between gap-3">
+            <h2 id="chinese-zodiac-heading" className="text-[1.4rem] font-bold tracking-[-0.03em] text-[#0f172a] sm:text-[1.7rem]">동양 12지 띠 안내</h2>
+            <Link href="/chinese-zodiac" className="group inline-flex min-h-9 items-center gap-1.5 text-[0.78rem] font-medium text-[#3b5bdb] transition-colors hover:text-[#2741b3]">
               12지 상세 가이드
               <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
             </Link>
           </div>
-          <div id="chinese-zodiac-list" className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+          <div id="chinese-zodiac-list" className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
             {CHINESE_ZODIAC.map((item, i) => (
               <div
                 key={i}
-                className={`rounded-[0.3rem] border border-[rgba(226,205,162,0.18)] bg-[rgba(247,240,225,0.04)] p-3.5 transition-colors hover:border-[rgba(226,205,162,0.45)] ${i >= 4 && !chineseZodiacExpanded ? 'hidden lg:block' : ''}`}
+                className={`rounded-xl border border-[#e8eaef] bg-white p-3.5 transition-colors hover:border-[#dcdfe6] ${i >= 4 && !chineseZodiacExpanded ? 'hidden lg:block' : ''}`}
               >
-                <div className="mb-1.5 flex items-center gap-2">
-                  <span className="text-[1rem]">{item.emoji}</span>
-                  <span className="text-[0.84rem] font-semibold text-[#f7f0e1]">{item.name}</span>
+                <div className="mb-2 flex items-center gap-2">
+                  <span className="grid h-7 w-7 place-items-center rounded-lg bg-[#f4f5f8] text-[0.9rem]">{item.emoji}</span>
+                  <span className="text-[0.82rem] font-semibold tracking-[-0.02em] text-[#0f172a]">{item.name}</span>
                 </div>
-                <p className="text-[0.6rem] leading-4 text-[rgba(247,240,225,0.45)]">{item.years}</p>
+                <p className="text-[0.6rem] leading-4 text-[#64748b]">{item.years}</p>
               </div>
             ))}
           </div>
           <button
             type="button"
-            className="mt-4 min-h-11 w-full rounded-[0.2rem] border border-[rgba(226,205,162,0.25)] text-[0.8rem] font-medium text-[rgba(247,240,225,0.8)] transition-colors hover:bg-[rgba(226,205,162,0.08)] lg:hidden"
+            className="mt-3 min-h-11 w-full rounded-full border border-[#e8eaef] bg-white text-[0.8rem] font-medium text-[#475569] transition-colors hover:border-[#dcdfe6] hover:text-[#0f172a] lg:hidden"
             aria-expanded={chineseZodiacExpanded}
             aria-controls="chinese-zodiac-list"
             onClick={() => setChineseZodiacExpanded((open) => !open)}
@@ -149,41 +145,41 @@ export default function InfoSection() {
       </section>
 
       {/* 블로그 추천 */}
-      <section className="mx-auto mt-20 w-full max-w-5xl px-4" aria-labelledby="blog-picks-heading">
-        <div className="section-line mb-9" />
+      <section className="mx-auto mt-16 w-full max-w-6xl" aria-labelledby="blog-picks-heading">
         <SectionHead
+          id="blog-picks-heading"
           eyebrow="Editorial"
           title="별자리 & 운세 가이드"
           href="/blog"
           linkLabel="전체 가이드 블로그"
         />
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-          {BLOG_PICKS.map((post, index) => (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {BLOG_PICKS.map((post) => (
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className={`card-lift group block border border-[var(--line)] bg-[#fffdf8] p-6 ${index === 0 ? 'sm:col-span-3 sm:min-h-[10rem] sm:p-8' : 'min-h-[8rem]'}`}
-              style={{ borderRadius: '0.4rem' }}
+              className="group flex flex-col overflow-hidden rounded-2xl border border-[#e8eaef] bg-white p-2 transition-all duration-300 hover:-translate-y-1 hover:border-[#dcdfe6] hover:shadow-[0_18px_40px_-26px_rgba(15,23,42,0.28)]"
             >
-              <div className="flex items-start justify-between gap-3">
-                <span className="text-[1.05rem] opacity-80">{post.emoji}</span>
-                <span className="text-[0.58rem] uppercase tracking-[0.28em] text-[var(--muted-2)]">
-                  0{index + 1}
+              <CardArtwork variant={post.variant} />
+              <div className="flex flex-1 flex-col px-2 pb-2 pt-3.5">
+                <span className="tag mb-2 self-start">{post.tag}</span>
+                <p className="text-[0.92rem] font-semibold leading-snug tracking-[-0.02em] text-[#0f172a] text-keep-all">
+                  {post.title}
+                </p>
+                <span className="mt-auto flex items-center gap-1.5 pt-3 text-[0.72rem] font-medium text-[#3b5bdb]">
+                  읽기
+                  <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
                 </span>
               </div>
-              <p className={`mt-4 font-display font-semibold leading-snug text-[var(--ink)] text-keep-all transition-colors group-hover:text-[var(--gold)] ${index === 0 ? 'text-[1.35rem] sm:text-[1.75rem]' : 'text-[1.05rem]'}`}>
-                {post.title}
-              </p>
             </Link>
           ))}
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="mx-auto mt-20 w-full max-w-3xl px-4" aria-labelledby="faq-section-heading">
-        <div className="section-line mb-9" />
-        <SectionHead eyebrow="Questions" title="자주 묻는 질문" />
-        <div className="divide-y divide-[var(--line)] border-y border-[var(--line)]">
+      <section className="mx-auto mt-16 w-full max-w-3xl" aria-labelledby="faq-section-heading">
+        <SectionHead id="faq-section-heading" eyebrow="Questions" title="자주 묻는 질문" />
+        <div className="divide-y divide-[#e8eaef] overflow-hidden rounded-2xl border border-[#e8eaef] bg-white">
           {[
             {
               q: '오늘의 운세는 매일 바뀌나요?',
@@ -212,22 +208,21 @@ export default function InfoSection() {
               <div key={i}>
                 <button
                   type="button"
-                  className="flex min-h-14 w-full items-start gap-3 py-4 text-left text-[0.92rem] font-semibold text-[var(--ink)] focus-visible:outline-none"
+                  className="flex min-h-14 w-full items-start gap-3 px-5 py-4 text-left text-[0.92rem] font-medium tracking-[-0.01em] text-[#0f172a] transition-colors hover:bg-[#f8f9fb] focus-visible:outline-none"
                   aria-expanded={isOpen}
                   aria-controls={answerId}
                   onClick={() => setOpenFaq(isOpen ? null : i)}
                 >
-                  <span className="font-display text-[0.85rem] italic text-[var(--gold)]">Q.</span>
                   <span className="flex-1 text-keep-all">{q}</span>
                   <span
-                    className={`mt-0.5 text-[var(--gold)] transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}
+                    className={`mt-0.5 grid h-5 w-5 flex-shrink-0 place-items-center rounded-full border border-[#e8eaef] text-[0.7rem] text-[#64748b] transition-transform duration-300 ${isOpen ? 'rotate-45 border-[#3b5bdb] text-[#3b5bdb]' : ''}`}
                     aria-hidden="true"
                   >
-                    ＋
+                    +
                   </span>
                 </button>
                 <div id={answerId} hidden={!isOpen}>
-                  <p className="pb-5 pl-8 text-[0.84rem] leading-7 text-[var(--muted)] text-keep-all">{a}</p>
+                  <p className="px-5 pb-5 text-[0.84rem] leading-7 text-[#64748b] text-keep-all">{a}</p>
                 </div>
               </div>
             );
@@ -236,14 +231,14 @@ export default function InfoSection() {
       </section>
 
       {/* 서비스 소개 */}
-      <section className="mx-auto mt-16 w-full max-w-3xl px-4" aria-labelledby="about-heading">
-        <div className="border border-[var(--line)] bg-[#fffdf8] p-6 sm:p-8" style={{ borderRadius: '0.4rem' }}>
+      <section className="mx-auto mt-14 w-full max-w-3xl" aria-labelledby="about-heading">
+        <div className="rounded-2xl border border-[#e8eaef] bg-white p-6 sm:p-8">
           <span className="eyebrow">About</span>
-          <h2 id="about-heading" className="mt-3 font-display text-[1.15rem] font-semibold text-[var(--ink)]">
+          <h2 id="about-heading" className="mt-3 text-[1.15rem] font-bold tracking-[-0.03em] text-[#0f172a]">
             {stripLeadingEmoji(tr.serviceIntroTitle)}
           </h2>
-          <p className="mt-3 text-[0.84rem] leading-7 text-[var(--muted)] text-keep-all">{tr.serviceIntroText}</p>
-          <p className="mt-3 text-[0.84rem] leading-7 text-[var(--muted)] text-keep-all">
+          <p className="mt-3 text-[0.84rem] leading-7 text-[#64748b] text-keep-all">{tr.serviceIntroText}</p>
+          <p className="mt-3 text-[0.84rem] leading-7 text-[#64748b] text-keep-all">
             starfate.day는 별자리와 동양 12지를 함께 읽는 무료 운세 가이드입니다.
             한국어·영어·일본어·중국어를 지원하고, 타로와 별자리 궁합 등 가볍게 즐길 콘텐츠를 제공합니다.
             모든 운세는 오락과 자기성찰을 위한 참고 자료입니다.

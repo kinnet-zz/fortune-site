@@ -11,12 +11,12 @@ type ScoreMap = Record<string, { score: number; summary: string; luckyColor: str
 
 function ScoreBar({ score }: { score: number }) {
   return (
-    <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-[rgba(20,23,43,0.08)]">
+    <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-[rgba(15,23,42,0.08)]">
       <div
         className="h-1 rounded-full transition-all duration-700"
         style={{
           width: `${score}%`,
-          background: 'linear-gradient(90deg, #a9803f, #d3b47c)',
+          background: 'linear-gradient(90deg, #3b5bdb, #d3b47c)',
           boxShadow: 'none',
         }}
       />
@@ -80,7 +80,7 @@ export default function DailyHoroscopePage() {
       <section className="relative overflow-hidden border-b border-[var(--line)]">
         <div
           className="pointer-events-none absolute inset-0"
-          style={{ background: 'radial-gradient(ellipse 50% 70% at 50% -10%, rgba(195,161,101,0.2) 0%, transparent 64%)' }}
+          style={{ background: 'radial-gradient(ellipse 50% 70% at 50% -10%, rgba(59,91,219,0.2) 0%, transparent 64%)' }}
           aria-hidden="true"
         />
         <div className="relative mx-auto max-w-5xl px-5 pb-12 pt-10 text-center sm:pt-14">
@@ -110,7 +110,7 @@ export default function DailyHoroscopePage() {
               <Link
                 key={z.slug}
                 href={`/blog/daily/${z.slug}`}
-                className="zodiac-card card-lift group relative flex flex-col rounded-2xl border border-[var(--line)] bg-[#fffdf8] p-4 hover:border-[rgba(169,128,63,0.45)] hover:bg-[#fffdf8]"
+                className="zodiac-card card-lift group relative flex flex-col rounded-2xl border border-[var(--line)] bg-[#ffffff] p-4 hover:border-[rgba(59,91,219,0.45)] hover:bg-[#ffffff]"
               >
                 <div className="flex items-start justify-between">
                   <span className="text-[var(--ink)]">
@@ -121,7 +121,7 @@ export default function DailyHoroscopePage() {
                 <div className="mt-2 text-[0.92rem] font-semibold text-[var(--ink)]">{z.ko}</div>
 
                 {loading ? (
-                  <div className="mt-3 h-8 animate-pulse rounded bg-[#14172b]/[0.04]" />
+                  <div className="mt-3 h-8 animate-pulse rounded bg-[#0f172a]/[0.04]" />
                 ) : score !== undefined ? (
                   <>
                     <div className="mt-3 flex items-baseline justify-between">
@@ -134,7 +134,7 @@ export default function DailyHoroscopePage() {
                     )}
                     {data.luckyColor && (
                       <div className="mt-2 flex items-center gap-1.5 text-[0.62rem] text-[var(--muted-2)]">
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#d9b877]" aria-hidden="true" />
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#3b5bdb]" aria-hidden="true" />
                         행운색 · {data.luckyColor}
                       </div>
                     )}
@@ -151,7 +151,7 @@ export default function DailyHoroscopePage() {
           })}
         </div>
 
-        <div className="mt-12 rounded-2xl border border-[rgba(169,128,63,0.32)] bg-[rgba(195,161,101,0.09)] p-6 text-center">
+        <div className="mt-12 rounded-2xl border border-[rgba(59,91,219,0.32)] bg-[rgba(59,91,219,0.09)] p-6 text-center">
           <p className="text-[0.8rem] leading-6 text-[var(--muted)]">
             ✦ 매일 자정(KST) 이후 별자리의 상징과 날짜를 바탕으로 새로운 자기성찰 문장을 제공합니다.
           </p>
@@ -166,13 +166,13 @@ export default function DailyHoroscopePage() {
             결과가 좋을 때는 이미 계획한 행동을 차분히 이어가고, 낮게 나왔을 때는 중요한 결정을 서두르지 않는 자기점검 질문으로 활용해보세요.
           </p>
           <div className="flex flex-wrap gap-x-5 gap-y-2 border-t border-[var(--line)] pt-4 text-[0.76rem]">
-            <Link href="/blog/how-to-read-daily-fortune" className="text-[var(--gold)] transition-colors hover:text-[#14172b]">
+            <Link href="/blog/how-to-read-daily-fortune" className="text-[var(--gold)] transition-colors hover:text-[#0f172a]">
               운세를 건강하게 읽는 법 →
             </Link>
-            <Link href="/zodiac" className="text-[var(--gold)] transition-colors hover:text-[#14172b]">
+            <Link href="/zodiac" className="text-[var(--gold)] transition-colors hover:text-[#0f172a]">
               12별자리 상세 가이드 →
             </Link>
-            <Link href="/" className="text-[var(--gold)] transition-colors hover:text-[#14172b]">
+            <Link href="/" className="text-[var(--gold)] transition-colors hover:text-[#0f172a]">
               생년월일 맞춤 운세 →
             </Link>
           </div>

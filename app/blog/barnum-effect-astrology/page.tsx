@@ -14,29 +14,29 @@ export const metadata: Metadata = {
 };
 
 const bgStyle = {
-  background: 'linear-gradient(160deg, rgba(250,246,238,0.6) 0%, rgba(247,242,232,0.4) 45%, rgba(241,233,218,0.5) 100%)',
+  background: '#ffffff',
   minHeight: '100vh',
 };
 
 export default function BarnumEffectAstrologyPage() {
   return (
     <div style={bgStyle}>
-      <article className="max-w-3xl mx-auto px-6 py-16 text-[#1a1c2e]/80">
-        <Link href="/blog" className="text-[#8a6a2f] hover:text-[#6f5223] text-sm mb-8 inline-block">
+      <article className="max-w-3xl mx-auto px-6 py-16 text-[#0f172a]/80">
+        <Link href="/blog" className="text-[#3b5bdb] hover:text-[#3b5bdb] text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
 
         <header className="mb-10">
           <div className="flex items-center gap-2 mb-4 flex-wrap">
-            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(169,128,63,0.14)', color: '#6f5223' }}>
+            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(59,91,219,0.14)', color: '#3b5bdb' }}>
               심리 분석
             </span>
-            <span className="text-[#1a1c2e]/38 text-xs">2025년 7월 8일 · 11분 읽기</span>
+            <span className="text-[#64748b] text-xs">2025년 7월 8일 · 11분 읽기</span>
           </div>
-          <h1 className="text-3xl font-bold text-[#14172b] mb-4 leading-tight">
+          <h1 className="text-3xl font-bold text-[#0f172a] mb-4 leading-tight">
             MBTI보다 정교한 &lsquo;운명의 알고리즘&rsquo;: 왜 우리는 여전히 별자리에 열광하는가?
           </h1>
-          <p className="text-[#1a1c2e]/55 text-base leading-relaxed">
+          <p className="text-[#475569] text-base leading-relaxed">
             12개의 짧은 문장이 어떻게 수십억 명을 각자의 이야기처럼 느끼게 만드는가. 1948년 한 심리학자의 실험이 그 답을 이미 알고 있었다.
           </p>
         </header>
@@ -51,40 +51,40 @@ export default function BarnumEffectAstrologyPage() {
         <div className="space-y-8 text-sm leading-relaxed">
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">1948년의 실험: 모두가 같은 문장을 받았다</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">1948년의 실험: 모두가 같은 문장을 받았다</h2>
             <p className="mb-3">
               1948년, 미국의 심리학자 버트럼 포러(Bertram Forer)는 학생들에게 개인 성격 검사를 실시한 뒤 각자의 결과를 돌려주었다. 학생들은 자신만을 위한 맞춤형 성격 분석이라고 믿었다. 1주일 뒤, 포러는 학생들에게 그 분석이 자신의 성격을 얼마나 정확하게 표현했는지 0점에서 5점으로 평가해달라고 요청했다.
             </p>
             <p className="mb-3">
-              평균 점수는 <strong className="text-[#14172b]">4.26점</strong>이었다. 놀랍도록 정확하다는 반응이었다. 그런데 실제로는 모든 학생이 동일한 문장을 받았다. 포러가 점성술 잡지에서 무작위로 뽑아 조합한 한 단락의 일반적인 성격 묘사였다.
+              평균 점수는 <strong className="text-[#0f172a]">4.26점</strong>이었다. 놀랍도록 정확하다는 반응이었다. 그런데 실제로는 모든 학생이 동일한 문장을 받았다. 포러가 점성술 잡지에서 무작위로 뽑아 조합한 한 단락의 일반적인 성격 묘사였다.
             </p>
             <p>
-              이것이 바로 <strong className="text-[#14172b]">&lsquo;포러 효과(Forer Effect)&rsquo;</strong>다. 이후 심리학자 폴 밀(Paul Meehl)이 1956년 서커스 흥행사 P.T. 바넘(Phineas Taylor Barnum)의 이름을 따 &lsquo;바넘 효과(Barnum Effect)&rsquo;라는 이름을 붙였다. 바넘은 &ldquo;우리 쇼에는 모두를 위한 무언가가 있다(We&apos;ve got something for everyone)&rdquo;는 말로 유명했다. 아이러니하게도 그 이름이 인간 심리의 보편적 취약점에 붙여졌다.
+              이것이 바로 <strong className="text-[#0f172a]">&lsquo;포러 효과(Forer Effect)&rsquo;</strong>다. 이후 심리학자 폴 밀(Paul Meehl)이 1956년 서커스 흥행사 P.T. 바넘(Phineas Taylor Barnum)의 이름을 따 &lsquo;바넘 효과(Barnum Effect)&rsquo;라는 이름을 붙였다. 바넘은 &ldquo;우리 쇼에는 모두를 위한 무언가가 있다(We&apos;ve got something for everyone)&rdquo;는 말로 유명했다. 아이러니하게도 그 이름이 인간 심리의 보편적 취약점에 붙여졌다.
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">별자리 묘사 속 3가지 언어적 트릭</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">별자리 묘사 속 3가지 언어적 트릭</h2>
             <p className="mb-3">
               별자리 설명이 &ldquo;나를 정확히 꿰뚫어 보는 것 같다&rdquo;고 느껴지는 데는 구체적인 언어 구조가 작동한다. 이를 이해하면 마법이 어디서 오는지 보이기 시작한다.
             </p>
 
-            <div className="rounded-2xl p-5 mb-4" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
-              <h3 className="text-[#14172b] font-semibold mb-3">첫 번째 트릭: 긍정적 특성의 선택적 강조</h3>
+            <div className="rounded-2xl p-5 mb-4" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
+              <h3 className="text-[#0f172a] font-semibold mb-3">첫 번째 트릭: 긍정적 특성의 선택적 강조</h3>
               <p>
                 별자리 묘사는 대부분 &ldquo;창의적이다&rdquo;, &ldquo;깊이 생각한다&rdquo;, &ldquo;충성스럽다&rdquo;처럼 누구나 자신에게 해당된다고 여기고 싶은 긍정적 특성을 포함한다. 사람은 자신이 평균 이상이라고 믿고 싶어 하는 경향(레이크 워비건 효과)이 있기 때문에, 이런 묘사를 접할 때 반사적으로 &ldquo;맞아, 나 그래&rdquo;라고 동의하게 된다.
               </p>
             </div>
 
-            <div className="rounded-2xl p-5 mb-4" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
-              <h3 className="text-[#14172b] font-semibold mb-3">두 번째 트릭: 보편적 경험의 활용</h3>
+            <div className="rounded-2xl p-5 mb-4" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
+              <h3 className="text-[#0f172a] font-semibold mb-3">두 번째 트릭: 보편적 경험의 활용</h3>
               <p>
                 &ldquo;당신은 때때로 자신이 올바른 결정을 내리고 있는지 의심한다&rdquo;, &ldquo;사람들에게 인정받고 싶은 욕구가 있다&rdquo; 같은 문장은 사실상 모든 인간에게 해당된다. 하지만 독자는 이것을 &ldquo;별자리가 나의 숨겨진 내면을 읽어냈다&rdquo;고 해석한다. 보편성이 개인성처럼 느껴지는 착시다.
               </p>
             </div>
 
-            <div className="rounded-2xl p-5" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
-              <h3 className="text-[#14172b] font-semibold mb-3">세 번째 트릭: 모순적 표현의 병렬</h3>
+            <div className="rounded-2xl p-5" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
+              <h3 className="text-[#0f172a] font-semibold mb-3">세 번째 트릭: 모순적 표현의 병렬</h3>
               <p>
                 &ldquo;당신은 외향적이지만 때로는 혼자만의 시간이 필요하다&rdquo;처럼 서로 상반되는 특성을 동시에 언급하면, 독자는 자신의 상황에 맞는 쪽을 자동으로 선택해 읽는다. 결과적으로 어느 쪽을 읽든 &ldquo;정확하다&rdquo;는 느낌을 받게 된다. 범위가 넓어질수록 적중률은 수학적으로 높아진다.
               </p>
@@ -92,7 +92,7 @@ export default function BarnumEffectAstrologyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">MBTI와 별자리: 무엇이 다른가</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">MBTI와 별자리: 무엇이 다른가</h2>
             <p className="mb-3">
               MBTI는 4가지 이분법적 축(외향/내향, 감각/직관, 사고/감정, 판단/인식)을 조합해 16가지 유형을 만든다. 각 유형은 상당히 구체적인 행동 패턴을 제시하며, 서로 상충하는 유형 간에는 명확한 차이가 있다. INTJ와 ENFP는 문장 하나하나가 다르다.
             </p>
@@ -105,7 +105,7 @@ export default function BarnumEffectAstrologyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">나르시시즘 연구와 오해: 믿는 사람이 나쁜 것인가</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">나르시시즘 연구와 오해: 믿는 사람이 나쁜 것인가</h2>
             <p className="mb-3">
               2013년 성격심리학 저널(Journal of Personality)에 실린 연구는 별자리를 강하게 믿는 사람들이 나르시시즘 성향과 약한 양의 상관관계를 보인다고 보고했다. 이 결과는 종종 &ldquo;별자리 믿는 사람 = 자기중심적&rdquo;이라는 방식으로 오독된다.
             </p>
@@ -118,7 +118,7 @@ export default function BarnumEffectAstrologyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">자기 확증적 예언: 믿으면 실제로 이루어진다</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">자기 확증적 예언: 믿으면 실제로 이루어진다</h2>
             <p className="mb-3">
               바넘 효과보다 더 흥미로운 현상은 별자리 신뢰가 낳는 행동 변화다. 사회학자 로버트 머튼(Robert Merton)이 정리한 &lsquo;자기 확증적 예언(self-fulfilling prophecy)&rsquo; 개념이 여기서 작동한다.
             </p>
@@ -134,7 +134,7 @@ export default function BarnumEffectAstrologyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">왜 알고도 계속 믿는가: 의미의 필요성</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">왜 알고도 계속 믿는가: 의미의 필요성</h2>
             <p className="mb-3">
               바넘 효과를 이해한 사람들도 별자리를 완전히 떠나지 않는 경우가 많다. 이것은 비합리성의 증거가 아니다. 오히려 인간이 의미와 이야기를 필요로 하는 존재임을 보여준다.
             </p>
@@ -150,7 +150,7 @@ export default function BarnumEffectAstrologyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">분석을 마치며: &ldquo;맞다/틀리다&rdquo; 너머의 질문</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">분석을 마치며: &ldquo;맞다/틀리다&rdquo; 너머의 질문</h2>
             <p className="mb-3">
               포러 효과는 별자리가 &ldquo;사기&rdquo;임을 증명하지 않는다. 오히려 인간이 자기 자신에 대한 이야기를 얼마나 강렬하게 원하는지를 보여준다. 별자리를 믿는 것이 순진한 것도, 믿지 않는 것이 더 현명한 것도 아니다.
             </p>
@@ -173,27 +173,27 @@ export default function BarnumEffectAstrologyPage() {
           />
         </div>
 
-        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(169,128,63,0.1)', border: '1px solid rgba(169,128,63,0.14)' }}>
-          <p className="text-[#1a1c2e]/64 mb-4 text-sm">나에게 공명하는 오늘의 별자리 이야기가 궁금하다면?</p>
+        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(59,91,219,0.1)', border: '1px solid rgba(59,91,219,0.14)' }}>
+          <p className="text-[#475569] mb-4 text-sm">나에게 공명하는 오늘의 별자리 이야기가 궁금하다면?</p>
           <Link
             href="/"
-            className="inline-block px-6 py-3 rounded-full font-bold text-[#f7f0e1] text-sm"
-            style={{ background: 'linear-gradient(135deg, #1a2144 0%, #111730 100%)' }}
+            className="inline-block px-6 py-3 rounded-full font-bold text-[#ffffff] text-sm"
+            style={{ background: 'linear-gradient(135deg, #3b5bdb 0%, #2f4bc7 100%)' }}
           >
             오늘의 운세 확인하기 →
           </Link>
         </div>
 
         <nav className="mt-10">
-          <h3 className="text-sm text-[#1a1c2e]/45 mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
+          <h3 className="text-sm text-[#64748b] mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <Link href="/blog/zodiac-myths-facts" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
-              <div className="text-[#1a1c2e]/72 font-medium">별자리, 왜 자꾸 보게 될까?</div>
-              <div className="text-[#1a1c2e]/38 text-xs mt-1">별자리 이야기가 오래 살아남은 이유</div>
+            <Link href="/blog/zodiac-myths-facts" className="p-4 rounded-xl text-sm hover:border-[#c7d0f7] transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
+              <div className="text-[#0f172a]/72 font-medium">별자리, 왜 자꾸 보게 될까?</div>
+              <div className="text-[#64748b] text-xs mt-1">별자리 이야기가 오래 살아남은 이유</div>
             </Link>
-            <Link href="/blog/morning-fortune-ritual" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
-              <div className="text-[#1a1c2e]/72 font-medium">운명을 바꾸는 아침 5분 루틴</div>
-              <div className="text-[#1a1c2e]/38 text-xs mt-1">운세를 의도 설정 도구로 활용하기</div>
+            <Link href="/blog/morning-fortune-ritual" className="p-4 rounded-xl text-sm hover:border-[#c7d0f7] transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
+              <div className="text-[#0f172a]/72 font-medium">운명을 바꾸는 아침 5분 루틴</div>
+              <div className="text-[#64748b] text-xs mt-1">운세를 의도 설정 도구로 활용하기</div>
             </Link>
           </div>
         </nav>

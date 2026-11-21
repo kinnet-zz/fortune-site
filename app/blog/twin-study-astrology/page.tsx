@@ -14,29 +14,29 @@ export const metadata: Metadata = {
 };
 
 const bgStyle = {
-  background: 'linear-gradient(160deg, rgba(250,246,238,0.6) 0%, rgba(247,242,232,0.4) 45%, rgba(241,233,218,0.5) 100%)',
+  background: '#ffffff',
   minHeight: '100vh',
 };
 
 export default function TwinStudyAstrologyPage() {
   return (
     <div style={bgStyle}>
-      <article className="max-w-3xl mx-auto px-6 py-16 text-[#1a1c2e]/80">
-        <Link href="/blog" className="text-[#8a6a2f] hover:text-[#6f5223] text-sm mb-8 inline-block">
+      <article className="max-w-3xl mx-auto px-6 py-16 text-[#0f172a]/80">
+        <Link href="/blog" className="text-[#3b5bdb] hover:text-[#3b5bdb] text-sm mb-8 inline-block">
           ← 블로그 목록으로 돌아가기
         </Link>
 
         <header className="mb-10">
           <div className="flex items-center gap-2 mb-4 flex-wrap">
-            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(169,128,63,0.14)', color: '#6f5223' }}>
+            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(59,91,219,0.14)', color: '#3b5bdb' }}>
               데이터 분석
             </span>
-            <span className="text-[#1a1c2e]/38 text-xs">2025년 8월 5일 · 10분 읽기</span>
+            <span className="text-[#64748b] text-xs">2025년 8월 5일 · 10분 읽기</span>
           </div>
-          <h1 className="text-3xl font-bold text-[#14172b] mb-4 leading-tight">
+          <h1 className="text-3xl font-bold text-[#0f172a] mb-4 leading-tight">
             같은 날 태어난 2,000명을 추적했다 — 쌍둥이 연구가 별자리에 던진 가장 불편한 질문
           </h1>
-          <p className="text-[#1a1c2e]/55 text-base leading-relaxed">
+          <p className="text-[#475569] text-base leading-relaxed">
             만약 별자리가 성격과 운명을 결정한다면, 같은 날 같은 시각에 태어난 사람들은 비슷한 삶을 살아야 합니다. 한 연구자가 수십 년간 2,000명 이상을 실제로 추적했습니다. 그 결과는 점성술에 대한 가장 불편한 질문을 남겼습니다.
           </p>
         </header>
@@ -51,7 +51,7 @@ export default function TwinStudyAstrologyPage() {
         <div className="space-y-8 text-sm leading-relaxed">
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">제프리 딘의 타임트윈 연구 — 2,101명, 수십 년의 추적</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">제프리 딘의 타임트윈 연구 — 2,101명, 수십 년의 추적</h2>
             <p className="mb-3">
               심리학자이자 점성술 연구자인 제프리 딘(Geoffrey Dean)은 2003년 영국의 장기 추적 자료를 이용해 출생 시각이 매우 가까운 2,101명의 '타임트윈(time twins)'을 분석한 결과를 발표했습니다.
             </p>
@@ -67,7 +67,7 @@ export default function TwinStudyAstrologyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">숀 칼슨의 이중맹검 실험 — Nature가 게재한 점성술 검증</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">숀 칼슨의 이중맹검 실험 — Nature가 게재한 점성술 검증</h2>
             <p className="mb-3">
               1985년, 물리학자 숀 칼슨(Shawn Carlson)은 세계 최고의 과학 저널 중 하나인 <em>Nature</em>에 점성술을 검증한 실험 결과를 발표했습니다. 이 실험은 설계의 엄밀함으로 지금도 자주 인용됩니다.
             </p>
@@ -83,7 +83,7 @@ export default function TwinStudyAstrologyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">화성 효과 — 점성술이 가장 희망을 걸었던 연구</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">화성 효과 — 점성술이 가장 희망을 걸었던 연구</h2>
             <p className="mb-3">
               프랑스의 심리학자 미셸 고클랭(Michel Gauquelin)은 1955년 흥미로운 통계를 발표했습니다. 저명한 운동선수들이 화성이 막 떠오르거나 중천에 걸리는 시각에 태어나는 비율이 우연보다 높다는 것이었습니다. 이른바 '화성 효과(Mars Effect)'입니다.
             </p>
@@ -99,7 +99,7 @@ export default function TwinStudyAstrologyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">점성술이 과학적 반증에도 살아남는 이유 — 반증 불가능성의 구조</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">점성술이 과학적 반증에도 살아남는 이유 — 반증 불가능성의 구조</h2>
             <p className="mb-3">
               과학철학자 칼 포퍼(Karl Popper)는 어떤 이론이 과학적이려면 '반증 가능(falsifiable)'해야 한다고 주장했습니다. 즉, 틀렸음을 증명할 수 있는 실험이 원칙적으로 존재해야 한다는 것입니다.
             </p>
@@ -115,7 +115,7 @@ export default function TwinStudyAstrologyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">과학적 예측력 없음 ≠ 심리적·문화적 가치 없음</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">과학적 예측력 없음 ≠ 심리적·문화적 가치 없음</h2>
             <p className="mb-3">
               위의 연구들이 말하는 것과 말하지 않는 것을 정확하게 구분하는 것이 중요합니다.
             </p>
@@ -134,15 +134,15 @@ export default function TwinStudyAstrologyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">독창적 분석 — 쌍둥이 연구가 드러내는 두 가지 오류</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">독창적 분석 — 쌍둥이 연구가 드러내는 두 가지 오류</h2>
             <p className="mb-3">
               쌍둥이 연구와 점성술 검증 실험들이 누적되면서, 이 논쟁에서 양쪽 모두 저지르는 오류가 보입니다.
             </p>
             <p className="mb-3">
-              <strong className="text-[#14172b]">점성술 과신자의 오류:</strong> "내 차트를 보면 내 성격이 정확히 나온다"는 개인적 경험을 "점성술은 과학적으로 유효하다"는 주장으로 비약하는 것입니다. 개인적 공명(personal resonance)과 통계적 예측력(statistical predictive power)은 전혀 다른 것입니다. 어떤 것이 나에게 의미 있게 느껴진다는 것이 그것이 객관적 사실이라는 증거가 아닙니다.
+              <strong className="text-[#0f172a]">점성술 과신자의 오류:</strong> "내 차트를 보면 내 성격이 정확히 나온다"는 개인적 경험을 "점성술은 과학적으로 유효하다"는 주장으로 비약하는 것입니다. 개인적 공명(personal resonance)과 통계적 예측력(statistical predictive power)은 전혀 다른 것입니다. 어떤 것이 나에게 의미 있게 느껴진다는 것이 그것이 객관적 사실이라는 증거가 아닙니다.
             </p>
             <p className="mb-3">
-              <strong className="text-[#14172b]">점성술 부정자의 오류:</strong> "과학적 예측력이 없으므로 점성술은 완전히 쓸모없다"는 결론입니다. 이는 인간 지식의 가치를 과학적 측정 가능성으로만 환원하는 과학주의적 오류입니다. 시, 철학, 종교, 신화는 과학적 예측력이 없지만 인간의 삶에 깊은 의미와 방향성을 제공합니다. 점성술도 이 범주에 있을 수 있습니다.
+              <strong className="text-[#0f172a]">점성술 부정자의 오류:</strong> "과학적 예측력이 없으므로 점성술은 완전히 쓸모없다"는 결론입니다. 이는 인간 지식의 가치를 과학적 측정 가능성으로만 환원하는 과학주의적 오류입니다. 시, 철학, 종교, 신화는 과학적 예측력이 없지만 인간의 삶에 깊은 의미와 방향성을 제공합니다. 점성술도 이 범주에 있을 수 있습니다.
             </p>
             <p className="mb-3">
               가장 지적으로 정직한 입장은 이렇습니다. 현재까지의 과학적 증거는 점성술의 예측적 타당성을 지지하지 않습니다. 동시에, 점성술이 제공하는 상징적 언어와 자기 성찰의 틀은 그 과학적 타당성과 무관하게 많은 사람들에게 실질적인 심리적·문화적 가치를 줍니다. 이 두 사실은 동시에 참일 수 있습니다.
@@ -168,27 +168,27 @@ export default function TwinStudyAstrologyPage() {
           />
         </div>
 
-        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(169,128,63,0.1)', border: '1px solid rgba(169,128,63,0.14)' }}>
-          <p className="text-[#1a1c2e]/64 mb-4 text-sm">나의 별자리 운세가 궁금하다면?</p>
+        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(59,91,219,0.1)', border: '1px solid rgba(59,91,219,0.14)' }}>
+          <p className="text-[#475569] mb-4 text-sm">나의 별자리 운세가 궁금하다면?</p>
           <Link
             href="/"
-            className="inline-block px-6 py-3 rounded-full font-bold text-[#f7f0e1] text-sm"
-            style={{ background: 'linear-gradient(135deg, #1a2144 0%, #111730 100%)' }}
+            className="inline-block px-6 py-3 rounded-full font-bold text-[#ffffff] text-sm"
+            style={{ background: 'linear-gradient(135deg, #3b5bdb 0%, #2f4bc7 100%)' }}
           >
             오늘의 운세 무료로 보기 →
           </Link>
         </div>
 
         <nav className="mt-10">
-          <h3 className="text-sm text-[#1a1c2e]/45 mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
+          <h3 className="text-sm text-[#64748b] mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <Link href="/blog/nasa-ophiuchus-13th-zodiac" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
-              <div className="text-[#1a1c2e]/72 font-medium">뱀주인자리와 황도 12궁 논쟁</div>
-              <div className="text-[#1a1c2e]/38 text-xs mt-1">뱀주인자리가 채택되지 못하는 진짜 이유</div>
+            <Link href="/blog/nasa-ophiuchus-13th-zodiac" className="p-4 rounded-xl text-sm hover:border-[#c7d0f7] transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
+              <div className="text-[#0f172a]/72 font-medium">뱀주인자리와 황도 12궁 논쟁</div>
+              <div className="text-[#64748b] text-xs mt-1">뱀주인자리가 채택되지 못하는 진짜 이유</div>
             </Link>
-            <Link href="/blog/ancient-egypt-astronomy" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
-              <div className="text-[#1a1c2e]/72 font-medium">고대 이집트와 별자리의 역사</div>
-              <div className="text-[#1a1c2e]/38 text-xs mt-1">천문학과 점성술이 갈라지기 전의 이야기</div>
+            <Link href="/blog/ancient-egypt-astronomy" className="p-4 rounded-xl text-sm hover:border-[#c7d0f7] transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
+              <div className="text-[#0f172a]/72 font-medium">고대 이집트와 별자리의 역사</div>
+              <div className="text-[#64748b] text-xs mt-1">천문학과 점성술이 갈라지기 전의 이야기</div>
             </Link>
           </div>
         </nav>

@@ -14,29 +14,29 @@ export const metadata: Metadata = {
 };
 
 const bgStyle = {
-  background: 'linear-gradient(160deg, rgba(250,246,238,0.6) 0%, rgba(247,242,232,0.4) 45%, rgba(241,233,218,0.5) 100%)',
+  background: '#ffffff',
   minHeight: '100vh',
 };
 
 export default function NasaOphiuchus13thZodiacPage() {
   return (
     <div style={bgStyle}>
-      <article className="max-w-3xl mx-auto px-6 py-16 text-[#1a1c2e]/80">
-        <Link href="/blog" className="text-[#8a6a2f] hover:text-[#6f5223] text-sm mb-8 inline-block">
+      <article className="max-w-3xl mx-auto px-6 py-16 text-[#0f172a]/80">
+        <Link href="/blog" className="text-[#3b5bdb] hover:text-[#3b5bdb] text-sm mb-8 inline-block">
           ← 블로그 목록으로 돌아가기
         </Link>
 
         <header className="mb-10">
           <div className="flex items-center gap-2 mb-4 flex-wrap">
-            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(169,128,63,0.14)', color: '#6f5223' }}>
+            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(59,91,219,0.14)', color: '#3b5bdb' }}>
               천문학 팩트
             </span>
-            <span className="text-[#1a1c2e]/38 text-xs">2025년 7월 22일 · 9분 읽기</span>
+            <span className="text-[#64748b] text-xs">2025년 7월 22일 · 9분 읽기</span>
           </div>
-          <h1 className="text-3xl font-bold text-[#14172b] mb-4 leading-tight">
+          <h1 className="text-3xl font-bold text-[#0f172a] mb-4 leading-tight">
             뱀주인자리는 왜 황도 12궁에 포함되지 않을까? 천문학과 점성술의 차이
           </h1>
-          <p className="text-[#1a1c2e]/55 text-base leading-relaxed">
+          <p className="text-[#475569] text-base leading-relaxed">
             2016년 NASA의 아동 교육 콘텐츠 한 줄이 전 세계를 뒤흔들었습니다. "당신의 별자리가 바뀌었습니다"라는 오보가 SNS를 달구었지만, 그 이면에는 황도 시스템의 근본적인 두 가지 세계관이 충돌하는 2,500년의 역사가 숨어 있습니다.
           </p>
         </header>
@@ -51,7 +51,7 @@ export default function NasaOphiuchus13thZodiacPage() {
         <div className="space-y-8 text-sm leading-relaxed">
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">NASA가 실제로 말한 것</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">NASA가 실제로 말한 것</h2>
             <p className="mb-3">
               2016년 NASA의 아동용 우주 교육 사이트 'Space Place'에 이런 문장이 등장했습니다. "바빌로니아인들은 황도 위에 13개의 별자리가 있다는 것을 알았다. 하지만 달력을 12개월로 맞추기 위해 그들은 뱀주인자리(Ophiuchus)를 제외하기로 했다."
             </p>
@@ -64,7 +64,7 @@ export default function NasaOphiuchus13thZodiacPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">뱀주인자리의 실제 위치와 규모</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">뱀주인자리의 실제 위치와 규모</h2>
             <p className="mb-3">
               천문학적으로 뱀주인자리(Ophiuchus, 오피우쿠스)는 엄연히 실재하는 별자리입니다. 국제천문연맹(IAU)이 1930년 공식 지정한 88개 별자리 중 하나이며, 황도 — 즉 지구에서 볼 때 태양이 한 해 동안 움직이는 경로 — 위에 걸쳐 있습니다.
             </p>
@@ -77,15 +77,15 @@ export default function NasaOphiuchus13thZodiacPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">황도대의 두 가지 세계관 — 열대 황도대 vs. 항성 황도대</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">황도대의 두 가지 세계관 — 열대 황도대 vs. 항성 황도대</h2>
             <p className="mb-3">
               뱀주인자리 논란을 제대로 이해하려면 황도 시스템에 근본적으로 다른 두 가지 접근법이 존재한다는 것을 알아야 합니다.
             </p>
             <p className="mb-3">
-              <strong className="text-[#14172b]">열대 황도대(Tropical Zodiac)</strong>는 서양 점성술이 사용하는 체계입니다. 이 시스템은 춘분점(태양이 북쪽으로 이동하면서 천구 적도를 교차하는 지점)을 양자리의 시작점(0도)으로 고정합니다. 매년 3월 21일경, 태양이 이 지점을 통과하면 점성술적으로 양자리 시즌이 시작됩니다. 중요한 것은 이 시스템이 실제 하늘의 별자리 위치와 무관하다는 점입니다. 계절의 에너지 순환, 즉 봄의 시작 · 여름의 절정 · 가을의 수확 · 겨울의 침잠이라는 자연의 리듬에 기반합니다.
+              <strong className="text-[#0f172a]">열대 황도대(Tropical Zodiac)</strong>는 서양 점성술이 사용하는 체계입니다. 이 시스템은 춘분점(태양이 북쪽으로 이동하면서 천구 적도를 교차하는 지점)을 양자리의 시작점(0도)으로 고정합니다. 매년 3월 21일경, 태양이 이 지점을 통과하면 점성술적으로 양자리 시즌이 시작됩니다. 중요한 것은 이 시스템이 실제 하늘의 별자리 위치와 무관하다는 점입니다. 계절의 에너지 순환, 즉 봄의 시작 · 여름의 절정 · 가을의 수확 · 겨울의 침잠이라는 자연의 리듬에 기반합니다.
             </p>
             <p className="mb-3">
-              <strong className="text-[#14172b]">항성 황도대(Sidereal Zodiac)</strong>는 인도의 베다 점성술(Jyotish)이 사용하는 체계입니다. 이 시스템은 별의 실제 위치를 기준으로 삼습니다. 그래서 현재 항성 황도대로 계산하면 서양 점성술보다 약 23~24일 뒤로 이동한 날짜 범위가 나옵니다. 서양 점성술에서 3월 21일에 양자리가 시작된다면, 베다 점성술에서는 4월 14일경에야 양자리가 시작되는 식입니다.
+              <strong className="text-[#0f172a]">항성 황도대(Sidereal Zodiac)</strong>는 인도의 베다 점성술(Jyotish)이 사용하는 체계입니다. 이 시스템은 별의 실제 위치를 기준으로 삼습니다. 그래서 현재 항성 황도대로 계산하면 서양 점성술보다 약 23~24일 뒤로 이동한 날짜 범위가 나옵니다. 서양 점성술에서 3월 21일에 양자리가 시작된다면, 베다 점성술에서는 4월 14일경에야 양자리가 시작되는 식입니다.
             </p>
             <p className="mb-3">
               이 두 체계는 어느 것이 옳고 그른 것이 아닙니다. 서로 다른 철학적 전제 위에 세워진 독립적인 전통입니다. 열대 황도대는 "하늘은 지구의 계절 에너지를 반영한다"는 관점이고, 항성 황도대는 "하늘의 실제 별 위치가 의미를 가진다"는 관점입니다.
@@ -93,7 +93,7 @@ export default function NasaOphiuchus13thZodiacPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">세차운동 — 2,000년의 오차가 만들어낸 역설</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">세차운동 — 2,000년의 오차가 만들어낸 역설</h2>
             <p className="mb-3">
               여기서 현대인을 가장 혼란스럽게 만드는 천문학적 사실이 등장합니다. 세차운동(Precession of the Equinoxes)입니다.
             </p>
@@ -109,7 +109,7 @@ export default function NasaOphiuchus13thZodiacPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">점성술 커뮤니티가 뱀주인자리를 거부하는 진짜 이유</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">점성술 커뮤니티가 뱀주인자리를 거부하는 진짜 이유</h2>
             <p className="mb-3">
               "천문학적으로 태양이 뱀주인자리를 통과하는 것이 사실이라면, 왜 점성술은 이를 받아들이지 않는가?" 이 질문이 논란의 핵심입니다.
             </p>
@@ -125,7 +125,7 @@ export default function NasaOphiuchus13thZodiacPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">IAU의 공식 입장 — 과학과 점성술의 명확한 경계</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">IAU의 공식 입장 — 과학과 점성술의 명확한 경계</h2>
             <p className="mb-3">
               국제천문연맹(IAU, International Astronomical Union)은 1930년 하늘을 88개의 별자리로 공식 구획했습니다. 이 구획은 점성술과 완전히 무관한 순수 천문학적 행정 구분입니다. 별 목록과 은하 분류, 관측 좌표를 위한 표준화 작업이었습니다.
             </p>
@@ -138,7 +138,7 @@ export default function NasaOphiuchus13thZodiacPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">독창적 분석 — 이 논란이 드러내는 더 깊은 질문</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">독창적 분석 — 이 논란이 드러내는 더 깊은 질문</h2>
             <p className="mb-3">
               뱀주인자리 논란은 표면적으로는 "별자리가 12개냐 13개냐"의 문제처럼 보이지만, 실제로는 훨씬 심층적인 질문을 던집니다. 우리는 왜 하늘에서 의미를 찾으려 하는가?
             </p>
@@ -164,27 +164,27 @@ export default function NasaOphiuchus13thZodiacPage() {
           />
         </div>
 
-        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(169,128,63,0.1)', border: '1px solid rgba(169,128,63,0.14)' }}>
-          <p className="text-[#1a1c2e]/64 mb-4 text-sm">나의 별자리 운세가 궁금하다면?</p>
+        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(59,91,219,0.1)', border: '1px solid rgba(59,91,219,0.14)' }}>
+          <p className="text-[#475569] mb-4 text-sm">나의 별자리 운세가 궁금하다면?</p>
           <Link
             href="/"
-            className="inline-block px-6 py-3 rounded-full font-bold text-[#f7f0e1] text-sm"
-            style={{ background: 'linear-gradient(135deg, #1a2144 0%, #111730 100%)' }}
+            className="inline-block px-6 py-3 rounded-full font-bold text-[#ffffff] text-sm"
+            style={{ background: 'linear-gradient(135deg, #3b5bdb 0%, #2f4bc7 100%)' }}
           >
             오늘의 운세 무료로 보기 →
           </Link>
         </div>
 
         <nav className="mt-10">
-          <h3 className="text-sm text-[#1a1c2e]/45 mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
+          <h3 className="text-sm text-[#64748b] mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <Link href="/blog/zodiac-myths-facts" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
-              <div className="text-[#1a1c2e]/72 font-medium">별자리, 왜 자꾸 보게 될까?</div>
-              <div className="text-[#1a1c2e]/38 text-xs mt-1">천문학·심리학·관계로 다시 읽는 별자리</div>
+            <Link href="/blog/zodiac-myths-facts" className="p-4 rounded-xl text-sm hover:border-[#c7d0f7] transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
+              <div className="text-[#0f172a]/72 font-medium">별자리, 왜 자꾸 보게 될까?</div>
+              <div className="text-[#64748b] text-xs mt-1">천문학·심리학·관계로 다시 읽는 별자리</div>
             </Link>
-            <Link href="/blog/twin-study-astrology" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
-              <div className="text-[#1a1c2e]/72 font-medium">같은 날 태어난 2,000명을 추적했다</div>
-              <div className="text-[#1a1c2e]/38 text-xs mt-1">쌍둥이 연구가 별자리에 던진 질문</div>
+            <Link href="/blog/twin-study-astrology" className="p-4 rounded-xl text-sm hover:border-[#c7d0f7] transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
+              <div className="text-[#0f172a]/72 font-medium">같은 날 태어난 2,000명을 추적했다</div>
+              <div className="text-[#64748b] text-xs mt-1">쌍둥이 연구가 별자리에 던진 질문</div>
             </Link>
           </div>
         </nav>

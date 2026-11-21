@@ -42,19 +42,18 @@ function FortuneSection({ index, title, content, color, delay }: SectionProps) {
 
   return (
     <div
-      className={`relative border-t border-[rgba(226,205,162,0.16)] pt-5 transition-all duration-700 ${
-        visible ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
+      className={`rounded-xl border border-[#eef0f4] bg-[#f8f9fb] p-4 transition-all duration-700 ${
+        visible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
       }`}
     >
-      <div className="mb-2 flex items-baseline gap-3">
-        <span className="font-display text-[0.72rem] italic tracking-[0.18em]" style={{ color }}>
-          {index}
-        </span>
-        <h3 className="text-[0.62rem] font-semibold uppercase tracking-[0.28em]" style={{ color }}>
+      <div className="mb-1.5 flex items-center gap-2">
+        <span className="h-1.5 w-1.5 rounded-full" style={{ background: color }} aria-hidden="true" />
+        <h3 className="text-[0.72rem] font-semibold tracking-[0.02em] text-[#475569]">
           {title}
         </h3>
+        <span className="ml-auto text-[0.6rem] tabular-nums tracking-[0.1em] text-[#64748b]">{index}</span>
       </div>
-      <p className="text-[0.88rem] leading-7 text-[rgba(247,240,225,0.78)] text-keep-all">{content}</p>
+      <p className="text-[0.86rem] leading-7 text-[#334155] text-keep-all">{content}</p>
     </div>
   );
 }
@@ -72,33 +71,25 @@ function ScoreRing({ score }: { score: number }) {
   }, []);
 
   return (
-    <div className="relative h-[6.4rem] w-[6.4rem] flex-shrink-0">
+    <div className="relative h-[6.2rem] w-[6.2rem] flex-shrink-0">
       <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90" aria-hidden="true">
-        <defs>
-          <linearGradient id="scoreGold" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#fdf3d5" />
-            <stop offset="45%" stopColor="#ecd193" />
-            <stop offset="100%" stopColor="#a9803f" />
-          </linearGradient>
-        </defs>
-        <circle cx="50" cy="50" r={radius} fill="none" stroke="rgba(226,205,162,0.18)" strokeWidth="3" />
+        <circle cx="50" cy="50" r={radius} fill="none" stroke="#eef0f5" strokeWidth="4" />
         <circle
           cx="50"
           cy="50"
           r={radius}
           fill="none"
-          stroke="url(#scoreGold)"
-          strokeWidth="3.4"
+          stroke="#3b5bdb"
+          strokeWidth="4"
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={animated ? offset : circumference}
-          style={{ transition: 'stroke-dashoffset 1.5s cubic-bezier(0.22,1,0.36,1)', filter: 'drop-shadow(0 0 6px rgba(226,205,162,0.35))' }}
+          style={{ transition: 'stroke-dashoffset 1.4s cubic-bezier(0.22,1,0.36,1)' }}
         />
-        <circle cx="50" cy="50" r="31" fill="none" stroke="rgba(226,205,162,0.25)" strokeWidth="0.6" strokeDasharray="1 5" />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="font-display text-[1.85rem] font-semibold leading-none text-[#f7f0e1]">{clamped}</span>
-        <span className="mt-1 text-[0.55rem] uppercase tracking-[0.22em] text-[rgba(247,240,225,0.42)]">/ 100</span>
+        <span className="text-[1.7rem] font-bold leading-none tracking-[-0.04em] text-[#0f172a]">{clamped}</span>
+        <span className="mt-1 text-[0.55rem] uppercase tracking-[0.14em] text-[#64748b]">/ 100</span>
       </div>
     </div>
   );
@@ -132,7 +123,7 @@ export default function FortuneCard({ fortune, onReset, lang }: FortuneCardProps
       try {
         const html2canvas = (await import('html2canvas')).default;
         const canvas = await html2canvas(cardRef.current, {
-          backgroundColor: '#080a16',
+          backgroundColor: '#ffffff',
           scale: 2,
           useCORS: true,
           allowTaint: true,
@@ -214,7 +205,7 @@ export default function FortuneCard({ fortune, onReset, lang }: FortuneCardProps
       if (!blob) {
         const html2canvas = (await import('html2canvas')).default;
         const canvas = await html2canvas(cardRef.current, {
-          backgroundColor: '#080a16',
+          backgroundColor: '#ffffff',
           scale: 2,
           useCORS: true,
           allowTaint: true,
@@ -291,154 +282,138 @@ export default function FortuneCard({ fortune, onReset, lang }: FortuneCardProps
   return (
     <div
       className={`mx-auto w-full max-w-xl transition-all duration-700 ${
-        cardVisible ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
+        cardVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
       }`}
     >
       {/* 메인 카드 */}
       <div
         ref={cardRef}
-        className="relative rounded-[0.5rem] p-[1px]"
-        style={{
-          background:
-            'linear-gradient(150deg, rgba(169,128,63,0.7) 0%, rgba(169,128,63,0.25) 45%, rgba(17,23,48,0.35) 100%)',
-          boxShadow: '0 36px 80px -44px rgba(20,23,43,0.5)',
-        }}
+        className="overflow-hidden rounded-[26px] border border-[#e8eaef] bg-white shadow-[0_30px_70px_-40px_rgba(15,23,42,0.35)]"
       >
-        <div
-          className="relative overflow-hidden rounded-[0.46rem]"
-          style={{
-            background:
-              'linear-gradient(170deg, #161d3d 0%, #111730 42%, #0f1529 100%)',
-          }}
-        >
-          {/* 상단 헤더 */}
-          <div className="relative overflow-hidden px-6 pb-6 pt-7 sm:px-8">
-            <div className="pointer-events-none absolute -right-16 -top-20 h-48 w-48 rounded-full border border-[rgba(226,205,162,0.18)]" aria-hidden="true" />
-            <div className="pointer-events-none absolute -right-8 -top-8 text-[rgba(226,205,162,0.14)]" aria-hidden="true">
-              <span className="font-display text-7xl italic">✦</span>
-            </div>
+        {/* 상단 헤더 */}
+        <div className="relative overflow-hidden border-b border-[#eef0f4] px-6 pb-6 pt-6 sm:px-8">
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{ background: 'radial-gradient(ellipse 54% 80% at 92% -10%, rgba(59,91,219,0.07) 0%, transparent 66%)' }}
+            aria-hidden="true"
+          />
+          <div className="relative flex items-center justify-between gap-3">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#eef2ff] px-3 py-1 text-[0.66rem] font-semibold tracking-[0.02em] text-[#3b5bdb]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#3b5bdb]" aria-hidden="true" />
+              {tr.resultHeader}
+            </span>
+            <span className="text-[0.7rem] tracking-[0.01em] text-[#64748b]">{readingDate}</span>
+          </div>
 
-            <div className="flex items-center justify-between gap-3">
-              <span className="text-[0.58rem] font-semibold uppercase tracking-[0.32em] text-[rgba(226,205,162,0.78)]">
-                {tr.resultHeader}
-              </span>
-              <span className="text-[0.64rem] tracking-[0.16em] text-[rgba(247,240,225,0.55)]">{readingDate}</span>
-            </div>
-
-            <div className="mt-5 flex items-center justify-between gap-4">
-              <div className="min-w-0">
-                <div className="mb-2 text-[rgba(226,205,162,0.9)]">
-                  <ConstellationIcon slug={slug} size={62} strokeWidth={1.1} animated />
-                </div>
-                <h2 className="font-display text-[1.8rem] font-semibold leading-tight text-[#f7f0e1] text-keep-all">
-                  {fortune.zodiacSign}
-                </h2>
-                {englishName && (
-                  <p className="mt-1 text-[0.62rem] uppercase tracking-[0.3em] text-[rgba(226,205,162,0.6)]">
-                    {englishName}
-                  </p>
-                )}
-                <div className="mt-3 flex flex-wrap items-center gap-2">
-                  <span className="chip-dark text-[0.68rem]">{fortune.chineseZodiac}</span>
-                  <span className="chip-dark text-[0.68rem]">{scoreLevel}</span>
-                </div>
+          <div className="relative mt-5 flex items-center justify-between gap-4">
+            <div className="min-w-0">
+              <div className="mb-3 grid h-12 w-12 place-items-center rounded-xl border border-[#eef0f4] bg-[#f8f9fb] text-[#3b5bdb]">
+                <ConstellationIcon slug={slug} size={28} strokeWidth={1.2} />
               </div>
-              <ScoreRing score={fortune.score} />
+              <h2 className="text-[1.7rem] font-bold leading-tight tracking-[-0.04em] text-[#0f172a] text-keep-all">
+                {fortune.zodiacSign}
+              </h2>
+              {englishName && (
+                <p className="mt-1 text-[0.66rem] uppercase tracking-[0.16em] text-[#64748b]">
+                  {englishName}
+                </p>
+              )}
+              <div className="mt-3 flex flex-wrap items-center gap-1.5">
+                <span className="tag-quiet">{fortune.chineseZodiac}</span>
+                <span className="tag-quiet">{scoreLevel}</span>
+              </div>
             </div>
+            <ScoreRing score={fortune.score} />
           </div>
+        </div>
 
-          {/* 운세 섹션들 */}
-          <div className="space-y-5 px-6 pb-6 pt-2 sm:px-8">
-            <FortuneSection index="01" title={tr.overall} content={fortune.overall} color="#f0d79d" delay={220} />
-            <FortuneSection index="02" title={tr.love} content={fortune.love} color="#e8b3c4" delay={340} />
-            <FortuneSection index="03" title={tr.money} content={fortune.money} color="#a9cfb5" delay={460} />
-            <FortuneSection index="04" title={tr.work} content={fortune.work} color="#a9b8e8" delay={580} />
-          </div>
+        {/* 운세 섹션들 */}
+        <div className="grid gap-2.5 px-5 pb-5 pt-5 sm:px-6">
+          <FortuneSection index="01" title={tr.overall} content={fortune.overall} color="#3b5bdb" delay={220} />
+          <FortuneSection index="02" title={tr.love} content={fortune.love} color="#e879a6" delay={340} />
+          <FortuneSection index="03" title={tr.money} content={fortune.money} color="#22a06b" delay={460} />
+          <FortuneSection index="04" title={tr.work} content={fortune.work} color="#6366f1" delay={580} />
+        </div>
 
-          {/* 행운 정보 */}
-          <div className="px-6 pb-6 sm:px-8">
-            <div className="rounded-2xl border border-[rgba(226,205,162,0.22)] bg-[rgba(226,205,162,0.05)] px-5 py-5">
-              <p className="mb-4 text-center text-[0.58rem] font-semibold uppercase tracking-[0.3em] text-[rgba(226,205,162,0.7)]">
-                {tr.luckyItemLabel}
-              </p>
-              <div className="flex items-center justify-center gap-8">
-                <div className="text-center">
-                  <div
-                    className="mx-auto mb-2.5 h-11 w-11 rounded-full ring-1 ring-[rgba(226,205,162,0.55)]"
-                    style={{
-                      background: getLuckyColorHex(fortune.luckyColor),
-                      boxShadow: `0 0 24px ${getLuckyColorHex(fortune.luckyColor)}66, inset 0 0 12px rgba(0,0,0,0.28)`,
-                    }}
-                  />
-                  <p className="mb-1 text-[0.58rem] uppercase tracking-[0.18em] text-[rgba(247,240,225,0.42)]">{tr.luckyColorLabel}</p>
-                  <p className="text-[0.82rem] font-semibold text-[#f7f0e1]">{fortune.luckyColor}</p>
+        {/* 행운 정보 */}
+        <div className="px-5 pb-5 sm:px-6">
+          <div className="rounded-2xl border border-[#eef0f4] bg-white px-5 py-5">
+            <p className="mb-4 text-center text-[0.64rem] font-semibold uppercase tracking-[0.14em] text-[#64748b]">
+              {tr.luckyItemLabel}
+            </p>
+            <div className="flex items-center justify-center gap-10">
+              <div className="text-center">
+                <div
+                  className="mx-auto mb-2 h-10 w-10 rounded-full ring-1 ring-black/5"
+                  style={{
+                    background: getLuckyColorHex(fortune.luckyColor),
+                    boxShadow: `0 6px 16px -8px ${getLuckyColorHex(fortune.luckyColor)}`,
+                  }}
+                />
+                <p className="mb-0.5 text-[0.6rem] uppercase tracking-[0.1em] text-[#64748b]">{tr.luckyColorLabel}</p>
+                <p className="text-[0.82rem] font-semibold text-[#0f172a]">{fortune.luckyColor}</p>
+              </div>
+
+              <div className="h-12 w-px bg-[#eef0f4]" />
+
+              <div className="text-center">
+                <div className="mx-auto mb-2 grid h-10 w-10 place-items-center rounded-full bg-[#eef2ff]">
+                  <span className="text-[0.95rem] font-bold text-[#3b5bdb]">{fortune.luckyNumber}</span>
                 </div>
-
-                <div className="h-14 w-px bg-[rgba(226,205,162,0.22)]" />
-
-                <div className="text-center">
-                  <div className="mx-auto mb-2.5 flex h-11 w-11 items-center justify-center rounded-full border border-[rgba(226,205,162,0.5)] bg-[linear-gradient(140deg,#e8d3a6,#c3a165)]">
-                    <span className="font-display text-lg font-bold text-[#1a1408]">{fortune.luckyNumber}</span>
-                  </div>
-                  <p className="mb-1 text-[0.58rem] uppercase tracking-[0.18em] text-[rgba(247,240,225,0.42)]">{tr.luckyNumberLabel}</p>
-                  <p className="text-[0.82rem] font-semibold text-[#f7f0e1]">{fortune.luckyNumber}</p>
-                </div>
+                <p className="mb-0.5 text-[0.6rem] uppercase tracking-[0.1em] text-[#64748b]">{tr.luckyNumberLabel}</p>
+                <p className="text-[0.82rem] font-semibold text-[#0f172a]">{fortune.luckyNumber}</p>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* 버튼 영역 */}
-          <div className="space-y-2.5 px-6 pb-8 sm:px-8">
-            <div className="flex flex-col gap-2.5 sm:flex-row">
-              <button
-                onClick={handleImageShare}
-                disabled={imageSharing}
-                className="btn-gold-warm flex-1 text-[0.86rem]"
-              >
-                <span className="relative z-10 flex items-center justify-center gap-2">
-                  <span aria-hidden="true">{imageSharing ? '◌' : imageSaved ? '✓' : '↓'}</span>
-                  <span>{imageSharing ? tr.imageSharing : imageSaved ? tr.imageSaved : tr.imageShareBtn}</span>
-                </span>
-              </button>
+        {/* 버튼 영역 */}
+        <div className="space-y-2.5 border-t border-[#eef0f4] px-5 pb-6 pt-5 sm:px-6">
+          <div className="flex flex-col gap-2.5 sm:flex-row">
+            <button
+              onClick={handleImageShare}
+              disabled={imageSharing}
+              className="btn-primary flex-1 text-[0.86rem]"
+            >
+              <span aria-hidden="true" className="text-[0.95rem]">{imageSharing ? '◌' : imageSaved ? '✓' : '↓'}</span>
+              <span>{imageSharing ? tr.imageSharing : imageSaved ? tr.imageSaved : tr.imageShareBtn}</span>
+            </button>
 
-              <button onClick={onReset} className="btn-ghost-light flex-1 text-[0.86rem]">
-                <span aria-hidden="true">↺</span>
-                <span>{tr.resetBtn}</span>
-              </button>
-            </div>
+            <button onClick={onReset} className="btn-ghost flex-1 text-[0.86rem]">
+              <span aria-hidden="true">↺</span>
+              <span>{tr.resetBtn}</span>
+            </button>
+          </div>
 
-            <div className="flex gap-2.5">
-              <button
-                onClick={handleShare}
-                className="flex-1 rounded-full border px-3 py-2.5 text-[0.78rem] font-medium transition-colors"
-                style={{
-                  background: copied ? 'rgba(52,211,153,0.12)' : 'rgba(20,23,43,0.025)',
-                  borderColor: copied ? 'rgba(52,211,153,0.45)' : 'rgba(226,205,162,0.32)',
-                  color: copied ? '#a7f3d0' : 'rgba(247,240,225,0.72)',
-                }}
-              >
-                {copied ? `✓ ${tr.copied}` : `↗ ${tr.shareBtn}`}
-              </button>
-              <button
-                onClick={handleLinkCopy}
-                className="flex-1 rounded-full border px-3 py-2.5 text-[0.78rem] font-medium transition-colors"
-                style={{
-                  background: linkCopied ? 'rgba(217,184,119,0.14)' : 'rgba(20,23,43,0.025)',
-                  borderColor: linkCopied ? 'rgba(226,205,162,0.55)' : 'rgba(226,205,162,0.32)',
-                  color: linkCopied ? '#e2cda2' : 'rgba(247,240,225,0.72)',
-                }}
-              >
-                {linkCopied ? `✓ ${tr.linkCopied}` : `⌘ ${tr.linkCopyBtn}`}
-              </button>
-            </div>
+          <div className="flex gap-2.5">
+            <button
+              onClick={handleShare}
+              className={`flex min-h-10 flex-1 items-center justify-center gap-1.5 rounded-full border px-3 py-2 text-[0.76rem] font-medium transition-colors ${
+                copied
+                  ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
+                  : 'border-[#e8eaef] bg-white text-[#475569] hover:border-[#dcdfe6] hover:text-[#0f172a]'
+              }`}
+            >
+              {copied ? `✓ ${tr.copied}` : `↗ ${tr.shareBtn}`}
+            </button>
+            <button
+              onClick={handleLinkCopy}
+              className={`flex min-h-10 flex-1 items-center justify-center gap-1.5 rounded-full border px-3 py-2 text-[0.76rem] font-medium transition-colors ${
+                linkCopied
+                  ? 'border-[#c7d0f7] bg-[#eef2ff] text-[#2741b3]'
+                  : 'border-[#e8eaef] bg-white text-[#475569] hover:border-[#dcdfe6] hover:text-[#0f172a]'
+              }`}
+            >
+              {linkCopied ? `✓ ${tr.linkCopied}` : `⌘ ${tr.linkCopyBtn}`}
+            </button>
           </div>
         </div>
       </div>
 
       {/* 하단 면책 조항 — AdSense 정책 준수 */}
       <div className="mt-6 space-y-1.5 text-center">
-        <p className="text-[0.7rem] text-[rgba(20,23,43,0.42)]">{tr.disclaimer}</p>
-        <p className="mx-auto max-w-sm rounded-xl border border border-[rgba(20,23,43,0.1)] bg-[#14172b]/[0.035]0 px-4 py-2 text-[0.7rem] leading-5 text-[rgba(20,23,43,0.5)]">
+        <p className="text-[0.7rem] text-[#64748b]">{tr.disclaimer}</p>
+        <p className="mx-auto max-w-sm rounded-xl border border-[#e8eaef] bg-[#f8f9fb] px-4 py-2 text-[0.7rem] leading-5 text-[#64748b]">
           ⚠️ 본 운세는 오락·자기성찰 목적의 콘텐츠입니다. 실제 미래를 예측하지 않으며, 중요한 의사결정의 근거로 사용하지 마세요.
         </p>
       </div>

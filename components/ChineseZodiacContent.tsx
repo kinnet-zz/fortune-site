@@ -45,14 +45,14 @@ export default function ChineseZodiacContent() {
   return (
     <div className="relative min-h-screen">
       {/* 히어로 */}
-      <section className="relative overflow-hidden border-b border-[rgba(169,128,63,0.14)]">
+      <section className="relative overflow-hidden border-b border-[rgba(59,91,219,0.14)]">
         <div
           className="pointer-events-none absolute inset-0"
-          style={{ background: 'radial-gradient(ellipse 55% 80% at 78% -10%, rgba(169,128,63,0.14) 0%, transparent 60%), radial-gradient(ellipse 45% 60% at 10% 110%, rgba(17,23,48,0.09) 0%, transparent 70%)' }}
+          style={{ background: 'radial-gradient(ellipse 55% 80% at 78% -10%, rgba(59,91,219,0.14) 0%, transparent 60%), radial-gradient(ellipse 45% 60% at 10% 110%, rgba(15,23,42,0.09) 0%, transparent 70%)' }}
           aria-hidden="true"
         />
         <div className="relative mx-auto max-w-6xl px-5 pb-12 pt-10 sm:pt-16">
-          <Link href="/" className="inline-flex min-h-11 items-center gap-2 text-[0.78rem] text-[var(--muted)] transition-colors hover:text-[#a9803f]">
+          <Link href="/" className="inline-flex min-h-11 items-center gap-2 text-[0.78rem] text-[var(--muted)] transition-colors hover:text-[#3b5bdb]">
             {tr.backHome}
           </Link>
           <div className="mt-7 grid grid-cols-1 items-end gap-8 lg:grid-cols-[1.15fr_0.85fr]">
@@ -71,7 +71,7 @@ export default function ChineseZodiacContent() {
             </div>
             <div className="grid grid-cols-6 gap-2" aria-hidden="true">
               {CHINESE_ZODIAC_DATA.slice(0, 12).map(({ emoji, english }) => (
-                <span key={english} className="grid aspect-square place-items-center rounded-lg border border-[var(--line)] bg-[#fffdf8] text-[1.1rem] opacity-90">
+                <span key={english} className="grid aspect-square place-items-center rounded-lg border border-[var(--line)] bg-[#ffffff] text-[1.1rem] opacity-90">
                   {emoji}
                 </span>
               ))}
@@ -95,7 +95,7 @@ export default function ChineseZodiacContent() {
               <Link
                 key={animal}
                 href={`/chinese-zodiac/${english.toLowerCase()}`}
-                className="group rounded-2xl border border-[#14172b]/8 bg-white/[0.022] p-3.5 text-center transition-all duration-500 hover:-translate-y-0.5 hover:border-[rgba(169,128,63,0.45)] hover:bg-[rgba(195,161,101,0.06)]"
+                className="group rounded-2xl border border-[#0f172a]/8 bg-white/[0.022] p-3.5 text-center transition-all duration-500 hover:-translate-y-0.5 hover:border-[rgba(59,91,219,0.45)] hover:bg-[rgba(59,91,219,0.06)]"
               >
                 <span className="mb-1 block text-[1.5rem] transition-transform duration-300 group-hover:scale-110">{emoji}</span>
                 <span className="block text-[0.82rem] font-semibold text-[var(--ink)]/90">{animal}{tr.animalUnit}</span>
@@ -120,7 +120,7 @@ export default function ChineseZodiacContent() {
             {CHINESE_ZODIAC_DATA.map(({ animal, emoji, english, element, years, traits, personality, strengths, weaknesses, compatible, careers }, index) => (
               <article key={animal} className="card-lux overflow-hidden rounded-3xl">
                 <div className="grid grid-cols-1 gap-0 lg:grid-cols-[16rem_1fr]">
-                  <div className="border-b border-[rgba(169,128,63,0.14)] p-6 lg:border-b-0 lg:border-r">
+                  <div className="border-b border-[rgba(59,91,219,0.14)] p-6 lg:border-b-0 lg:border-r">
                     <div className="flex items-start justify-between">
                       <span className="text-[2.4rem] leading-none">{emoji}</span>
                       <span className="font-display text-[0.7rem] italic text-[var(--muted-2)]">
@@ -142,7 +142,7 @@ export default function ChineseZodiacContent() {
                   <div className="p-6 sm:p-7">
                     <div className="mb-4 flex flex-wrap gap-1.5">
                       {traits.map((trait) => (
-                        <span key={trait} className="rounded-full border border-[rgba(169,128,63,0.28)] bg-[rgba(195,161,101,0.08)] px-2.5 py-1 text-[0.68rem] text-[#6f5223]">
+                        <span key={trait} className="rounded-full border border-[rgba(59,91,219,0.28)] bg-[rgba(59,91,219,0.08)] px-2.5 py-1 text-[0.68rem] text-[#3b5bdb]">
                           {trait}
                         </span>
                       ))}
@@ -160,14 +160,14 @@ export default function ChineseZodiacContent() {
                       </div>
                     </div>
 
-                    <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[rgba(169,128,63,0.14)] pt-4">
+                    <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[rgba(59,91,219,0.14)] pt-4">
                       <div className="flex flex-wrap gap-x-5 gap-y-1 text-[0.72rem] text-[var(--muted-2)]">
                         <span>{tr.compatibleAnimalsLabel} · <strong className="font-medium text-[var(--ink)]">{compatible}</strong></span>
                         <span>{tr.careersLabel} · <strong className="font-medium text-[var(--ink)]">{careers}</strong></span>
                       </div>
                       <Link
                         href={`/chinese-zodiac/${english.toLowerCase()}`}
-                        className="group inline-flex min-h-9 items-center gap-1.5 text-[0.74rem] font-semibold text-[var(--gold)] transition-colors hover:text-[#14172b]"
+                        className="group inline-flex min-h-9 items-center gap-1.5 text-[0.74rem] font-semibold text-[var(--gold)] transition-colors hover:text-[#0f172a]"
                       >
                         상세 가이드
                         <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
@@ -180,7 +180,7 @@ export default function ChineseZodiacContent() {
           </div>
         </section>
 
-        <div className="mt-14 flex flex-col items-center gap-4 rounded-[0.6rem] border border-[rgba(226,205,162,0.2)] bg-[linear-gradient(160deg,#141a35,#0f1529)] px-6 py-10 text-center">
+        <div className="mt-14 flex flex-col items-center gap-4 rounded-2xl border border-[#e8eaef] bg-[#f8f9fb] px-6 py-10 text-center">
           <span className="eyebrow eyebrow-light eyebrow-center">Your reading</span>
           <Link href="/" className="btn-gold-warm text-[0.9rem]">
             {tr.chineseZodiacCTA} <span aria-hidden="true">→</span>

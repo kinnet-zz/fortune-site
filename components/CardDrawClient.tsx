@@ -111,26 +111,26 @@ export default function CardDrawClient() {
   const l = lang as Lang;
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, #0d0118 0%, #150a2e 60%, #0d0118 100%)' }}>
+    <div className="min-h-screen bg-white">
 
       {/* 히어로 */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0" style={{
-          background: 'radial-gradient(ellipse 70% 40% at 50% 0%, rgba(99,102,241,0.18) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(59,91,219,0.08) 0%, transparent 70%)',
         }} />
-        <div className="relative z-10 max-w-md mx-auto px-4 pt-10 pb-4 text-center">
-          <h1 className="text-3xl font-black text-white mb-2">{t.pageTitle}</h1>
-          <p className="text-white/40 text-sm">{t.pageSubtitle}</p>
+        <div className="relative z-10 mx-auto max-w-xl px-4 pb-6 pt-12 text-center">
+          <h1 className="mb-2 text-[2.2rem] font-bold tracking-[-0.045em] text-[#0f172a]">{t.pageTitle}</h1>
+          <p className="text-[#64748b] text-sm">{t.pageSubtitle}</p>
         </div>
       </div>
 
-      <div className="max-w-md mx-auto px-4 pb-20">
+      <div className="mx-auto w-full max-w-xl px-4 pb-20">
 
         {/* 카드 스프레드 */}
         {!revealed && spreadIndices.length > 0 && (
           <div className="mb-8">
-            <p className="text-center text-purple-300/40 text-xs mb-6 tracking-widest uppercase">
-              ✦ {t.instruction} ✦
+            <p className="mb-7 text-center text-[0.64rem] font-medium tracking-[0.16em] uppercase text-[#64748b]">
+              {t.instruction}
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               {spreadIndices.map((cardIdx, i) => (
@@ -163,7 +163,7 @@ export default function CardDrawClient() {
           />
         )}
 
-        <p className="text-center text-white/15 text-xs mt-8">{t.footerText}</p>
+        <p className="mt-10 text-center text-[0.7rem] text-[#64748b]">{t.footerText}</p>
       </div>
     </div>
   );
@@ -211,25 +211,25 @@ function TarotCardBack({
           style={{
             backfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
-            background: `linear-gradient(160deg, #f7f2e8 0%, #0f0628 100%)`,
+            background: '#ffffff',
             border: `2px solid ${card.color}70`,
           }}
         >
           {/* 상단 로마 숫자 */}
           <div className="flex justify-center pt-1.5">
-            <span style={{ color: `${card.color}90`, fontSize: '0.55rem', fontWeight: 900, letterSpacing: '0.05em' }}>
+            <span style={{ color: '#64748b', fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.05em' }}>
               {ROMAN[card.id]}
             </span>
           </div>
           {/* 내부: 이미지 */}
           <div className="flex-1 mx-1.5 mb-1.5 rounded-lg overflow-hidden flex items-center justify-center"
-            style={{ border: `1px solid ${card.color}30`, background: '#06030f' }}>
+            style={{ border: `1px solid ${card.color}33`, background: '#f8f9fb' }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={card.image} alt={card.name.en} className="w-full h-full object-contain" />
           </div>
           {/* 하단 이름 */}
           <div className="pb-1.5 text-center">
-            <span style={{ color: card.color, fontSize: '0.5rem', fontWeight: 700, letterSpacing: '0.04em' }}>
+            <span style={{ color: '#0f172a', fontSize: '0.5rem', fontWeight: 700, letterSpacing: '0.04em' }}>
               {card.name[lang].toUpperCase()}
             </span>
           </div>
@@ -245,33 +245,33 @@ function CardBackFace({ isHovered }: { isHovered: boolean }) {
     <div
       className="w-full h-full flex flex-col items-center justify-center"
       style={{
-        background: 'linear-gradient(160deg, #1e0a4e 0%, #2a1060 40%, #1a0840 100%)',
-        border: isHovered ? '1.5px solid rgba(167,139,250,0.6)' : '1.5px solid rgba(139,92,246,0.3)',
-        boxShadow: isHovered ? '0 8px 30px rgba(124,58,237,0.5), inset 0 0 20px rgba(139,92,246,0.1)' : '0 4px 15px rgba(0,0,0,0.5)',
+        background: 'linear-gradient(165deg, #f7f9ff 0%, #eef2ff 60%, #e7ecff 100%)',
+        border: isHovered ? '1px solid rgba(59,91,219,0.6)' : '1px solid #dde3f7',
+        boxShadow: isHovered ? '0 18px 34px -16px rgba(59,91,219,0.4)' : '0 4px 12px rgba(15,23,42,0.07)',
         transition: 'all 0.3s',
       }}
     >
       {/* 외부 장식 테두리 */}
-      <div className="absolute inset-[5px] rounded-lg" style={{ border: '1px solid rgba(139,92,246,0.25)' }} />
-      <div className="absolute inset-[8px] rounded-md" style={{ border: '0.5px solid rgba(139,92,246,0.15)' }} />
+      <div className="absolute inset-[5px] rounded-lg" style={{ border: '1px solid rgba(59,91,219,0.14)' }} />
+      <div className="absolute inset-[8px] rounded-md" style={{ border: '0.5px solid rgba(59,91,219,0.09)' }} />
 
       {/* 코너 장식 */}
       {['top-[10px] left-[10px]', 'top-[10px] right-[10px]', 'bottom-[10px] left-[10px]', 'bottom-[10px] right-[10px]'].map((pos, i) => (
-        <div key={i} className={`absolute ${pos} text-purple-300/40`} style={{ fontSize: '0.5rem' }}>◆</div>
+        <div key={i} className={`absolute ${pos} text-[#9db0ee]`} style={{ fontSize: '0.5rem' }}>◆</div>
       ))}
 
       {/* 배경 패턴 */}
-      <div className="absolute inset-0 opacity-10" style={{
+      <div className="absolute inset-0 opacity-[0.16]" style={{
         backgroundImage: [
-          'repeating-linear-gradient(45deg, rgba(139,92,246,0.4) 0px, rgba(139,92,246,0.4) 1px, transparent 1px, transparent 10px)',
-          'repeating-linear-gradient(-45deg, rgba(139,92,246,0.4) 0px, rgba(139,92,246,0.4) 1px, transparent 1px, transparent 10px)',
+          'repeating-linear-gradient(45deg, rgba(59,91,219,0.5) 0px, rgba(59,91,219,0.5) 1px, transparent 1px, transparent 10px)',
+          'repeating-linear-gradient(-45deg, rgba(59,91,219,0.5) 0px, rgba(59,91,219,0.5) 1px, transparent 1px, transparent 10px)',
         ].join(', '),
       }} />
 
       {/* 중앙 별 */}
       <div className="relative z-10 flex flex-col items-center gap-1">
-        <div style={{ fontSize: '1.2rem', color: 'rgba(196,132,252,0.7)', filter: 'drop-shadow(0 0 6px rgba(167,139,250,0.6))' }}>✦</div>
-        <div style={{ fontSize: '0.5rem', color: 'rgba(196,132,252,0.35)', letterSpacing: '0.15em' }}>TAROT</div>
+        <div style={{ fontSize: '1.3rem', color: 'rgba(59,91,219,0.9)' }}>✦</div>
+        <div style={{ fontSize: '0.5rem', color: 'rgba(59,91,219,0.55)', letterSpacing: '0.18em', fontWeight: 600 }}>TAROT</div>
       </div>
     </div>
   );
@@ -298,10 +298,10 @@ function ResultCard({
           className="relative overflow-hidden"
           style={{
             width: 190,
-            background: 'linear-gradient(160deg, #1a0840 0%, #0e0520 100%)',
-            border: `2px solid ${card.color}80`,
-            borderRadius: 16,
-            boxShadow: `0 0 50px ${card.color}35, 0 20px 60px rgba(0,0,0,0.6)`,
+            background: '#ffffff',
+            border: '1px solid #e8eaef',
+            borderRadius: 18,
+            boxShadow: '0 30px 60px -34px rgba(15,23,42,0.35)',
           }}
         >
           {/* 이미지: 잘림 없이 전체 표시 */}
@@ -321,7 +321,7 @@ function ResultCard({
           background: `${card.color}18`,
           border: `1px solid ${card.color}50`,
         }}>
-          <span style={{ color: card.color, fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em' }}>
+          <span style={{ color: '#0f172a', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em' }}>
             ✦ {card.keyword[lang]} ✦
           </span>
         </div>
@@ -332,10 +332,10 @@ function ResultCard({
         className="rounded-3xl p-[1.5px] mb-4"
         style={{ background: `linear-gradient(135deg, ${card.color}70, ${card.color}20, ${card.color}50)` }}
       >
-        <div className="rounded-3xl p-6 space-y-4" style={{ background: 'linear-gradient(160deg, #100828 0%, #0e0520 100%)' }}>
+        <div className="rounded-3xl p-6 space-y-4 bg-white">
           <div className="text-center">
-            <div className="text-white/30 text-xs tracking-widest uppercase mb-1">{t.messageLabel}</div>
-            <p className="text-white/80 text-sm leading-relaxed">{card.message[lang]}</p>
+            <div className="text-[#64748b] text-[0.66rem] tracking-[0.14em] uppercase mb-2">{t.messageLabel}</div>
+            <p className="text-[#334155] text-[0.86rem] leading-7">{card.message[lang]}</p>
           </div>
         </div>
       </div>
@@ -346,16 +346,16 @@ function ResultCard({
           onClick={onRetry}
           className="flex-1 py-3.5 rounded-2xl text-sm font-bold transition-all"
           style={{
-            background: 'rgba(20,23,43,0.04)',
-            border: '1px solid rgba(20,23,43,0.08)',
-            color: 'rgba(255,255,255,0.5)',
+            background: '#ffffff',
+            border: '1px solid #e8eaef',
+            color: '#475569',
           }}
         >
           {t.retryBtn}
         </button>
         <button
           onClick={onShare}
-          className="flex-1 py-3.5 rounded-2xl text-sm font-bold transition-all text-white"
+          className="flex-1 py-3.5 rounded-2xl text-sm font-semibold transition-all text-white"
           style={{
             background: `linear-gradient(135deg, ${card.color}60, ${card.color}30)`,
             border: `1px solid ${card.color}50`,

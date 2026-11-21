@@ -13,29 +13,29 @@ export const metadata: Metadata = {
 };
 
 const bgStyle = {
-  background: 'linear-gradient(160deg, rgba(250,246,238,0.6) 0%, rgba(247,242,232,0.4) 45%, rgba(241,233,218,0.5) 100%)',
+  background: '#ffffff',
   minHeight: '100vh',
 };
 
 export default function NumerologyLuckyNumbersPage() {
   return (
     <div style={bgStyle}>
-      <article className="max-w-3xl mx-auto px-6 py-16 text-[#1a1c2e]/80">
-        <Link href="/blog" className="text-[#8a6a2f] hover:text-[#6f5223] text-sm mb-8 inline-block">
+      <article className="max-w-3xl mx-auto px-6 py-16 text-[#0f172a]/80">
+        <Link href="/blog" className="text-[#3b5bdb] hover:text-[#3b5bdb] text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
 
         <header className="mb-10">
           <div className="flex items-center gap-2 mb-4 flex-wrap">
-            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(169,128,63,0.14)', color: '#6f5223' }}>
+            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(59,91,219,0.14)', color: '#3b5bdb' }}>
               운세 심화
             </span>
-            <span className="text-[#1a1c2e]/38 text-xs">2025년 3월 22일 · 9분 읽기</span>
+            <span className="text-[#64748b] text-xs">2025년 3월 22일 · 9분 읽기</span>
           </div>
-          <h1 className="text-3xl font-bold text-[#14172b] mb-4 leading-tight">
+          <h1 className="text-3xl font-bold text-[#0f172a] mb-4 leading-tight">
             수비학과 행운의 숫자 — 내 운명 숫자로 알아보는 운세
           </h1>
-          <p className="text-[#1a1c2e]/55 text-base leading-relaxed">
+          <p className="text-[#475569] text-base leading-relaxed">
             숫자 하나에 삶 전체가 담긴다고 하면 믿어지시나요? 수비학은 수천 년간 숫자에서 우주의 패턴과 인간의 운명을 읽어온 고대 학문입니다. 내 생년월일에 숨겨진 운명 숫자를 찾아보세요.
           </p>
         </header>
@@ -43,7 +43,7 @@ export default function NumerologyLuckyNumbersPage() {
         <div className="space-y-8 text-sm leading-relaxed">
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">수비학(Numerology)이란?</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">수비학(Numerology)이란?</h2>
             <p className="mb-3">
               수비학(數秘學, Numerology)은 숫자와 문자에 신비로운 의미와 에너지가 내재되어 있다는 믿음을 바탕으로, 숫자를 통해 사람의 성격과 운명, 미래를 해석하는 학문입니다. 그 역사는 기원전 6세기경 고대 그리스 철학자 피타고라스로 거슬러 올라갑니다.
             </p>
@@ -59,20 +59,20 @@ export default function NumerologyLuckyNumbersPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">운명 숫자(Life Path Number) 계산법</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">운명 숫자(Life Path Number) 계산법</h2>
             <p className="mb-3">
               운명 숫자는 수비학에서 가장 중요한 숫자입니다. 마치 별자리의 태양 별자리처럼, 한 사람의 근본적인 성격과 인생 방향을 나타냅니다. 계산 방법은 생년월일의 모든 숫자를 더하여 한 자리 수(또는 마스터 넘버 11, 22, 33)가 나올 때까지 반복합니다.
             </p>
 
-            <div className="rounded-2xl p-5 mb-4" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
-              <h3 className="text-[#14172b] font-semibold mb-3">계산 예시 — 1990년 5월 23일생</h3>
-              <ul className="space-y-2 text-[#1a1c2e]/72">
-                <li>① 연도: 1+9+9+0 = <strong className="text-[#8a6a2f]">19</strong> → 1+9 = <strong className="text-[#8a6a2f]">10</strong> → 1+0 = <strong className="text-[#8a6a2f]">1</strong></li>
-                <li>② 월: 0+5 = <strong className="text-[#8a6a2f]">5</strong></li>
-                <li>③ 일: 2+3 = <strong className="text-[#8a6a2f]">5</strong></li>
+            <div className="rounded-2xl p-5 mb-4" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
+              <h3 className="text-[#0f172a] font-semibold mb-3">계산 예시 — 1990년 5월 23일생</h3>
+              <ul className="space-y-2 text-[#0f172a]/72">
+                <li>① 연도: 1+9+9+0 = <strong className="text-[#3b5bdb]">19</strong> → 1+9 = <strong className="text-[#3b5bdb]">10</strong> → 1+0 = <strong className="text-[#3b5bdb]">1</strong></li>
+                <li>② 월: 0+5 = <strong className="text-[#3b5bdb]">5</strong></li>
+                <li>③ 일: 2+3 = <strong className="text-[#3b5bdb]">5</strong></li>
                 <li>④ 합산: 1+5+5 = <strong className="text-yellow-300">11</strong> (마스터 넘버, 더 이상 줄이지 않음)</li>
               </ul>
-              <p className="mt-3 text-[#1a1c2e]/55 text-xs">※ 11, 22, 33은 마스터 넘버로, 일반 숫자보다 강화된 에너지를 지닙니다.</p>
+              <p className="mt-3 text-[#475569] text-xs">※ 11, 22, 33은 마스터 넘버로, 일반 숫자보다 강화된 에너지를 지닙니다.</p>
             </div>
 
             <p className="mb-3">
@@ -84,7 +84,7 @@ export default function NumerologyLuckyNumbersPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">1~9 운명 숫자별 성격과 운세</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">1~9 운명 숫자별 성격과 운세</h2>
             <p className="mb-3">
               각 운명 숫자는 독특한 에너지와 특성을 지니고 있습니다. 자신의 운명 숫자를 찾아 그 의미를 탐구해보세요.
             </p>
@@ -101,26 +101,26 @@ export default function NumerologyLuckyNumbersPage() {
                 { num: '8', title: '성공의 숫자 — 물질과 권력', desc: '뛰어난 사업 감각과 리더십으로 큰 성공을 이루는 성취자입니다. 금전운과 사업운이 가장 강한 숫자로, 큰 목표를 현실로 만드는 실행력이 있습니다. 권력욕이 강해질 수 있으니, 윤리적인 방향으로 에너지를 사용해야 합니다. 행운색은 검정과 보라입니다.' },
                 { num: '9', title: '완성의 숫자 — 봉사와 인도주의', desc: '인류를 사랑하는 이타적인 이상주의자입니다. 깊은 지혜와 넓은 시야를 가지고 있으며, 사회에 기여하고자 하는 강한 사명감이 있습니다. 예술, 사회활동, 상담 분야에서 빛납니다. 자신의 필요를 챙기는 것도 잊지 마세요. 행운색은 금색과 빨간색입니다.' },
               ].map(({ num, title, desc }) => (
-                <div key={num} className="rounded-2xl p-4" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
+                <div key={num} className="rounded-2xl p-4" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
                   <div className="flex items-center gap-3 mb-2">
-                    <span className="text-2xl font-black text-[#8a6a2f]">{num}</span>
-                    <strong className="text-[#14172b] text-sm">{title}</strong>
+                    <span className="text-2xl font-black text-[#3b5bdb]">{num}</span>
+                    <strong className="text-[#0f172a] text-sm">{title}</strong>
                   </div>
-                  <p className="text-[#1a1c2e]/64 text-xs leading-relaxed">{desc}</p>
+                  <p className="text-[#475569] text-xs leading-relaxed">{desc}</p>
                 </div>
               ))}
             </div>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">별자리와 행운의 숫자의 연관성</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">별자리와 행운의 숫자의 연관성</h2>
             <p className="mb-3">
               수비학과 점성술은 서로 다른 체계이지만, 놀라운 조화를 이룹니다. 각 별자리는 고유의 행운 숫자를 가지고 있으며, 이는 지배 행성의 수비학적 특성에서 비롯됩니다.
             </p>
 
-            <div className="rounded-2xl p-5 mb-4" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
-              <h3 className="text-[#14172b] font-semibold mb-3">별자리별 행운의 숫자</h3>
-              <div className="grid grid-cols-2 gap-2 text-xs text-[#1a1c2e]/72">
+            <div className="rounded-2xl p-5 mb-4" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
+              <h3 className="text-[#0f172a] font-semibold mb-3">별자리별 행운의 숫자</h3>
+              <div className="grid grid-cols-2 gap-2 text-xs text-[#0f172a]/72">
                 <div>♈ 양자리 — 1, 9</div>
                 <div>♉ 황소자리 — 2, 6</div>
                 <div>♊ 쌍둥이자리 — 5, 7</div>
@@ -145,25 +145,25 @@ export default function NumerologyLuckyNumbersPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">집 번지, 전화번호, 이름에서 보는 수비학</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">집 번지, 전화번호, 이름에서 보는 수비학</h2>
             <p className="mb-3">
               수비학은 생년월일에만 국한되지 않습니다. 우리 삶 곳곳의 숫자들도 수비학적으로 해석할 수 있습니다. 가장 실용적으로 활용되는 영역은 집 번지, 전화번호, 그리고 이름 수비학입니다.
             </p>
             <p className="mb-3">
-              <strong className="text-[#14172b]">집 번지 수비학:</strong> 집 번지의 숫자를 모두 더해서 한 자리 수로 줄입니다. 예를 들어 번지가 123이라면 1+2+3=6이 됩니다. 6번 집은 사랑, 가족, 아름다움의 에너지를 가지며 가정을 이루기에 이상적인 공간입니다. 1번 집은 독립과 개척에 좋으며, 8번 집은 사업가나 성공을 꿈꾸는 사람에게 적합합니다. 반면 4번 집은 안정적이지만 변화가 적을 수 있으며, 일부 동아시아 문화에서 기피됩니다.
+              <strong className="text-[#0f172a]">집 번지 수비학:</strong> 집 번지의 숫자를 모두 더해서 한 자리 수로 줄입니다. 예를 들어 번지가 123이라면 1+2+3=6이 됩니다. 6번 집은 사랑, 가족, 아름다움의 에너지를 가지며 가정을 이루기에 이상적인 공간입니다. 1번 집은 독립과 개척에 좋으며, 8번 집은 사업가나 성공을 꿈꾸는 사람에게 적합합니다. 반면 4번 집은 안정적이지만 변화가 적을 수 있으며, 일부 동아시아 문화에서 기피됩니다.
             </p>
             <p className="mb-3">
-              <strong className="text-[#14172b]">이름 수비학 (표현 숫자):</strong> 알파벳 각 글자에 1~9의 숫자를 대응시켜(A=1, B=2, ... I=9, J=1 순환) 이름의 모든 숫자를 더합니다. 한국 이름은 한글의 자음과 모음에 숫자를 배정하는 방식을 사용합니다. 이 '표현 숫자(Expression Number)'는 그 사람이 타고난 재능과 잠재력을 나타냅니다.
+              <strong className="text-[#0f172a]">이름 수비학 (표현 숫자):</strong> 알파벳 각 글자에 1~9의 숫자를 대응시켜(A=1, B=2, ... I=9, J=1 순환) 이름의 모든 숫자를 더합니다. 한국 이름은 한글의 자음과 모음에 숫자를 배정하는 방식을 사용합니다. 이 '표현 숫자(Expression Number)'는 그 사람이 타고난 재능과 잠재력을 나타냅니다.
             </p>
             <p>
-              <strong className="text-[#14172b]">전화번호와 자동차 번호판:</strong> 일상의 숫자들도 에너지를 가집니다. 자신의 운명 숫자와 조화로운 숫자가 많이 포함된 전화번호를 선택하면 그 에너지를 강화할 수 있다고 수비학자들은 말합니다. 중요한 계약이나 미팅의 날짜도 수비학적으로 좋은 날을 선택하는 것이 전통적인 관행입니다.
+              <strong className="text-[#0f172a]">전화번호와 자동차 번호판:</strong> 일상의 숫자들도 에너지를 가집니다. 자신의 운명 숫자와 조화로운 숫자가 많이 포함된 전화번호를 선택하면 그 에너지를 강화할 수 있다고 수비학자들은 말합니다. 중요한 계약이나 미팅의 날짜도 수비학적으로 좋은 날을 선택하는 것이 전통적인 관행입니다.
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#14172b] mb-4">2026년의 수비학적 의미 — 보편 연도 수 1</h2>
+            <h2 className="text-xl font-bold text-[#0f172a] mb-4">2026년의 수비학적 의미 — 보편 연도 수 1</h2>
             <p className="mb-3">
-              수비학에서는 특정 연도의 에너지를 '보편 연도 수(Universal Year Number)'로 파악합니다. 2026년의 보편 연도 수를 계산해보면: 2+0+2+6 = 10, 그리고 1+0 = <strong className="text-[#8a6a2f]">1</strong>입니다.
+              수비학에서는 특정 연도의 에너지를 '보편 연도 수(Universal Year Number)'로 파악합니다. 2026년의 보편 연도 수를 계산해보면: 2+0+2+6 = 10, 그리고 1+0 = <strong className="text-[#3b5bdb]">1</strong>입니다.
             </p>
             <p className="mb-3">
               보편 연도 수 1은 수비학에서 가장 강력한 시작의 에너지를 의미합니다. 1은 태양, 리더십, 새로운 시작, 독립의 숫자입니다. 9년 주기 중 첫 해에 해당하는 2026년은, 이전 9년 주기의 완성(2025년, 보편 연도 수 9) 이후 완전히 새로운 페이지가 열리는 해입니다.
@@ -178,27 +178,27 @@ export default function NumerologyLuckyNumbersPage() {
 
         </div>
 
-        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(169,128,63,0.1)', border: '1px solid rgba(169,128,63,0.14)' }}>
-          <p className="text-[#1a1c2e]/64 mb-4 text-sm">나의 별자리 운세가 궁금하다면?</p>
+        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(59,91,219,0.1)', border: '1px solid rgba(59,91,219,0.14)' }}>
+          <p className="text-[#475569] mb-4 text-sm">나의 별자리 운세가 궁금하다면?</p>
           <Link
             href="/"
-            className="inline-block px-6 py-3 rounded-full font-bold text-[#f7f0e1] text-sm"
-            style={{ background: 'linear-gradient(135deg, #1a2144 0%, #111730 100%)' }}
+            className="inline-block px-6 py-3 rounded-full font-bold text-[#ffffff] text-sm"
+            style={{ background: 'linear-gradient(135deg, #3b5bdb 0%, #2f4bc7 100%)' }}
           >
             🔮 오늘의 운세 무료로 보기 →
           </Link>
         </div>
 
         <nav className="mt-10">
-          <h3 className="text-sm text-[#1a1c2e]/45 mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
+          <h3 className="text-sm text-[#64748b] mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <Link href="/blog/what-is-astrology" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
-              <div className="text-[#1a1c2e]/72 font-medium">✨ 점성술이란 무엇인가?</div>
-              <div className="text-[#1a1c2e]/38 text-xs mt-1">서양 별자리의 역사와 기초 가이드</div>
+            <Link href="/blog/what-is-astrology" className="p-4 rounded-xl text-sm hover:border-[#c7d0f7] transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
+              <div className="text-[#0f172a]/72 font-medium">✨ 점성술이란 무엇인가?</div>
+              <div className="text-[#64748b] text-xs mt-1">서양 별자리의 역사와 기초 가이드</div>
             </Link>
-            <Link href="/blog/zodiac-career-guide" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
-              <div className="text-[#1a1c2e]/72 font-medium">💼 별자리별 직업 적성 가이드</div>
-              <div className="text-[#1a1c2e]/38 text-xs mt-1">내 별자리에 맞는 최고의 직업은?</div>
+            <Link href="/blog/zodiac-career-guide" className="p-4 rounded-xl text-sm hover:border-[#c7d0f7] transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
+              <div className="text-[#0f172a]/72 font-medium">💼 별자리별 직업 적성 가이드</div>
+              <div className="text-[#64748b] text-xs mt-1">내 별자리에 맞는 최고의 직업은?</div>
             </Link>
           </div>
         </nav>

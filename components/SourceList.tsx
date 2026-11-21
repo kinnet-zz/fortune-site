@@ -8,11 +8,11 @@ export default function SourceList({ sources }: { sources: SourceItem[] }) {
   return (
     <section
       className="mt-10 rounded-2xl p-6"
-      style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}
+      style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}
       aria-labelledby="sources-heading"
     >
-      <h2 id="sources-heading" className="text-lg font-bold text-[#14172b] mb-3">주요 참고자료</h2>
-      <p className="text-[#1a1c2e]/45 text-xs leading-relaxed mb-4">
+      <h2 id="sources-heading" className="text-lg font-bold text-[#0f172a] mb-3">주요 참고자료</h2>
+      <p className="text-[#64748b] text-xs leading-relaxed mb-4">
         아래 자료는 글에 포함된 사실 관계를 확인하기 위한 출처입니다. 점성술적 해석과 활용 의견은 StarFate의 편집 관점입니다.
       </p>
       <ul className="space-y-3 text-sm">
@@ -22,11 +22,11 @@ export default function SourceList({ sources }: { sources: SourceItem[] }) {
               href={source.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#8a6a2f] hover:text-[#6f5223] underline underline-offset-4"
+              className="text-[#3b5bdb] hover:text-[#3b5bdb] underline underline-offset-4"
             >
               {source.title}
             </a>
-            {source.note && <p className="text-[#1a1c2e]/40 text-xs mt-1">{source.note}</p>}
+            {source.note && <p className="text-[#0f172a]/40 text-xs mt-1">{source.note}</p>}
           </li>
         ))}
       </ul>

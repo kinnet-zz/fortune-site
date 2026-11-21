@@ -113,7 +113,7 @@ export default function IdolClient() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: '#0a0a0a' }}>
+    <div className="min-h-screen" style={{ background: '#ffffff' }}>
 
       {/* 히어로 — 4색 에이전시 배너 */}
       <div className="relative overflow-hidden">
@@ -129,7 +129,7 @@ export default function IdolClient() {
         </div>
         {/* 중앙 그라데이션 오버레이 */}
         <div className="absolute inset-0" style={{
-          background: 'radial-gradient(ellipse 80% 100% at 50% 0%, transparent 0%, #0a0a0a 75%)'
+          background: 'radial-gradient(ellipse 80% 100% at 50% 0%, transparent 0%, #ffffff 75%)'
         }} />
 
         <div className="relative z-10 max-w-2xl mx-auto px-4 pt-12 pb-8 text-center">
@@ -152,10 +152,10 @@ export default function IdolClient() {
           </div>
 
           {/* 타이틀 */}
-          <h1 className="text-3xl sm:text-4xl font-black text-white leading-tight mb-3">
+          <h1 className="text-3xl sm:text-4xl font-black text-[#0f172a] leading-tight mb-3">
             {tr.pageTitle}
           </h1>
-          <p className="text-white/40 text-sm sm:text-base max-w-md mx-auto leading-relaxed">
+          <p className="text-[#64748b] text-sm sm:text-base max-w-md mx-auto leading-relaxed">
             {tr.pageSubtitle}
           </p>
         </div>
@@ -184,11 +184,12 @@ export default function IdolClient() {
                   <button
                     key={g}
                     onClick={() => { setGender(g); setResult(null); setError(''); }}
-                    className="flex-1 py-3 rounded-2xl font-bold text-sm transition-all duration-200"
+                    className="flex-1 rounded-2xl py-3 text-sm font-semibold transition-all duration-200"
                     style={{
-                      background: isSelected ? 'rgba(255,255,255,0.12)' : 'rgba(20,23,43,0.03)',
-                      border: isSelected ? '1.5px solid rgba(255,255,255,0.35)' : '1.5px solid rgba(20,23,43,0.08)',
-                      color: isSelected ? '#fff' : 'rgba(255,255,255,0.35)',
+                      background: isSelected ? '#ffffff' : '#f8f9fb',
+                      border: isSelected ? '1.5px solid #3b5bdb' : '1.5px solid #e8eaef',
+                      color: isSelected ? '#0f172a' : '#64748b',
+                      boxShadow: isSelected ? '0 6px 18px -12px rgba(59,91,219,0.45)' : 'none',
                     }}
                   >
                     {emoji} {label}
@@ -201,7 +202,7 @@ export default function IdolClient() {
 
             {error && (
               <div className="px-4 py-3 rounded-2xl text-sm text-center"
-                style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)', color: '#fca5a5' }}>
+                style={{ background: '#fef2f2', border: '1px solid #fecaca', color: '#b91c1c' }}>
                 {error}
               </div>
             )}
@@ -209,9 +210,9 @@ export default function IdolClient() {
             {image && (
               <button
                 onClick={handleAnalyze}
-                className="w-full py-4 rounded-2xl font-black text-base transition-all duration-200 hover:opacity-90 active:scale-[0.98]"
+                className="w-full rounded-full py-4 text-base font-semibold transition-all duration-200 hover:bg-[#2f4bc7] active:scale-[0.99]"
                 style={{
-                  background: 'linear-gradient(90deg, #00A0E9, #9B59B6)',
+                  background: '#3b5bdb',
                   color: 'white',
                   letterSpacing: '-0.02em',
                 }}
@@ -233,8 +234,8 @@ export default function IdolClient() {
                       <span className="text-base leading-none">{AGENCY_INFO[a].emoji}</span>
                       <span className="font-black text-sm" style={{ color: AGENCY_COLORS[a].text }}>{a}</span>
                     </div>
-                    <div className="text-white/30 text-xs">{tr.agencyDesc[a]}</div>
-                    <div className="text-white/20 text-xs mt-1">{AGENCY_INFO[a].idol}</div>
+                    <div className="text-[#64748b] text-xs">{tr.agencyDesc[a]}</div>
+                    <div className="text-[#64748b] text-xs mt-1">{AGENCY_INFO[a].idol}</div>
                   </div>
                 ))}
               </div>
@@ -248,7 +249,7 @@ export default function IdolClient() {
             {preview && (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={preview} alt="" className="w-28 h-28 rounded-3xl object-cover"
-                style={{ border: '2px solid rgba(20,23,43,0.08)' }} />
+                style={{ border: '2px solid rgba(15,23,42,0.08)' }} />
             )}
             {/* 에이전시 컬러 스피너 */}
             <div className="relative w-16 h-16">
@@ -265,7 +266,7 @@ export default function IdolClient() {
                 />
               ))}
             </div>
-            <p className="text-white/50 text-sm text-center animate-pulse">
+            <p className="text-[#64748b] text-sm text-center animate-pulse">
               {tr.analyzingMessages[loadingMsgIdx]}
             </p>
           </div>

@@ -14,7 +14,7 @@ import { getDailyHoroscope } from '@/lib/dailyHoroscopeServer';
 import ConstellationIcon from '@/components/Constellation';
 
 const bgStyle = {
-  background: 'linear-gradient(160deg, rgba(250,246,238,0.6) 0%, rgba(247,242,232,0.4) 45%, rgba(241,233,218,0.5) 100%)',
+  background: '#ffffff',
   minHeight: '100vh',
 };
 
@@ -64,12 +64,12 @@ function ScoreRing({ score }: { score: number }) {
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (score / 100) * circumference;
-  const color = score >= 80 ? '#a9803f' : score >= 65 ? '#6b6a63' : '#8a857b';
+  const color = score >= 80 ? '#3b5bdb' : score >= 65 ? '#6b6a63' : '#8a857b';
 
   return (
     <div className="relative flex items-center justify-center" style={{ width: 100, height: 100 }}>
       <svg width="100" height="100" style={{ transform: 'rotate(-90deg)' }}>
-        <circle cx="50" cy="50" r={radius} fill="none" stroke="rgba(20,23,43,0.08)" strokeWidth="8" />
+        <circle cx="50" cy="50" r={radius} fill="none" stroke="rgba(15,23,42,0.08)" strokeWidth="8" />
         <circle
           cx="50" cy="50" r={radius} fill="none"
           stroke={color} strokeWidth="8"
@@ -80,8 +80,8 @@ function ScoreRing({ score }: { score: number }) {
         />
       </svg>
       <div className="absolute text-center">
-        <div className="text-[#14172b] font-bold text-xl leading-none">{score}</div>
-        <div className="text-[#1a1c2e]/45 text-xs">점</div>
+        <div className="text-[#0f172a] font-bold text-xl leading-none">{score}</div>
+        <div className="text-[#64748b] text-xs">점</div>
       </div>
     </div>
   );
@@ -91,13 +91,13 @@ function Section({ emoji, title, content }: { emoji: string; title: string; cont
   return (
     <div
       className="rounded-2xl p-5"
-      style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.05)' }}
+      style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.05)' }}
     >
       <div className="flex items-center gap-2 mb-3">
         <span className="text-xl">{emoji}</span>
-        <h3 className="text-[#14172b] font-semibold text-sm">{title}</h3>
+        <h3 className="text-[#0f172a] font-semibold text-sm">{title}</h3>
       </div>
-      <p className="text-[#1a1c2e]/72 text-sm leading-relaxed">{content}</p>
+      <p className="text-[#0f172a]/72 text-sm leading-relaxed">{content}</p>
     </div>
   );
 }
@@ -149,7 +149,7 @@ export default async function ZodiacDailyPage({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }}
         />
-        <Link href="/blog/daily" className="text-[#8a6a2f] hover:text-[#6f5223] text-sm mb-8 inline-block">
+        <Link href="/blog/daily" className="text-[#3b5bdb] hover:text-[#3b5bdb] text-sm mb-8 inline-block">
           ← 오늘의 전체 운세
         </Link>
 
@@ -159,39 +159,39 @@ export default async function ZodiacDailyPage({
               <div className="flex items-center gap-2 mb-4 flex-wrap">
                 <span
                   className="px-2 py-0.5 rounded-full text-xs font-medium"
-                  style={{ background: 'rgba(169,128,63,0.14)', color: '#6f5223' }}
+                  style={{ background: 'rgba(59,91,219,0.14)', color: '#3b5bdb' }}
                 >
                   일일 운세
                 </span>
-                <span className="text-[#1a1c2e]/55 text-xs">{formattedDate}</span>
+                <span className="text-[#475569] text-xs">{formattedDate}</span>
               </div>
 
               <div className="flex items-center gap-4 mb-6">
                 <div className="text-[var(--ink)]"><ConstellationIcon slug={zodiac as DailyZodiacSlug} size={72} strokeWidth={1.05} animated /></div>
                 <div>
-                  <h1 className="text-3xl font-bold text-[#14172b]">{data.zodiacKo} 오늘의 운세</h1>
-                  <p className="text-[#1a1c2e]/55 text-sm mt-1">{data.summary}</p>
+                  <h1 className="text-3xl font-bold text-[#0f172a]">{data.zodiacKo} 오늘의 운세</h1>
+                  <p className="text-[#475569] text-sm mt-1">{data.summary}</p>
                 </div>
               </div>
 
               {/* Score + Lucky */}
               <div
                 className="rounded-2xl p-5 flex items-center gap-6 flex-wrap"
-                style={{ background: 'rgba(195,161,101,0.12)', border: '1px solid rgba(169,128,63,0.12)' }}
+                style={{ background: 'rgba(59,91,219,0.12)', border: '1px solid rgba(59,91,219,0.12)' }}
               >
                 <ScoreRing score={data.score} />
                 <div className="flex-1 grid grid-cols-3 gap-4 min-w-0">
                   <div className="text-center">
-                    <div className="text-[#1a1c2e]/45 text-xs mb-1">행운 색</div>
-                    <div className="text-[#14172b] font-semibold text-sm">{data.luckyColor}</div>
+                    <div className="text-[#64748b] text-xs mb-1">행운 색</div>
+                    <div className="text-[#0f172a] font-semibold text-sm">{data.luckyColor}</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-[#1a1c2e]/45 text-xs mb-1">행운 숫자</div>
-                    <div className="text-[#14172b] font-semibold text-sm">{data.luckyNumber}</div>
+                    <div className="text-[#64748b] text-xs mb-1">행운 숫자</div>
+                    <div className="text-[#0f172a] font-semibold text-sm">{data.luckyNumber}</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-[#1a1c2e]/45 text-xs mb-1">행운 아이템</div>
-                    <div className="text-[#14172b] font-semibold text-sm">{data.luckyItem}</div>
+                    <div className="text-[#64748b] text-xs mb-1">행운 아이템</div>
+                    <div className="text-[#0f172a] font-semibold text-sm">{data.luckyItem}</div>
                   </div>
                 </div>
               </div>
@@ -200,10 +200,10 @@ export default async function ZodiacDailyPage({
             {/* Overall */}
             <div
               className="rounded-2xl p-6 mb-6"
-              style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}
+              style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}
             >
-              <h2 className="text-[#14172b] font-bold text-base mb-3">🌟 종합 운세</h2>
-              <p className="text-[#1a1c2e]/75 text-sm leading-relaxed">{data.overall}</p>
+              <h2 className="text-[#0f172a] font-bold text-base mb-3">🌟 종합 운세</h2>
+              <p className="text-[#0f172a]/75 text-sm leading-relaxed">{data.overall}</p>
             </div>
 
             {/* Sections grid */}
@@ -217,16 +217,16 @@ export default async function ZodiacDailyPage({
             {/* Advice */}
             <div
               className="rounded-2xl p-5 text-center"
-              style={{ background: 'rgba(195,161,101,0.1)', border: '1px solid rgba(169,128,63,0.28)' }}
+              style={{ background: 'rgba(59,91,219,0.1)', border: '1px solid rgba(59,91,219,0.28)' }}
             >
               <div className="text-2xl mb-2">✨</div>
-              <p className="text-[#6f5223] text-sm font-medium italic">&ldquo;{data.advice}&rdquo;</p>
-              <p className="text-[#1a1c2e]/38 text-xs mt-2">오늘 하루를 위한 한 마디</p>
+              <p className="text-[#3b5bdb] text-sm font-medium italic">&ldquo;{data.advice}&rdquo;</p>
+              <p className="text-[#64748b] text-xs mt-2">오늘 하루를 위한 한 마디</p>
             </div>
 
             {/* Nav to other signs */}
             <nav className="mt-10">
-              <p className="text-[#1a1c2e]/38 text-xs mb-4 text-center">다른 별자리 운세 보기</p>
+              <p className="text-[#64748b] text-xs mb-4 text-center">다른 별자리 운세 보기</p>
               <div className="flex flex-wrap gap-2 justify-center">
                 {DAILY_ZODIACS.map((other) => (
                   <Link
@@ -234,10 +234,10 @@ export default async function ZodiacDailyPage({
                     href={`/blog/daily/${other.slug}`}
                     className={`px-3 py-1.5 rounded-full text-xs transition-colors ${
                       other.slug === zodiac
-                        ? 'text-[#14172b]'
-                        : 'text-[#1a1c2e]/45 hover:text-[#1a1c2e]/72'
+                        ? 'text-[#0f172a]'
+                        : 'text-[#64748b] hover:text-[#0f172a]/72'
                     }`}
-                    style={other.slug === zodiac ? { background: 'rgba(195,161,101,0.3)' } : { background: 'rgba(20,23,43,0.04)' }}
+                    style={other.slug === zodiac ? { background: 'rgba(59,91,219,0.3)' } : { background: 'rgba(15,23,42,0.04)' }}
                   >
                     {other.ko}
                   </Link>
@@ -252,21 +252,21 @@ export default async function ZodiacDailyPage({
           <section className="mt-12 space-y-6">
             <div
               className="rounded-2xl p-6"
-              style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.05)' }}
+              style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.05)' }}
             >
               <div className="flex items-center gap-3 mb-4">
                 <span className="text-3xl">{info.symbol}</span>
                 <div>
-                  <h2 className="text-[#14172b] font-bold text-base">{info.ko} 별자리 소개</h2>
-                  <p className="text-[#1a1c2e]/45 text-xs">{info.dates} · {info.element}의 원소 · 지배 행성: {info.planet}</p>
+                  <h2 className="text-[#0f172a] font-bold text-base">{info.ko} 별자리 소개</h2>
+                  <p className="text-[#64748b] text-xs">{info.dates} · {info.element}의 원소 · 지배 행성: {info.planet}</p>
                 </div>
               </div>
-              <p className="text-[#1a1c2e]/64 text-sm leading-relaxed mb-3">
-                <strong className="text-[#8a6a2f]">{info.trait}</strong>
+              <p className="text-[#475569] text-sm leading-relaxed mb-3">
+                <strong className="text-[#3b5bdb]">{info.trait}</strong>
               </p>
-              <p className="text-[#1a1c2e]/58 text-sm leading-relaxed">{info.desc}</p>
+              <p className="text-[#475569] text-sm leading-relaxed">{info.desc}</p>
               <div className="mt-4">
-                <Link href={`/zodiac/${zodiac}`} className="text-[#8a6a2f] hover:text-[#6f5223] text-xs transition-colors">
+                <Link href={`/zodiac/${zodiac}`} className="text-[#3b5bdb] hover:text-[#3b5bdb] text-xs transition-colors">
                   {info.ko} 상세 가이드 보기 →
                 </Link>
               </div>
@@ -274,35 +274,35 @@ export default async function ZodiacDailyPage({
 
             <div
               className="rounded-2xl p-6"
-              style={{ background: 'rgba(195,161,101,0.09)', border: '1px solid rgba(169,128,63,0.28)' }}
+              style={{ background: 'rgba(59,91,219,0.09)', border: '1px solid rgba(59,91,219,0.28)' }}
             >
-              <h2 className="text-[#14172b] font-bold text-base mb-3">💡 {info.ko} 일일운세 활용 팁</h2>
-              <p className="text-[#1a1c2e]/64 text-sm leading-relaxed mb-4">{info.tip}</p>
-              <div className="space-y-2 text-sm text-[#1a1c2e]/55">
+              <h2 className="text-[#0f172a] font-bold text-base mb-3">💡 {info.ko} 일일운세 활용 팁</h2>
+              <p className="text-[#475569] text-sm leading-relaxed mb-4">{info.tip}</p>
+              <div className="space-y-2 text-sm text-[#475569]">
                 <div className="flex gap-2">
-                  <span className="text-[#8a6a2f] flex-shrink-0">▸</span>
-                  <span><strong className="text-[#1a1c2e]/72">운세 점수 해석:</strong> 80점 이상은 에너지가 매우 좋은 날, 65~79점은 보통, 64점 이하는 신중하게 행동해야 하는 날입니다.</span>
+                  <span className="text-[#3b5bdb] flex-shrink-0">▸</span>
+                  <span><strong className="text-[#0f172a]/72">운세 점수 해석:</strong> 80점 이상은 에너지가 매우 좋은 날, 65~79점은 보통, 64점 이하는 신중하게 행동해야 하는 날입니다.</span>
                 </div>
                 <div className="flex gap-2">
-                  <span className="text-[#8a6a2f] flex-shrink-0">▸</span>
-                  <span><strong className="text-[#1a1c2e]/72">행운 아이템 활용:</strong> 오늘의 행운 색과 아이템을 일상에 작게 접목해보세요. 긍정적 의도를 설정하는 데 도움이 됩니다.</span>
+                  <span className="text-[#3b5bdb] flex-shrink-0">▸</span>
+                  <span><strong className="text-[#0f172a]/72">행운 아이템 활용:</strong> 오늘의 행운 색과 아이템을 일상에 작게 접목해보세요. 긍정적 의도를 설정하는 데 도움이 됩니다.</span>
                 </div>
                 <div className="flex gap-2">
-                  <span className="text-[#8a6a2f] flex-shrink-0">▸</span>
-                  <span><strong className="text-[#1a1c2e]/72">운세 안내:</strong> 본 운세는 별자리·띠·날짜를 기반으로 매일 새롭게 제공되는 오락 목적의 콘텐츠입니다. 실제 미래를 예측하지 않습니다.</span>
+                  <span className="text-[#3b5bdb] flex-shrink-0">▸</span>
+                  <span><strong className="text-[#0f172a]/72">운세 안내:</strong> 본 운세는 별자리·띠·날짜를 기반으로 매일 새롭게 제공되는 오락 목적의 콘텐츠입니다. 실제 미래를 예측하지 않습니다.</span>
                 </div>
               </div>
             </div>
 
             <div
               className="rounded-2xl p-5 text-center"
-              style={{ background: 'rgba(20,23,43,0.025)', border: '1px solid rgba(20,23,43,0.05)' }}
+              style={{ background: 'rgba(15,23,42,0.025)', border: '1px solid rgba(15,23,42,0.05)' }}
             >
-              <p className="text-[#1a1c2e]/45 text-xs mb-3">생년월일로 별자리·띠 종합 운세 보기</p>
+              <p className="text-[#64748b] text-xs mb-3">생년월일로 별자리·띠 종합 운세 보기</p>
               <Link
                 href="/"
-                className="inline-block px-6 py-3 rounded-full font-bold text-[#f7f0e1] text-sm"
-                style={{ background: 'linear-gradient(135deg, #1a2144 0%, #111730 100%)' }}
+                className="inline-block px-6 py-3 rounded-full font-bold text-[#ffffff] text-sm"
+                style={{ background: 'linear-gradient(135deg, #3b5bdb 0%, #2f4bc7 100%)' }}
               >
                 🔮 나의 오늘 운세 무료로 보기 →
               </Link>
@@ -311,35 +311,35 @@ export default async function ZodiacDailyPage({
         )}
 
         <section className="mt-10" aria-labelledby="daily-related-title">
-          <h2 id="daily-related-title" className="text-[#14172b] font-bold text-lg mb-4">
+          <h2 id="daily-related-title" className="text-[#0f172a] font-bold text-lg mb-4">
             {data.zodiacKo} 운세와 함께 보기
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <Link
               href="/card-draw"
-              className="rounded-xl p-4 text-sm text-[#1a1c2e]/72 hover:text-[#14172b] transition-colors"
-              style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}
+              className="rounded-xl p-4 text-sm text-[#0f172a]/72 hover:text-[#0f172a] transition-colors"
+              style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}
             >
               🃏 오늘의 타로 한 장
             </Link>
             <Link
               href="/guide/zodiac-compatibility"
-              className="rounded-xl p-4 text-sm text-[#1a1c2e]/72 hover:text-[#14172b] transition-colors"
-              style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}
+              className="rounded-xl p-4 text-sm text-[#0f172a]/72 hover:text-[#0f172a] transition-colors"
+              style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}
             >
               💞 별자리 궁합 알아보기
             </Link>
             <Link
               href="/blog/how-to-read-daily-fortune"
-              className="rounded-xl p-4 text-sm text-[#1a1c2e]/72 hover:text-[#14172b] transition-colors"
-              style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}
+              className="rounded-xl p-4 text-sm text-[#0f172a]/72 hover:text-[#0f172a] transition-colors"
+              style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}
             >
               📖 운세를 건강하게 읽는 법
             </Link>
           </div>
         </section>
 
-        <footer className="mt-8 border-t border-[#14172b]/12 pt-5 text-sm leading-relaxed text-[#1a1c2e]/72">
+        <footer className="mt-8 border-t border-[#0f172a]/12 pt-5 text-sm leading-relaxed text-[#0f172a]/72">
           <p>업데이트: {formattedDate} · 작성 및 검토: StarFate 편집팀</p>
           <p className="mt-2">
             별자리 운세는 오락과 자기성찰을 위한 참고 콘텐츠입니다. 건강·금전·법률 등 중요한 결정은 실제 정보와 전문가의 조언을 기준으로 판단하세요.

@@ -320,11 +320,11 @@ export default async function ZodiacSignPage({
       <section className="relative overflow-hidden border-b border-[var(--line)]">
         <div
           className="pointer-events-none absolute inset-0"
-          style={{ background: 'radial-gradient(ellipse 55% 80% at 20% -10%, rgba(17,23,48,0.09) 0%, transparent 62%), radial-gradient(ellipse 40% 60% at 90% 110%, rgba(169,128,63,0.12) 0%, transparent 70%)' }}
+          style={{ background: 'radial-gradient(ellipse 55% 80% at 20% -10%, rgba(15,23,42,0.09) 0%, transparent 62%), radial-gradient(ellipse 40% 60% at 90% 110%, rgba(59,91,219,0.12) 0%, transparent 70%)' }}
           aria-hidden="true"
         />
         <div className="relative mx-auto max-w-4xl px-5 pb-12 pt-10 sm:pt-14">
-          <Link href="/zodiac" className="inline-flex min-h-11 items-center gap-2 text-[0.78rem] text-[var(--muted)] transition-colors hover:text-[#a9803f]">
+          <Link href="/zodiac" className="inline-flex min-h-11 items-center gap-2 text-[0.78rem] text-[var(--muted)] transition-colors hover:text-[#3b5bdb]">
             <span aria-hidden="true">←</span> 별자리 목록으로
           </Link>
 
@@ -352,7 +352,7 @@ export default async function ZodiacSignPage({
         <section className="mb-10">
           <div className="mb-4 flex flex-wrap gap-2">
             {data.traits.map((trait) => (
-              <span key={trait} className="rounded-full border border-[rgba(169,128,63,0.28)] bg-[rgba(195,161,101,0.08)] px-3 py-1.5 text-[0.74rem] text-[#6f5223]">
+              <span key={trait} className="rounded-full border border-[rgba(59,91,219,0.28)] bg-[rgba(59,91,219,0.08)] px-3 py-1.5 text-[0.74rem] text-[#3b5bdb]">
                 {trait}
               </span>
             ))}
@@ -362,7 +362,7 @@ export default async function ZodiacSignPage({
           </p>
         </section>
 
-        <div className="mb-10 h-px bg-[linear-gradient(90deg,transparent,rgba(169,128,63,0.4),transparent)]" />
+        <div className="mb-10 h-px bg-[linear-gradient(90deg,transparent,rgba(59,91,219,0.4),transparent)]" />
 
         {/* 강점 & 약점 */}
         <div className="mb-10 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -419,7 +419,7 @@ export default async function ZodiacSignPage({
         </div>
 
         {/* 궁합 */}
-        <section className="mt-10 rounded-[0.4rem] border border-[var(--line)] bg-[#fffdf8] p-6">
+        <section className="mt-10 rounded-[0.4rem] border border-[var(--line)] bg-[#ffffff] p-6">
           <h2 className="mb-4 border-0 pt-0 font-display text-[1.1rem] font-semibold text-[var(--ink)]">궁합</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="rounded-xl border border-[rgba(47,107,74,0.28)] bg-[rgba(47,107,74,0.06)] p-4">
@@ -434,7 +434,7 @@ export default async function ZodiacSignPage({
         </section>
 
         {/* 행운 & 유명인 */}
-        <section className="mt-4 rounded-[0.4rem] border border-[rgba(169,128,63,0.35)] bg-[rgba(195,161,101,0.08)] p-6">
+        <section className="mt-4 rounded-[0.4rem] border border-[rgba(59,91,219,0.35)] bg-[rgba(59,91,219,0.08)] p-6">
           <h2 className="mb-3 border-0 pt-0 font-display text-[1.1rem] font-semibold text-[var(--ink)]">행운의 상징</h2>
           <p className="mb-4 text-[0.86rem] text-[var(--ink-soft)]">{data.lucky}</p>
           <p className="text-[0.62rem] font-semibold uppercase tracking-[0.24em] text-[var(--gold)]">유명한 {data.name}</p>
@@ -442,9 +442,9 @@ export default async function ZodiacSignPage({
         </section>
 
         {/* CTA */}
-        <div className="mt-10 flex flex-col items-center gap-4 rounded-[0.6rem] border border-[rgba(226,205,162,0.2)] bg-[linear-gradient(160deg,#141a35,#0f1529)] px-6 py-9 text-center">
+        <div className="mt-10 flex flex-col items-center gap-4 rounded-2xl border border-[#e8eaef] bg-[#f8f9fb] px-6 py-10 text-center">
           <span className="eyebrow eyebrow-light eyebrow-center">Today</span>
-          <p className="font-display text-[1.2rem] font-semibold text-[#f7f0e1]">오늘 {data.name}의 운세가 궁금하다면?</p>
+          <p className="text-[1.2rem] font-bold tracking-[-0.03em] text-[#0f172a]">오늘 {data.name}의 운세가 궁금하다면?</p>
           <Link href="/" className="btn-gold-warm text-[0.88rem]">
             오늘의 운세 무료로 보기 <span aria-hidden="true">→</span>
           </Link>
@@ -458,12 +458,12 @@ export default async function ZodiacSignPage({
               <Link
                 key={s.slug}
                 href={`/zodiac/${s.slug}`}
-                className="group flex items-center gap-2 rounded-xl border border-[var(--line)] bg-[#fffdf8] px-3 py-2.5 transition-all hover:border-[rgba(169,128,63,0.45)] hover:bg-[rgba(195,161,101,0.06)]"
+                className="group flex items-center gap-2 rounded-xl border border-[var(--line)] bg-[#ffffff] px-3 py-2.5 transition-all hover:border-[rgba(59,91,219,0.45)] hover:bg-[rgba(59,91,219,0.06)]"
               >
                 <span className="text-[var(--ink)]">
                   <ConstellationIcon slug={s.slug} size={22} strokeWidth={1.4} />
                 </span>
-                <span className="text-[0.78rem] text-[var(--ink-soft)] transition-colors group-hover:text-[#a9803f]">{s.name}</span>
+                <span className="text-[0.78rem] text-[var(--ink-soft)] transition-colors group-hover:text-[#3b5bdb]">{s.name}</span>
               </Link>
             ))}
           </div>

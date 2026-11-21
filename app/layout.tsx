@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Playfair_Display } from 'next/font/google';
+import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import CookieBanner from '../components/CookieBanner';
 import ConsentScripts from '../components/ConsentScripts';
@@ -15,8 +15,15 @@ const playfairDisplay = Playfair_Display({
   variable: '--font-playfair-display',
 });
 
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
 export const viewport: Viewport = {
-  themeColor: '#111730',
+  themeColor: '#ffffff',
   colorScheme: 'light',
 };
 
@@ -81,7 +88,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" className={playfairDisplay.variable}>
+    <html lang="ko" className={`${playfairDisplay.variable} ${inter.variable}`}>
       <head>
         <meta name="google-adsense-account" content="ca-pub-3314960461630607" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -90,7 +97,7 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap"
         />
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%23111730%22/><path d=%22M32 12l4.6 15.4L52 32l-15.4 4.6L32 52l-4.6-15.4L12 32l15.4-4.6L32 12z%22 fill=%22%23e2cda2%22/></svg>" />
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%23ffffff%22/><rect x=%220.5%22 y=%220.5%22 width=%2263%22 height=%2263%22 rx=%2215.5%22 fill=%22none%22 stroke=%22%23e8eaef%22/><path d=%22M32 13l4.4 14.6L51 32l-14.6 4.4L32 51l-4.4-14.6L13 32l14.6-4.4L32 13z%22 fill=%22%233b5bdb%22/></svg>" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -131,7 +138,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${playfairDisplay.variable} antialiased`}>
+      <body className={`${playfairDisplay.variable} ${inter.variable} antialiased`}>
         <LangProvider>
           <ConditionalHeader />
           <CookieBanner />

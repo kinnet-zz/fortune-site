@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { CardArtwork, type ArtworkVariant } from '@/components/Artwork';
 
 export const metadata: Metadata = {
   title: '별자리·운세 가이드 블로그 | StarFate',
@@ -234,133 +235,149 @@ const ARTICLES = [
 
 const CATEGORIES = Array.from(new Set(ARTICLES.map((a) => a.category)));
 
+const CATEGORY_ART: { match: string; variant: ArtworkVariant }[] = [
+  { match: '궁합', variant: 'compatibility' },
+  { match: '달', variant: 'moon' },
+  { match: '행성', variant: 'orbit' },
+  { match: '심리', variant: 'journal' },
+  { match: '역사', variant: 'history' },
+  { match: '문화', variant: 'zodiac' },
+  { match: '커리어', variant: 'numbers' },
+  { match: '점성술', variant: 'orbit' },
+  { match: '운세', variant: 'yearly' },
+];
+
+function artworkFor(category: string): ArtworkVariant {
+  return CATEGORY_ART.find((entry) => category.includes(entry.match))?.variant ?? 'journal';
+}
+
 export default function BlogIndexPage() {
   const featured = ARTICLES[ARTICLES.length - 1];
   const rest = ARTICLES.slice(0, -1).slice().reverse();
 
   return (
-    <div className="relative min-h-screen">
-      <section className="relative overflow-hidden border-b border-[var(--line)]">
+    <div className="relative min-h-screen bg-white">
+      <section className="relative overflow-hidden border-b border-[#e8eaef]">
         <div
           className="pointer-events-none absolute inset-0"
-          style={{ background: 'radial-gradient(ellipse 55% 70% at 82% -20%, rgba(195,161,101,0.18) 0%, transparent 62%), radial-gradient(ellipse 45% 60% at 8% 120%, rgba(17,23,48,0.06) 0%, transparent 70%)' }}
+          style={{ background: 'radial-gradient(ellipse 46% 70% at 88% -20%, rgba(59,91,219,0.07) 0%, transparent 64%)' }}
           aria-hidden="true"
         />
-        <div className="relative mx-auto max-w-6xl px-5 pb-12 pt-10 sm:pt-16">
-          <Link href="/" className="inline-flex min-h-11 items-center gap-2 text-[0.78rem] text-[var(--muted)] transition-colors hover:text-[#a9803f]">
-            <span aria-hidden="true">←</span> 홈으로
-          </Link>
-          <div className="mt-7 flex flex-wrap items-end justify-between gap-6">
+        <div className="relative mx-auto max-w-6xl px-5 pb-12 pt-10 sm:px-6 sm:pt-16">
+          <nav className="flex items-center gap-2 text-[0.76rem] text-[#64748b]" aria-label="위치">
+            <Link href="/" className="transition-colors hover:text-[#3b5bdb]">홈</Link>
+            <span aria-hidden="true">/</span>
+            <span className="text-[#475569]">가이드 블로그</span>
+          </nav>
+          <div className="mt-8 flex flex-wrap items-end justify-between gap-6">
             <div>
               <span className="eyebrow">The journal</span>
-              <h1 className="mt-5 font-display text-[2.5rem] font-semibold leading-[1.1] text-[var(--ink)] sm:text-[3.5rem]">
-                별자리 &amp; <span className="gold-ink italic">운세 가이드</span>
+              <h1 className="mt-4 text-[2.4rem] font-bold leading-[1.08] tracking-[-0.04em] text-[#0f172a] sm:text-[3.2rem]">
+                별자리 &amp; <span className="font-display font-semibold italic text-[#3b5bdb]">운세 가이드</span>
               </h1>
-              <p className="mt-5 max-w-xl text-[0.92rem] leading-8 text-[var(--muted)] text-keep-all">
+              <p className="mt-4 max-w-xl text-[0.92rem] leading-8 text-[#64748b] text-keep-all">
                 점성술의 역사, 별자리 궁합, 운세 해석법까지 — 깊이 있는 아스트롤로지 지식을 쌓아보세요.
               </p>
             </div>
-            <div className="text-right">
-              <p className="font-display text-[2.4rem] font-semibold leading-none text-[var(--gold)]">{ARTICLES.length}</p>
-              <p className="mt-1 text-[0.62rem] uppercase tracking-[0.26em] text-[var(--muted-2)]">Articles</p>
+            <div className="flex items-center gap-2 rounded-full border border-[#e8eaef] bg-white px-3.5 py-2">
+              <span className="text-[0.95rem] font-bold tabular-nums text-[#0f172a]">{ARTICLES.length}</span>
+              <span className="text-[0.66rem] uppercase tracking-[0.1em] text-[#64748b]">Articles</span>
             </div>
           </div>
         </div>
       </section>
 
-      <div className="mx-auto max-w-6xl px-5 py-12">
+      <div className="mx-auto max-w-6xl px-5 py-12 sm:px-6">
         <Link
           href="/blog/daily"
-          className="group mb-12 flex flex-col gap-4 rounded-2xl border border-[rgba(169,128,63,0.35)] bg-[linear-gradient(120deg,rgba(195,161,101,0.14),rgba(255,253,248,0.9))] p-6 transition-all duration-500 hover:border-[rgba(169,128,63,0.7)] sm:flex-row sm:items-center sm:p-7"
+          className="group mb-10 flex flex-col gap-4 rounded-2xl border border-[#e8eaef] bg-[#f8f9fb] p-5 transition-all duration-300 hover:border-[#dcdfe6] hover:bg-white hover:shadow-[0_18px_40px_-26px_rgba(15,23,42,0.25)] sm:flex-row sm:items-center sm:p-6"
         >
-          <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-[rgba(169,128,63,0.5)] text-[1.2rem] text-[var(--gold)]">
-            ✦
+          <div className="grid h-12 w-12 flex-shrink-0 place-items-center rounded-xl border border-[#e8eaef] bg-white text-[#3b5bdb]">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" fill="currentColor" fillOpacity="0.16" stroke="currentColor" strokeWidth="1.3" />
+              <path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4L17 7M7 17l-1.6 1.6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+            </svg>
           </div>
           <div className="flex-1">
-            <span className="text-[0.58rem] font-semibold uppercase tracking-[0.3em] text-[var(--gold)]">
+            <span className="text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-[#3b5bdb]">
               Updated every midnight
             </span>
-            <h2 className="mt-2 font-display text-[1.3rem] font-semibold text-[var(--ink)] sm:text-[1.6rem]">오늘의 12별자리 일일 운세</h2>
-            <p className="mt-1 text-[0.8rem] text-[var(--muted)]">
+            <h2 className="mt-1.5 text-[1.15rem] font-bold tracking-[-0.03em] text-[#0f172a] sm:text-[1.35rem]">오늘의 12별자리 일일 운세</h2>
+            <p className="mt-1 text-[0.8rem] text-[#64748b]">
               종합·사랑·금전·건강 운세와 행운 아이템까지 매일 새롭게 업데이트됩니다.
             </p>
           </div>
-          <span className="inline-flex items-center gap-2 text-[0.78rem] font-semibold text-[var(--gold)] transition-transform duration-300 group-hover:translate-x-1">
+          <span className="inline-flex items-center gap-2 text-[0.8rem] font-semibold text-[#3b5bdb] transition-transform duration-300 group-hover:translate-x-1">
             바로 보기 <span aria-hidden="true">→</span>
           </span>
         </Link>
 
         <div className="mb-8 flex flex-wrap items-center gap-2">
-          <span className="mr-1 text-[0.6rem] uppercase tracking-[0.28em] text-[var(--muted-2)]">Topics</span>
+          <span className="mr-1 text-[0.66rem] uppercase tracking-[0.12em] text-[#64748b]">Topics</span>
           {CATEGORIES.map((cat) => (
-            <span key={cat} className="rounded-full border border-[rgba(169,128,63,0.3)] bg-[rgba(195,161,101,0.08)] px-3 py-1 text-[0.68rem] text-[#6f5223]">
-              {cat}
-            </span>
+            <span key={cat} className="tag-quiet">{cat}</span>
           ))}
         </div>
 
         <Link
           href={`/blog/${featured.slug}`}
-          className="group mb-4 block overflow-hidden rounded-[0.6rem] border border-[rgba(226,205,162,0.2)] bg-[linear-gradient(160deg,#141a35_0%,#0f1529_100%)] p-7 text-[#f7f0e1] shadow-[0_30px_60px_-44px_rgba(20,23,43,0.7)] transition-all duration-500 hover:border-[rgba(226,205,162,0.45)] sm:p-10"
+          className="group mb-6 grid gap-6 overflow-hidden rounded-2xl border border-[#e8eaef] bg-white p-2 transition-all duration-300 hover:-translate-y-1 hover:border-[#dcdfe6] hover:shadow-[0_24px_50px_-30px_rgba(15,23,42,0.28)] lg:grid-cols-[1.05fr_1fr] lg:items-stretch"
         >
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="rounded-full border border-[rgba(226,205,162,0.4)] bg-[rgba(226,205,162,0.1)] px-3 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[#e2cda2]">
-              Featured
-            </span>
-            <span className="text-[0.7rem] text-[var(--muted-2)]">{featured.date} · {featured.readTime} 읽기</span>
-          </div>
-          <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+          <CardArtwork variant={artworkFor(featured.category)} className="!aspect-auto min-h-[13rem] lg:h-full" />
+          <div className="flex flex-col justify-between px-4 pb-4 pt-2 lg:px-6 lg:py-6">
             <div>
-              <h2 className="max-w-3xl font-display text-[1.6rem] font-semibold leading-snug text-[#f7f0e1] text-keep-all sm:text-[2.2rem]">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="tag">Featured</span>
+                <span className="text-[0.7rem] text-[#64748b]">{featured.date} · {featured.readTime} 읽기</span>
+              </div>
+              <h2 className="mt-4 text-[1.4rem] font-bold leading-snug tracking-[-0.03em] text-[#0f172a] text-keep-all sm:text-[1.75rem]">
                 {featured.title}
               </h2>
-              <p className="mt-4 max-w-2xl text-[0.85rem] leading-7 text-[rgba(247,240,225,0.6)] text-keep-all">
+              <p className="mt-3 text-[0.84rem] leading-7 text-[#64748b] text-keep-all">
                 {featured.description}
               </p>
             </div>
-            <span className="hidden h-20 w-20 items-center justify-center rounded-full border border-[rgba(226,205,162,0.3)] text-[1.7rem] sm:flex">
-              {featured.emoji}
-            </span>
-          </div>
-          <div className="mt-6 flex items-center gap-3 border-t border-[rgba(226,205,162,0.2)] pt-4">
-            <span className="text-[0.68rem] uppercase tracking-[0.22em] text-[rgba(226,205,162,0.7)]">{featured.category}</span>
-            <span className="ml-auto inline-flex items-center gap-2 text-[0.76rem] font-semibold text-[#e2cda2]">
-              읽기 <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-            </span>
+            <div className="mt-5 flex items-center gap-3 border-t border-[#eef0f4] pt-4">
+              <span className="text-[0.7rem] font-medium uppercase tracking-[0.08em] text-[#64748b]">{featured.category}</span>
+              <span className="ml-auto inline-flex items-center gap-2 text-[0.8rem] font-semibold text-[#3b5bdb]">
+                읽기 <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+              </span>
+            </div>
           </div>
         </Link>
 
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {rest.map((article) => (
             <Link
               key={article.slug}
               href={`/blog/${article.slug}`}
-              className="card-lift group flex min-h-[15rem] flex-col justify-between rounded-2xl border border-[var(--line)] bg-[#fffdf8] p-6 hover:border-[rgba(169,128,63,0.45)] hover:bg-[#fffdf8]"
+              className="group flex flex-col overflow-hidden rounded-2xl border border-[#e8eaef] bg-white p-2 transition-all duration-300 hover:-translate-y-1 hover:border-[#dcdfe6] hover:shadow-[0_18px_40px_-26px_rgba(15,23,42,0.28)]"
             >
-              <div>
-                <div className="flex items-start justify-between gap-3">
-                  <span className="text-[1.25rem] opacity-80">{article.emoji}</span>
-                  <span className="text-[0.58rem] uppercase tracking-[0.18em] text-[var(--muted-2)]">{article.category}</span>
+              <CardArtwork variant={artworkFor(article.category)} />
+              <div className="flex flex-1 flex-col px-2.5 pb-2 pt-3.5">
+                <div className="mb-2 flex items-center justify-between gap-2">
+                  <span className="tag">{article.category}</span>
+                  <span className="text-[0.64rem] text-[#64748b]">{article.readTime}</span>
                 </div>
-                <h2 className="mt-4 font-display text-[1.1rem] font-semibold leading-snug text-[var(--ink)] text-keep-all transition-colors group-hover:text-[var(--gold)]">
+                <h2 className="text-[0.98rem] font-semibold leading-snug tracking-[-0.02em] text-[#0f172a] text-keep-all transition-colors group-hover:text-[#3b5bdb]">
                   {article.title}
                 </h2>
-                <p className="mt-2 line-clamp-3 text-[0.76rem] leading-6 text-[var(--muted)] text-keep-all">
+                <p className="mt-2 line-clamp-2 text-[0.76rem] leading-5 text-[#64748b] text-keep-all">
                   {article.description}
                 </p>
-              </div>
-              <div className="mt-5 flex items-center justify-between border-t border-[var(--line)] pt-3 text-[0.66rem] text-[var(--muted-2)]">
-                <span>{article.date}</span>
-                <span>{article.readTime} 읽기</span>
+                <div className="mt-auto flex items-center justify-between border-t border-[#eef0f4] pt-3 text-[0.68rem] text-[#64748b]">
+                  <span>{article.date}</span>
+                  <span>{article.readTime} 읽기</span>
+                </div>
               </div>
             </Link>
           ))}
         </div>
 
-        <div className="mt-14 flex flex-col items-center gap-4 rounded-3xl border border-[rgba(226,205,162,0.2)] bg-[linear-gradient(160deg,#141a35,#0f1529)] px-6 py-10 text-center">
-          <span className="eyebrow eyebrow-light eyebrow-center">Daily reading</span>
-          <p className="font-display text-[1.25rem] font-semibold text-[#f7f0e1]">가이드를 읽었다면, 오늘의 운세도 확인해보세요</p>
-          <Link href="/" className="btn-gold-warm mt-1 text-[0.88rem]">
+        <div className="mt-14 flex flex-col items-center gap-4 rounded-[24px] border border-[#e8eaef] bg-[#f8f9fb] px-6 py-10 text-center">
+          <span className="eyebrow eyebrow-center">Daily reading</span>
+          <p className="text-[1.2rem] font-bold tracking-[-0.03em] text-[#0f172a]">가이드를 읽었다면, 오늘의 운세도 확인해보세요</p>
+          <Link href="/" className="btn-primary mt-1 text-[0.88rem]">
             오늘의 운세 무료로 보기 <span aria-hidden="true">→</span>
           </Link>
         </div>
