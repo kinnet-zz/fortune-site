@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useLang } from '@/lib/useLang';
 import {
   CONSENT_CHANGED_EVENT,
   getCookieConsent,
@@ -10,7 +11,16 @@ import {
 } from '@/lib/adConsent';
 
 export default function CookieBanner() {
+  const { lang } = useLang();
   const [visible, setVisible] = useState(false);
+
+  const copy = {
+    ko: { region: '쿠키 선택', text: '저희 사이트는 맞춤 광고 제공을 위해 쿠키를 사용합니다.', policy: '개인정보처리방침', decline: '거부', accept: '동의' },
+    en: { region: 'Cookie choices', text: 'We use cookies to serve personalised ads.', policy: 'Privacy policy', decline: 'Decline', accept: 'Accept' },
+    zh: { region: 'Cookie 设置', text: '本站使用 Cookie 以提供个性化广告。', policy: '隐私政策', decline: '拒绝', accept: '同意' },
+    ja: { region: 'Cookie の選択', text: '当サイトはパーソナライズ広告のために Cookie を使用します。', policy: 'プライバシーポリシー', decline: '拒否', accept: '同意' },
+  } as const;
+  const c = copy[lang];
 
   useEffect(() => {
     const syncVisibility = () => setVisible(getCookieConsent() === null);
@@ -40,7 +50,7 @@ export default function CookieBanner() {
   if (!visible) return null;
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-40 px-3 pb-3 sm:px-5 sm:pb-5" role="region" aria-label="쿠키 선택">
+    <div className="fixed inset-x-0 bottom-0 z-40 px-3 pb-3 sm:px-5 sm:pb-5" role="region" aria-label={c.region}>
       <div className="mx-auto flex max-w-3xl flex-col items-start gap-3 rounded-2xl border border-[#e8eaef] bg-white px-4 py-3.5 shadow-[0_20px_50px_-20px_rgba(15,23,42,0.3)] sm:flex-row sm:items-center sm:gap-4 sm:px-5">
         <span className="hidden h-9 w-9 flex-shrink-0 place-items-center rounded-xl bg-[#f4f5f8] text-[#64748b] sm:grid" aria-hidden="true">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
@@ -52,9 +62,9 @@ export default function CookieBanner() {
           </svg>
         </span>
         <p className="flex-1 text-[0.8rem] leading-6 text-[#475569] text-keep-all">
-          저희 사이트는 맞춤 광고 제공을 위해 쿠키를 사용합니다.{' '}
+          {c.text}{' '}
           <Link href="/privacy" className="font-medium text-[#3b5bdb] underline decoration-[#c7d0f7] underline-offset-2 hover:text-[#2741b3]">
-            개인정보처리방침
+            {c.policy}
           </Link>
         </p>
         <div className="grid w-full flex-shrink-0 grid-cols-2 gap-2 sm:flex sm:w-auto">
@@ -62,13 +72,13 @@ export default function CookieBanner() {
             onClick={decline}
             className="min-h-10 rounded-full border border-[#e8eaef] px-4 py-2 text-[0.8rem] font-medium text-[#475569] transition-colors hover:border-[#dcdfe6] hover:text-[#0f172a]"
           >
-            거부
+            {c.decline}
           </button>
           <button
             onClick={accept}
             className="min-h-10 rounded-full bg-[#3b5bdb] px-4 py-2 text-[0.8rem] font-semibold text-white transition-colors hover:bg-[#2f4bc7]"
           >
-            동의
+            {c.accept}
           </button>
         </div>
       </div>
