@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
+import { Playfair_Display } from 'next/font/google';
 import './globals.css';
 import CookieBanner from '../components/CookieBanner';
 import ConsentScripts from '../components/ConsentScripts';
@@ -13,13 +13,6 @@ const playfairDisplay = Playfair_Display({
   style: ['normal', 'italic'],
   display: 'swap',
   variable: '--font-playfair-display',
-});
-
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  display: 'swap',
-  variable: '--font-inter',
 });
 
 export const viewport: Viewport = {
@@ -88,7 +81,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" className={`${playfairDisplay.variable} ${inter.variable}`}>
+    <html lang="ko" className={playfairDisplay.variable}>
       <head>
         <meta name="google-adsense-account" content="ca-pub-3314960461630607" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -138,7 +131,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${playfairDisplay.variable} ${inter.variable} antialiased`}>
+      <body className={`${playfairDisplay.variable} antialiased`}>
         <LangProvider>
           <ConditionalHeader />
           <CookieBanner />
