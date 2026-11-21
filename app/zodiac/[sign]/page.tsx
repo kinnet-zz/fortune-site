@@ -3,6 +3,7 @@ export const runtime = 'edge';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import ConstellationIcon from '@/components/Constellation';
 
 const ZODIAC_SIGNS = [
   {
@@ -304,11 +305,6 @@ export async function generateMetadata({
   };
 }
 
-const bgStyle = {
-  background: 'linear-gradient(160deg, #050520 0%, #0a0a2e 30%, #130a2e 60%, #1a0a3e 100%)',
-  minHeight: '100vh',
-};
-
 export default async function ZodiacSignPage({
   params,
 }: {
@@ -319,65 +315,73 @@ export default async function ZodiacSignPage({
   if (!data) notFound();
 
   return (
-    <div style={bgStyle}>
-      <div className="max-w-3xl mx-auto px-6 py-16 text-white/80">
-        <Link href="/zodiac" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
-          ← 별자리 목록으로
-        </Link>
+    <div className="relative min-h-screen">
+      {/* 히어로 */}
+      <section className="relative overflow-hidden border-b border-[var(--line)]">
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{ background: 'radial-gradient(ellipse 55% 80% at 20% -10%, rgba(17,23,48,0.09) 0%, transparent 62%), radial-gradient(ellipse 40% 60% at 90% 110%, rgba(169,128,63,0.12) 0%, transparent 70%)' }}
+          aria-hidden="true"
+        />
+        <div className="relative mx-auto max-w-4xl px-5 pb-12 pt-10 sm:pt-14">
+          <Link href="/zodiac" className="inline-flex min-h-11 items-center gap-2 text-[0.78rem] text-[var(--muted)] transition-colors hover:text-[#a9803f]">
+            <span aria-hidden="true">←</span> 별자리 목록으로
+          </Link>
 
-        {/* 헤더 */}
-        <header className="mb-10 text-center">
-          <div className="text-7xl mb-4">{data.symbol}</div>
-          <h1 className="text-4xl font-bold text-white mb-2">
-            {data.name} <span className="text-white/40 text-2xl">{data.english}</span>
-          </h1>
-          <p className="text-white/50 text-base">{data.period}</p>
-          <div className="flex justify-center gap-4 mt-4 flex-wrap">
-            <span className="px-3 py-1 rounded-full text-sm" style={{ background: `${data.color}33`, border: `1px solid ${data.color}66`, color: data.color }}>
-              {data.element}
-            </span>
-            <span className="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10">
-              🪐 {data.planet}
-            </span>
+          <div className="mt-8 flex flex-col items-start gap-6 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <span className="eyebrow">{data.english} · {data.period}</span>
+              <h1 className="mt-5 font-display text-[2.6rem] font-semibold leading-[1.08] text-[var(--ink)] sm:text-[4rem]">
+                {data.name}
+              </h1>
+              <div className="mt-5 flex flex-wrap gap-2">
+                <span className="chip-gold">{data.element}</span>
+                <span className="chip-quiet">지배 행성 · {data.planet}</span>
+                <span className="chip-quiet">{data.period}</span>
+              </div>
+            </div>
+            <div className="text-[var(--ink)]">
+              <ConstellationIcon slug={data.slug} size={132} strokeWidth={0.9} animated />
+            </div>
           </div>
-        </header>
+        </div>
+      </section>
 
+      <div className="mx-auto max-w-3xl px-5 py-12 text-[var(--ink-soft)]">
         {/* 핵심 특성 */}
-        <section className="mb-8 p-6 rounded-2xl bg-white/5 border border-white/10">
-          <h2 className="text-lg font-bold text-white mb-4">✨ 핵심 특성</h2>
-          <div className="flex flex-wrap gap-2">
-            {data.traits.map((t) => (
-              <span key={t} className="px-3 py-1 rounded-full text-sm bg-purple-500/20 border border-purple-500/30 text-purple-300">
-                {t}
+        <section className="mb-10">
+          <div className="mb-4 flex flex-wrap gap-2">
+            {data.traits.map((trait) => (
+              <span key={trait} className="rounded-full border border-[rgba(169,128,63,0.28)] bg-[rgba(195,161,101,0.08)] px-3 py-1.5 text-[0.74rem] text-[#6f5223]">
+                {trait}
               </span>
             ))}
           </div>
+          <p className="font-display text-[1.05rem] leading-8 text-[var(--ink)] text-keep-all">
+            {data.personality}
+          </p>
         </section>
 
-        {/* 성격 */}
-        <section className="mb-6">
-          <h2 className="text-xl font-bold text-white mb-3">🌟 성격 &amp; 특징</h2>
-          <p className="leading-relaxed text-white/70">{data.personality}</p>
-        </section>
+        <div className="mb-10 h-px bg-[linear-gradient(90deg,transparent,rgba(169,128,63,0.4),transparent)]" />
 
-        {/* 그리드: 강점 & 약점 */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-          <section className="p-5 rounded-2xl bg-green-500/10 border border-green-500/20">
-            <h3 className="text-base font-bold text-green-400 mb-3">💪 강점</h3>
-            <ul className="space-y-1">
+        {/* 강점 & 약점 */}
+        <div className="mb-10 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <section className="rounded-2xl border border-[rgba(47,107,74,0.3)] bg-[rgba(47,107,74,0.06)] p-5">
+            <h2 className="mb-3 border-0 pt-0 text-[0.64rem] font-semibold uppercase tracking-[0.26em] text-[#2f6b4a]">Strengths · 강점</h2>
+            <ul className="space-y-1.5">
               {data.strengths.map((s) => (
-                <li key={s} className="text-sm text-white/70 flex items-center gap-2">
-                  <span className="text-green-400">·</span> {s}
+                <li key={s} className="flex items-center gap-2 text-[0.82rem] text-[var(--muted)]">
+                  <span className="h-1 w-1 rotate-45 bg-[#2f6b4a]" aria-hidden="true" /> {s}
                 </li>
               ))}
             </ul>
           </section>
-          <section className="p-5 rounded-2xl bg-red-500/10 border border-red-500/20">
-            <h3 className="text-base font-bold text-red-400 mb-3">⚠️ 약점</h3>
-            <ul className="space-y-1">
+          <section className="rounded-2xl border border-[rgba(155,58,58,0.3)] bg-[rgba(155,58,58,0.05)] p-5">
+            <h2 className="mb-3 border-0 pt-0 text-[0.64rem] font-semibold uppercase tracking-[0.26em] text-[#9b3a3a]">Watch · 약점</h2>
+            <ul className="space-y-1.5">
               {data.weaknesses.map((w) => (
-                <li key={w} className="text-sm text-white/70 flex items-center gap-2">
-                  <span className="text-red-400">·</span> {w}
+                <li key={w} className="flex items-center gap-2 text-[0.82rem] text-[var(--muted)]">
+                  <span className="h-1 w-1 rotate-45 bg-[#9b3a3a]" aria-hidden="true" /> {w}
                 </li>
               ))}
             </ul>
@@ -385,75 +389,81 @@ export default async function ZodiacSignPage({
         </div>
 
         {/* 연애 / 금전 / 직업 */}
-        {[
-          { icon: '💕', title: '연애운', content: data.love },
-          { icon: '💰', title: '금전운', content: data.money },
-          { icon: '💼', title: '직업운', content: data.career },
-        ].map(({ icon, title, content }) => (
-          <section key={title} className="mb-6 p-6 rounded-2xl bg-white/5 border border-white/10">
-            <h2 className="text-lg font-bold text-white mb-3">{icon} {title}</h2>
-            <p className="leading-relaxed text-white/70">{content}</p>
-          </section>
-        ))}
+        <div className="space-y-8">
+          {[
+            { index: '01', title: '연애운', content: data.love, accent: '#8a4a5e' },
+            { index: '02', title: '금전운', content: data.money, accent: '#2f6b4a' },
+            { index: '03', title: '직업운', content: data.career, accent: '#39406e' },
+          ].map(({ index, title, content, accent }) => (
+            <section key={title} className="border-t border-[var(--line)] pt-6">
+              <div className="mb-3 flex items-baseline gap-3">
+                <span className="font-display text-[0.8rem] italic tracking-[0.18em]" style={{ color: accent }}>{index}</span>
+                <h2 className="border-0 pt-0 font-display text-[1.15rem] font-semibold text-[var(--ink)]">{title}</h2>
+              </div>
+              <p className="text-[0.86rem] leading-8 text-[var(--muted)] text-keep-all">{content}</p>
+            </section>
+          ))}
 
-        {/* 신화와 역사 */}
-        <section className="mb-6 p-6 rounded-2xl bg-indigo-500/10 border border-indigo-500/20">
-          <h2 className="text-lg font-bold text-white mb-3">📜 신화와 역사</h2>
-          <p className="leading-relaxed text-white/70 text-sm">{data.history}</p>
-        </section>
-
-        {/* 건강 */}
-        <section className="mb-8 p-6 rounded-2xl bg-teal-500/10 border border-teal-500/20">
-          <h2 className="text-lg font-bold text-white mb-3">🌿 건강 &amp; 웰니스</h2>
-          <p className="leading-relaxed text-white/70 text-sm">{data.health}</p>
-        </section>
+          {[
+            { index: '04', title: '신화와 역사', content: data.history, accent: '#4b4680' },
+            { index: '05', title: '건강 & 웰니스', content: data.health, accent: '#2c6b63' },
+          ].map(({ index, title, content, accent }) => (
+            <section key={title} className="border-t border-[var(--line)] pt-6">
+              <div className="mb-3 flex items-baseline gap-3">
+                <span className="font-display text-[0.8rem] italic tracking-[0.18em]" style={{ color: accent }}>{index}</span>
+                <h2 className="border-0 pt-0 font-display text-[1.15rem] font-semibold text-[var(--ink)]">{title}</h2>
+              </div>
+              <p className="text-[0.86rem] leading-8 text-[var(--muted)] text-keep-all">{content}</p>
+            </section>
+          ))}
+        </div>
 
         {/* 궁합 */}
-        <section className="mb-8 p-6 rounded-2xl bg-white/5 border border-white/10">
-          <h2 className="text-lg font-bold text-white mb-4">💞 궁합</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="text-sm text-green-400 font-semibold mb-1">✅ 잘 맞는 별자리</p>
-              <p className="text-white/70">{data.compatible}</p>
+        <section className="mt-10 rounded-[0.4rem] border border-[var(--line)] bg-[#fffdf8] p-6">
+          <h2 className="mb-4 border-0 pt-0 font-display text-[1.1rem] font-semibold text-[var(--ink)]">궁합</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="rounded-xl border border-[rgba(47,107,74,0.28)] bg-[rgba(47,107,74,0.06)] p-4">
+              <p className="mb-1 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[#2f6b4a]">잘 맞는 별자리</p>
+              <p className="text-[0.86rem] text-[var(--ink)]">{data.compatible}</p>
             </div>
-            <div>
-              <p className="text-sm text-red-400 font-semibold mb-1">⚠️ 주의할 별자리</p>
-              <p className="text-white/70">{data.incompatible}</p>
+            <div className="rounded-xl border border-[rgba(155,58,58,0.3)] bg-[rgba(155,58,58,0.05)] p-4">
+              <p className="mb-1 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[#9b3a3a]">주의할 별자리</p>
+              <p className="text-[0.86rem] text-[var(--ink)]">{data.incompatible}</p>
             </div>
           </div>
         </section>
 
         {/* 행운 & 유명인 */}
-        <section className="mb-10 p-6 rounded-2xl bg-purple-500/10 border border-purple-500/20">
-          <h2 className="text-lg font-bold text-white mb-4">🍀 행운의 상징</h2>
-          <p className="text-white/70 mb-4">{data.lucky}</p>
-          <h3 className="text-sm font-bold text-purple-300 mb-2">🌟 유명한 {data.name}</h3>
-          <p className="text-white/60 text-sm">{data.famous}</p>
+        <section className="mt-4 rounded-[0.4rem] border border-[rgba(169,128,63,0.35)] bg-[rgba(195,161,101,0.08)] p-6">
+          <h2 className="mb-3 border-0 pt-0 font-display text-[1.1rem] font-semibold text-[var(--ink)]">행운의 상징</h2>
+          <p className="mb-4 text-[0.86rem] text-[var(--ink-soft)]">{data.lucky}</p>
+          <p className="text-[0.62rem] font-semibold uppercase tracking-[0.24em] text-[var(--gold)]">유명한 {data.name}</p>
+          <p className="mt-1.5 text-[0.82rem] text-[var(--muted)]">{data.famous}</p>
         </section>
 
         {/* CTA */}
-        <div className="text-center p-8 rounded-2xl bg-gradient-to-br from-purple-900/40 to-blue-900/40 border border-purple-500/20">
-          <p className="text-white/60 mb-4 text-sm">오늘 {data.name}의 운세가 궁금하다면?</p>
-          <Link
-            href="/"
-            className="inline-block px-6 py-3 rounded-full font-bold text-white text-sm"
-            style={{ background: data.color }}
-          >
-            오늘의 운세 무료로 보기 →
+        <div className="mt-10 flex flex-col items-center gap-4 rounded-[0.6rem] border border-[rgba(226,205,162,0.2)] bg-[linear-gradient(160deg,#141a35,#0f1529)] px-6 py-9 text-center">
+          <span className="eyebrow eyebrow-light eyebrow-center">Today</span>
+          <p className="font-display text-[1.2rem] font-semibold text-[#f7f0e1]">오늘 {data.name}의 운세가 궁금하다면?</p>
+          <Link href="/" className="btn-gold-warm text-[0.88rem]">
+            오늘의 운세 무료로 보기 <span aria-hidden="true">→</span>
           </Link>
         </div>
 
         {/* 다른 별자리 링크 */}
-        <nav className="mt-10">
-          <h3 className="text-sm text-white/40 mb-3 font-semibold uppercase tracking-widest">다른 별자리 보기</h3>
-          <div className="flex flex-wrap gap-2">
+        <nav className="mt-12">
+          <h3 className="mb-4 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-[var(--muted-2)]">다른 별자리 보기</h3>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {ZODIAC_SIGNS.filter((s) => s.slug !== sign).map((s) => (
               <Link
                 key={s.slug}
                 href={`/zodiac/${s.slug}`}
-                className="px-3 py-1 rounded-full text-xs border border-white/10 text-white/50 hover:border-purple-400 hover:text-purple-400 transition-colors"
+                className="group flex items-center gap-2 rounded-xl border border-[var(--line)] bg-[#fffdf8] px-3 py-2.5 transition-all hover:border-[rgba(169,128,63,0.45)] hover:bg-[rgba(195,161,101,0.06)]"
               >
-                {s.symbol} {s.name}
+                <span className="text-[var(--ink)]">
+                  <ConstellationIcon slug={s.slug} size={22} strokeWidth={1.4} />
+                </span>
+                <span className="text-[0.78rem] text-[var(--ink-soft)] transition-colors group-hover:text-[#a9803f]">{s.name}</span>
               </Link>
             ))}
           </div>

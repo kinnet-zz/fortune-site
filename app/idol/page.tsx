@@ -61,7 +61,7 @@ export async function generateMetadata({
 }
 
 const bgStyle = {
-  background: 'linear-gradient(160deg, #050520 0%, #0a0a2e 100%)',
+  background: 'linear-gradient(160deg, #f7f2e8 0%, #f3ecdf 100%)',
 };
 
 const AGENCIES = [
@@ -105,13 +105,13 @@ export default function IdolPage() {
 
         <div
           className="rounded-2xl p-6"
-          style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}
+          style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.05)' }}
         >
-          <h2 className="text-white font-bold text-base mb-3">🎤 K-Pop 4대 소속사란?</h2>
-          <p className="text-white/55 text-sm leading-relaxed mb-3">
+          <h2 className="text-[#14172b] font-bold text-base mb-3">🎤 K-Pop 4대 소속사란?</h2>
+          <p className="text-[#1a1c2e]/58 text-sm leading-relaxed mb-3">
             K-Pop(Korean Pop)은 대한민국에서 시작된 음악 장르이자 문화 현상으로, 1990년대 H.O.T.·S.E.S. 등 1세대 아이돌 그룹의 등장과 함께 체계적인 아이돌 시스템이 형성되었습니다. 연습생 제도, 퍼포먼스 중심의 음악, 세계관 기반 스토리텔링을 특징으로 하며 2010년대 이후 BTS·BLACKPINK 등을 통해 글로벌 문화로 자리 잡았습니다.
           </p>
-          <p className="text-white/55 text-sm leading-relaxed">
+          <p className="text-[#1a1c2e]/58 text-sm leading-relaxed">
             SM·JYP·YG·HYBE는 각자 독특한 색깔과 육성 방식을 가지고 있으며, 소속 아이돌의 외모 스타일·음악성·무대 에너지도 각 소속사의 철학을 반영합니다. 본 테스트는 각 소속사 아이돌의 공통적인 비주얼 특성을 AI가 분석하여 재미로 매칭하는 오락 서비스입니다.
           </p>
         </div>
@@ -121,35 +121,35 @@ export default function IdolPage() {
             <div
               key={a.name}
               className="rounded-2xl p-5"
-              style={{ background: 'rgba(255,255,255,0.03)', border: `1px solid ${a.color}25` }}
+              style={{ background: 'rgba(20,23,43,0.03)', border: `1px solid ${a.color}25` }}
             >
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-2xl">{a.emoji}</span>
                 <div>
-                  <h3 className="text-white font-bold text-sm">{a.name}</h3>
+                  <h3 className="text-[#14172b] font-bold text-sm">{a.name}</h3>
                   <div className="flex gap-2 mt-0.5">
-                    <span className="text-white/30 text-xs">설립 {a.founded}</span>
+                    <span className="text-[#1a1c2e]/38 text-xs">설립 {a.founded}</span>
                     <span className="px-2 py-0.5 rounded-full text-xs" style={{ background: `${a.color}18`, color: a.color }}>
                       {a.style}
                     </span>
                   </div>
                 </div>
               </div>
-              <p className="text-white/50 text-xs leading-relaxed mb-2">{a.desc}</p>
-              <p className="text-white/30 text-xs"><span className="text-white/40">대표 아티스트:</span> {a.artists}</p>
+              <p className="text-[#1a1c2e]/55 text-xs leading-relaxed mb-2">{a.desc}</p>
+              <p className="text-[#1a1c2e]/38 text-xs"><span className="text-[#1a1c2e]/45">대표 아티스트:</span> {a.artists}</p>
             </div>
           ))}
         </div>
 
         <div
           className="rounded-2xl p-5 text-center"
-          style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}
+          style={{ background: 'rgba(20,23,43,0.025)', border: '1px solid rgba(20,23,43,0.05)' }}
         >
-          <p className="text-white/40 text-xs mb-3">별자리와 운세로 나의 K-Pop 에너지 알아보기</p>
+          <p className="text-[#1a1c2e]/45 text-xs mb-3">별자리와 운세로 나의 K-Pop 에너지 알아보기</p>
           <a
             href="/"
-            className="inline-block px-6 py-3 rounded-full font-bold text-white text-sm"
-            style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #9333ea 100%)' }}
+            className="inline-block px-6 py-3 rounded-full font-bold text-[#f7f0e1] text-sm"
+            style={{ background: 'linear-gradient(135deg, #1a2144 0%, #111730 100%)' }}
           >
             🔮 오늘의 운세 무료로 보기 →
           </a>

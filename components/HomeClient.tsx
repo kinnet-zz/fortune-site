@@ -34,25 +34,6 @@ interface FortuneResult {
   score: number;
 }
 
-interface BackgroundStar {
-  id: number;
-  x: number;
-  y: number;
-  size: number;
-  opacity: number;
-  delay: number;
-  duration: number;
-}
-
-const STAR_COLORS = [
-  'rgba(255,255,255,0.9)',
-  'rgba(192,132,252,0.8)',
-  'rgba(240,171,252,0.7)',
-  'rgba(165,243,252,0.6)',
-  'rgba(255,255,255,0.7)',
-];
-
-const FLOATING_SYMBOL_SIZES = [18, 21, 15, 20, 17, 14, 19, 22, 16, 18, 15, 21];
 const SCORE_BUCKET_SIZE = 20;
 
 const REQUEST_STATUS_COPY = {
@@ -110,80 +91,14 @@ const SAMPLE_READINGS = [
   },
 ];
 
-function BackgroundStars() {
-  const [stars, setStars] = useState<BackgroundStar[]>([]);
-
-  useEffect(() => {
-    setStars(
-      Array.from({ length: 64 }, (_, i) => ({
-        id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        size: Math.random() * 2 + 0.3,
-        opacity: Math.random() * 0.7 + 0.1,
-        delay: Math.random() * 6,
-        duration: Math.random() * 4 + 2,
-      }))
-    );
-  }, []);
-
+function Atmosphere() {
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      {stars.map((star) => (
-        <div
-          key={star.id}
-          className="absolute rounded-full"
-          style={{
-            left: `${star.x}%`,
-            top: `${star.y}%`,
-            width: `${star.size}px`,
-            height: `${star.size}px`,
-            background: STAR_COLORS[star.id % STAR_COLORS.length],
-            opacity: star.opacity,
-            animation: `twinkle ${star.duration}s ease-in-out infinite`,
-            animationDelay: `${star.delay}s`,
-            boxShadow: star.size > 1.5
-              ? `0 0 ${star.size * 3}px ${STAR_COLORS[star.id % STAR_COLORS.length]}`
-              : 'none',
-          }}
-        />
-      ))}
-
-      {/* 떠다니는 별자리 기호 */}
-      {['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'].map((sign, i) => (
-        <div
-          key={sign}
-          className="absolute select-none"
-          style={{
-            left: `${(i * 8.5) % 95}%`,
-            top: `${(i * 13 + 5) % 90}%`,
-            fontSize: `${FLOATING_SYMBOL_SIZES[i]}px`,
-            color: 'rgba(192,132,252,0.06)',
-            animation: `float ${6 + i * 0.7}s ease-in-out infinite`,
-            animationDelay: `${i * 0.5}s`,
-          }}
-        >
-          {sign}
-        </div>
-      ))}
-
-      {/* 오로라 글로우 레이어들 */}
+    <div className="pointer-events-none absolute inset-x-0 top-0 h-[42rem] overflow-hidden" aria-hidden="true">
       <div
         className="absolute inset-0"
         style={{
-          background: 'radial-gradient(ellipse 70% 50% at 20% 40%, rgba(139,92,246,0.12) 0%, transparent 70%)',
-        }}
-      />
-      <div
-        className="absolute inset-0"
-        style={{
-          background: 'radial-gradient(ellipse 50% 60% at 80% 20%, rgba(236,72,153,0.08) 0%, transparent 70%)',
-        }}
-      />
-      <div
-        className="absolute inset-0"
-        style={{
-          background: 'radial-gradient(ellipse 60% 40% at 50% 90%, rgba(99,102,241,0.1) 0%, transparent 70%)',
+          background:
+            'radial-gradient(ellipse 55% 55% at 82% 0%, rgba(195,161,101,0.16) 0%, transparent 62%), radial-gradient(ellipse 45% 45% at 6% 30%, rgba(17,23,48,0.06) 0%, transparent 70%)',
         }}
       />
     </div>
@@ -359,118 +274,94 @@ export default function HomeClient() {
   };
 
   return (
-    <div className="min-h-screen relative aurora-bg">
-      <BackgroundStars />
+    <div className="relative min-h-screen">
+      <Atmosphere />
 
-      {/* 상단 퍼플 글로우 */}
-      <div
-        className="fixed top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] opacity-25 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse, rgba(139,92,246,0.5) 0%, rgba(236,72,153,0.2) 50%, transparent 70%)',
-          filter: 'blur(60px)',
-        }}
-      />
-      {/* 좌측 핑크 글로우 */}
-      <div
-        className="fixed top-1/3 left-0 w-[400px] h-[600px] opacity-10 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse, rgba(240,171,252,0.6) 0%, transparent 70%)',
-          filter: 'blur(80px)',
-        }}
-      />
-
-      <main className="relative z-10 min-h-screen flex flex-col">
-        <div className="flex-1 flex flex-col items-center justify-start px-4 py-6 sm:py-8 pb-16">
+      <main className="relative z-10 min-h-screen">
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-start px-4 pb-20 pt-12 sm:pt-16">
           {!fortune && (
             <HomeConversionHero onSubmit={handleSubmit} isLoading={isLoading} lang={lang} error={error} />
           )}
 
           {!fortune && !isLoading && (
-            <section className="w-full max-w-6xl mx-auto mb-10" aria-labelledby="home-guide-heading">
-              <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-6 items-start">
+            <section className="mb-16 w-full" aria-labelledby="home-guide-heading">
+              <div className="relative overflow-hidden rounded-[0.6rem] border border-[rgba(226,205,162,0.2)] bg-[linear-gradient(160deg,#141a35_0%,#0f1529_100%)] px-6 py-10 text-[#f7f0e1] sm:px-10 sm:py-12">
                 <div
-                  className="rounded-3xl p-7 sm:p-8"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(15,10,40,0.92), rgba(40,12,70,0.72))',
-                    border: '1px solid rgba(192,132,252,0.16)',
-                    boxShadow: '0 24px 80px rgba(15,10,40,0.42)',
-                    backdropFilter: 'blur(18px)',
-                  }}
-                >
-                  <p className="text-purple-300/70 text-xs font-semibold tracking-[0.22em] uppercase mb-4">
-                    Zodiac and self-reflection guide
-                  </p>
-                  <h2 id="home-guide-heading" className="font-serif-display text-2xl sm:text-3xl font-bold text-white/92 leading-tight mb-4">
-                    StarFate는 별자리와 12지를 하루의 자기성찰 언어로 풀어 쓰는 운세 가이드입니다.
-                  </h2>
-                  <p className="text-white/76 text-base leading-8 mb-6 text-keep-all">
-                    생년월일 기반 운세 도구는 빠른 확인을 위한 기능이고, 사이트의 핵심은 별자리·동양 12지·수비학·타로를 문화적 배경과 함께 설명하는 해석 콘텐츠입니다. 운세는 예언이 아니라 오늘의 감정, 관계, 선택을 돌아보는 가벼운 참고 자료로 제공합니다.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <Link href="/blog" className="inline-flex min-h-11 items-center px-4 py-2 rounded-xl text-base font-semibold text-white bg-purple-600/75 hover:bg-purple-500 transition-colors">
-                      가이드 블로그 보기
-                    </Link>
-                    <Link href="/zodiac" className="inline-flex min-h-11 items-center px-4 py-2 rounded-xl text-base font-semibold text-purple-100 border border-purple-300/20 hover:border-purple-300/40 transition-colors">
-                      12별자리 백과
-                    </Link>
-                    <Link href="/chinese-zodiac" className="inline-flex min-h-11 items-center px-4 py-2 rounded-xl text-base font-semibold text-purple-100 border border-purple-300/20 hover:border-purple-300/40 transition-colors">
-                      12지 띠 백과
-                    </Link>
-                    <Link href="/about" className="inline-flex min-h-11 items-center px-4 py-2 rounded-xl text-base font-semibold text-purple-100 border border-purple-300/20 hover:border-purple-300/40 transition-colors">
-                      편집 기준
-                    </Link>
+                  className="pointer-events-none absolute inset-0 opacity-70"
+                  style={{ background: 'radial-gradient(ellipse 45% 70% at 92% 0%, rgba(195,161,101,0.16) 0%, transparent 65%)' }}
+                  aria-hidden="true"
+                />
+                <div className="relative grid grid-cols-1 gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+                  <div>
+                    <span className="eyebrow eyebrow-light">The editorial standard</span>
+                    <h2 id="home-guide-heading" className="mt-5 max-w-2xl font-display text-[1.7rem] font-semibold leading-[1.25] text-[#f7f0e1] text-keep-all sm:text-[2.25rem]">
+                      StarFate는 별자리와 12지를 <span className="italic text-[#e2cda2]">하루의 자기성찰 언어</span>로 풀어 쓰는 운세 가이드입니다.
+                    </h2>
+                    <p className="mt-5 max-w-2xl text-[0.86rem] leading-8 text-[rgba(247,240,225,0.66)] text-keep-all">
+                      생년월일 기반 운세 도구는 빠른 확인을 위한 기능이고, 사이트의 핵심은 별자리·동양 12지·수비학·타로를 문화적 배경과 함께 설명하는 해석 콘텐츠입니다. 운세는 예언이 아니라 오늘의 감정, 관계, 선택을 돌아보는 가벼운 참고 자료로 제공합니다.
+                    </p>
+                    <div className="mt-7 flex flex-wrap gap-2">
+                      <Link href="/blog" className="btn-ghost-light">가이드 블로그</Link>
+                      <Link href="/zodiac" className="btn-ghost-light">12별자리 백과</Link>
+                      <Link href="/chinese-zodiac" className="btn-ghost-light">12지 띠 백과</Link>
+                      <Link href="/about" className="btn-ghost-light">편집 기준</Link>
+                    </div>
                   </div>
-                </div>
 
-                <div className="grid grid-cols-1 gap-3">
-                  {EDITORIAL_POINTS.map((item) => (
-                    <article
-                      key={item.title}
-                      className="py-5 border-b border-white/10 last:border-b-0"
-                      style={{
-                        background: 'transparent',
-                      }}
-                    >
-                      <h2 className="text-white/90 text-base font-semibold mb-2">{item.title}</h2>
-                      <p className="text-white/68 text-sm leading-7 text-keep-all">{item.body}</p>
-                    </article>
-                  ))}
+                  <div className="grid grid-cols-3 gap-4 border-t border-[rgba(226,205,162,0.2)] pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+                    {[
+                      ['12', '별자리 해석'],
+                      ['24', '에디토리얼 가이드'],
+                      ['4', '언어 지원'],
+                    ].map(([value, label]) => (
+                      <div key={label}>
+                        <p className="font-display text-[1.8rem] font-semibold leading-none text-[#e2cda2]">{value}</p>
+                        <p className="mt-2 text-[0.62rem] leading-4 text-[rgba(247,240,225,0.5)]">{label}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-[1.35fr_1fr_1fr] gap-3 mt-6">
-                {GUIDE_LINKS.map((guide) => (
-                  <Link
-                    key={guide.href}
-                    href={guide.href}
-                    className="rounded-2xl p-5 block card-glow"
-                    style={{
-                      background: 'rgba(139,92,246,0.04)',
-                      border: '1px solid rgba(192,132,252,0.12)',
-                      backdropFilter: 'blur(16px)',
-                    }}
-                  >
-                    <h2 className="text-white/90 text-base font-semibold mb-2">{guide.label}</h2>
-                    <p className="text-white/68 text-sm leading-7 text-keep-all">{guide.desc}</p>
+              <div className="mt-3 grid grid-cols-1 border-t border-[var(--line)] md:grid-cols-3">
+                {EDITORIAL_POINTS.map((item, index) => (
+                  <article key={item.title} className="border-b border-[var(--line)] px-1 py-6 md:border-b-0 md:px-6 md:py-7 md:first:pl-1 md:[&:not(:first-child)]:border-l md:[&:not(:first-child)]:border-[var(--line)]">
+                    <span className="font-display text-[0.85rem] italic text-[var(--gold)]">0{index + 1}</span>
+                    <h3 className="mt-2 text-[0.9rem] font-semibold text-[var(--ink)]">{item.title}</h3>
+                    <p className="mt-2 text-[0.78rem] leading-7 text-[var(--muted)] text-keep-all">{item.body}</p>
+                  </article>
+                ))}
+              </div>
+
+              <div className="mt-8 grid grid-cols-1 gap-3 md:grid-cols-3">
+                {GUIDE_LINKS.map((guide, index) => (
+                  <Link key={guide.href} href={guide.href} className="card-lux card-lift group block p-6">
+                    <div className="flex items-start justify-between">
+                      <span className="text-[0.58rem] uppercase tracking-[0.28em] text-[var(--gold)]">Guide 0{index + 1}</span>
+                      <span className="text-[var(--gold)] transition-transform duration-300 group-hover:translate-x-1">→</span>
+                    </div>
+                    <h3 className="mt-6 font-display text-[1.15rem] font-semibold leading-snug text-[var(--ink)] text-keep-all">{guide.label}</h3>
+                    <p className="mt-2 text-[0.76rem] leading-6 text-[var(--muted)] text-keep-all">{guide.desc}</p>
                   </Link>
                 ))}
               </div>
 
-              <section className="mt-5 rounded-3xl p-6" style={{ background: 'rgba(5,5,32,0.52)', border: '1px solid rgba(255,255,255,0.07)' }} aria-labelledby="sample-reading-heading">
-                <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 mb-5">
+              <section className="mt-10 border-t border-[var(--line)] pt-8" aria-labelledby="sample-reading-heading">
+                <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                   <div>
-                    <p className="text-purple-300/60 text-xs font-semibold tracking-[0.18em] uppercase mb-2">Reading examples</p>
-                    <h2 id="sample-reading-heading" className="font-serif-display text-white/86 text-xl font-bold">해석 예시로 먼저 살펴보기</h2>
+                    <span className="eyebrow">Reading examples</span>
+                    <h2 id="sample-reading-heading" className="mt-3 font-display text-[1.4rem] font-semibold text-[var(--ink)]">해석 예시로 먼저 살펴보기</h2>
                   </div>
-                  <p className="text-white/65 text-sm leading-6 max-w-md text-keep-all">
+                  <p className="max-w-md text-[0.78rem] leading-6 text-[var(--muted)] text-keep-all">
                     생년월일을 입력하기 전에 아래 세 가지 예시로 해석의 결을 먼저 볼 수 있습니다. 입력하면 같은 항목이 내 별자리와 오늘 날짜에 맞춰 채워집니다.
                   </p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  {SAMPLE_READINGS.map((sample) => (
-                    <article key={sample.title} className="py-4 md:px-4 border-t md:border-t-0 md:border-l first:border-l-0 border-white/10">
-                      <h3 className="text-white/85 text-sm font-semibold mb-2">{sample.title}</h3>
-                      <p className="text-white/65 text-sm leading-7 text-keep-all">{sample.body}</p>
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+                  {SAMPLE_READINGS.map((sample, index) => (
+                    <article key={sample.title} className="border-t border-[var(--line)] pt-4">
+                      <span className="font-display text-[0.75rem] italic text-[var(--gold)]">0{index + 1}</span>
+                      <h3 className="mt-2 text-[0.86rem] font-semibold text-[var(--ink)]">{sample.title}</h3>
+                      <p className="mt-2 text-[0.78rem] leading-7 text-[var(--muted)] text-keep-all">{sample.body}</p>
                     </article>
                   ))}
                 </div>
@@ -482,13 +373,18 @@ export default function HomeClient() {
             <>
               {(isRefreshing || error?.scope === 'refresh' || resultStatus) && (
                 <div
-                  className={`w-full max-w-2xl mb-4 rounded-xl px-4 py-3 text-sm sm:text-base leading-6 ${error?.scope === 'refresh' ? 'border border-amber-300/30 bg-amber-300/10 text-amber-100' : 'border border-purple-300/25 bg-purple-300/10 text-purple-100'}`}
+                  className={`mb-5 w-full max-w-2xl border px-4 py-3 text-[0.8rem] leading-6 ${
+                    error?.scope === 'refresh'
+                      ? 'border-amber-600/40 bg-amber-50 text-amber-900'
+                      : 'border-[rgba(169,128,63,0.35)] bg-[rgba(195,161,101,0.1)] text-[#6f5223]'
+                  }`}
+                  style={{ borderRadius: '0.3rem' }}
                   role={error?.scope === 'refresh' ? 'alert' : 'status'}
                 >
                   {error?.scope === 'refresh' ? REQUEST_STATUS_COPY[lang].refreshError : isRefreshing ? REQUEST_STATUS_COPY[lang].refreshing : resultStatus}
                 </div>
               )}
-              <div ref={resultRef} className="w-full flex justify-center scroll-mt-6 focus:outline-none" tabIndex={-1}>
+              <div ref={resultRef} className="flex w-full scroll-mt-24 justify-center focus:outline-none" tabIndex={-1}>
                 <FortuneCard fortune={fortune} onReset={handleReset} lang={lang} />
               </div>
               <ResultNextSteps lang={lang} />
@@ -498,9 +394,9 @@ export default function HomeClient() {
           {fortune && (
             <>
               <div className="mt-8 text-center">
-                <p className="text-white/65 text-sm">{t(lang).retryHint}</p>
+                <p className="text-[0.76rem] text-[var(--muted)]">{t(lang).retryHint}</p>
               </div>
-              <div className="w-full max-w-lg mx-auto mt-8">
+              <div className="mx-auto mt-8 w-full max-w-lg">
                 <AdUnit slot="4511932122" format="auto" />
               </div>
             </>
@@ -509,21 +405,12 @@ export default function HomeClient() {
           {!isLoading && <InfoSection />}
 
           {!isLoading && (
-            <div className="w-full max-w-2xl mx-auto px-4 mt-10">
+            <div className="mx-auto mt-14 w-full max-w-2xl px-4">
               <AdUnit slot="4511932122" format="horizontal" />
             </div>
           )}
         </div>
       </main>
-
-      {/* 우측 하단 인디고 글로우 */}
-      <div
-        className="fixed bottom-0 right-0 w-[600px] h-[400px] opacity-12 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse, rgba(99,102,241,0.5) 0%, transparent 70%)',
-          filter: 'blur(60px)',
-        }}
-      />
     </div>
   );
 }

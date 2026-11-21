@@ -11,6 +11,24 @@ interface FortuneFormProps {
   error?: FortuneErrorState | null;
 }
 
+function GenderMark({ type }: { type: 'male' | 'female' }) {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      {type === 'male' ? (
+        <>
+          <circle cx="10" cy="14" r="5.4" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M14 10l6-6M14.6 4H20v5.4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </>
+      ) : (
+        <>
+          <circle cx="12" cy="9.5" r="5.4" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M12 14.9V21M9.2 18.4h5.6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </>
+      )}
+    </svg>
+  );
+}
+
 export default function FortuneForm({ onSubmit, isLoading, lang, error }: FortuneFormProps) {
   const [birthDate, setBirthDate] = useState('');
   const [gender, setGender] = useState('');
@@ -31,61 +49,70 @@ export default function FortuneForm({ onSubmit, isLoading, lang, error }: Fortun
   };
 
   const isValid = birthDate.length > 0 && gender.length > 0;
+  const stripEmoji = (value: string) => value.replace(/^[^A-Za-z가-힣\u3040-\u30FF\u4E00-\u9FFF]+/, '').trim();
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="mx-auto w-full max-w-md">
       <div
-        className="relative rounded-[1.75rem] p-[1px]"
+        className="relative rounded-[0.45rem] p-[1px]"
         style={{
-          background: 'linear-gradient(145deg, rgba(216,180,254,0.45), rgba(129,140,248,0.16), rgba(244,114,182,0.24))',
-          boxShadow: '0 24px 80px rgba(3,0,18,0.48)',
+          background:
+            'linear-gradient(150deg, rgba(226,205,162,0.75) 0%, rgba(169,128,63,0.3) 40%, rgba(37,45,85,0.7) 100%)',
+          boxShadow: '0 34px 70px -36px rgba(20,23,43,0.55)',
         }}
       >
         <div
-          className="rounded-[1.7rem] p-5 sm:p-7"
+          className="relative overflow-hidden rounded-[0.42rem] p-5 sm:p-7"
           style={{
-            background: 'linear-gradient(145deg, rgba(13,7,31,0.98), rgba(27,12,52,0.96))',
-            backdropFilter: 'blur(20px)',
+            background:
+              'linear-gradient(165deg, #161d3d 0%, #111730 60%, #0e142b 100%)',
+            backdropFilter: 'blur(22px)',
           }}
         >
+          {/* 모서리 장식 */}
+          <span className="pointer-events-none absolute left-4 top-4 h-5 w-5 border-l border-t border-[rgba(226,205,162,0.55)]" aria-hidden="true" />
+          <span className="pointer-events-none absolute bottom-4 right-4 h-5 w-5 border-b border-r border-[rgba(226,205,162,0.55)]" aria-hidden="true" />
+
           <form onSubmit={handleSubmit} className="relative z-10">
             <div className="mb-6">
-              <p className="text-white text-lg font-semibold leading-relaxed text-keep-all">
+              <p className="font-display text-[1.22rem] font-semibold leading-snug text-[#f7f0e1] text-keep-all">
                 {tr.formSubtitle}
               </p>
-              <p className="text-purple-200/80 text-sm mt-1.5 text-keep-all">
+              <p className="mt-2 text-[0.78rem] leading-6 text-[rgba(247,240,225,0.55)] text-keep-all">
                 {tr.formHint}
               </p>
             </div>
 
             {/* 성별 선택 */}
-            <div className="mb-6">
-              <label className="block text-purple-200 text-sm font-semibold mb-2 tracking-wide">
-                {tr.genderLabel}
+            <div className="mb-5">
+              <label className="mb-2 block text-[0.66rem] font-semibold uppercase tracking-[0.26em] text-[rgba(226,205,162,0.8)]">
+                {stripEmoji(tr.genderLabel)}
               </label>
-              <div className="grid grid-cols-2 gap-3">
-                {[{ value: '남자', emoji: '♂️', label: tr.male }, { value: '여자', emoji: '♀️', label: tr.female }].map(({ value, emoji, label }) => (
-                  <button
-                    key={value}
-                    type="button"
-                    onClick={() => setGender(value)}
-                    disabled={isLoading}
-                    aria-pressed={gender === value}
-                    className="min-h-11 py-3 rounded-xl font-semibold text-base transition-all duration-200 border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#130a2c]"
-                    style={{
-                      background: gender === value
-                        ? 'linear-gradient(135deg, #7c3aed 0%, #6366f1 100%)'
-                        : 'rgba(255,255,255,0.03)',
-                      borderColor: gender === value
-                        ? 'rgba(139,92,246,0.8)'
-                        : 'rgba(255,255,255,0.1)',
-                      color: gender === value ? '#fff' : 'rgba(255,255,255,0.72)',
-                      boxShadow: gender === value ? '0 0 20px rgba(139,92,246,0.4)' : 'none',
-                    }}
-                  >
-                    {emoji} {label}
-                  </button>
-                ))}
+              <div className="relative grid grid-cols-2 gap-1 rounded-full border border-[rgba(226,205,162,0.18)] bg-white/[0.035] p-1">
+                <span className="pointer-events-none absolute inset-y-2 left-1/2 w-px -translate-x-1/2 bg-[rgba(226,205,162,0.18)]" aria-hidden="true" />
+                {[{ value: '남자', type: 'male' as const, label: tr.male }, { value: '여자', type: 'female' as const, label: tr.female }].map(({ value, type, label }) => {
+                  const selected = gender === value;
+                  return (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => setGender(value)}
+                      disabled={isLoading}
+                      aria-pressed={selected}
+                      className="flex min-h-11 items-center justify-center gap-2 rounded-full text-[0.85rem] font-semibold transition-all duration-300"
+                      style={{
+                        background: selected
+                          ? 'linear-gradient(120deg, #e8d3a6, #c3a165)'
+                          : 'transparent',
+                        color: selected ? '#1a1408' : 'rgba(247,240,225,0.62)',
+                        boxShadow: selected ? '0 6px 18px -12px rgba(0,0,0,0.5)' : 'none',
+                      }}
+                    >
+                      <GenderMark type={type} />
+                      {label}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
@@ -93,11 +120,11 @@ export default function FortuneForm({ onSubmit, isLoading, lang, error }: Fortun
             <div className="mb-6">
               <label
                 htmlFor="birthDate"
-                className="block text-purple-200 text-sm font-semibold mb-2 tracking-wide"
+                className="mb-2 block text-[0.66rem] font-semibold uppercase tracking-[0.26em] text-[rgba(226,205,162,0.8)]"
               >
-                {tr.dateLabel}
+                {stripEmoji(tr.dateLabel)}
               </label>
-              <div className="relative rounded-xl p-[1px] bg-gradient-to-r from-purple-700/70 to-indigo-700/70 focus-within:from-purple-400 focus-within:to-pink-400 transition-colors">
+              <div className="relative rounded-xl border border-[rgba(226,205,162,0.2)] bg-[rgba(20,23,43,0.03)] transition-colors focus-within:border-[rgba(226,205,162,0.75)]">
                 <input
                   id="birthDate"
                   type="date"
@@ -107,11 +134,7 @@ export default function FortuneForm({ onSubmit, isLoading, lang, error }: Fortun
                   max={today}
                   required
                   disabled={isLoading}
-                  className="w-full min-h-12 rounded-xl px-4 py-3 text-white text-base font-medium
-                    bg-gray-900/80 outline-none cursor-pointer
-                    disabled:opacity-50 disabled:cursor-not-allowed
-                    transition-all duration-200 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-purple-200
-                    [color-scheme:dark]"
+                  className="min-h-12 w-full rounded-xl bg-transparent px-4 py-3 text-base font-medium text-[#f7f0e1] outline-none [color-scheme:dark] disabled:cursor-not-allowed disabled:opacity-50"
                   style={{ colorScheme: 'dark' }}
                 />
               </div>
@@ -121,39 +144,25 @@ export default function FortuneForm({ onSubmit, isLoading, lang, error }: Fortun
             <button
               type="submit"
               disabled={!isValid || isLoading}
-              className={`
-                w-full min-h-12 py-3.5 px-6 rounded-xl font-bold text-lg
-                transition-all duration-300 transform ripple-btn
-                relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-200 focus-visible:ring-offset-2 focus-visible:ring-offset-[#130a2c]
-                ${isValid && !isLoading
-                  ? 'hover:scale-[1.02] active:scale-[0.98] cursor-pointer'
-                  : 'opacity-70 cursor-not-allowed'
-                }
-              `}
-              style={{
-                background: isValid && !isLoading
-                  ? 'linear-gradient(135deg, #7c3aed 0%, #a855f7 40%, #ec4899 100%)'
-                  : 'linear-gradient(135deg, #4c2c75 0%, #37306f 100%)',
-                boxShadow: isValid && !isLoading
-                  ? '0 0 30px rgba(168,85,247,0.4), 0 0 60px rgba(168,85,247,0.15), 0 4px 20px rgba(0,0,0,0.4)'
-                  : 'none',
-                letterSpacing: '0.02em',
-              }}
+              className={`btn-gold-warm w-full text-[0.95rem] ${isValid && !isLoading ? '' : '!cursor-not-allowed'}`}
             >
-              <span className="relative z-10 flex items-center justify-center gap-2 font-serif-display tracking-wide">
+              <span className="relative z-10 flex items-center justify-center gap-2 font-display tracking-[0.02em]">
                 {isLoading ? (
                   <>
-                    <span className="inline-block w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-[#1a1408]/30 border-t-[#1a1408]" />
                     <span>{tr.loadingBtn}</span>
                   </>
                 ) : (
-                  <span>{tr.submitBtn}</span>
+                  <>
+                    <span>{tr.submitBtn}</span>
+                    <span aria-hidden="true" className="text-[1.05rem] leading-none">→</span>
+                  </>
                 )}
               </span>
             </button>
 
             {isLoading && (
-              <p className="mt-4 text-center text-purple-100 text-sm leading-6" role="status" aria-live="polite">
+              <p className="mt-4 text-center text-[0.8rem] leading-6 text-[rgba(226,205,162,0.85)]" role="status" aria-live="polite">
                 {tr.loadingTitle} · {tr.loadingMessages[0]}
               </p>
             )}
@@ -161,7 +170,7 @@ export default function FortuneForm({ onSubmit, isLoading, lang, error }: Fortun
               <div
                 role="alert"
                 aria-live="assertive"
-                className={`mt-4 rounded-xl px-4 py-3 text-sm leading-6 ${error.code === 'QUOTA_EXCEEDED' ? 'text-yellow-100 bg-yellow-400/10 border border-yellow-300/30' : 'text-red-100 bg-red-400/10 border border-red-300/30'}`}
+                className={`mt-4 rounded-xl border px-4 py-3 text-[0.82rem] leading-6 ${error.code === 'QUOTA_EXCEEDED' ? 'border-amber-300/30 bg-amber-400/10 text-amber-100' : 'border-rose-300/25 bg-rose-400/10 text-rose-100'}`}
               >
                 <p className="font-semibold">{error.code === 'QUOTA_EXCEEDED' ? tr.quotaTitle : tr.errorTitle}</p>
                 <p className="mt-1 opacity-90">{error.code === 'QUOTA_EXCEEDED' ? `${tr.quotaMsg1} ${tr.quotaMsg2}` : tr.generalError}</p>

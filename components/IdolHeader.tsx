@@ -30,7 +30,7 @@ export default function IdolHeader() {
   };
 
   return (
-    <header className="relative z-50 w-full" style={{ background: '#0a0a0a', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+    <header className="relative z-50 w-full" style={{ background: '#0a0a0a', borderBottom: '1px solid rgba(20,23,43,0.05)' }}>
       <div className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
         {/* 로고 */}
         <Link href="/idol" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
@@ -49,13 +49,13 @@ export default function IdolHeader() {
           <Link
             href="/"
             className="text-xs px-3 py-1.5 rounded-full transition-all hover:opacity-80"
-            style={{ color: 'rgba(255,255,255,0.3)', border: '1px solid rgba(255,255,255,0.08)' }}
+            style={{ color: 'rgba(255,255,255,0.3)', border: '1px solid rgba(20,23,43,0.06)' }}
           >
             {lang === 'ko' ? '🔮 오늘의 운세' : '🔮 Fortune'}
           </Link>
 
           {/* 언어 토글 */}
-          <div className="flex rounded-lg overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
+          <div className="flex rounded-lg overflow-hidden" style={{ border: '1px solid rgba(20,23,43,0.06)' }}>
             {(['ko', 'en', 'zh', 'ja'] as IdolLang[]).map((l) => (
               <button
                 key={l}

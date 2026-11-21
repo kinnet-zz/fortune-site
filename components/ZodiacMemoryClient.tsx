@@ -419,10 +419,10 @@ export default function ZodiacMemoryClient() {
                     key={lv}
                     onClick={() => startLevel(lv)}
                     className="flex flex-col items-start gap-1.5 p-4 rounded-2xl text-left transition-all active:scale-95 hover:opacity-90"
-                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+                    style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}
                   >
                     <div className="flex items-center justify-between w-full">
-                      <span className="text-purple-400 font-bold text-sm">{t.levelLabel(lv)}</span>
+                      <span className="text-[#c3a165] font-bold text-sm">{t.levelLabel(lv)}</span>
                       {best && (
                         <span className="text-white/30 text-xs">⭐ {best.score}pt</span>
                       )}
@@ -453,7 +453,7 @@ export default function ZodiacMemoryClient() {
             <div className="flex items-center justify-between mb-4">
               <div
                 className="px-3 py-1 rounded-full text-sm font-bold"
-                style={{ background: 'rgba(124,58,237,0.25)', color: '#c084fc', border: '1px solid rgba(124,58,237,0.4)' }}
+                style={{ background: 'rgba(169,128,63,0.14)', color: '#c084fc', border: '1px solid rgba(124,58,237,0.4)' }}
               >
                 {t.levelLabel(level)}
               </div>
@@ -513,12 +513,12 @@ export default function ZodiacMemoryClient() {
                         ? `${z.color}20`
                         : card.flipped
                           ? `${z.color}15`
-                          : 'rgba(255,255,255,0.05)',
+                          : 'rgba(20,23,43,0.04)',
                       border: card.matched
                         ? `1px solid ${z.color}50`
                         : card.flipped
                           ? `1px solid ${z.color}40`
-                          : '1px solid rgba(255,255,255,0.07)',
+                          : '1px solid rgba(20,23,43,0.05)',
                       cursor: isVisible ? 'default' : 'pointer',
                     }}
                   >
@@ -543,7 +543,7 @@ export default function ZodiacMemoryClient() {
             </div>
 
             {/* Progress bar */}
-            <div className="mt-4 w-full h-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+            <div className="mt-4 w-full h-1 rounded-full overflow-hidden" style={{ background: 'rgba(20,23,43,0.05)' }}>
               <div
                 className="h-full rounded-full transition-all"
                 style={{
@@ -604,7 +604,7 @@ export default function ZodiacMemoryClient() {
               <button
                 onClick={() => setPhase('idle')}
                 className="flex-1 py-3 rounded-2xl font-bold transition-all active:scale-95"
-                style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.1)' }}
+                style={{ background: 'rgba(20,23,43,0.05)', color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(20,23,43,0.08)' }}
               >
                 {t.home}
               </button>
@@ -625,9 +625,9 @@ export default function ZodiacMemoryClient() {
                 <div
                   key={lv}
                   className="flex items-center justify-between px-4 py-2 rounded-xl"
-                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}
+                  style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.05)' }}
                 >
-                  <span className="text-purple-400 font-bold text-sm">{t.levelLabel(Number(lv))}</span>
+                  <span className="text-[#c3a165] font-bold text-sm">{t.levelLabel(Number(lv))}</span>
                   <span className="text-white/60 text-sm">{entry.time}{t.sec} · {entry.mistakes}{t.times}</span>
                   <span className="text-white/30 text-xs">⭐ {entry.score}pt</span>
                 </div>

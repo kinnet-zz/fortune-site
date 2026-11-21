@@ -211,7 +211,7 @@ function TarotCardBack({
           style={{
             backfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
-            background: `linear-gradient(160deg, #1a0a3e 0%, #0f0628 100%)`,
+            background: `linear-gradient(160deg, #f7f2e8 0%, #0f0628 100%)`,
             border: `2px solid ${card.color}70`,
           }}
         >
@@ -257,7 +257,7 @@ function CardBackFace({ isHovered }: { isHovered: boolean }) {
 
       {/* 코너 장식 */}
       {['top-[10px] left-[10px]', 'top-[10px] right-[10px]', 'bottom-[10px] left-[10px]', 'bottom-[10px] right-[10px]'].map((pos, i) => (
-        <div key={i} className={`absolute ${pos} text-purple-400/40`} style={{ fontSize: '0.5rem' }}>◆</div>
+        <div key={i} className={`absolute ${pos} text-purple-300/40`} style={{ fontSize: '0.5rem' }}>◆</div>
       ))}
 
       {/* 배경 패턴 */}
@@ -346,8 +346,8 @@ function ResultCard({
           onClick={onRetry}
           className="flex-1 py-3.5 rounded-2xl text-sm font-bold transition-all"
           style={{
-            background: 'rgba(255,255,255,0.05)',
-            border: '1px solid rgba(255,255,255,0.1)',
+            background: 'rgba(20,23,43,0.04)',
+            border: '1px solid rgba(20,23,43,0.08)',
             color: 'rgba(255,255,255,0.5)',
           }}
         >

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { trackEvent } from '@/lib/analytics';
 import { type Lang, t } from '@/lib/i18n';
 import { encodeSharedResult } from '@/lib/sharedFortune';
+import ConstellationIcon, { CONSTELLATIONS, zodiacSlugFromName } from '@/components/Constellation';
 
 interface FortuneResult {
   zodiacSign: string;
@@ -24,14 +25,14 @@ interface FortuneCardProps {
 }
 
 interface SectionProps {
-  icon: string;
+  index: string;
   title: string;
   content: string;
   color: string;
   delay: number;
 }
 
-function FortuneSection({ icon, title, content, color, delay }: SectionProps) {
+function FortuneSection({ index, title, content, color, delay }: SectionProps) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -41,86 +42,63 @@ function FortuneSection({ icon, title, content, color, delay }: SectionProps) {
 
   return (
     <div
-      className={`rounded-2xl p-5 transition-all duration-700 ${
-        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+      className={`relative border-t border-[rgba(226,205,162,0.16)] pt-5 transition-all duration-700 ${
+        visible ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
       }`}
-      style={{
-        background: 'rgba(255,255,255,0.04)',
-        border: '1px solid rgba(255,255,255,0.08)',
-        backdropFilter: 'blur(10px)',
-      }}
     >
-      <div className="flex items-center gap-2 mb-3">
-        <span className="text-2xl">{icon}</span>
-        <h3 className="text-sm font-bold tracking-widest uppercase" style={{ color }}>
+      <div className="mb-2 flex items-baseline gap-3">
+        <span className="font-display text-[0.72rem] italic tracking-[0.18em]" style={{ color }}>
+          {index}
+        </span>
+        <h3 className="text-[0.62rem] font-semibold uppercase tracking-[0.28em]" style={{ color }}>
           {title}
         </h3>
       </div>
-      <p className="text-white/80 text-sm leading-relaxed font-medium">{content}</p>
+      <p className="text-[0.88rem] leading-7 text-[rgba(247,240,225,0.78)] text-keep-all">{content}</p>
     </div>
   );
 }
 
-function ScoreBar({ score }: { score: number }) {
+function ScoreRing({ score }: { score: number }) {
   const [animated, setAnimated] = useState(false);
+  const radius = 40;
+  const circumference = 2 * Math.PI * radius;
+  const clamped = Math.max(0, Math.min(100, score));
+  const offset = circumference - (clamped / 100) * circumference;
 
   useEffect(() => {
-    const timer = setTimeout(() => setAnimated(true), 300);
+    const timer = setTimeout(() => setAnimated(true), 260);
     return () => clearTimeout(timer);
   }, []);
 
-  const stars = Array.from({ length: 5 }, (_, i) => {
-    const filled = (score / 100) * 5;
-    if (i < Math.floor(filled)) return 'full';
-    if (i < filled) return 'half';
-    return 'empty';
-  });
-
   return (
-    <div className="space-y-3">
-      {/* 별점 */}
-      <div className="flex justify-center gap-1">
-        {stars.map((type, i) => (
-          <span
-            key={i}
-            className={`text-2xl transition-all duration-500 ${
-              animated ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
-            }`}
-            style={{ transitionDelay: `${i * 100}ms` }}
-          >
-            {type === 'full' ? '⭐' : type === 'half' ? '🌟' : '☆'}
-          </span>
-        ))}
-      </div>
-
-      {/* 프로그레스 바 */}
-      <div className="relative h-3 bg-white/10 rounded-full overflow-hidden">
-        <div
-          className="absolute inset-y-0 left-0 rounded-full transition-all duration-1000 ease-out"
-          style={{
-            width: animated ? `${score}%` : '0%',
-            background: 'linear-gradient(90deg, #7c3aed, #a855f7, #ec4899)',
-            boxShadow: '0 0 10px rgba(168, 85, 247, 0.5)',
-          }}
+    <div className="relative h-[6.4rem] w-[6.4rem] flex-shrink-0">
+      <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90" aria-hidden="true">
+        <defs>
+          <linearGradient id="scoreGold" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#fdf3d5" />
+            <stop offset="45%" stopColor="#ecd193" />
+            <stop offset="100%" stopColor="#a9803f" />
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="50" r={radius} fill="none" stroke="rgba(226,205,162,0.18)" strokeWidth="3" />
+        <circle
+          cx="50"
+          cy="50"
+          r={radius}
+          fill="none"
+          stroke="url(#scoreGold)"
+          strokeWidth="3.4"
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={animated ? offset : circumference}
+          style={{ transition: 'stroke-dashoffset 1.5s cubic-bezier(0.22,1,0.36,1)', filter: 'drop-shadow(0 0 6px rgba(226,205,162,0.35))' }}
         />
-        {/* 반짝임 효과 */}
-        <div
-          className="absolute inset-y-0 left-0 rounded-full animate-shimmer"
-          style={{
-            width: animated ? `${score}%` : '0%',
-            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
-            backgroundSize: '200% 100%',
-            transition: 'width 1s ease-out',
-          }}
-        />
-      </div>
-
-      {/* 점수 텍스트 */}
-      <div className="text-center">
-        <span className="text-3xl font-black bg-gradient-to-r from-purple-300 via-pink-300 to-indigo-300 bg-clip-text text-transparent">
-          {score}
-        </span>
-        <span className="text-white/40 text-sm ml-1">/ 100</span>
+        <circle cx="50" cy="50" r="31" fill="none" stroke="rgba(226,205,162,0.25)" strokeWidth="0.6" strokeDasharray="1 5" />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className="font-display text-[1.85rem] font-semibold leading-none text-[#f7f0e1]">{clamped}</span>
+        <span className="mt-1 text-[0.55rem] uppercase tracking-[0.22em] text-[rgba(247,240,225,0.42)]">/ 100</span>
       </div>
     </div>
   );
@@ -131,15 +109,21 @@ export default function FortuneCard({ fortune, onReset, lang }: FortuneCardProps
   const [linkCopied, setLinkCopied] = useState(false);
   const [imageSharing, setImageSharing] = useState(false);
   const [imageSaved, setImageSaved] = useState(false);
+  const [readingDate, setReadingDate] = useState('');
   const cardRef = useRef<HTMLDivElement>(null);
   const preBlobRef = useRef<Blob | null>(null);
   const [cardVisible, setCardVisible] = useState(false);
   const tr = t(lang);
 
   useEffect(() => {
-    const timer = setTimeout(() => setCardVisible(true), 100);
+    const timer = setTimeout(() => setCardVisible(true), 80);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const locale = lang === 'ko' ? 'ko-KR' : lang === 'ja' ? 'ja-JP' : lang === 'zh' ? 'zh-CN' : 'en-US';
+    setReadingDate(new Intl.DateTimeFormat(locale, { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date()));
+  }, [lang]);
 
   // iOS Safari 대응: 카드 렌더 후 미리 이미지 생성 (클릭 시 즉시 share 호출 위해)
   useEffect(() => {
@@ -148,7 +132,7 @@ export default function FortuneCard({ fortune, onReset, lang }: FortuneCardProps
       try {
         const html2canvas = (await import('html2canvas')).default;
         const canvas = await html2canvas(cardRef.current, {
-          backgroundColor: '#0f0a2d',
+          backgroundColor: '#080a16',
           scale: 2,
           useCORS: true,
           allowTaint: true,
@@ -230,7 +214,7 @@ export default function FortuneCard({ fortune, onReset, lang }: FortuneCardProps
       if (!blob) {
         const html2canvas = (await import('html2canvas')).default;
         const canvas = await html2canvas(cardRef.current, {
-          backgroundColor: '#0f0a2d',
+          backgroundColor: '#080a16',
           scale: 2,
           useCORS: true,
           allowTaint: true,
@@ -301,247 +285,150 @@ export default function FortuneCard({ fortune, onReset, lang }: FortuneCardProps
   };
 
   const scoreLevel = tr.scoreLevel(fortune.score);
-
-  const scoreEmoji = fortune.score >= 80 ? '🌟' :
-    fortune.score >= 60 ? '⭐' :
-    fortune.score >= 40 ? '🌙' : '💫';
+  const slug = zodiacSlugFromName(fortune.zodiacSign);
+  const englishName = slug ? CONSTELLATIONS[slug].en : '';
 
   return (
     <div
-      className={`w-full max-w-lg mx-auto transition-all duration-700 ${
-        cardVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      className={`mx-auto w-full max-w-xl transition-all duration-700 ${
+        cardVisible ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
       }`}
     >
       {/* 메인 카드 */}
       <div
         ref={cardRef}
-        className="rounded-3xl p-[1px]"
+        className="relative rounded-[0.5rem] p-[1px]"
         style={{
-          background: 'linear-gradient(135deg, rgba(139,92,246,0.7), rgba(99,102,241,0.4), rgba(236,72,153,0.5))',
-          boxShadow: '0 0 60px rgba(139, 92, 246, 0.3), 0 20px 40px rgba(0,0,0,0.5)',
+          background:
+            'linear-gradient(150deg, rgba(169,128,63,0.7) 0%, rgba(169,128,63,0.25) 45%, rgba(17,23,48,0.35) 100%)',
+          boxShadow: '0 36px 80px -44px rgba(20,23,43,0.5)',
         }}
       >
         <div
-          className="rounded-3xl overflow-hidden"
+          className="relative overflow-hidden rounded-[0.46rem]"
           style={{
-            background: 'linear-gradient(160deg, rgba(15,10,45,0.98) 0%, rgba(25,10,65,0.98) 100%)',
-            backdropFilter: 'blur(20px)',
+            background:
+              'linear-gradient(170deg, #161d3d 0%, #111730 42%, #0f1529 100%)',
           }}
         >
           {/* 상단 헤더 */}
-          <div
-            className="px-8 py-6 text-center relative overflow-hidden"
-            style={{
-              background: 'linear-gradient(135deg, rgba(124,58,237,0.3) 0%, rgba(99,102,241,0.2) 100%)',
-              borderBottom: '1px solid rgba(255,255,255,0.06)',
-            }}
-          >
-            {/* 배경 장식 */}
-            <div className="absolute top-2 left-4 text-purple-500/20 text-6xl select-none">✦</div>
-            <div className="absolute bottom-2 right-4 text-indigo-500/20 text-4xl select-none">✦</div>
-            <div className="absolute top-4 right-10 text-pink-500/20 text-2xl select-none animate-twinkle">★</div>
-            <div className="absolute bottom-4 left-10 text-purple-400/20 text-2xl select-none animate-twinkle-delayed">★</div>
-
-            <p className="text-purple-300/60 text-xs tracking-widest uppercase font-medium mb-3">
-              {tr.resultHeader}
-            </p>
-
-            {/* 별자리 & 띠 */}
-            <div className="flex justify-center gap-3 mb-4">
-              <span
-                className="px-4 py-1.5 rounded-full text-sm font-bold text-purple-200"
-                style={{
-                  background: 'rgba(124,58,237,0.3)',
-                  border: '1px solid rgba(167,139,250,0.3)',
-                }}
-              >
-                ♈ {fortune.zodiacSign}
-              </span>
-              <span
-                className="px-4 py-1.5 rounded-full text-sm font-bold text-pink-200"
-                style={{
-                  background: 'rgba(236,72,153,0.2)',
-                  border: '1px solid rgba(249,168,212,0.3)',
-                }}
-              >
-                🐾 {fortune.chineseZodiac}
-              </span>
+          <div className="relative overflow-hidden px-6 pb-6 pt-7 sm:px-8">
+            <div className="pointer-events-none absolute -right-16 -top-20 h-48 w-48 rounded-full border border-[rgba(226,205,162,0.18)]" aria-hidden="true" />
+            <div className="pointer-events-none absolute -right-8 -top-8 text-[rgba(226,205,162,0.14)]" aria-hidden="true">
+              <span className="font-display text-7xl italic">✦</span>
             </div>
 
-            {/* 오늘의 한마디 */}
-            <div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl"
-              style={{
-                background: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(255,255,255,0.08)',
-              }}
-            >
-              <span className="text-lg">{scoreEmoji}</span>
-              <span className="text-white/70 text-sm font-semibold">{scoreLevel}</span>
+            <div className="flex items-center justify-between gap-3">
+              <span className="text-[0.58rem] font-semibold uppercase tracking-[0.32em] text-[rgba(226,205,162,0.78)]">
+                {tr.resultHeader}
+              </span>
+              <span className="text-[0.64rem] tracking-[0.16em] text-[rgba(247,240,225,0.55)]">{readingDate}</span>
             </div>
-          </div>
 
-          {/* 점수 섹션 */}
-          <div className="px-8 py-6" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-            <p className="text-center text-white/40 text-xs tracking-widest uppercase font-medium mb-4">
-              {tr.scoreLabel}
-            </p>
-            <ScoreBar score={fortune.score} />
+            <div className="mt-5 flex items-center justify-between gap-4">
+              <div className="min-w-0">
+                <div className="mb-2 text-[rgba(226,205,162,0.9)]">
+                  <ConstellationIcon slug={slug} size={62} strokeWidth={1.1} animated />
+                </div>
+                <h2 className="font-display text-[1.8rem] font-semibold leading-tight text-[#f7f0e1] text-keep-all">
+                  {fortune.zodiacSign}
+                </h2>
+                {englishName && (
+                  <p className="mt-1 text-[0.62rem] uppercase tracking-[0.3em] text-[rgba(226,205,162,0.6)]">
+                    {englishName}
+                  </p>
+                )}
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  <span className="chip-dark text-[0.68rem]">{fortune.chineseZodiac}</span>
+                  <span className="chip-dark text-[0.68rem]">{scoreLevel}</span>
+                </div>
+              </div>
+              <ScoreRing score={fortune.score} />
+            </div>
           </div>
 
           {/* 운세 섹션들 */}
-          <div className="px-8 py-6 space-y-4">
-            <p className="text-white/30 text-xs tracking-widest uppercase font-medium mb-2">
-              {tr.detailLabel}
-            </p>
-            <FortuneSection
-              icon="✨"
-              title={tr.overall}
-              content={fortune.overall}
-              color="#c084fc"
-              delay={200}
-            />
-            <FortuneSection
-              icon="💕"
-              title={tr.love}
-              content={fortune.love}
-              color="#f9a8d4"
-              delay={400}
-            />
-            <FortuneSection
-              icon="💰"
-              title={tr.money}
-              content={fortune.money}
-              color="#6ee7b7"
-              delay={600}
-            />
-            <FortuneSection
-              icon="💼"
-              title={tr.work}
-              content={fortune.work}
-              color="#93c5fd"
-              delay={800}
-            />
+          <div className="space-y-5 px-6 pb-6 pt-2 sm:px-8">
+            <FortuneSection index="01" title={tr.overall} content={fortune.overall} color="#f0d79d" delay={220} />
+            <FortuneSection index="02" title={tr.love} content={fortune.love} color="#e8b3c4" delay={340} />
+            <FortuneSection index="03" title={tr.money} content={fortune.money} color="#a9cfb5" delay={460} />
+            <FortuneSection index="04" title={tr.work} content={fortune.work} color="#a9b8e8" delay={580} />
           </div>
 
           {/* 행운 정보 */}
-          <div className="px-8 pb-6">
-            <div
-              className="rounded-2xl p-5"
-              style={{
-                background: 'linear-gradient(135deg, rgba(124,58,237,0.15), rgba(99,102,241,0.10))',
-                border: '1px solid rgba(167,139,250,0.15)',
-              }}
-            >
-              <p className="text-white/40 text-xs tracking-widest uppercase font-medium mb-4 text-center">
+          <div className="px-6 pb-6 sm:px-8">
+            <div className="rounded-2xl border border-[rgba(226,205,162,0.22)] bg-[rgba(226,205,162,0.05)] px-5 py-5">
+              <p className="mb-4 text-center text-[0.58rem] font-semibold uppercase tracking-[0.3em] text-[rgba(226,205,162,0.7)]">
                 {tr.luckyItemLabel}
               </p>
-              <div className="flex justify-center gap-8">
-                {/* 행운의 색상 */}
+              <div className="flex items-center justify-center gap-8">
                 <div className="text-center">
                   <div
-                    className="w-12 h-12 rounded-full mx-auto mb-2 ring-2 ring-white/20"
+                    className="mx-auto mb-2.5 h-11 w-11 rounded-full ring-1 ring-[rgba(226,205,162,0.55)]"
                     style={{
                       background: getLuckyColorHex(fortune.luckyColor),
-                      boxShadow: `0 0 20px ${getLuckyColorHex(fortune.luckyColor)}60`,
+                      boxShadow: `0 0 24px ${getLuckyColorHex(fortune.luckyColor)}66, inset 0 0 12px rgba(0,0,0,0.28)`,
                     }}
                   />
-                  <p className="text-white/40 text-xs mb-1">{tr.luckyColorLabel}</p>
-                  <p className="text-white/80 text-sm font-bold">{fortune.luckyColor}</p>
+                  <p className="mb-1 text-[0.58rem] uppercase tracking-[0.18em] text-[rgba(247,240,225,0.42)]">{tr.luckyColorLabel}</p>
+                  <p className="text-[0.82rem] font-semibold text-[#f7f0e1]">{fortune.luckyColor}</p>
                 </div>
 
-                {/* 구분선 */}
-                <div
-                  className="w-px self-stretch"
-                  style={{ background: 'rgba(255,255,255,0.08)' }}
-                />
+                <div className="h-14 w-px bg-[rgba(226,205,162,0.22)]" />
 
-                {/* 행운의 숫자 */}
                 <div className="text-center">
-                  <div
-                    className="w-12 h-12 rounded-full mx-auto mb-2 flex items-center justify-center ring-2 ring-purple-500/30"
-                    style={{
-                      background: 'linear-gradient(135deg, rgba(124,58,237,0.4), rgba(99,102,241,0.4))',
-                    }}
-                  >
-                    <span className="text-xl font-black text-white">{fortune.luckyNumber}</span>
+                  <div className="mx-auto mb-2.5 flex h-11 w-11 items-center justify-center rounded-full border border-[rgba(226,205,162,0.5)] bg-[linear-gradient(140deg,#e8d3a6,#c3a165)]">
+                    <span className="font-display text-lg font-bold text-[#1a1408]">{fortune.luckyNumber}</span>
                   </div>
-                  <p className="text-white/40 text-xs mb-1">{tr.luckyNumberLabel}</p>
-                  <p className="text-white/80 text-sm font-bold">{fortune.luckyNumber}</p>
+                  <p className="mb-1 text-[0.58rem] uppercase tracking-[0.18em] text-[rgba(247,240,225,0.42)]">{tr.luckyNumberLabel}</p>
+                  <p className="text-[0.82rem] font-semibold text-[#f7f0e1]">{fortune.luckyNumber}</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* 버튼 영역 */}
-          <div className="px-8 pb-8 space-y-3">
-            <div className="flex gap-3">
-              {/* 이미지 공유 버튼 */}
+          <div className="space-y-2.5 px-6 pb-8 sm:px-8">
+            <div className="flex flex-col gap-2.5 sm:flex-row">
               <button
                 onClick={handleImageShare}
                 disabled={imageSharing}
-                className="flex-1 py-4 rounded-2xl font-bold text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{
-                  background: imageSharing
-                    ? 'rgba(255,255,255,0.04)'
-                    : 'linear-gradient(135deg, rgba(236,72,153,0.3), rgba(139,92,246,0.3))',
-                  border: '1px solid rgba(236,72,153,0.3)',
-                  color: imageSharing ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.8)',
-                }}
+                className="btn-gold-warm flex-1 text-[0.86rem]"
               >
-                <span className="flex items-center justify-center gap-2">
-                  <span>{imageSharing ? '⏳' : imageSaved ? '✅' : '📸'}</span>
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <span aria-hidden="true">{imageSharing ? '◌' : imageSaved ? '✓' : '↓'}</span>
                   <span>{imageSharing ? tr.imageSharing : imageSaved ? tr.imageSaved : tr.imageShareBtn}</span>
                 </span>
               </button>
 
-              {/* 다시 보기 버튼 */}
-              <button
-                onClick={onReset}
-                className="flex-1 py-4 rounded-2xl font-bold text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-                style={{
-                  background: 'linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #6366f1 100%)',
-                  boxShadow: '0 0 20px rgba(139, 92, 246, 0.4)',
-                }}
-              >
-                <span className="flex items-center justify-center gap-2 text-white">
-                  <span>🔮</span>
-                  <span>{tr.resetBtn}</span>
-                </span>
+              <button onClick={onReset} className="btn-ghost-light flex-1 text-[0.86rem]">
+                <span aria-hidden="true">↺</span>
+                <span>{tr.resetBtn}</span>
               </button>
             </div>
 
-            {/* 텍스트 공유 + 링크 복사 */}
-            <div className="flex gap-3">
+            <div className="flex gap-2.5">
               <button
                 onClick={handleShare}
-                className="flex-1 py-3 rounded-2xl font-semibold text-sm transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]"
+                className="flex-1 rounded-full border px-3 py-2.5 text-[0.78rem] font-medium transition-colors"
                 style={{
-                  background: copied
-                    ? 'linear-gradient(135deg, rgba(34,197,94,0.3), rgba(16,185,129,0.3))'
-                    : 'rgba(255,255,255,0.03)',
-                  border: copied ? '1px solid rgba(34,197,94,0.4)' : '1px solid rgba(255,255,255,0.07)',
-                  color: copied ? '#86efac' : 'rgba(255,255,255,0.35)',
+                  background: copied ? 'rgba(52,211,153,0.12)' : 'rgba(20,23,43,0.025)',
+                  borderColor: copied ? 'rgba(52,211,153,0.45)' : 'rgba(226,205,162,0.32)',
+                  color: copied ? '#a7f3d0' : 'rgba(247,240,225,0.72)',
                 }}
               >
-                <span className="flex items-center justify-center gap-2">
-                  {copied ? <><span>✅</span><span>{tr.copied}</span></> : <><span>📋</span><span>{tr.shareBtn}</span></>}
-                </span>
+                {copied ? `✓ ${tr.copied}` : `↗ ${tr.shareBtn}`}
               </button>
               <button
                 onClick={handleLinkCopy}
-                className="flex-1 py-3 rounded-2xl font-semibold text-sm transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]"
+                className="flex-1 rounded-full border px-3 py-2.5 text-[0.78rem] font-medium transition-colors"
                 style={{
-                  background: linkCopied
-                    ? 'linear-gradient(135deg, rgba(99,102,241,0.3), rgba(139,92,246,0.3))'
-                    : 'rgba(255,255,255,0.03)',
-                  border: linkCopied ? '1px solid rgba(139,92,246,0.5)' : '1px solid rgba(255,255,255,0.07)',
-                  color: linkCopied ? '#c4b5fd' : 'rgba(255,255,255,0.35)',
+                  background: linkCopied ? 'rgba(217,184,119,0.14)' : 'rgba(20,23,43,0.025)',
+                  borderColor: linkCopied ? 'rgba(226,205,162,0.55)' : 'rgba(226,205,162,0.32)',
+                  color: linkCopied ? '#e2cda2' : 'rgba(247,240,225,0.72)',
                 }}
               >
-                <span className="flex items-center justify-center gap-2">
-                  {linkCopied ? <><span>✅</span><span>{tr.linkCopied}</span></> : <><span>🔗</span><span>{tr.linkCopyBtn}</span></>}
-                </span>
+                {linkCopied ? `✓ ${tr.linkCopied}` : `⌘ ${tr.linkCopyBtn}`}
               </button>
             </div>
           </div>
@@ -549,12 +436,9 @@ export default function FortuneCard({ fortune, onReset, lang }: FortuneCardProps
       </div>
 
       {/* 하단 면책 조항 — AdSense 정책 준수 */}
-      <div className="mt-6 text-center space-y-1">
-        <p className="text-white/20 text-xs">{tr.disclaimer}</p>
-        <p
-          className="text-xs px-4 py-2 rounded-xl mx-auto max-w-sm"
-          style={{ color: 'rgba(255,255,255,0.25)', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
-        >
+      <div className="mt-6 space-y-1.5 text-center">
+        <p className="text-[0.7rem] text-[rgba(20,23,43,0.42)]">{tr.disclaimer}</p>
+        <p className="mx-auto max-w-sm rounded-xl border border border-[rgba(20,23,43,0.1)] bg-[#14172b]/[0.035]0 px-4 py-2 text-[0.7rem] leading-5 text-[rgba(20,23,43,0.5)]">
           ⚠️ 본 운세는 오락·자기성찰 목적의 콘텐츠입니다. 실제 미래를 예측하지 않으며, 중요한 의사결정의 근거로 사용하지 마세요.
         </p>
       </div>
@@ -587,7 +471,7 @@ function getLuckyColorHex(colorName: string): string {
     'blue': '#3b82f6', 'navy': '#1e3a8a', 'indigo': '#6366f1', 'teal': '#14b8a6',
     'yellow': '#eab308', 'amber': '#f59e0b', 'gold': '#f59e0b',
     'green': '#22c55e', 'emerald': '#10b981', 'lime': '#84cc16',
-    'purple': '#a855f7', 'violet': '#8b5cf6', 'lavender': '#c4b5fd',
+    'purple': '#a855f7', 'violet': '#8b5cf6', 'lavender': '#6f5223',
     'orange': '#f97316', 'coral': '#fb923c',
     'pink': '#ec4899', 'rose': '#f43f5e',
     'sky blue': '#38bdf8', 'sky': '#38bdf8', 'turquoise': '#2dd4bf', 'cyan': '#06b6d4',
@@ -601,7 +485,7 @@ function getLuckyColorHex(colorName: string): string {
     '蓝色': '#3b82f6', '蓝': '#3b82f6', '深蓝色': '#1e3a8a', '深蓝': '#1e3a8a', '靛蓝': '#6366f1',
     '黄色': '#eab308', '黄': '#eab308', '金色': '#f59e0b', '金黄色': '#f59e0b',
     '绿色': '#22c55e', '绿': '#22c55e', '翠绿': '#10b981', '草绿': '#84cc16',
-    '紫色': '#a855f7', '紫': '#a855f7', '薰衣草色': '#c4b5fd',
+    '紫色': '#a855f7', '紫': '#a855f7', '薰衣草色': '#6f5223',
     '橙色': '#f97316', '橙': '#f97316', '珊瑚色': '#fb923c',
     '粉色': '#ec4899', '粉红色': '#ec4899', '粉红': '#ec4899',
     '天蓝色': '#38bdf8', '天蓝': '#38bdf8', '青色': '#06b6d4', '青': '#06b6d4',
@@ -615,7 +499,7 @@ function getLuckyColorHex(colorName: string): string {
     '紺': '#1e3a8a', '紺色': '#1e3a8a',
     '金': '#f59e0b',
     '緑': '#22c55e', '緑色': '#22c55e', '黄緑': '#84cc16',
-    'ラベンダー': '#c4b5fd',
+    'ラベンダー': '#6f5223',
     'オレンジ': '#f97316', 'オレンジ色': '#f97316', 'サーモン': '#fb923c',
     'ピンク': '#ec4899', 'ピンク色': '#ec4899',
     '水色': '#38bdf8', 'ターコイズ': '#2dd4bf', 'シアン': '#06b6d4',

@@ -13,29 +13,29 @@ export const metadata: Metadata = {
 };
 
 const bgStyle = {
-  background: 'linear-gradient(160deg, #050520 0%, #0a0a2e 30%, #130a2e 60%, #1a0a3e 100%)',
+  background: 'linear-gradient(160deg, rgba(250,246,238,0.6) 0%, rgba(247,242,232,0.4) 45%, rgba(241,233,218,0.5) 100%)',
   minHeight: '100vh',
 };
 
 export default function StarNameEtymologyPage() {
   return (
     <div style={bgStyle}>
-      <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
-        <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
+      <article className="max-w-3xl mx-auto px-6 py-16 text-[#1a1c2e]/80">
+        <Link href="/blog" className="text-[#8a6a2f] hover:text-[#6f5223] text-sm mb-8 inline-block">
           ← 블로그 목록으로 돌아가기
         </Link>
 
         <header className="mb-10">
           <div className="flex items-center gap-2 mb-4 flex-wrap">
-            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(124,58,237,0.3)', color: 'rgba(196,181,253,1)' }}>
+            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(169,128,63,0.14)', color: '#6f5223' }}>
               별자리 문화
             </span>
-            <span className="text-white/30 text-xs">2026년 11월 16일 · 10분 읽기</span>
+            <span className="text-[#1a1c2e]/38 text-xs">2026년 11월 16일 · 10분 읽기</span>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-4 leading-tight">
+          <h1 className="text-3xl font-bold text-[#14172b] mb-4 leading-tight">
             베텔게우스, 알골, 미자르 — 별 이름은 누가 지었나
           </h1>
-          <p className="text-white/50 text-base leading-relaxed">
+          <p className="text-[#1a1c2e]/55 text-base leading-relaxed">
             밝은 별들의 이름을 눈여겨보면 낯선 소리가 섞여 있습니다. 덴네브, 알타이르, 알데바란. 라틴어도 그리스어도 아닌 이 이름들은 어디서 왔고, 누가 정한 것일까요. 별 이름의 계보를 따라가면 번역과 오역, 그리고 naming 권한을 둘러싼 근대의 논쟁이 나옵니다.
           </p>
         </header>
@@ -50,7 +50,7 @@ export default function StarNameEtymologyPage() {
         <div className="space-y-8 text-sm leading-relaxed">
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-4">하늘의 목록이 아랍어를 거쳐 유럽으로</h2>
+            <h2 className="text-xl font-bold text-[#14172b] mb-4">하늘의 목록이 아랍어를 거쳐 유럽으로</h2>
             <p className="mb-3">
               2세기 알렉산드리아의 프톨레마이오스는 <em>알마게스트</em>에 별 목록을 정리했습니다. 48개 별자리에 약 1,000개 남짓한 별의 위치와 밝기를 담은 이 목록은 이후 천 년 동안 하늘을 정리하는 기준이 되었습니다.
             </p>
@@ -63,7 +63,7 @@ export default function StarNameEtymologyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-4">알골 — &lsquo;구울의 머리&rsquo;라는 이름이 남은 이유</h2>
+            <h2 className="text-xl font-bold text-[#14172b] mb-4">알골 — &lsquo;구울의 머리&rsquo;라는 이름이 남은 이유</h2>
             <p className="mb-3">
               페르세우스자리의 알골은 아랍어 <em>라으스 알굴</em>, 즉 &lsquo;구울의 머리&rsquo;에서 왔습니다. 메두사의 머리를 든 페르세우스의 모습과 맞아떨어져 오늘날까지 그대로 쓰입니다.
             </p>
@@ -76,7 +76,7 @@ export default function StarNameEtymologyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-4">그리스·라틴어 이름과 민간 이름이 섞이다</h2>
+            <h2 className="text-xl font-bold text-[#14172b] mb-4">그리스·라틴어 이름과 민간 이름이 섞이다</h2>
             <p className="mb-3">
               모든 이름이 아랍어에서 온 것은 아닙니다. 시리우스는 그리스어로 &lsquo;타오르는&rsquo;을 뜻하는 말에서 왔고, 아르크투루스는 &lsquo;곰의 수호자&rsquo;입니다. 큰곰자리를 따라 도는 위치에서 나온 이름입니다. 폴라리스, 카펠라처럼 라틴어 어원이 분명한 이름도 많습니다.
             </p>
@@ -86,7 +86,7 @@ export default function StarNameEtymologyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-4">2016년 — 국제천문연맹이 이름을 정리하다</h2>
+            <h2 className="text-xl font-bold text-[#14172b] mb-4">2016년 — 국제천문연맹이 이름을 정리하다</h2>
             <p className="mb-3">
               오랫동안 별 이름은 여러 출처에서 서로 다르게 쓰였습니다. 관측 소프트웨어마다 표기가 달랐고, 상업용 별 등록 서비스처럼 공식 절차와 무관한 이름도 유통되었습니다.
             </p>
@@ -99,7 +99,7 @@ export default function StarNameEtymologyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-4">한국의 하늘 — 28수와 천상열차분야지도</h2>
+            <h2 className="text-xl font-bold text-[#14172b] mb-4">한국의 하늘 — 28수와 천상열차분야지도</h2>
             <p className="mb-3">
               동아시아에는 서양의 88개 별자리와 다른 체계가 있었습니다. 하늘을 28개 구역으로 나눈 28수(二十八宿)가 그것입니다. 각 구역은 청룡·현무·백호·주작의 사신(四神)에 묶여 있고, 28수는 달이 하루에 하나씩 머무는 자리로 이해되었습니다.
             </p>
@@ -112,7 +112,7 @@ export default function StarNameEtymologyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-4">이름을 읽는 법</h2>
+            <h2 className="text-xl font-bold text-[#14172b] mb-4">이름을 읽는 법</h2>
             <p className="mb-3">
               별 이름을 볼 때 세 가지만 기억하면 대부분의 혼란을 줄일 수 있습니다. 첫째, 밝은 별의 이름은 대개 그 별의 위치나 별자리 속 역할을 가리키는 설명입니다. 둘째, 표기가 여러 가지라면 원출처를 확인하는 편이 좋습니다. 셋째, 별 이름을 상품으로 파는 서비스는 공식 목록과 무관합니다.
             </p>
@@ -123,27 +123,27 @@ export default function StarNameEtymologyPage() {
 
         </div>
 
-        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.3)' }}>
-          <p className="text-white/60 mb-4 text-sm">오늘 밤, 내 별자리의 흐름은?</p>
+        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(169,128,63,0.1)', border: '1px solid rgba(169,128,63,0.14)' }}>
+          <p className="text-[#1a1c2e]/64 mb-4 text-sm">오늘 밤, 내 별자리의 흐름은?</p>
           <Link
             href="/"
-            className="inline-block px-6 py-3 rounded-full font-bold text-white text-sm"
-            style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #9333ea 100%)' }}
+            className="inline-block px-6 py-3 rounded-full font-bold text-[#f7f0e1] text-sm"
+            style={{ background: 'linear-gradient(135deg, #1a2144 0%, #111730 100%)' }}
           >
             오늘의 운세 무료로 보기 →
           </Link>
         </div>
 
         <nav className="mt-10">
-          <h3 className="text-sm text-white/40 mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
+          <h3 className="text-sm text-[#1a1c2e]/45 mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <Link href="/blog/zodiac-in-medieval-art" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <div className="text-white/70 font-medium">중세 기도서 속 황도대</div>
-              <div className="text-white/30 text-xs mt-1">달력 그림과 별자리 미술</div>
+            <Link href="/blog/zodiac-in-medieval-art" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
+              <div className="text-[#1a1c2e]/72 font-medium">중세 기도서 속 황도대</div>
+              <div className="text-[#1a1c2e]/38 text-xs mt-1">달력 그림과 별자리 미술</div>
             </Link>
-            <Link href="/blog/ancient-egypt-astronomy" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <div className="text-white/70 font-medium">천문학과 점성술이 갈라지기 전</div>
-              <div className="text-white/30 text-xs mt-1">시리우스와 나일강의 5,000년</div>
+            <Link href="/blog/ancient-egypt-astronomy" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
+              <div className="text-[#1a1c2e]/72 font-medium">천문학과 점성술이 갈라지기 전</div>
+              <div className="text-[#1a1c2e]/38 text-xs mt-1">시리우스와 나일강의 5,000년</div>
             </Link>
           </div>
         </nav>

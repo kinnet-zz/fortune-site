@@ -186,8 +186,8 @@ export default function IdolClient() {
                     onClick={() => { setGender(g); setResult(null); setError(''); }}
                     className="flex-1 py-3 rounded-2xl font-bold text-sm transition-all duration-200"
                     style={{
-                      background: isSelected ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.04)',
-                      border: isSelected ? '1.5px solid rgba(255,255,255,0.35)' : '1.5px solid rgba(255,255,255,0.1)',
+                      background: isSelected ? 'rgba(255,255,255,0.12)' : 'rgba(20,23,43,0.03)',
+                      border: isSelected ? '1.5px solid rgba(255,255,255,0.35)' : '1.5px solid rgba(20,23,43,0.08)',
                       color: isSelected ? '#fff' : 'rgba(255,255,255,0.35)',
                     }}
                   >
@@ -248,7 +248,7 @@ export default function IdolClient() {
             {preview && (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={preview} alt="" className="w-28 h-28 rounded-3xl object-cover"
-                style={{ border: '2px solid rgba(255,255,255,0.1)' }} />
+                style={{ border: '2px solid rgba(20,23,43,0.08)' }} />
             )}
             {/* 에이전시 컬러 스피너 */}
             <div className="relative w-16 h-16">

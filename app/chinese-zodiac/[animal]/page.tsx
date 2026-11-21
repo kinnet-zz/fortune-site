@@ -245,7 +245,7 @@ export async function generateMetadata({
 }
 
 const bgStyle = {
-  background: 'linear-gradient(160deg, #050520 0%, #0a0a2e 30%, #130a2e 60%, #1a0a3e 100%)',
+  background: 'linear-gradient(160deg, rgba(250,246,238,0.6) 0%, rgba(247,242,232,0.4) 45%, rgba(241,233,218,0.5) 100%)',
   minHeight: '100vh',
 };
 
@@ -260,50 +260,50 @@ export default async function ChineseZodiacAnimalPage({
 
   return (
     <div style={bgStyle}>
-      <div className="max-w-3xl mx-auto px-6 py-16 text-white/80">
-        <Link href="/chinese-zodiac" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
+      <div className="max-w-3xl mx-auto px-6 py-16 text-[#1a1c2e]/80">
+        <Link href="/chinese-zodiac" className="text-[#8a6a2f] hover:text-[#6f5223] text-sm mb-8 inline-block">
           ← 띠 목록으로
         </Link>
 
         {/* 헤더 */}
         <header className="mb-10 text-center">
           <div className="text-7xl mb-4">{data.emoji}</div>
-          <h1 className="text-4xl font-bold text-white mb-2">{data.name}</h1>
+          <h1 className="text-4xl font-bold text-[#14172b] mb-2">{data.name}</h1>
           <div className="flex justify-center gap-3 mt-4 flex-wrap">
-            <span className="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-white/60">
+            <span className="px-3 py-1 rounded-full text-sm bg-[#14172b]/[0.035] border border-[#14172b]/12 text-[#1a1c2e]/64">
               🔥 원소: {data.element}
             </span>
-            <span className="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-white/60">
+            <span className="px-3 py-1 rounded-full text-sm bg-[#14172b]/[0.035] border border-[#14172b]/12 text-[#1a1c2e]/64">
               📅 다음 {data.name} 해: {data.nextYear}년
             </span>
           </div>
         </header>
 
         {/* 해당 연도 */}
-        <section className="mb-8 p-6 rounded-2xl bg-white/5 border border-white/10">
-          <h2 className="text-base font-bold text-white mb-2">📅 {data.name} 해당 연도</h2>
-          <p className="text-white/60 text-sm leading-relaxed">{data.years}</p>
+        <section className="mb-8 p-6 rounded-2xl bg-[#14172b]/[0.035] border border-[#14172b]/12">
+          <h2 className="text-base font-bold text-[#14172b] mb-2">📅 {data.name} 해당 연도</h2>
+          <p className="text-[#1a1c2e]/64 text-sm leading-relaxed">{data.years}</p>
         </section>
 
         {/* 핵심 특성 */}
         <section className="mb-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-5 rounded-2xl bg-green-500/10 border border-green-500/20">
-              <h3 className="text-base font-bold text-green-400 mb-3">💪 강점</h3>
+              <h3 className="text-base font-bold text-[#2f6b4a] mb-3">💪 강점</h3>
               <ul className="space-y-1">
                 {data.traits.map((t) => (
-                  <li key={t} className="text-sm text-white/70 flex items-center gap-2">
-                    <span className="text-green-400">·</span> {t}
+                  <li key={t} className="text-sm text-[#1a1c2e]/72 flex items-center gap-2">
+                    <span className="text-[#2f6b4a]">·</span> {t}
                   </li>
                 ))}
               </ul>
             </div>
             <div className="p-5 rounded-2xl bg-red-500/10 border border-red-500/20">
-              <h3 className="text-base font-bold text-red-400 mb-3">⚠️ 약점</h3>
+              <h3 className="text-base font-bold text-[#9b3a3a] mb-3">⚠️ 약점</h3>
               <ul className="space-y-1">
                 {data.weaknesses.map((w) => (
-                  <li key={w} className="text-sm text-white/70 flex items-center gap-2">
-                    <span className="text-red-400">·</span> {w}
+                  <li key={w} className="text-sm text-[#1a1c2e]/72 flex items-center gap-2">
+                    <span className="text-[#9b3a3a]">·</span> {w}
                   </li>
                 ))}
               </ul>
@@ -318,53 +318,53 @@ export default async function ChineseZodiacAnimalPage({
           { icon: '💰', title: '금전운', content: data.money },
           { icon: '💼', title: '직업운', content: data.career },
         ].map(({ icon, title, content }) => (
-          <section key={title} className="mb-6 p-6 rounded-2xl bg-white/5 border border-white/10">
-            <h2 className="text-lg font-bold text-white mb-3">{icon} {title}</h2>
-            <p className="leading-relaxed text-white/70">{content}</p>
+          <section key={title} className="mb-6 p-6 rounded-2xl bg-[#14172b]/[0.035] border border-[#14172b]/12">
+            <h2 className="text-lg font-bold text-[#14172b] mb-3">{icon} {title}</h2>
+            <p className="leading-relaxed text-[#1a1c2e]/72">{content}</p>
           </section>
         ))}
 
         {/* 궁합 */}
-        <section className="mb-8 p-6 rounded-2xl bg-white/5 border border-white/10">
-          <h2 className="text-lg font-bold text-white mb-4">💞 궁합</h2>
+        <section className="mb-8 p-6 rounded-2xl bg-[#14172b]/[0.035] border border-[#14172b]/12">
+          <h2 className="text-lg font-bold text-[#14172b] mb-4">💞 궁합</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <p className="text-sm text-green-400 font-semibold mb-1">✅ 잘 맞는 띠</p>
-              <p className="text-white/70 text-sm">{data.compatible}</p>
+              <p className="text-sm text-[#2f6b4a] font-semibold mb-1">✅ 잘 맞는 띠</p>
+              <p className="text-[#1a1c2e]/72 text-sm">{data.compatible}</p>
             </div>
             <div>
-              <p className="text-sm text-red-400 font-semibold mb-1">⚠️ 주의할 띠</p>
-              <p className="text-white/70 text-sm">{data.incompatible}</p>
+              <p className="text-sm text-[#9b3a3a] font-semibold mb-1">⚠️ 주의할 띠</p>
+              <p className="text-[#1a1c2e]/72 text-sm">{data.incompatible}</p>
             </div>
           </div>
         </section>
 
         {/* 행운 */}
-        <section className="mb-10 p-6 rounded-2xl bg-purple-500/10 border border-purple-500/20">
-          <h2 className="text-lg font-bold text-white mb-4">🍀 행운의 상징</h2>
+        <section className="mb-10 p-6 rounded-2xl bg-purple-500/10 border border-[#a9803f]/25">
+          <h2 className="text-lg font-bold text-[#14172b] mb-4">🍀 행운의 상징</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
             <div>
-              <p className="text-purple-300 font-semibold mb-1">행운의 색</p>
-              <p className="text-white/60">{data.lucky.color}</p>
+              <p className="text-[#8a6a2f] font-semibold mb-1">행운의 색</p>
+              <p className="text-[#1a1c2e]/64">{data.lucky.color}</p>
             </div>
             <div>
-              <p className="text-purple-300 font-semibold mb-1">행운의 숫자</p>
-              <p className="text-white/60">{data.lucky.number}</p>
+              <p className="text-[#8a6a2f] font-semibold mb-1">행운의 숫자</p>
+              <p className="text-[#1a1c2e]/64">{data.lucky.number}</p>
             </div>
             <div>
-              <p className="text-purple-300 font-semibold mb-1">행운의 방향</p>
-              <p className="text-white/60">{data.lucky.direction}</p>
+              <p className="text-[#8a6a2f] font-semibold mb-1">행운의 방향</p>
+              <p className="text-[#1a1c2e]/64">{data.lucky.direction}</p>
             </div>
           </div>
         </section>
 
         {/* CTA */}
-        <div className="text-center p-8 rounded-2xl bg-gradient-to-br from-purple-900/40 to-blue-900/40 border border-purple-500/20">
-          <p className="text-white/60 mb-4 text-sm">오늘 {data.name}의 운세가 궁금하다면?</p>
+        <div className="text-center p-8 rounded-2xl bg-gradient-to-br from-purple-900/40 to-blue-900/40 border border-[#a9803f]/25">
+          <p className="text-[#1a1c2e]/64 mb-4 text-sm">오늘 {data.name}의 운세가 궁금하다면?</p>
           <Link
             href="/"
-            className="inline-block px-6 py-3 rounded-full font-bold text-white text-sm"
-            style={{ background: data.color }}
+            className="inline-block px-6 py-3 font-bold text-[#f7f0e1] text-sm"
+            style={{ background: 'linear-gradient(120deg, #1a2144, #111730)', borderRadius: '0.2rem', border: '1px solid rgba(226,205,162,0.3)' }}
           >
             오늘의 운세 무료로 보기 →
           </Link>
@@ -372,13 +372,13 @@ export default async function ChineseZodiacAnimalPage({
 
         {/* 다른 띠 보기 */}
         <nav className="mt-10">
-          <h3 className="text-sm text-white/40 mb-3 font-semibold uppercase tracking-widest">다른 띠 보기</h3>
+          <h3 className="text-sm text-[#1a1c2e]/45 mb-3 font-semibold uppercase tracking-widest">다른 띠 보기</h3>
           <div className="flex flex-wrap gap-2">
             {CHINESE_ZODIAC.filter((a) => a.slug !== animal).map((a) => (
               <Link
                 key={a.slug}
                 href={`/chinese-zodiac/${a.slug}`}
-                className="px-3 py-1 rounded-full text-xs border border-white/10 text-white/50 hover:border-purple-400 hover:text-purple-400 transition-colors"
+                className="px-3 py-1 rounded-full text-xs border border-[#14172b]/12 text-[#1a1c2e]/55 hover:border-purple-400 hover:text-[#8a6a2f] transition-colors"
               >
                 {a.emoji} {a.name}
               </Link>

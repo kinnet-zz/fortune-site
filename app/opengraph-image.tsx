@@ -10,68 +10,91 @@ export default function Image() {
     (
       <div
         style={{
-          background: 'linear-gradient(160deg, #050520 0%, #0a0a2e 40%, #1a0a3e 100%)',
+          background: 'linear-gradient(160deg, #141a35 0%, #111730 55%, #0e142b 100%)',
           width: '100%',
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
+          justifyContent: 'space-between',
+          padding: '72px 80px',
           fontFamily: 'sans-serif',
+          color: '#f7f0e1',
         }}
       >
-        <div style={{ fontSize: 100, marginBottom: 24 }}>🔮</div>
-        <div
-          style={{
-            fontSize: 64,
-            fontWeight: 900,
-            color: 'white',
-            marginBottom: 16,
-            letterSpacing: '-1px',
-          }}
-        >
-          오늘의 운세
+        <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
+          <div
+            style={{
+              width: 44,
+              height: 44,
+              borderRadius: 999,
+              border: '1px solid rgba(226,205,162,0.5)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#e2cda2',
+              fontSize: 26,
+            }}
+          >
+            ✦
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ fontSize: 26, letterSpacing: '0.24em', color: '#f7f0e1' }}>STARFATE</div>
+            <div style={{ fontSize: 13, letterSpacing: '0.4em', color: 'rgba(226,205,162,0.7)', marginTop: 6 }}>
+              별자리 · 운세
+            </div>
+          </div>
         </div>
-        <div
-          style={{
-            fontSize: 28,
-            color: 'rgba(167,139,250,1)',
-            marginBottom: 40,
-          }}
-        >
-          별자리 · 띠로 알아보는 무료 오늘의 운세
+
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div style={{ width: 120, height: 1, background: 'rgba(226,205,162,0.7)', marginBottom: 30 }} />
+          <div
+            style={{
+              fontSize: 86,
+              fontWeight: 700,
+              color: '#f7f0e1',
+              letterSpacing: '-2px',
+              lineHeight: 1.15,
+              marginBottom: 22,
+            }}
+          >
+            오늘의 운세
+          </div>
+          <div style={{ fontSize: 30, color: 'rgba(226,205,162,0.85)', marginBottom: 40 }}>
+            별자리 · 띠로 알아보는 무료 오늘의 운세
+          </div>
+          <div style={{ display: 'flex', gap: 14 }}>
+            {['종합운', '연애운', '금전운', '직업운'].map((item) => (
+              <div
+                key={item}
+                style={{
+                  background: 'rgba(226,205,162,0.09)',
+                  border: '1px solid rgba(226,205,162,0.32)',
+                  borderRadius: 4,
+                  padding: '10px 22px',
+                  color: 'rgba(247,240,225,0.85)',
+                  fontSize: 22,
+                }}
+              >
+                {item}
+              </div>
+            ))}
+          </div>
         </div>
+
         <div
           style={{
             display: 'flex',
-            gap: 20,
-          }}
-        >
-          {['종합운', '연애운', '금전운', '직업운'].map((item) => (
-            <div
-              key={item}
-              style={{
-                background: 'rgba(139,92,246,0.3)',
-                border: '1px solid rgba(139,92,246,0.5)',
-                borderRadius: 12,
-                padding: '8px 20px',
-                color: 'rgba(221,214,254,1)',
-                fontSize: 22,
-              }}
-            >
-              {item}
-            </div>
-          ))}
-        </div>
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 32,
-            color: 'rgba(255,255,255,0.3)',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            borderTop: '1px solid rgba(226,205,162,0.22)',
+            paddingTop: 22,
+            color: 'rgba(247,240,225,0.55)',
             fontSize: 20,
+            letterSpacing: '0.08em',
           }}
         >
-          www.starfate.day
+          <span>starfate.day</span>
+          <span>ZODIAC · CHINESE ZODIAC · TAROT</span>
         </div>
       </div>
     ),

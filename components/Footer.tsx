@@ -5,7 +5,6 @@ import { useLang } from '@/lib/useLang';
 import { t } from '@/lib/i18n';
 import { clearCookieConsent, CONSENT_CHANGED_EVENT } from '@/lib/adConsent';
 
-
 export default function Footer() {
   const { lang } = useLang();
   const tr = t(lang);
@@ -29,37 +28,44 @@ export default function Footer() {
       : lang === 'zh'
         ? 'Cookie设置'
         : 'Cookie設定';
+
   return (
     <footer
-      className="relative z-10 mt-16 py-10 px-6"
+      className="relative z-10 mt-20 px-6 pb-10 pt-14"
       style={{
-        background: 'rgba(5, 5, 32, 0.7)',
-        borderTop: '1px solid rgba(255,255,255,0.06)',
+        background: 'linear-gradient(180deg, #131a37 0%, #0f1529 100%)',
+        borderTop: '1px solid rgba(226,205,162,0.22)',
       }}
     >
-      <div className="max-w-4xl mx-auto">
-        {/* 상단: 로고 + 링크 */}
-        <div className="flex flex-col sm:flex-row gap-8 mb-8">
+      <div className="mx-auto max-w-5xl">
+        <div className="mb-10 grid grid-cols-1 gap-10 sm:grid-cols-[1.3fr_0.7fr_0.7fr]">
           {/* 로고 & 소개 */}
-          <div className="flex-1">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-xl">🔮</span>
-              <span className="text-white/80 font-bold text-base">{tr.navFortune}</span>
+          <div>
+            <div className="mb-4 flex items-center gap-2.5">
+              <span className="grid h-8 w-8 place-items-center rounded-full border border-[rgba(226,205,162,0.45)]">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 2.5l1.6 6.1 6.1 1.6-6.1 1.6-1.6 6.1-1.6-6.1L4.3 10.2l6.1-1.6L12 2.5z" fill="#f4dfa8" opacity="0.9" />
+                </svg>
+              </span>
+              <span className="flex flex-col leading-none">
+                <span className="font-display text-[0.98rem] font-semibold tracking-[0.16em] text-[#f7f0e1]">STARFATE</span>
+                <span className="mt-1 text-[0.5rem] tracking-[0.32em] text-[rgba(226,205,162,0.7)]">별자리 · 운세</span>
+              </span>
             </div>
-            <p className="text-white/35 text-xs leading-relaxed max-w-xs">
+            <p className="max-w-xs text-[0.72rem] leading-6 text-[rgba(247,240,225,0.5)] text-keep-all">
               {tr.footerDesc}
             </p>
           </div>
 
           {/* 사이트 링크 */}
           <div>
-            <h3 className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-3">{tr.footerService}</h3>
-            <ul className="space-y-2">
+            <h3 className="mb-4 text-[0.58rem] font-semibold uppercase tracking-[0.3em] text-[rgba(226,205,162,0.62)]">{tr.footerService}</h3>
+            <ul className="space-y-2.5">
               {SITE_LINKS.map(({ href, label }) => (
                 <li key={href}>
                   <Link
                     href={href}
-                    className="text-white/35 hover:text-white/60 text-xs transition-colors"
+                    className="text-[0.75rem] text-[rgba(247,240,225,0.55)] transition-colors hover:text-[#e2cda2]"
                   >
                     {label}
                   </Link>
@@ -70,8 +76,8 @@ export default function Footer() {
 
           {/* 정책 링크 */}
           <div>
-            <h3 className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-3">{tr.footerPolicy}</h3>
-            <ul className="space-y-2">
+            <h3 className="mb-4 text-[0.58rem] font-semibold uppercase tracking-[0.3em] text-[rgba(226,205,162,0.62)]">{tr.footerPolicy}</h3>
+            <ul className="space-y-2.5">
               {[
                 { href: '/privacy', label: tr.footerPrivacy },
                 { href: '/terms', label: tr.footerTerms },
@@ -80,7 +86,7 @@ export default function Footer() {
                 <li key={href}>
                   <Link
                     href={href}
-                    className="text-white/35 hover:text-white/60 text-xs transition-colors"
+                    className="text-[0.75rem] text-[rgba(247,240,225,0.55)] transition-colors hover:text-[#e2cda2]"
                   >
                     {label}
                   </Link>
@@ -90,7 +96,7 @@ export default function Footer() {
                 <button
                   type="button"
                   onClick={openCookieSettings}
-                  className="text-white/35 hover:text-white/60 text-xs transition-colors"
+                  className="text-[0.75rem] text-[rgba(247,240,225,0.55)] transition-colors hover:text-[#e2cda2]"
                 >
                   {cookieSettingsLabel}
                 </button>
@@ -99,18 +105,13 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* 구분선 */}
-        <div
-          className="border-t mb-6"
-          style={{ borderColor: 'rgba(255,255,255,0.06)' }}
-        />
+        <div className="mb-6 h-px bg-[linear-gradient(90deg,transparent,rgba(226,205,162,0.25),transparent)]" />
 
-        {/* 하단: 저작권 + 면책 */}
-        <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
-          <p className="text-white/25 text-xs">
+        <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+          <p className="text-[0.68rem] text-[rgba(247,240,225,0.38)]">
             © {new Date().getFullYear()} {tr.navFortune}. All rights reserved.
           </p>
-          <p className="text-white/20 text-xs max-w-sm text-right leading-relaxed">
+          <p className="max-w-sm text-[0.66rem] leading-5 text-[rgba(247,240,225,0.3)] sm:text-right">
             {tr.footerDisclaimer}
           </p>
         </div>

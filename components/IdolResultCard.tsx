@@ -189,12 +189,12 @@ export default function IdolResultCard({
                       {score.toFixed(1)}%
                     </span>
                   </div>
-                  <div className="h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.05)' }}>
+                  <div className="h-2 rounded-full" style={{ background: 'rgba(20,23,43,0.04)' }}>
                     <div
                       className="h-full rounded-full transition-all duration-1000 ease-out"
                       style={{
                         width: animated ? `${score}%` : '0%',
-                        background: isTop ? `linear-gradient(90deg, ${colors.primary}88, ${colors.primary})` : 'rgba(255,255,255,0.1)',
+                        background: isTop ? `linear-gradient(90deg, ${colors.primary}88, ${colors.primary})` : 'rgba(20,23,43,0.08)',
                         boxShadow: isTop ? `0 0 8px ${colors.primary}50` : 'none',
                       }}
                     />
@@ -206,7 +206,7 @@ export default function IdolResultCard({
         </div>
 
         {/* 구분선 */}
-        <div style={{ height: '1px', background: 'rgba(255,255,255,0.05)', margin: '0 20px' }} />
+        <div style={{ height: '1px', background: 'rgba(20,23,43,0.04)', margin: '0 20px' }} />
 
         {/* 종합 분析 + 데뷔 멘트 */}
         <div className="px-5 py-4">
@@ -218,7 +218,7 @@ export default function IdolResultCard({
         </div>
 
         {/* 구분선 */}
-        <div style={{ height: '1px', background: 'rgba(255,255,255,0.05)', margin: '0 20px 16px' }} />
+        <div style={{ height: '1px', background: 'rgba(20,23,43,0.04)', margin: '0 20px 16px' }} />
 
         {/* 부위별 */}
         <div className="px-5 pb-4 grid grid-cols-2 gap-2">
@@ -228,7 +228,7 @@ export default function IdolResultCard({
             { label: tr.lips, val: result.features.lips, e: '💋' },
             { label: tr.overall, val: result.features.overall, e: '✨' },
           ].map(({ label, val, e }) => (
-            <div key={label} className="rounded-xl p-3" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <div key={label} className="rounded-xl p-3" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.04)' }}>
               <p className="text-white/30 text-xs mb-1">{e} {label}</p>
               <p className="text-white/60 text-xs leading-relaxed">{val}</p>
             </div>
@@ -262,7 +262,7 @@ export default function IdolResultCard({
         <button
           onClick={onRetry}
           className="flex-1 py-4 rounded-2xl font-black text-sm transition-all hover:opacity-80 active:scale-[0.98]"
-          style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)' }}
+          style={{ background: 'rgba(20,23,43,0.05)', border: '1px solid rgba(20,23,43,0.08)', color: 'rgba(255,255,255,0.6)' }}
         >
           🔄 {tr.retryBtn}
         </button>

@@ -13,29 +13,29 @@ export const metadata: Metadata = {
 };
 
 const bgStyle = {
-  background: 'linear-gradient(160deg, #050520 0%, #0a0a2e 30%, #130a2e 60%, #1a0a3e 100%)',
+  background: 'linear-gradient(160deg, rgba(250,246,238,0.6) 0%, rgba(247,242,232,0.4) 45%, rgba(241,233,218,0.5) 100%)',
   minHeight: '100vh',
 };
 
 export default function ZodiacBloodTypePage() {
   return (
     <div style={bgStyle}>
-      <article className="max-w-3xl mx-auto px-6 py-16 text-white/80">
-        <Link href="/blog" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
+      <article className="max-w-3xl mx-auto px-6 py-16 text-[#1a1c2e]/80">
+        <Link href="/blog" className="text-[#8a6a2f] hover:text-[#6f5223] text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
 
         <header className="mb-10">
           <div className="flex items-center gap-2 mb-4 flex-wrap">
-            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(124,58,237,0.3)', color: 'rgba(196,181,253,1)' }}>
+            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(169,128,63,0.14)', color: '#6f5223' }}>
               성격 분석
             </span>
-            <span className="text-white/30 text-xs">2025년 3월 10일 · 9분 읽기</span>
+            <span className="text-[#1a1c2e]/38 text-xs">2025년 3월 10일 · 9분 읽기</span>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-4 leading-tight">
+          <h1 className="text-3xl font-bold text-[#14172b] mb-4 leading-tight">
             별자리와 혈액형의 관계 — 성격 유형 완벽 분석
           </h1>
-          <p className="text-white/50 text-base leading-relaxed">
+          <p className="text-[#1a1c2e]/55 text-base leading-relaxed">
             동아시아에서 수십 년간 사랑받아온 혈액형 성격론과 서양 점성술의 별자리. 두 체계를 결합하면 어떤 새로운 자기 이해가 가능할까요? 48가지 조합의 세계로 떠나봅니다.
           </p>
         </header>
@@ -43,7 +43,7 @@ export default function ZodiacBloodTypePage() {
         <div className="space-y-8 text-sm leading-relaxed">
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-4">혈액형 성격론의 역사와 기원</h2>
+            <h2 className="text-xl font-bold text-[#14172b] mb-4">혈액형 성격론의 역사와 기원</h2>
             <p className="mb-3">
               혈액형으로 성격을 파악하려는 시도는 1927년 일본의 심리학자 후루카와 다케지(古川竹二)가 「혈액형에 의한 기질 연구」를 발표하면서 본격적으로 시작되었습니다. 후루카와는 A형과 B형 사람들의 기질 차이를 연구하며, 혈액형이 성격 분류의 새로운 기준이 될 수 있다고 주장했습니다.
             </p>
@@ -59,69 +59,69 @@ export default function ZodiacBloodTypePage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-4">4가지 혈액형별 핵심 특성</h2>
+            <h2 className="text-xl font-bold text-[#14172b] mb-4">4가지 혈액형별 핵심 특성</h2>
             <p className="mb-3">
               혈액형 성격론에서 제시하는 네 가지 혈액형의 핵심 특성을 정리하면 다음과 같습니다. 이 특성들은 수십 년간 대중적으로 공유되어온 내용을 바탕으로 한 것입니다.
             </p>
 
             <div className="space-y-4">
-              <div className="rounded-2xl p-5" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                <h3 className="text-white font-semibold mb-2">🅰 A형 — 꼼꼼한 완벽주의자</h3>
+              <div className="rounded-2xl p-5" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
+                <h3 className="text-[#14172b] font-semibold mb-2">🅰 A형 — 꼼꼼한 완벽주의자</h3>
                 <p className="mb-2">A형은 질서, 규칙, 성실함을 중시하는 성향으로 알려져 있습니다. 계획적이고 책임감이 강하며, 타인의 감정에 민감하게 반응합니다. 완벽주의적 경향이 있어 작은 실수에도 자책하는 경우가 있습니다.</p>
-                <p className="text-white/50 text-xs">키워드: 성실, 계획적, 꼼꼼, 완벽주의, 배려, 소심</p>
+                <p className="text-[#1a1c2e]/55 text-xs">키워드: 성실, 계획적, 꼼꼼, 완벽주의, 배려, 소심</p>
               </div>
 
-              <div className="rounded-2xl p-5" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                <h3 className="text-white font-semibold mb-2">🅱 B형 — 자유로운 개인주의자</h3>
+              <div className="rounded-2xl p-5" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
+                <h3 className="text-[#14172b] font-semibold mb-2">🅱 B형 — 자유로운 개인주의자</h3>
                 <p className="mb-2">B형은 자신만의 스타일과 페이스를 고집하는 개인주의적 성향이 강합니다. 호기심이 왕성하고 다양한 것에 흥미를 느끼지만, 금세 새로운 것으로 관심이 옮겨가기도 합니다. 솔직하고 직설적인 표현을 선호합니다.</p>
-                <p className="text-white/50 text-xs">키워드: 자유, 개성, 솔직, 호기심, 즉흥, 자기중심</p>
+                <p className="text-[#1a1c2e]/55 text-xs">키워드: 자유, 개성, 솔직, 호기심, 즉흥, 자기중심</p>
               </div>
 
-              <div className="rounded-2xl p-5" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                <h3 className="text-white font-semibold mb-2">🅾 O형 — 타고난 리더</h3>
+              <div className="rounded-2xl p-5" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
+                <h3 className="text-[#14172b] font-semibold mb-2">🅾 O형 — 타고난 리더</h3>
                 <p className="mb-2">O형은 열정적이고 추진력 있는 리더형 성격으로 알려져 있습니다. 목표 지향적이고 경쟁심이 강하며, 집단에서 자연스럽게 주도권을 쥐는 경향이 있습니다. 큰 그림을 보는 능력이 있지만, 세부 사항을 놓치는 경우도 있습니다.</p>
-                <p className="text-white/50 text-xs">키워드: 리더십, 열정, 추진력, 목표지향, 사교적, 대범</p>
+                <p className="text-[#1a1c2e]/55 text-xs">키워드: 리더십, 열정, 추진력, 목표지향, 사교적, 대범</p>
               </div>
 
-              <div className="rounded-2xl p-5" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                <h3 className="text-white font-semibold mb-2">🆎 AB형 — 복잡한 이중성</h3>
+              <div className="rounded-2xl p-5" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
+                <h3 className="text-[#14172b] font-semibold mb-2">🆎 AB형 — 복잡한 이중성</h3>
                 <p className="mb-2">AB형은 A형의 세밀함과 B형의 자유로움이 공존하는 복잡한 성격의 소유자로 묘사됩니다. 합리적이고 냉철하게 보이면서도 내면에는 풍부한 감성을 지니고 있습니다. 상황에 따라 카멜레온처럼 다른 면을 보여주기도 합니다.</p>
-                <p className="text-white/50 text-xs">키워드: 이중성, 합리, 창의, 독립, 신비, 적응력</p>
+                <p className="text-[#1a1c2e]/55 text-xs">키워드: 이중성, 합리, 창의, 독립, 신비, 적응력</p>
               </div>
             </div>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-4">별자리 원소 + 혈액형 조합 분석</h2>
+            <h2 className="text-xl font-bold text-[#14172b] mb-4">별자리 원소 + 혈액형 조합 분석</h2>
             <p className="mb-3">
               별자리의 4원소(불·땅·공기·물)와 4가지 혈액형을 결합하면 16가지 기본 조합이 만들어집니다. 각 조합이 어떤 독특한 성격을 나타내는지 살펴보겠습니다.
             </p>
 
             <div className="space-y-4">
               <div className="rounded-2xl p-5" style={{ background: 'rgba(255,100,50,0.08)', border: '1px solid rgba(255,100,50,0.2)' }}>
-                <h3 className="text-red-300 font-semibold mb-3">🔥 불(火) 원소 (양자리·사자자리·사수자리) + 혈액형</h3>
+                <h3 className="text-[#9b3a3a] font-semibold mb-3">🔥 불(火) 원소 (양자리·사자자리·사수자리) + 혈액형</h3>
                 <ul className="space-y-2 text-sm">
-                  <li><strong className="text-white">불 + A형:</strong> 외부적으로는 열정적이고 행동파이지만, 내면에는 치밀한 계획가의 면모가 숨어있습니다. 충동과 신중함 사이에서 균형을 잡는 능력이 뛰어납니다.</li>
-                  <li><strong className="text-white">불 + B형:</strong> 화끈하고 즉흥적인 에너지가 폭발합니다. 아이디어가 넘치고 실행력도 강하지만, 지속성이 다소 부족할 수 있습니다. 주변을 활기차게 만드는 천부적인 재능.</li>
-                  <li><strong className="text-white">불 + O형:</strong> 타고난 리더십에 불의 열정이 더해진 조합. 강렬한 추진력으로 목표를 향해 돌진합니다. 때로는 주변 사람들이 따라가기 벅찰 정도.</li>
-                  <li><strong className="text-white">불 + AB형:</strong> 예측 불가능한 매력의 소유자. 카리스마 넘치는 리더처럼 보이다가도 갑자기 혼자만의 세계에 빠지는 신비로운 성향.</li>
+                  <li><strong className="text-[#14172b]">불 + A형:</strong> 외부적으로는 열정적이고 행동파이지만, 내면에는 치밀한 계획가의 면모가 숨어있습니다. 충동과 신중함 사이에서 균형을 잡는 능력이 뛰어납니다.</li>
+                  <li><strong className="text-[#14172b]">불 + B형:</strong> 화끈하고 즉흥적인 에너지가 폭발합니다. 아이디어가 넘치고 실행력도 강하지만, 지속성이 다소 부족할 수 있습니다. 주변을 활기차게 만드는 천부적인 재능.</li>
+                  <li><strong className="text-[#14172b]">불 + O형:</strong> 타고난 리더십에 불의 열정이 더해진 조합. 강렬한 추진력으로 목표를 향해 돌진합니다. 때로는 주변 사람들이 따라가기 벅찰 정도.</li>
+                  <li><strong className="text-[#14172b]">불 + AB형:</strong> 예측 불가능한 매력의 소유자. 카리스마 넘치는 리더처럼 보이다가도 갑자기 혼자만의 세계에 빠지는 신비로운 성향.</li>
                 </ul>
               </div>
 
               <div className="rounded-2xl p-5" style={{ background: 'rgba(50,200,100,0.08)', border: '1px solid rgba(50,200,100,0.2)' }}>
-                <h3 className="text-green-300 font-semibold mb-3">🌍 땅(土) 원소 (황소자리·처녀자리·염소자리) + 혈액형</h3>
+                <h3 className="text-[#2f6b4a] font-semibold mb-3">🌍 땅(土) 원소 (황소자리·처녀자리·염소자리) + 혈액형</h3>
                 <ul className="space-y-2 text-sm">
-                  <li><strong className="text-white">땅 + A형:</strong> 완벽주의의 극치. 매우 꼼꼼하고 신뢰할 수 있지만, 완벽함을 추구하다 스트레스를 받는 경향이 있습니다. 장기 프로젝트에서 빛을 발합니다.</li>
-                  <li><strong className="text-white">땅 + B형:</strong> 겉으로는 자유로워 보이지만, 실제로는 매우 실용적이고 현실적입니다. 남들이 보지 못하는 방식으로 자신만의 확고한 기반을 쌓습니다.</li>
-                  <li><strong className="text-white">땅 + O형:</strong> 안정적이면서도 강력한 리더. 무모한 도전보다는 철저한 준비 후 행동합니다. 비즈니스 분야에서 탁월한 성과를 내는 유형.</li>
-                  <li><strong className="text-white">땅 + AB형:</strong> 냉철한 분석력과 현실 감각의 결합. 감정에 휘둘리지 않고 합리적인 판단을 내리지만, 때로 차갑게 보일 수 있습니다.</li>
+                  <li><strong className="text-[#14172b]">땅 + A형:</strong> 완벽주의의 극치. 매우 꼼꼼하고 신뢰할 수 있지만, 완벽함을 추구하다 스트레스를 받는 경향이 있습니다. 장기 프로젝트에서 빛을 발합니다.</li>
+                  <li><strong className="text-[#14172b]">땅 + B형:</strong> 겉으로는 자유로워 보이지만, 실제로는 매우 실용적이고 현실적입니다. 남들이 보지 못하는 방식으로 자신만의 확고한 기반을 쌓습니다.</li>
+                  <li><strong className="text-[#14172b]">땅 + O형:</strong> 안정적이면서도 강력한 리더. 무모한 도전보다는 철저한 준비 후 행동합니다. 비즈니스 분야에서 탁월한 성과를 내는 유형.</li>
+                  <li><strong className="text-[#14172b]">땅 + AB형:</strong> 냉철한 분석력과 현실 감각의 결합. 감정에 휘둘리지 않고 합리적인 판단을 내리지만, 때로 차갑게 보일 수 있습니다.</li>
                 </ul>
               </div>
             </div>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-4">과학적 관점에서 본 혈액형 성격론</h2>
+            <h2 className="text-xl font-bold text-[#14172b] mb-4">과학적 관점에서 본 혈액형 성격론</h2>
             <p className="mb-3">
               사실을 말하자면, 혈액형 성격론은 현재까지 과학적으로 유의미하게 검증된 바가 없습니다. 2004년 일본에서 만 명이 넘는 대규모 연구를 포함해 여러 차례의 학술적 조사가 진행되었지만, 혈액형과 성격 사이에 통계적으로 의미 있는 상관관계는 발견되지 않았습니다.
             </p>
@@ -137,7 +137,7 @@ export default function ZodiacBloodTypePage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-4">별자리와 혈액형을 결합한 자기 이해법</h2>
+            <h2 className="text-xl font-bold text-[#14172b] mb-4">별자리와 혈액형을 결합한 자기 이해법</h2>
             <p className="mb-3">
               별자리와 혈액형을 함께 사용할 때 가장 효과적인 방법은 두 체계를 상호 보완적으로 활용하는 것입니다. 어느 하나가 맞지 않는다고 느껴질 때, 다른 체계의 시각으로 새로운 해석을 얻을 수 있습니다.
             </p>
@@ -153,7 +153,7 @@ export default function ZodiacBloodTypePage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-4">도구로서의 가치 — 결론</h2>
+            <h2 className="text-xl font-bold text-[#14172b] mb-4">도구로서의 가치 — 결론</h2>
             <p className="mb-3">
               별자리와 혈액형 성격론은 서로 다른 문화권에서 발전한 두 가지 성격 분류 체계입니다. 과학적 엄밀성 면에서는 한계가 있지만, 자기 이해와 인간 관계를 탐색하는 실용적인 언어로서는 충분한 가치가 있습니다.
             </p>
@@ -167,27 +167,27 @@ export default function ZodiacBloodTypePage() {
 
         </div>
 
-        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.3)' }}>
-          <p className="text-white/60 mb-4 text-sm">나의 별자리 운세가 궁금하다면?</p>
+        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(169,128,63,0.1)', border: '1px solid rgba(169,128,63,0.14)' }}>
+          <p className="text-[#1a1c2e]/64 mb-4 text-sm">나의 별자리 운세가 궁금하다면?</p>
           <Link
             href="/"
-            className="inline-block px-6 py-3 rounded-full font-bold text-white text-sm"
-            style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #9333ea 100%)' }}
+            className="inline-block px-6 py-3 rounded-full font-bold text-[#f7f0e1] text-sm"
+            style={{ background: 'linear-gradient(135deg, #1a2144 0%, #111730 100%)' }}
           >
             🔮 오늘의 운세 무료로 보기 →
           </Link>
         </div>
 
         <nav className="mt-10">
-          <h3 className="text-sm text-white/40 mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
+          <h3 className="text-sm text-[#1a1c2e]/45 mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <Link href="/blog/what-is-astrology" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <div className="text-white/70 font-medium">✨ 점성술이란 무엇인가?</div>
-              <div className="text-white/30 text-xs mt-1">서양 별자리의 역사와 기초 완벽 가이드</div>
+            <Link href="/blog/what-is-astrology" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
+              <div className="text-[#1a1c2e]/72 font-medium">✨ 점성술이란 무엇인가?</div>
+              <div className="text-[#1a1c2e]/38 text-xs mt-1">서양 별자리의 역사와 기초 완벽 가이드</div>
             </Link>
-            <Link href="/blog/zodiac-compatibility-guide" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <div className="text-white/70 font-medium">💞 12 별자리 궁합 완벽 분석</div>
-              <div className="text-white/30 text-xs mt-1">나와 가장 잘 맞는 별자리는?</div>
+            <Link href="/blog/zodiac-compatibility-guide" className="p-4 rounded-xl text-sm hover:border-purple-400 transition-colors" style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}>
+              <div className="text-[#1a1c2e]/72 font-medium">💞 12 별자리 궁합 완벽 분석</div>
+              <div className="text-[#1a1c2e]/38 text-xs mt-1">나와 가장 잘 맞는 별자리는?</div>
             </Link>
           </div>
         </nav>

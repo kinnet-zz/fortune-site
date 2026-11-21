@@ -178,30 +178,30 @@ export default function PrivacyPage() {
   }, [lang, c.title]);
 
   return (
-    <div style={{ background: 'linear-gradient(160deg, #050520 0%, #0a0a2e 30%, #130a2e 60%, #1a0a3e 100%)', minHeight: '100vh' }}>
-      <div className="max-w-3xl mx-auto px-6 py-16 text-white/80">
-        <Link href="/" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">{c.back}</Link>
-        <h1 className="text-3xl font-bold text-white mb-2">{c.title}</h1>
-        <p className="text-white/40 text-sm mb-10">{c.lastUpdated}</p>
+    <div style={{ background: 'linear-gradient(160deg, rgba(250,246,238,0.6) 0%, rgba(247,242,232,0.4) 45%, rgba(241,233,218,0.5) 100%)', minHeight: '100vh' }}>
+      <div className="max-w-3xl mx-auto px-6 py-16 text-[#1a1c2e]/80">
+        <Link href="/" className="text-[#8a6a2f] hover:text-[#6f5223] text-sm mb-8 inline-block">{c.back}</Link>
+        <h1 className="text-3xl font-bold text-[#14172b] mb-2">{c.title}</h1>
+        <p className="text-[#1a1c2e]/45 text-sm mb-10">{c.lastUpdated}</p>
 
         <div className="space-y-10 text-sm leading-relaxed">
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">{c.s1Title}</h2>
+            <h2 className="text-lg font-semibold text-[#14172b] mb-3">{c.s1Title}</h2>
             <p>{c.s1Intro}</p>
             <ul className="mt-3 space-y-2 pl-4 list-disc">
               {c.s1Items.map((item, i) => (
-                <li key={i}><strong className="text-white">{item.label}</strong>{item.desc}</li>
+                <li key={i}><strong className="text-[#14172b]">{item.label}</strong>{item.desc}</li>
               ))}
             </ul>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">{c.s2Title}</h2>
+            <h2 className="text-lg font-semibold text-[#14172b] mb-3">{c.s2Title}</h2>
             <p>{c.s2Body}</p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">{c.s3Title}</h2>
+            <h2 className="text-lg font-semibold text-[#14172b] mb-3">{c.s3Title}</h2>
             <p>{c.s3Intro}</p>
             <ul className="mt-3 space-y-2 pl-4 list-disc">
               {c.s3Items.map((item, i) => <li key={i}>{item}</li>)}
@@ -209,17 +209,17 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">{c.s4Title}</h2>
-            <table className="w-full text-sm border border-white/10 rounded-lg overflow-hidden mt-3">
+            <h2 className="text-lg font-semibold text-[#14172b] mb-3">{c.s4Title}</h2>
+            <table className="w-full text-sm border border-[#14172b]/12 rounded-lg overflow-hidden mt-3">
               <thead>
-                <tr className="bg-white/5">
-                  <th className="px-4 py-2 text-left text-white">{c.s4ColA}</th>
-                  <th className="px-4 py-2 text-left text-white">{c.s4ColB}</th>
+                <tr className="bg-[#14172b]/[0.035]">
+                  <th className="px-4 py-2 text-left text-[#14172b]">{c.s4ColA}</th>
+                  <th className="px-4 py-2 text-left text-[#14172b]">{c.s4ColB}</th>
                 </tr>
               </thead>
               <tbody>
                 {c.s4Rows.map(([a, b], i) => (
-                  <tr key={i} className="border-t border-white/10">
+                  <tr key={i} className="border-t border-[#14172b]/12">
                     <td className="px-4 py-2">{a}</td>
                     <td className="px-4 py-2">{b}</td>
                   </tr>
@@ -229,17 +229,17 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">{c.s5Title}</h2>
+            <h2 className="text-lg font-semibold text-[#14172b] mb-3">{c.s5Title}</h2>
             <p>{c.s5Body}</p>
             <p className="mt-2">
               {c.s5LinkPrefix}
-              <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer" className="text-purple-400 underline">{c.s5LinkText}</a>
+              <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer" className="text-[#8a6a2f] underline">{c.s5LinkText}</a>
               {c.s5LinkSuffix}
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">{c.s6Title}</h2>
+            <h2 className="text-lg font-semibold text-[#14172b] mb-3">{c.s6Title}</h2>
             <p>{c.s6Intro}</p>
             <ul className="mt-3 space-y-2 pl-4 list-disc">
               {c.s6Items.map((item, i) => <li key={i}>{item}</li>)}
@@ -248,15 +248,15 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">{c.s7Title}</h2>
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <p><strong className="text-white">{c.s7ManagerLabel}</strong>: {c.s7ManagerValue}</p>
-              <p className="mt-1"><strong className="text-white">{c.s7EmailLabel}</strong>: <a href="mailto:dhcho0607@gmail.com" className="text-purple-400">dhcho0607@gmail.com</a></p>
+            <h2 className="text-lg font-semibold text-[#14172b] mb-3">{c.s7Title}</h2>
+            <div className="bg-[#14172b]/[0.035] rounded-xl p-4 border border-[#14172b]/12">
+              <p><strong className="text-[#14172b]">{c.s7ManagerLabel}</strong>: {c.s7ManagerValue}</p>
+              <p className="mt-1"><strong className="text-[#14172b]">{c.s7EmailLabel}</strong>: <a href="mailto:dhcho0607@gmail.com" className="text-[#8a6a2f]">dhcho0607@gmail.com</a></p>
             </div>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-white mb-3">{c.s8Title}</h2>
+            <h2 className="text-lg font-semibold text-[#14172b] mb-3">{c.s8Title}</h2>
             <p>{c.s8Body}</p>
           </section>
         </div>

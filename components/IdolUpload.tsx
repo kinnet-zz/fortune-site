@@ -78,8 +78,8 @@ export default function IdolUpload({ onImageReady, lang }: IdolUploadProps) {
         onClick={() => fileRef.current?.click()}
         className="relative cursor-pointer rounded-3xl overflow-hidden transition-all duration-200"
         style={{
-          border: `2px dashed ${dragOver ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.08)'}`,
-          background: dragOver ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.02)',
+          border: `2px dashed ${dragOver ? 'rgba(255,255,255,0.3)' : 'rgba(20,23,43,0.06)'}`,
+          background: dragOver ? 'rgba(20,23,43,0.03)' : 'rgba(20,23,43,0.025)',
           minHeight: '240px',
           display: 'flex',
           alignItems: 'center',
@@ -105,20 +105,20 @@ export default function IdolUpload({ onImageReady, lang }: IdolUploadProps) {
         )}
       </div>
 
-      {error && <p className="text-red-400 text-xs text-center">{error}</p>}
+      {error && <p className="text-[#9b3a3a] text-xs text-center">{error}</p>}
 
       <div className="flex gap-2">
         <button
           onClick={() => fileRef.current?.click()}
           className="flex-1 py-3.5 rounded-2xl text-sm font-bold transition-all hover:opacity-90"
-          style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)' }}
+          style={{ background: 'rgba(20,23,43,0.05)', border: '1px solid rgba(20,23,43,0.08)', color: 'rgba(255,255,255,0.8)' }}
         >
           📁 {tr.uploadBtn}
         </button>
         <button
           onClick={() => camRef.current?.click()}
           className="flex-1 py-3.5 rounded-2xl text-sm font-bold transition-all hover:opacity-90"
-          style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.5)' }}
+          style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.05)', color: 'rgba(255,255,255,0.5)' }}
         >
           📷 {tr.cameraBtn}
         </button>

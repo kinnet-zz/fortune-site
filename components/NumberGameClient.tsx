@@ -358,7 +358,7 @@ export default function NumberGameClient() {
       {/* 상단 헤더 */}
       <div
         className="w-full flex items-center justify-between px-4 py-3"
-        style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}
+        style={{ borderBottom: '1px solid rgba(20,23,43,0.06)' }}
       >
         <Link
           href="/"
@@ -384,7 +384,7 @@ export default function NumberGameClient() {
             <div className="text-center">
               <div className="text-7xl mb-3" style={{ filter: 'drop-shadow(0 0 20px rgba(99,102,241,0.6))' }}>🔢</div>
               <h1 className="text-4xl font-black text-white tracking-tight">{t.title}</h1>
-              <p className="text-indigo-300/60 text-sm mt-2">{t.subtitle}</p>
+              <p className="text-[#39406e]/60 text-sm mt-2">{t.subtitle}</p>
             </div>
 
             {/* 레벨 미리보기 */}
@@ -400,8 +400,8 @@ export default function NumberGameClient() {
                     style={{
                       background: isLast
                         ? 'linear-gradient(135deg, rgba(251,146,60,0.2), rgba(239,68,68,0.15))'
-                        : 'rgba(255,255,255,0.06)',
-                      border: `1px solid ${isLast ? 'rgba(251,146,60,0.4)' : 'rgba(255,255,255,0.1)'}`,
+                        : 'rgba(20,23,43,0.05)',
+                      border: `1px solid ${isLast ? 'rgba(251,146,60,0.4)' : 'rgba(20,23,43,0.08)'}`,
                     }}
                   >
                     <div className="font-black text-sm" style={{ color: d.color }}>{t.levelLabel(lv)}</div>
@@ -423,7 +423,7 @@ export default function NumberGameClient() {
             {/* 규칙 */}
             <div
               className="w-full rounded-2xl p-4 space-y-2"
-              style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}
+              style={{ background: 'rgba(20,23,43,0.04)', border: '1px solid rgba(20,23,43,0.06)' }}
             >
               <p className="text-white/80 text-sm font-bold mb-3">📋 {t.rulesTitle}</p>
               {[t.rule1, t.rule2, t.rule3, t.rule4].map((r, i) => (
@@ -466,7 +466,7 @@ export default function NumberGameClient() {
               return (
                 <div
                   className="px-8 py-4 rounded-2xl"
-                  style={{ background: 'rgba(255,255,255,0.07)', border: `1px solid ${nd.color}40` }}
+                  style={{ background: 'rgba(20,23,43,0.05)', border: `1px solid ${nd.color}40` }}
                 >
                   <div className="font-black text-lg" style={{ color: nd.color }}>{t.levelLabel(level + 1)}</div>
                   <div className="text-white/60 text-sm mt-1">{t.range(nc.total)} · {t.timeLabel(nc.timeLimit)}</div>
@@ -483,7 +483,7 @@ export default function NumberGameClient() {
             {/* HUD */}
             <div
               className="flex items-center justify-between px-4 py-3 rounded-2xl"
-              style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}
+              style={{ background: 'rgba(20,23,43,0.05)', border: '1px solid rgba(20,23,43,0.08)' }}
             >
               {/* 레벨 + 난이도 */}
               <div className="flex items-center gap-2">
@@ -530,7 +530,7 @@ export default function NumberGameClient() {
             {/* 타임바 */}
             <div
               className="w-full h-2 rounded-full overflow-hidden"
-              style={{ background: 'rgba(255,255,255,0.08)' }}
+              style={{ background: 'rgba(20,23,43,0.06)' }}
             >
               <div
                 className="h-full rounded-full transition-all duration-1000"
@@ -545,7 +545,7 @@ export default function NumberGameClient() {
             {/* 진행도 */}
             <div className="flex items-center justify-between px-1">
               <span className="text-white/30 text-xs">{nextTarget - 1} / {cfg.total}</span>
-              <div className="w-32 h-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.08)' }}>
+              <div className="w-32 h-1 rounded-full overflow-hidden" style={{ background: 'rgba(20,23,43,0.06)' }}>
                 <div
                   className="h-full rounded-full transition-all"
                   style={{
@@ -564,12 +564,12 @@ export default function NumberGameClient() {
                   ? 'rgba(239,68,68,0.1)'
                   : correctFlash
                     ? 'rgba(52,211,153,0.06)'
-                    : 'rgba(255,255,255,0.04)',
+                    : 'rgba(20,23,43,0.03)',
                 border: wrongFlash
                   ? '1.5px solid rgba(239,68,68,0.5)'
                   : correctFlash
                     ? '1.5px solid rgba(52,211,153,0.3)'
-                    : '1.5px solid rgba(255,255,255,0.08)',
+                    : '1.5px solid rgba(20,23,43,0.06)',
                 boxShadow: wrongFlash
                   ? '0 0 20px rgba(239,68,68,0.2)'
                   : correctFlash
@@ -590,9 +590,9 @@ export default function NumberGameClient() {
                       disabled={done}
                       className="aspect-square flex items-center justify-center rounded-xl font-bold transition-all active:scale-90"
                       style={{
-                        background: done ? 'rgba(99,102,241,0.2)' : 'rgba(255,255,255,0.07)',
+                        background: done ? 'rgba(99,102,241,0.2)' : 'rgba(20,23,43,0.05)',
                         color: done ? 'rgba(165,180,252,0.4)' : 'rgba(255,255,255,0.85)',
-                        border: done ? '1px solid rgba(99,102,241,0.2)' : '1px solid rgba(255,255,255,0.1)',
+                        border: done ? '1px solid rgba(99,102,241,0.2)' : '1px solid rgba(20,23,43,0.08)',
                         fontSize: cfg.cols <= 5 ? '1.2rem' : '0.72rem',
                         cursor: done ? 'default' : 'pointer',
                       }}
@@ -624,7 +624,7 @@ export default function NumberGameClient() {
                 {isAllClear ? t.allClear : clearedLevel > 0 ? t.cleared(clearedLevel) : t.failed(level)}
               </h2>
               {clearedLevel > 0 && (
-                <p className="text-indigo-300/60 text-sm mt-2">{t.avg(avgTime)}</p>
+                <p className="text-[#39406e]/60 text-sm mt-2">{t.avg(avgTime)}</p>
               )}
             </div>
 
@@ -632,7 +632,7 @@ export default function NumberGameClient() {
             {clearedLevel > 0 ? (
               <div
                 className="w-full rounded-2xl p-4"
-                style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
+                style={{ background: 'rgba(20,23,43,0.04)', border: '1px solid rgba(20,23,43,0.08)' }}
               >
                 <p className="text-white/50 text-sm mb-3 text-center">{t.top100prompt}</p>
                 <div className="flex gap-2">
@@ -647,7 +647,7 @@ export default function NumberGameClient() {
                     disabled={gameState === 'submitting'}
                     className="flex-1 px-4 py-3 rounded-xl text-sm text-white outline-none"
                     style={{
-                      background: 'rgba(255,255,255,0.08)',
+                      background: 'rgba(20,23,43,0.06)',
                       border: '1px solid rgba(255,255,255,0.15)',
                     }}
                   />
@@ -660,12 +660,12 @@ export default function NumberGameClient() {
                     {gameState === 'submitting' ? '...' : t.register}
                   </button>
                 </div>
-                {submitError && <p className="text-red-400 text-xs mt-2 text-center">{submitError}</p>}
+                {submitError && <p className="text-[#9b3a3a] text-xs mt-2 text-center">{submitError}</p>}
               </div>
             ) : (
               <div
                 className="w-full rounded-2xl py-4 text-center"
-                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+                style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.06)' }}
               >
                 <p className="text-white/40 text-sm">{t.needClear}</p>
               </div>
@@ -681,8 +681,8 @@ export default function NumberGameClient() {
                       key={i}
                       className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm"
                       style={{
-                        background: i < 3 ? 'rgba(99,102,241,0.12)' : 'rgba(255,255,255,0.04)',
-                        border: i < 3 ? '1px solid rgba(99,102,241,0.25)' : '1px solid rgba(255,255,255,0.06)',
+                        background: i < 3 ? 'rgba(99,102,241,0.12)' : 'rgba(20,23,43,0.03)',
+                        border: i < 3 ? '1px solid rgba(99,102,241,0.25)' : '1px solid rgba(20,23,43,0.05)',
                       }}
                     >
                       <span className="w-6 text-center font-bold" style={{ color: i === 0 ? '#fbbf24' : i === 1 ? '#d1d5db' : i === 2 ? '#fb923c' : 'rgba(255,255,255,0.3)' }}>
@@ -736,8 +736,8 @@ export default function NumberGameClient() {
                       key={i}
                       className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm"
                       style={{
-                        background: e.name === nickname ? 'rgba(99,102,241,0.2)' : 'rgba(255,255,255,0.04)',
-                        border: e.name === nickname ? '1px solid rgba(99,102,241,0.5)' : '1px solid rgba(255,255,255,0.06)',
+                        background: e.name === nickname ? 'rgba(99,102,241,0.2)' : 'rgba(20,23,43,0.03)',
+                        border: e.name === nickname ? '1px solid rgba(99,102,241,0.5)' : '1px solid rgba(20,23,43,0.05)',
                       }}
                     >
                       <span className="w-6 text-center font-bold" style={{ color: i === 0 ? '#fbbf24' : i === 1 ? '#d1d5db' : i === 2 ? '#fb923c' : 'rgba(255,255,255,0.3)' }}>

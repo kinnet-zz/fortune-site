@@ -30,11 +30,6 @@ const WUXING_ELEMENT: Record<string, Record<string, string>> = {
   '나무/흙': { en: 'Wood/Earth', zh: '木/土', ja: '木/土' },
 };
 
-const bgStyle = {
-  background: 'linear-gradient(160deg, #050520 0%, #0a0a2e 30%, #130a2e 60%, #1a0a3e 100%)',
-  minHeight: '100vh',
-};
-
 export default function ChineseZodiacContent() {
   const { lang } = useLang();
   const tr = t(lang);
@@ -47,117 +42,136 @@ export default function ChineseZodiacContent() {
   }));
 
   return (
-    <div style={bgStyle}>
-      <div className="max-w-4xl mx-auto px-6 py-16 text-white/80">
-        <Link href="/" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">
-          {tr.backHome}
-        </Link>
-
-        <header className="mb-12 text-center">
-          <h1 className="text-3xl font-bold text-white mb-3">{tr.chineseZodiacPageTitle}</h1>
-          <p className="text-white/50 text-base max-w-xl mx-auto leading-relaxed">{tr.chineseZodiacPageSubtitle}</p>
-        </header>
-
-        {/* 내 띠 확인 */}
-        <section className="mb-12" aria-labelledby="find-zodiac">
-          <h2 id="find-zodiac" className="text-xl font-bold text-white mb-4">{tr.findMyZodiacTitle}</h2>
-          <div
-            className="rounded-2xl p-6 text-sm leading-relaxed"
-            style={{ background: 'rgba(124,58,237,0.08)', border: '1px solid rgba(124,58,237,0.2)' }}
-          >
-            <p className="text-white/60 mb-4">{tr.lunarNote}</p>
-            <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-              {CHINESE_ZODIAC_DATA.map(({ animal, emoji, english, years }) => (
-                <Link
-                  key={animal}
-                  href={`/chinese-zodiac/${english.toLowerCase()}`}
-                  className="text-center rounded-xl p-2 block transition-all hover:scale-105"
-                  style={{ background: 'rgba(255,255,255,0.04)' }}
-                >
-                  <div className="text-2xl mb-1">{emoji}</div>
-                  <div className="text-white/70 text-xs font-semibold">{animal}{tr.animalUnit}</div>
-                  <div className="text-white/30 text-xs mt-1">
-                    {years.slice(-3).join(', ')}...
-                  </div>
-                </Link>
+    <div className="relative min-h-screen">
+      {/* 히어로 */}
+      <section className="relative overflow-hidden border-b border-[rgba(169,128,63,0.14)]">
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{ background: 'radial-gradient(ellipse 55% 80% at 78% -10%, rgba(169,128,63,0.14) 0%, transparent 60%), radial-gradient(ellipse 45% 60% at 10% 110%, rgba(17,23,48,0.09) 0%, transparent 70%)' }}
+          aria-hidden="true"
+        />
+        <div className="relative mx-auto max-w-6xl px-5 pb-12 pt-10 sm:pt-16">
+          <Link href="/" className="inline-flex min-h-11 items-center gap-2 text-[0.78rem] text-[var(--muted)] transition-colors hover:text-[#a9803f]">
+            {tr.backHome}
+          </Link>
+          <div className="mt-7 grid grid-cols-1 items-end gap-8 lg:grid-cols-[1.15fr_0.85fr]">
+            <div>
+              <span className="eyebrow">The twelve animals</span>
+              <h1 className="mt-5 font-display text-[2.4rem] font-semibold leading-[1.1] text-[var(--ink)] sm:text-[3.4rem]">
+                {tr.chineseZodiacPageTitle}
+              </h1>
+              <p className="mt-5 max-w-xl text-[0.92rem] leading-8 text-[var(--muted)] text-keep-all">
+                {tr.chineseZodiacPageSubtitle}
+              </p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                <span className="chip-gold">12 ANIMALS</span>
+                <span className="chip-quiet">음양오행</span>
+              </div>
+            </div>
+            <div className="grid grid-cols-6 gap-2" aria-hidden="true">
+              {CHINESE_ZODIAC_DATA.slice(0, 12).map(({ emoji, english }) => (
+                <span key={english} className="grid aspect-square place-items-center rounded-lg border border-[var(--line)] bg-[#fffdf8] text-[1.1rem] opacity-90">
+                  {emoji}
+                </span>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="mx-auto max-w-6xl px-5 py-14 text-[var(--ink)]">
+        {/* 내 띠 확인 */}
+        <section className="mb-16" aria-labelledby="find-zodiac">
+          <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <span className="eyebrow">Find yours</span>
+              <h2 id="find-zodiac" className="mt-3 font-display text-[1.5rem] font-semibold text-[var(--ink)]">{tr.findMyZodiacTitle}</h2>
+            </div>
+            <p className="max-w-md text-[0.74rem] leading-5 text-[var(--muted-2)] text-keep-all">{tr.lunarNote}</p>
+          </div>
+          <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-4 lg:grid-cols-6">
+            {CHINESE_ZODIAC_DATA.map(({ animal, emoji, english, years }) => (
+              <Link
+                key={animal}
+                href={`/chinese-zodiac/${english.toLowerCase()}`}
+                className="group rounded-2xl border border-[#14172b]/8 bg-white/[0.022] p-3.5 text-center transition-all duration-500 hover:-translate-y-0.5 hover:border-[rgba(169,128,63,0.45)] hover:bg-[rgba(195,161,101,0.06)]"
+              >
+                <span className="mb-1 block text-[1.5rem] transition-transform duration-300 group-hover:scale-110">{emoji}</span>
+                <span className="block text-[0.82rem] font-semibold text-[var(--ink)]/90">{animal}{tr.animalUnit}</span>
+                <span className="mt-0.5 block text-[0.6rem] text-[var(--muted-2)]">
+                  {years.slice(-3).join(', ')}...
+                </span>
+              </Link>
+            ))}
           </div>
         </section>
 
         {/* 각 띠 상세 */}
         <section aria-labelledby="animals-heading">
-          <h2 id="animals-heading" className="text-xl font-bold text-white mb-6">{tr.chineseDetailTitle}</h2>
-          <div className="space-y-6">
-            {CHINESE_ZODIAC_DATA.map(({ animal, emoji, english, element, years, traits, personality, strengths, weaknesses, compatible, careers }) => (
-              <article
-                key={animal}
-                className="rounded-2xl overflow-hidden"
-                style={{ border: '1px solid rgba(255,255,255,0.08)' }}
-              >
-                <div
-                  className="px-6 py-5 flex flex-wrap items-center gap-4"
-                  style={{ background: 'rgba(255,255,255,0.04)' }}
-                >
-                  <span className="text-4xl">{emoji}</span>
-                  <div className="flex-1">
-                    <h3 className="text-white font-bold text-lg">{animal}{tr.animalUnit} <span className="text-white/40 font-normal text-base">({english})</span></h3>
-                    <p className="text-purple-300/70 text-sm mt-0.5">
-                      {element} · {tr.recentYearsLabel}: {years.slice(-4).join(', ')}...
+          <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <span className="eyebrow">Deep dive</span>
+              <h2 id="animals-heading" className="mt-3 font-display text-[1.5rem] font-semibold text-[var(--ink)]">{tr.chineseDetailTitle}</h2>
+            </div>
+            <span className="text-[0.7rem] uppercase tracking-[0.24em] text-[var(--muted-2)]">01 — 12</span>
+          </div>
+          <div className="space-y-4">
+            {CHINESE_ZODIAC_DATA.map(({ animal, emoji, english, element, years, traits, personality, strengths, weaknesses, compatible, careers }, index) => (
+              <article key={animal} className="card-lux overflow-hidden rounded-3xl">
+                <div className="grid grid-cols-1 gap-0 lg:grid-cols-[16rem_1fr]">
+                  <div className="border-b border-[rgba(169,128,63,0.14)] p-6 lg:border-b-0 lg:border-r">
+                    <div className="flex items-start justify-between">
+                      <span className="text-[2.4rem] leading-none">{emoji}</span>
+                      <span className="font-display text-[0.7rem] italic text-[var(--muted-2)]">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                    </div>
+                    <h3 className="mt-4 font-display text-[1.4rem] font-semibold text-[var(--ink)]">
+                      {animal}{tr.animalUnit}
+                    </h3>
+                    <p className="mt-1 text-[0.64rem] uppercase tracking-[0.3em] text-[var(--gold)]">{english}</p>
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      <span className="chip-quiet text-[0.66rem]">{element}</span>
+                    </div>
+                    <p className="mt-3 text-[0.66rem] leading-5 text-[var(--muted-2)]">
+                      {tr.recentYearsLabel} · {years.slice(-4).join(', ')}...
                     </p>
                   </div>
-                </div>
 
-                <div className="px-6 py-5 space-y-4" style={{ background: 'rgba(255,255,255,0.02)' }}>
-                  <div>
-                    <h4 className="text-white/50 text-xs uppercase tracking-widest font-medium mb-2">{tr.coreTraitsLabel}</h4>
-                    <div className="flex flex-wrap gap-2">
+                  <div className="p-6 sm:p-7">
+                    <div className="mb-4 flex flex-wrap gap-1.5">
                       {traits.map((trait) => (
-                        <span
-                          key={trait}
-                          className="px-3 py-1 rounded-full text-xs text-white/70"
-                          style={{ background: 'rgba(124,58,237,0.2)', border: '1px solid rgba(124,58,237,0.3)' }}
-                        >
+                        <span key={trait} className="rounded-full border border-[rgba(169,128,63,0.28)] bg-[rgba(195,161,101,0.08)] px-2.5 py-1 text-[0.68rem] text-[#6f5223]">
                           {trait}
                         </span>
                       ))}
                     </div>
-                  </div>
+                    <p className="text-[0.84rem] leading-7 text-[var(--muted)] text-keep-all">{personality}</p>
 
-                  <div>
-                    <h4 className="text-white/50 text-xs uppercase tracking-widest font-medium mb-2">{tr.personalityLabel}</h4>
-                    <p className="text-white/60 text-sm leading-relaxed">{personality}</p>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div
-                      className="rounded-xl p-4"
-                      style={{ background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.15)' }}
-                    >
-                      <h4 className="text-green-300/70 text-xs font-semibold mb-2">{tr.strengthsLabel}</h4>
-                      <p className="text-white/50 text-xs">{strengths}</p>
+                    <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                      <div className="rounded-xl border border-[rgba(47,107,74,0.28)] bg-[rgba(47,107,74,0.06)] p-4">
+                        <h4 className="mb-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.22em] text-[#2f6b4a]">{tr.strengthsLabel}</h4>
+                        <p className="text-[0.76rem] leading-6 text-[var(--muted)]">{strengths}</p>
+                      </div>
+                      <div className="rounded-xl border border-[rgba(155,58,58,0.3)] bg-[rgba(155,58,58,0.05)] p-4">
+                        <h4 className="mb-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.22em] text-[#9b3a3a]">{tr.weaknessesLabel}</h4>
+                        <p className="text-[0.76rem] leading-6 text-[var(--muted)]">{weaknesses}</p>
+                      </div>
                     </div>
-                    <div
-                      className="rounded-xl p-4"
-                      style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.15)' }}
-                    >
-                      <h4 className="text-red-300/70 text-xs font-semibold mb-2">{tr.weaknessesLabel}</h4>
-                      <p className="text-white/50 text-xs">{weaknesses}</p>
-                    </div>
-                  </div>
 
-                  <div className="flex flex-col sm:flex-row gap-3 text-xs text-white/40">
-                    <span>🤝 {tr.compatibleAnimalsLabel}: <strong className="text-white/60">{compatible}</strong></span>
-                    <span className="hidden sm:inline text-white/20">·</span>
-                    <span>💼 {tr.careersLabel}: <strong className="text-white/60">{careers}</strong></span>
-                  </div>
-                  <div className="pt-3">
-                    <Link
-                      href={`/chinese-zodiac/${english.toLowerCase()}`}
-                      className="inline-flex items-center gap-1 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors"
-                    >
-                      {animal}띠 상세 가이드 →
-                    </Link>
+                    <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[rgba(169,128,63,0.14)] pt-4">
+                      <div className="flex flex-wrap gap-x-5 gap-y-1 text-[0.72rem] text-[var(--muted-2)]">
+                        <span>{tr.compatibleAnimalsLabel} · <strong className="font-medium text-[var(--ink)]">{compatible}</strong></span>
+                        <span>{tr.careersLabel} · <strong className="font-medium text-[var(--ink)]">{careers}</strong></span>
+                      </div>
+                      <Link
+                        href={`/chinese-zodiac/${english.toLowerCase()}`}
+                        className="group inline-flex min-h-9 items-center gap-1.5 text-[0.74rem] font-semibold text-[var(--gold)] transition-colors hover:text-[#14172b]"
+                      >
+                        상세 가이드
+                        <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </article>
@@ -165,13 +179,10 @@ export default function ChineseZodiacContent() {
           </div>
         </section>
 
-        <div className="mt-12 text-center">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-bold text-white text-sm transition-all duration-300 hover:scale-[1.02]"
-            style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #6366f1 100%)' }}
-          >
-            {tr.chineseZodiacCTA}
+        <div className="mt-14 flex flex-col items-center gap-4 rounded-[0.6rem] border border-[rgba(226,205,162,0.2)] bg-[linear-gradient(160deg,#141a35,#0f1529)] px-6 py-10 text-center">
+          <span className="eyebrow eyebrow-light eyebrow-center">Your reading</span>
+          <Link href="/" className="btn-gold-warm text-[0.9rem]">
+            {tr.chineseZodiacCTA} <span aria-hidden="true">→</span>
           </Link>
         </div>
       </div>

@@ -100,7 +100,7 @@ export default function CardDrawPage() {
         {/* 타로란? */}
         <div
           className="rounded-2xl p-6"
-          style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}
+          style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.05)' }}
         >
           <h2 className="text-white font-bold text-base mb-3">🃏 타로 카드란?</h2>
           <p className="text-white/55 text-sm leading-relaxed mb-3">
@@ -125,10 +125,10 @@ export default function CardDrawPage() {
               <div
                 key={card.id}
                 className="flex gap-3 items-start rounded-xl p-3"
-                style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}
+                style={{ background: 'rgba(20,23,43,0.025)', border: '1px solid rgba(20,23,43,0.04)' }}
               >
                 <div className="flex-shrink-0 w-12 text-center">
-                  <div className="text-purple-400 font-black text-xs">{card.id}</div>
+                  <div className="text-purple-300 font-black text-xs">{card.id}</div>
                   <div className="text-white font-bold text-xs mt-0.5">{card.ko}</div>
                   <div className="text-white/25 text-[9px]">{card.en}</div>
                 </div>
@@ -141,7 +141,7 @@ export default function CardDrawPage() {
         {/* 카드 활용 팁 */}
         <div
           className="rounded-2xl p-6"
-          style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}
+          style={{ background: 'rgba(20,23,43,0.025)', border: '1px solid rgba(20,23,43,0.05)' }}
         >
           <h2 className="text-white font-bold text-base mb-3">💡 타로 카드 활용 팁</h2>
           <div className="space-y-2 text-sm text-white/50">

@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useLang } from '@/lib/useLang';
 import { t, type Lang } from '@/lib/i18n';
+import ConstellationIcon, { ZODIAC_SLUGS } from '@/components/Constellation';
 
-const ZODIAC_EMOJIS = ['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
 const ZODIAC_PERIODS = ['3/21~4/19','4/20~5/20','5/21~6/21','6/22~7/22','7/23~8/22','8/23~9/22','9/23~10/23','10/24~11/22','11/23~12/21','12/22~1/19','1/20~2/18','2/19~3/20'];
 
 const CHINESE_ZODIAC = [
@@ -42,17 +42,25 @@ const DISCLOSURE_COPY: Record<Lang, {
   ja: { zodiacOpen: '12星座をすべて表示', zodiacClose: '星座を閉じる', chineseOpen: '十二支をすべて表示', chineseClose: '十二支を閉じる' },
 };
 
-const cardStyle = {
-  background: 'rgba(255,255,255,0.03)',
-  border: '1px solid rgba(255,255,255,0.07)',
-  backdropFilter: 'blur(12px)',
-};
-
-const glassCard = {
-  background: 'rgba(255,255,255,0.035)',
-  border: '1px solid rgba(216,180,254,0.14)',
-  backdropFilter: 'blur(12px)',
-};
+function SectionHead({ eyebrow, title, href, linkLabel, light = false }: { eyebrow: string; title: string; href?: string; linkLabel?: string; light?: boolean }) {
+  return (
+    <div className="mb-7 flex flex-wrap items-end justify-between gap-3">
+      <div>
+        <span className={light ? 'eyebrow eyebrow-light' : 'eyebrow'}>{eyebrow}</span>
+        <h2 className={`mt-3 font-display text-[1.45rem] font-semibold sm:text-[1.8rem] ${light ? 'text-[#f7f0e1]' : 'text-[var(--ink)]'}`}>{title}</h2>
+      </div>
+      {href && linkLabel && (
+        <Link
+          href={href}
+          className={`group inline-flex min-h-11 items-center gap-2 text-[0.76rem] font-medium transition-colors ${light ? 'text-[rgba(226,205,162,0.85)] hover:text-[#f7f0e1]' : 'text-[var(--gold)] hover:text-[var(--ink)]'}`}
+        >
+          {linkLabel}
+          <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+        </Link>
+      )}
+    </div>
+  );
+}
 
 export default function InfoSection() {
   const { lang } = useLang();
@@ -64,143 +72,117 @@ export default function InfoSection() {
 
   return (
     <>
-      {/* 서양 별자리 — bento grid */}
-      <section className="w-full max-w-6xl mx-auto px-4 mt-20" aria-labelledby="zodiac-heading">
-        <div className="section-line mb-8" />
-        <h2
-          id="zodiac-heading"
-          className="text-left text-white/85 text-xl sm:text-2xl font-semibold mb-6 font-serif-display"
-        >
-          {tr.zodiacGuideTitle}
-        </h2>
-        <div id="zodiac-list" className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
+      {/* 서양 별자리 */}
+      <section className="mx-auto mt-24 w-full max-w-6xl px-4" aria-labelledby="zodiac-heading">
+        <div className="section-line mb-9" />
+        <SectionHead
+          eyebrow="The twelve signs"
+          title={tr.zodiacGuideTitle}
+          href="/zodiac"
+          linkLabel="12별자리 상세 가이드"
+        />
+        <div id="zodiac-list" className="stagger grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 lg:grid-cols-6">
           {tr.zodiacSigns.map((sign, i) => (
             <div
               key={i}
-              className={`rounded-xl min-h-24 p-3 group ${i >= 4 && !zodiacExpanded ? 'hidden lg:block' : ''}`}
-              style={glassCard}
+              className={`zodiac-card group relative min-h-[9.5rem] rounded-[0.4rem] border border-[var(--line)] bg-[#fffdf8] p-4 transition-all duration-500 hover:-translate-y-0.5 hover:border-[rgba(169,128,63,0.45)] hover:shadow-[0_20px_40px_-36px_rgba(20,23,43,0.5)] ${i >= 4 && !zodiacExpanded ? 'hidden lg:block' : ''}`}
             >
-              <div className="flex items-center gap-2 mb-1">
-                <span
-                  className="text-base transition-transform group-hover:scale-110"
-                  style={{ color: 'rgba(192,132,252,0.8)' }}
-                >
-                  {ZODIAC_EMOJIS[i]}
+              <div className="flex items-start justify-between">
+                <span className="text-[var(--ink)]">
+                  <ConstellationIcon slug={ZODIAC_SLUGS[i]} size={44} strokeWidth={1.15} />
                 </span>
-                <span className="text-white/80 text-sm font-semibold">{sign}</span>
+                <span className="font-display text-[0.62rem] italic text-[var(--muted-2)]">{String(i + 1).padStart(2, '0')}</span>
               </div>
-              <p className="text-purple-200/80 text-xs">{ZODIAC_PERIODS[i]}</p>
-              <p className="text-white/65 text-xs mt-1 leading-relaxed text-keep-all">{tr.zodiacGuideTraits[i]}</p>
+              <p className="mt-3 text-[0.92rem] font-semibold text-[var(--ink)]">{sign}</p>
+              <p className="mt-0.5 text-[0.64rem] tracking-[0.08em] text-[var(--gold)]">{ZODIAC_PERIODS[i]}</p>
+              <p className="mt-2 text-[0.7rem] leading-5 text-[var(--muted)] text-keep-all">{tr.zodiacGuideTraits[i]}</p>
             </div>
           ))}
         </div>
         <button
           type="button"
-          className="lg:hidden mt-4 min-h-11 w-full rounded-xl border border-purple-300/25 text-purple-100 text-base font-semibold"
+          className="mt-4 min-h-11 w-full rounded-[0.2rem] border border-[var(--line)] text-[0.8rem] font-medium text-[var(--ink-soft)] transition-colors hover:border-[var(--gold)] lg:hidden"
           aria-expanded={zodiacExpanded}
           aria-controls="zodiac-list"
           onClick={() => setZodiacExpanded((open) => !open)}
         >
           {zodiacExpanded ? disclosureCopy.zodiacClose : disclosureCopy.zodiacOpen}
         </button>
-        <div className="mt-5 text-right">
-          <Link
-            href="/zodiac"
-            className="inline-flex min-h-11 items-center text-purple-200 hover:text-white text-sm font-semibold transition-colors"
-          >
-            12별자리 상세 가이드 →
-          </Link>
-        </div>
       </section>
 
-      {/* 동양 12지 */}
-      <section className="w-full max-w-6xl mx-auto px-4 mt-14 py-6 rounded-3xl bg-white/[0.02]" aria-labelledby="chinese-zodiac-heading">
-        <div className="section-line mb-8" />
-        <h2
-          id="chinese-zodiac-heading"
-          className="text-left text-white/85 text-xl sm:text-2xl font-semibold mb-6 font-serif-display"
-        >
-          동양 12지 띠 안내
-        </h2>
-        <div id="chinese-zodiac-list" className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
-          {CHINESE_ZODIAC.map((item, i) => (
-            <div key={i} className={`rounded-xl min-h-20 p-3 group ${i >= 4 && !chineseZodiacExpanded ? 'hidden lg:block' : ''}`} style={glassCard}>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-base transition-transform group-hover:scale-110">{item.emoji}</span>
-                <span className="text-white/80 text-sm font-semibold">{item.name}</span>
+      {/* 동양 12지 — 다크 밴드 */}
+      <section className="mx-auto mt-20 w-full max-w-6xl px-4" aria-labelledby="chinese-zodiac-heading">
+        <div className="relative overflow-hidden rounded-[0.6rem] border border-[rgba(226,205,162,0.18)] bg-[linear-gradient(165deg,#141a35_0%,#0f1529_100%)] px-6 py-9 text-[#f7f0e1] sm:px-9 sm:py-10">
+          <span className="eyebrow eyebrow-light">The twelve animals</span>
+          <div className="mt-3 mb-7 flex flex-wrap items-end justify-between gap-3">
+            <h2 id="chinese-zodiac-heading" className="font-display text-[1.45rem] font-semibold text-[#f7f0e1] sm:text-[1.8rem]">동양 12지 띠 안내</h2>
+            <Link href="/chinese-zodiac" className="group inline-flex min-h-11 items-center gap-2 text-[0.76rem] font-medium text-[rgba(226,205,162,0.85)] transition-colors hover:text-[#f7f0e1]">
+              12지 상세 가이드
+              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </Link>
+          </div>
+          <div id="chinese-zodiac-list" className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+            {CHINESE_ZODIAC.map((item, i) => (
+              <div
+                key={i}
+                className={`rounded-[0.3rem] border border-[rgba(226,205,162,0.18)] bg-[rgba(247,240,225,0.04)] p-3.5 transition-colors hover:border-[rgba(226,205,162,0.45)] ${i >= 4 && !chineseZodiacExpanded ? 'hidden lg:block' : ''}`}
+              >
+                <div className="mb-1.5 flex items-center gap-2">
+                  <span className="text-[1rem]">{item.emoji}</span>
+                  <span className="text-[0.84rem] font-semibold text-[#f7f0e1]">{item.name}</span>
+                </div>
+                <p className="text-[0.6rem] leading-4 text-[rgba(247,240,225,0.45)]">{item.years}</p>
               </div>
-              <p className="text-purple-100/65 text-xs leading-relaxed">{item.years}</p>
-            </div>
-          ))}
-        </div>
-        <button
-          type="button"
-          className="lg:hidden mt-4 min-h-11 w-full rounded-xl border border-purple-300/25 text-purple-100 text-base font-semibold"
-          aria-expanded={chineseZodiacExpanded}
-          aria-controls="chinese-zodiac-list"
-          onClick={() => setChineseZodiacExpanded((open) => !open)}
-        >
-          {chineseZodiacExpanded ? disclosureCopy.chineseClose : disclosureCopy.chineseOpen}
-        </button>
-        <div className="mt-5 text-right">
-          <Link
-            href="/chinese-zodiac"
-            className="inline-flex min-h-11 items-center text-purple-200 hover:text-white text-sm font-semibold transition-colors"
+            ))}
+          </div>
+          <button
+            type="button"
+            className="mt-4 min-h-11 w-full rounded-[0.2rem] border border-[rgba(226,205,162,0.25)] text-[0.8rem] font-medium text-[rgba(247,240,225,0.8)] transition-colors hover:bg-[rgba(226,205,162,0.08)] lg:hidden"
+            aria-expanded={chineseZodiacExpanded}
+            aria-controls="chinese-zodiac-list"
+            onClick={() => setChineseZodiacExpanded((open) => !open)}
           >
-            12지 상세 가이드 →
-          </Link>
+            {chineseZodiacExpanded ? disclosureCopy.chineseClose : disclosureCopy.chineseOpen}
+          </button>
         </div>
       </section>
 
       {/* 블로그 추천 */}
-      <section className="w-full max-w-4xl mx-auto px-4 mt-16" aria-labelledby="blog-picks-heading">
-        <div className="section-line mb-8" />
-        <h2
-          id="blog-picks-heading"
-          className="text-left text-white/85 text-xl sm:text-2xl font-semibold mb-6 font-serif-display"
-        >
-          별자리 &amp; 운세 가이드
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <section className="mx-auto mt-20 w-full max-w-5xl px-4" aria-labelledby="blog-picks-heading">
+        <div className="section-line mb-9" />
+        <SectionHead
+          eyebrow="Editorial"
+          title="별자리 & 운세 가이드"
+          href="/blog"
+          linkLabel="전체 가이드 블로그"
+        />
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           {BLOG_PICKS.map((post, index) => (
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className={`rounded-xl p-5 card-glow group block min-h-28 ${index === 0 ? 'sm:col-span-3 sm:min-h-40' : ''}`}
-              style={glassCard}
+              className={`card-lift group block border border-[var(--line)] bg-[#fffdf8] p-6 ${index === 0 ? 'sm:col-span-3 sm:min-h-[10rem] sm:p-8' : 'min-h-[8rem]'}`}
+              style={{ borderRadius: '0.4rem' }}
             >
-              <span
-                className="text-xl block mb-3 transition-transform group-hover:scale-110 origin-left"
-                style={{ color: 'rgba(192,132,252,0.7)' }}
-              >
-                {post.emoji}
-              </span>
-              <p className={`${index === 0 ? 'text-xl sm:text-2xl font-serif-display' : 'text-base'} text-white/85 font-semibold leading-snug group-hover:text-white transition-colors text-keep-all`}>
+              <div className="flex items-start justify-between gap-3">
+                <span className="text-[1.05rem] opacity-80">{post.emoji}</span>
+                <span className="text-[0.58rem] uppercase tracking-[0.28em] text-[var(--muted-2)]">
+                  0{index + 1}
+                </span>
+              </div>
+              <p className={`mt-4 font-display font-semibold leading-snug text-[var(--ink)] text-keep-all transition-colors group-hover:text-[var(--gold)] ${index === 0 ? 'text-[1.35rem] sm:text-[1.75rem]' : 'text-[1.05rem]'}`}>
                 {post.title}
               </p>
             </Link>
           ))}
         </div>
-        <div className="mt-5 text-right">
-          <Link
-            href="/blog"
-            className="inline-flex min-h-11 items-center text-purple-200 hover:text-white text-sm font-semibold transition-colors"
-          >
-            전체 가이드 블로그 →
-          </Link>
-        </div>
       </section>
 
       {/* FAQ */}
-      <section className="w-full max-w-3xl mx-auto px-4 mt-16" aria-labelledby="faq-section-heading">
-        <div className="section-line mb-8" />
-        <h2
-          id="faq-section-heading"
-          className="text-left text-white/85 text-xl sm:text-2xl font-semibold mb-6 font-serif-display"
-        >
-          자주 묻는 질문
-        </h2>
-        <div className="space-y-3">
+      <section className="mx-auto mt-20 w-full max-w-3xl px-4" aria-labelledby="faq-section-heading">
+        <div className="section-line mb-9" />
+        <SectionHead eyebrow="Questions" title="자주 묻는 질문" />
+        <div className="divide-y divide-[var(--line)] border-y border-[var(--line)]">
           {[
             {
               q: '오늘의 운세는 매일 바뀌나요?',
@@ -226,40 +208,41 @@ export default function InfoSection() {
             const isOpen = openFaq === i;
             const answerId = `faq-answer-${i}`;
             return (
-            <div key={i} className="rounded-xl" style={glassCard}>
-              <button
-                type="button"
-                className="min-h-14 w-full px-5 py-4 text-white/90 text-left text-base font-semibold flex items-start gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-purple-300 rounded-xl"
-                aria-expanded={isOpen}
-                aria-controls={answerId}
-                onClick={() => setOpenFaq(isOpen ? null : i)}
-              >
-                <span style={{ color: 'rgba(192,132,252,0.6)' }}>Q.</span>
-                {q}
-                <span className={`ml-auto text-purple-200 transition-transform ${isOpen ? 'rotate-45' : ''}`} aria-hidden="true">＋</span>
-              </button>
-              <div id={answerId} hidden={!isOpen}>
-                <p className="text-white/78 text-base leading-7 px-5 pb-5 pl-10 text-keep-all">{a}</p>
+              <div key={i}>
+                <button
+                  type="button"
+                  className="flex min-h-14 w-full items-start gap-3 py-4 text-left text-[0.92rem] font-semibold text-[var(--ink)] focus-visible:outline-none"
+                  aria-expanded={isOpen}
+                  aria-controls={answerId}
+                  onClick={() => setOpenFaq(isOpen ? null : i)}
+                >
+                  <span className="font-display text-[0.85rem] italic text-[var(--gold)]">Q.</span>
+                  <span className="flex-1 text-keep-all">{q}</span>
+                  <span
+                    className={`mt-0.5 text-[var(--gold)] transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}
+                    aria-hidden="true"
+                  >
+                    ＋
+                  </span>
+                </button>
+                <div id={answerId} hidden={!isOpen}>
+                  <p className="pb-5 pl-8 text-[0.84rem] leading-7 text-[var(--muted)] text-keep-all">{a}</p>
+                </div>
               </div>
-            </div>
-          );})}
+            );
+          })}
         </div>
       </section>
 
       {/* 서비스 소개 */}
-      <section className="w-full max-w-3xl mx-auto px-4 mt-14" aria-labelledby="about-heading">
-        <div
-          className="rounded-2xl p-6"
-          style={{
-            background: 'rgba(139,92,246,0.03)',
-            border: '1px solid rgba(192,132,252,0.08)',
-          }}
-        >
-          <h2 id="about-heading" className="text-white/90 text-base font-semibold mb-3 font-serif-display">
+      <section className="mx-auto mt-16 w-full max-w-3xl px-4" aria-labelledby="about-heading">
+        <div className="border border-[var(--line)] bg-[#fffdf8] p-6 sm:p-8" style={{ borderRadius: '0.4rem' }}>
+          <span className="eyebrow">About</span>
+          <h2 id="about-heading" className="mt-3 font-display text-[1.15rem] font-semibold text-[var(--ink)]">
             {tr.serviceIntroTitle}
           </h2>
-          <p className="text-white/78 text-base leading-7 mb-3 text-keep-all">{tr.serviceIntroText}</p>
-          <p className="text-white/70 text-base leading-7 text-keep-all">
+          <p className="mt-3 text-[0.84rem] leading-7 text-[var(--muted)] text-keep-all">{tr.serviceIntroText}</p>
+          <p className="mt-3 text-[0.84rem] leading-7 text-[var(--muted)] text-keep-all">
             starfate.day는 별자리와 동양 12지를 함께 읽는 무료 운세 가이드입니다.
             한국어·영어·일본어·중국어를 지원하고, 타로와 별자리 궁합 등 가볍게 즐길 콘텐츠를 제공합니다.
             모든 운세는 오락과 자기성찰을 위한 참고 자료입니다.

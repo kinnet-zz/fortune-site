@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Playfair_Display } from 'next/font/google';
 import './globals.css';
 import CookieBanner from '../components/CookieBanner';
@@ -9,10 +9,16 @@ import { LangProvider } from '@/lib/LangContext';
 
 const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
-  weight: ['400', '600', '700'],
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
   display: 'swap',
   variable: '--font-playfair-display',
 });
+
+export const viewport: Viewport = {
+  themeColor: '#111730',
+  colorScheme: 'light',
+};
 
 export const metadata: Metadata = {
   title: 'StarFate | 별자리·12지 운세 해석 가이드',
@@ -78,6 +84,12 @@ export default function RootLayout({
     <html lang="ko" className={playfairDisplay.variable}>
       <head>
         <meta name="google-adsense-account" content="ca-pub-3314960461630607" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap"
+        />
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔮</text></svg>" />
         <script
           type="application/ld+json"
@@ -119,7 +131,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased">
+      <body className={`${playfairDisplay.variable} antialiased`}>
         <LangProvider>
           <ConditionalHeader />
           <CookieBanner />

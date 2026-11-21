@@ -171,7 +171,7 @@ export default function PastLifeClient() {
               >
                 {/* 이름 */}
                 <div>
-                  <label className="block text-purple-200 text-sm font-semibold mb-2 tracking-wide">
+                  <label className="block text-[#e2cda2] text-sm font-semibold mb-2 tracking-wide">
                     {t.nameLabel}
                   </label>
                   <input
@@ -182,7 +182,7 @@ export default function PastLifeClient() {
                     maxLength={30}
                     className="w-full rounded-2xl px-4 py-4 text-white text-base font-medium outline-none transition-all"
                     style={{
-                      background: 'rgba(255,255,255,0.05)',
+                      background: 'rgba(20,23,43,0.04)',
                       border: '1.5px solid rgba(139,92,246,0.25)',
                     }}
                   />
@@ -190,7 +190,7 @@ export default function PastLifeClient() {
 
                 {/* 생년월일 */}
                 <div>
-                  <label className="block text-purple-200 text-sm font-semibold mb-2 tracking-wide">
+                  <label className="block text-[#e2cda2] text-sm font-semibold mb-2 tracking-wide">
                     {t.dateLabel}
                   </label>
                   <input
@@ -201,7 +201,7 @@ export default function PastLifeClient() {
                     max={today}
                     className="w-full rounded-2xl px-4 py-4 text-white text-base font-medium outline-none [color-scheme:dark]"
                     style={{
-                      background: 'rgba(255,255,255,0.05)',
+                      background: 'rgba(20,23,43,0.04)',
                       border: '1.5px solid rgba(139,92,246,0.25)',
                       colorScheme: 'dark',
                     }}
@@ -215,8 +215,8 @@ export default function PastLifeClient() {
                   className="w-full py-4 rounded-2xl font-black text-base transition-all duration-200"
                   style={{
                     background: isValid
-                      ? 'linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #6366f1 100%)'
-                      : 'rgba(255,255,255,0.06)',
+                      ? 'linear-gradient(135deg, #1a2144 0%, #111730 100%)'
+                      : 'rgba(20,23,43,0.05)',
                     color: isValid ? '#fff' : 'rgba(255,255,255,0.25)',
                     boxShadow: isValid ? '0 0 30px rgba(139,92,246,0.4)' : 'none',
                     cursor: isValid ? 'pointer' : 'not-allowed',
@@ -238,7 +238,7 @@ export default function PastLifeClient() {
         <div className="space-y-5 mt-10">
           <div
             className="rounded-2xl p-6"
-            style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}
+            style={{ background: 'rgba(20,23,43,0.03)', border: '1px solid rgba(20,23,43,0.05)' }}
           >
             <h2 className="text-white font-bold text-base mb-3">🌀 전생이란 무엇인가?</h2>
             <p className="text-white/55 text-sm leading-relaxed mb-3">
@@ -267,7 +267,7 @@ export default function PastLifeClient() {
 
           <div
             className="rounded-2xl p-5"
-            style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}
+            style={{ background: 'rgba(20,23,43,0.025)', border: '1px solid rgba(20,23,43,0.05)' }}
           >
             <h2 className="text-white font-bold text-sm mb-3">📚 전생 테스트 결과 유형 안내</h2>
             <div className="grid grid-cols-2 gap-3 text-xs text-white/45">
@@ -322,7 +322,7 @@ function RevealLoader({ step, lang }: { step: number; lang: string }) {
         ))}
         <div className="absolute inset-0 flex items-center justify-center text-2xl">🌀</div>
       </div>
-      <p className="text-purple-300/70 text-sm text-center animate-pulse px-4">{msg}</p>
+      <p className="text-[#c3a165]/70 text-sm text-center animate-pulse px-4">{msg}</p>
     </div>
   );
 }
@@ -366,7 +366,7 @@ function ResultCard({
               <div className="text-7xl mb-4" style={{ filter: 'drop-shadow(0 0 20px rgba(168,85,247,0.6))' }}>
                 {result.emoji}
               </div>
-              <div className="text-purple-300/60 text-xs font-semibold tracking-widest uppercase mb-2">
+              <div className="text-[#c3a165]/60 text-xs font-semibold tracking-widest uppercase mb-2">
                 {t.eraLabel} · {result.era[l]}
               </div>
               <h2 className="text-2xl font-black text-white leading-tight">
@@ -383,7 +383,7 @@ function ResultCard({
 
             {/* 특성 뱃지 */}
             <div>
-              <div className="text-purple-300/50 text-xs font-semibold tracking-widest uppercase mb-3 text-center">
+              <div className="text-[#c3a165]/50 text-xs font-semibold tracking-widest uppercase mb-3 text-center">
                 {t.traitsLabel}
               </div>
               <div className="flex flex-wrap justify-center gap-2">
@@ -394,7 +394,7 @@ function ResultCard({
                     style={{
                       background: 'rgba(139,92,246,0.2)',
                       border: '1px solid rgba(139,92,246,0.4)',
-                      color: '#c4b5fd',
+                      color: '#6f5223',
                     }}
                   >
                     {trait}
@@ -409,8 +409,8 @@ function ResultCard({
                 onClick={onRetry}
                 className="flex-1 py-3 rounded-2xl text-sm font-bold transition-all"
                 style={{
-                  background: 'rgba(255,255,255,0.05)',
-                  border: '1px solid rgba(255,255,255,0.1)',
+                  background: 'rgba(20,23,43,0.04)',
+                  border: '1px solid rgba(20,23,43,0.08)',
                   color: 'rgba(255,255,255,0.5)',
                 }}
               >
