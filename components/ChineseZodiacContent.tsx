@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useLang } from '@/lib/useLang';
 import { t } from '@/lib/i18n';
 import { CHINESE_ZODIAC_CONTENT } from '@/lib/chinese-zodiac-data';
+import { stripLeadingEmoji } from '@/lib/text';
 
 const CHINESE_ZODIAC_BASE = [
   { emoji: '🐭', english: 'Rat', elementKey: '물 💧', years: [1924, 1936, 1948, 1960, 1972, 1984, 1996, 2008, 2020] },
@@ -150,11 +151,11 @@ export default function ChineseZodiacContent() {
 
                     <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
                       <div className="rounded-xl border border-[rgba(47,107,74,0.28)] bg-[rgba(47,107,74,0.06)] p-4">
-                        <h4 className="mb-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.22em] text-[#2f6b4a]">{tr.strengthsLabel}</h4>
+                        <h4 className="mb-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.22em] text-[#2f6b4a]">{stripLeadingEmoji(tr.strengthsLabel)}</h4>
                         <p className="text-[0.76rem] leading-6 text-[var(--muted)]">{strengths}</p>
                       </div>
                       <div className="rounded-xl border border-[rgba(155,58,58,0.3)] bg-[rgba(155,58,58,0.05)] p-4">
-                        <h4 className="mb-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.22em] text-[#9b3a3a]">{tr.weaknessesLabel}</h4>
+                        <h4 className="mb-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.22em] text-[#9b3a3a]">{stripLeadingEmoji(tr.weaknessesLabel)}</h4>
                         <p className="text-[0.76rem] leading-6 text-[var(--muted)]">{weaknesses}</p>
                       </div>
                     </div>

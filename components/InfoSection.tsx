@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useLang } from '@/lib/useLang';
 import { t, type Lang } from '@/lib/i18n';
 import ConstellationIcon, { ZODIAC_SLUGS } from '@/components/Constellation';
+import { stripLeadingEmoji } from '@/lib/text';
 
 const ZODIAC_PERIODS = ['3/21~4/19','4/20~5/20','5/21~6/21','6/22~7/22','7/23~8/22','8/23~9/22','9/23~10/23','10/24~11/22','11/23~12/21','12/22~1/19','1/20~2/18','2/19~3/20'];
 
@@ -239,7 +240,7 @@ export default function InfoSection() {
         <div className="border border-[var(--line)] bg-[#fffdf8] p-6 sm:p-8" style={{ borderRadius: '0.4rem' }}>
           <span className="eyebrow">About</span>
           <h2 id="about-heading" className="mt-3 font-display text-[1.15rem] font-semibold text-[var(--ink)]">
-            {tr.serviceIntroTitle}
+            {stripLeadingEmoji(tr.serviceIntroTitle)}
           </h2>
           <p className="mt-3 text-[0.84rem] leading-7 text-[var(--muted)] text-keep-all">{tr.serviceIntroText}</p>
           <p className="mt-3 text-[0.84rem] leading-7 text-[var(--muted)] text-keep-all">

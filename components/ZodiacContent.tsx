@@ -5,6 +5,7 @@ import { useLang } from '@/lib/useLang';
 import { t } from '@/lib/i18n';
 import { ZODIAC_CONTENT } from '@/lib/zodiac-data';
 import ConstellationIcon, { ZODIAC_SLUGS, type ZodiacSlug } from '@/components/Constellation';
+import { stripLeadingEmoji } from '@/lib/text';
 
 const ZODIAC_BASE = [
   { english: 'Aries', symbol: '♈', period: '3/21 ~ 4/19', elementKey: '불 🔥', color: '#ef4444' },
@@ -212,11 +213,11 @@ export default function ZodiacContent() {
 
                     <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
                       <div className="rounded-xl border border-[rgba(138,74,94,0.3)] bg-[rgba(138,74,94,0.05)] p-4">
-                        <h4 className="mb-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.24em] text-[#8a4a5e]">{tr.loveTrendLabel}</h4>
+                        <h4 className="mb-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.24em] text-[#8a4a5e]">{stripLeadingEmoji(tr.loveTrendLabel)}</h4>
                         <p className="text-[0.76rem] leading-6 text-[var(--muted)] text-keep-all">{love}</p>
                       </div>
                       <div className="rounded-xl border border-[rgba(47,107,74,0.28)] bg-[rgba(47,107,74,0.06)] p-4">
-                        <h4 className="mb-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.24em] text-[#2f6b4a]">{tr.moneyTrendLabel}</h4>
+                        <h4 className="mb-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.24em] text-[#2f6b4a]">{stripLeadingEmoji(tr.moneyTrendLabel)}</h4>
                         <p className="text-[0.76rem] leading-6 text-[var(--muted)] text-keep-all">{money}</p>
                       </div>
                     </div>
