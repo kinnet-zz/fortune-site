@@ -51,8 +51,8 @@ export default function CookieBanner() {
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 px-3 pb-3 sm:px-5 sm:pb-5" role="region" aria-label={c.region}>
-      <div className="mx-auto flex max-w-3xl flex-col items-start gap-3 rounded-2xl border border-[#e8eaef] bg-white px-4 py-3.5 shadow-[0_20px_50px_-20px_rgba(15,23,42,0.3)] sm:flex-row sm:items-center sm:gap-4 sm:px-5">
-        <span className="hidden h-9 w-9 flex-shrink-0 place-items-center rounded-xl bg-[#f4f5f8] text-[#64748b] sm:grid" aria-hidden="true">
+      <div className="mx-auto flex max-w-3xl flex-col items-start gap-3 rounded-2xl border border-[rgba(184,199,220,0.14)] bg-[#101620] px-4 py-3.5 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.3)] sm:flex-row sm:items-center sm:gap-4 sm:px-5">
+        <span className="hidden h-9 w-9 flex-shrink-0 place-items-center rounded-xl bg-[#121722] text-[#9aa3b2] sm:grid" aria-hidden="true">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
             <circle cx="12" cy="12" r="8.4" stroke="currentColor" strokeWidth="1.4" />
             <circle cx="9.4" cy="10.2" r="1" fill="currentColor" />
@@ -61,22 +61,22 @@ export default function CookieBanner() {
             <circle cx="10.2" cy="14.2" r="0.8" fill="currentColor" />
           </svg>
         </span>
-        <p className="flex-1 text-[0.8rem] leading-6 text-[#475569] text-keep-all">
+        <p className="flex-1 text-[0.8rem] leading-6 text-[#bdc5d1] text-keep-all">
           {c.text}{' '}
-          <Link href="/privacy" className="font-medium text-[#3b5bdb] underline decoration-[#c7d0f7] underline-offset-2 hover:text-[#2741b3]">
+          <Link href="/privacy" className="font-medium text-[#e6ecf5] underline decoration-[#3a4a61] underline-offset-2 hover:text-[#dbe6f4]">
             {c.policy}
           </Link>
         </p>
         <div className="grid w-full flex-shrink-0 grid-cols-2 gap-2 sm:flex sm:w-auto">
           <button
             onClick={decline}
-            className="min-h-10 rounded-full border border-[#e8eaef] px-4 py-2 text-[0.8rem] font-medium text-[#475569] transition-colors hover:border-[#dcdfe6] hover:text-[#0f172a]"
+            className="min-h-10 rounded-full border border-[rgba(184,199,220,0.14)] px-4 py-2 text-[0.8rem] font-medium text-[#bdc5d1] transition-colors hover:border-[rgba(184,199,220,0.28)] hover:text-[#f2f0ea]"
           >
             {c.decline}
           </button>
           <button
             onClick={accept}
-            className="min-h-10 rounded-full bg-[#3b5bdb] px-4 py-2 text-[0.8rem] font-semibold text-white transition-colors hover:bg-[#2f4bc7]"
+            className="min-h-10 rounded-full bg-[#e6ecf5] px-4 py-2 text-[0.8rem] font-semibold text-[#0a0e14] transition-colors hover:bg-[#f4f8fd]"
           >
             {c.accept}
           </button>

@@ -267,9 +267,9 @@ export default function HomeClient() {
   };
 
   return (
-    <div className="relative min-h-screen bg-white">
+    <div className="relative min-h-screen">
       <main className="relative z-10 min-h-screen">
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-start px-5 pb-24 pt-12 sm:px-6 sm:pt-16">
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-start px-5 pb-24 pt-6 sm:px-6 sm:pt-8">
           {!fortune && (
             <HomeConversionHero onSubmit={handleSubmit} isLoading={isLoading} lang={lang} error={error} />
           )}
@@ -277,19 +277,18 @@ export default function HomeClient() {
           {!fortune && !isLoading && (
             <section className="mb-20 w-full" aria-labelledby="home-guide-heading">
               {/* 편집 기준 */}
-              <div className="relative overflow-hidden rounded-[24px] border border-[#e8eaef] bg-[#f8f9fb] px-6 py-10 sm:px-10 sm:py-12">
+              <div className="relative overflow-hidden rounded-[26px] border border-[rgba(184,199,220,0.14)] bg-[linear-gradient(155deg,rgba(18,23,34,0.9)_0%,rgba(8,11,17,0.9)_62%)] px-6 py-11 sm:px-10 sm:py-14">
                 <div
-                  className="pointer-events-none absolute inset-0"
-                  style={{ background: 'radial-gradient(ellipse 40% 70% at 96% 0%, rgba(59,91,219,0.07) 0%, transparent 62%)' }}
+                  className="pointer-events-none absolute -right-24 -top-28 h-[26rem] w-[26rem] rounded-full bg-[radial-gradient(circle,rgba(230,236,245,0.14)_0%,rgba(184,199,220,0.05)_45%,transparent_70%)]"
                   aria-hidden="true"
                 />
-                <div className="relative grid grid-cols-1 gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+                <div className="relative grid grid-cols-1 gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
                   <div>
                     <span className="eyebrow">The editorial standard</span>
-                    <h2 id="home-guide-heading" className="mt-5 max-w-2xl text-[1.55rem] font-bold leading-[1.28] tracking-[-0.03em] text-[#0f172a] text-keep-all sm:text-[2.1rem]">
-                      StarFate는 별자리와 12지를 <span className="font-display italic text-[#3b5bdb]">하루의 자기성찰 언어</span>로 풀어 쓰는 운세 가이드입니다.
+                    <h2 id="home-guide-heading" className="mt-5 max-w-2xl font-display text-[1.75rem] leading-[1.28] tracking-[-0.015em] text-[#f6f9fd] text-keep-all sm:text-[2.35rem]">
+                      StarFate는 별자리와 12지를 <span className="italic text-[#e6ecf5]">하루의 자기성찰 언어</span>로 풀어 쓰는 운세 가이드입니다.
                     </h2>
-                    <p className="mt-5 max-w-2xl text-[0.86rem] leading-8 text-[#64748b] text-keep-all">
+                    <p className="mt-5 max-w-2xl text-[0.86rem] leading-8 text-[#9aa3b2] text-keep-all">
                       생년월일 기반 운세 도구는 빠른 확인을 위한 기능이고, 사이트의 핵심은 별자리·동양 12지·수비학·타로를 문화적 배경과 함께 설명하는 해석 콘텐츠입니다. 운세는 예언이 아니라 오늘의 감정, 관계, 선택을 돌아보는 가벼운 참고 자료로 제공합니다.
                     </p>
                     <div className="mt-7 flex flex-wrap gap-2">
@@ -300,73 +299,84 @@ export default function HomeClient() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-3 lg:border-l lg:border-[#e8eaef] lg:pl-8">
+                  <div className="grid grid-cols-3 gap-4 lg:border-l lg:border-[rgba(184,199,220,0.16)] lg:pl-9">
                     {[
                       ['12', '별자리 해석'],
                       ['24', '에디토리얼 가이드'],
                       ['4', '언어 지원'],
                     ].map(([value, label]) => (
-                      <div key={label} className="rounded-xl border border-[#e8eaef] bg-white px-3 py-4">
-                        <p className="text-[1.6rem] font-bold leading-none tracking-[-0.04em] text-[#3b5bdb]">{value}</p>
-                        <p className="mt-2 text-[0.64rem] leading-4 text-[#64748b]">{label}</p>
+                      <div key={label} className="border-t border-[rgba(230,236,245,0.28)] pt-3">
+                        <p className="font-display text-[2rem] font-light leading-none tracking-[-0.02em] text-[#f6f9fd]">{value}</p>
+                        <p className="mt-2 text-[0.62rem] leading-4 tracking-[0.06em] text-[#8b94a3]">{label}</p>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
 
-              <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
+              <div className="mt-14 grid grid-cols-1 gap-8 border-t border-[rgba(184,199,220,0.14)] pt-10 md:grid-cols-3 md:gap-10">
                 {EDITORIAL_POINTS.map((item, index) => (
-                  <article key={item.title} className="rounded-2xl border border-[#e8eaef] bg-white p-6">
-                    <span className="inline-flex h-7 items-center rounded-full bg-[#eef2ff] px-2.5 text-[0.68rem] font-semibold tracking-[0.04em] text-[#3b5bdb]">
+                  <article key={item.title}>
+                    <span className="font-display text-[0.78rem] tracking-[0.24em] text-[#8fa2bb]">
                       0{index + 1}
                     </span>
-                    <h3 className="mt-3 text-[0.92rem] font-semibold tracking-[-0.02em] text-[#0f172a]">{item.title}</h3>
-                    <p className="mt-2 text-[0.78rem] leading-7 text-[#64748b] text-keep-all">{item.body}</p>
+                    <h3 className="mt-3 font-display text-[1.1rem] leading-snug text-[#f2f0ea]">{item.title}</h3>
+                    <p className="mt-2.5 text-[0.78rem] leading-7 text-[#9aa3b2] text-keep-all">{item.body}</p>
                   </article>
                 ))}
               </div>
 
               {/* 가이드 카드 */}
-              <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
-                {GUIDE_LINKS.map((guide) => (
-                  <Link
-                    key={guide.href}
-                    href={guide.href}
-                    className="group flex flex-col overflow-hidden rounded-2xl border border-[#e8eaef] bg-white p-2 transition-all duration-300 hover:-translate-y-1 hover:border-[#dcdfe6] hover:shadow-[0_18px_40px_-26px_rgba(15,23,42,0.28)]"
-                  >
-                    <CardArtwork variant={guide.variant} />
-                    <div className="flex flex-1 flex-col px-2.5 pb-2 pt-3.5">
-                      <span className="tag mb-2 self-start">{guide.tag}</span>
-                      <h3 className="text-[0.95rem] font-semibold leading-snug tracking-[-0.02em] text-[#0f172a] text-keep-all">
-                        {guide.label}
-                      </h3>
-                      <p className="mt-1.5 line-clamp-2 text-[0.76rem] leading-5 text-[#64748b] text-keep-all">{guide.desc}</p>
-                      <span className="mt-3 flex items-center gap-1.5 text-[0.72rem] font-medium text-[#3b5bdb]">
-                        읽기
-                        <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
-                      </span>
-                    </div>
+              <div className="mt-16">
+                <div className="mb-6 flex flex-col gap-2 border-t border-[rgba(184,199,220,0.14)] pt-9 sm:flex-row sm:items-end sm:justify-between">
+                  <div>
+                    <span className="eyebrow">Editorial guides</span>
+                    <h2 className="mt-3 font-display text-[1.5rem] tracking-[-0.015em] text-[#f6f9fd]">천천히 읽는 운세 이야기</h2>
+                  </div>
+                  <Link href="/blog" className="text-[0.76rem] tracking-[0.04em] text-[#b8c7dc] hover:text-[#f6f9fd]">
+                    전체 보기 →
                   </Link>
-                ))}
+                </div>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                  {GUIDE_LINKS.map((guide) => (
+                    <Link
+                      key={guide.href}
+                      href={guide.href}
+                      className="group flex flex-col overflow-hidden rounded-[20px] border border-[rgba(184,199,220,0.14)] bg-[rgba(15,19,28,0.72)] p-2 transition-all duration-500 hover:-translate-y-1 hover:border-[rgba(184,199,220,0.34)] hover:shadow-[0_30px_60px_-34px_rgba(0,0,0,0.9)]"
+                    >
+                      <CardArtwork variant={guide.variant} />
+                      <div className="flex flex-1 flex-col px-2.5 pb-2 pt-3.5">
+                        <span className="tag mb-2 self-start">{guide.tag}</span>
+                        <h3 className="font-display text-[1.02rem] leading-snug text-[#f2f0ea] text-keep-all">
+                          {guide.label}
+                        </h3>
+                        <p className="mt-1.5 line-clamp-2 text-[0.76rem] leading-5 text-[#9aa3b2] text-keep-all">{guide.desc}</p>
+                        <span className="mt-3 flex items-center gap-1.5 text-[0.72rem] tracking-[0.04em] text-[#dbe6f4] opacity-70 transition-opacity duration-300 group-hover:opacity-100">
+                          읽기
+                          <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               </div>
 
-              <section className="mt-16" aria-labelledby="sample-reading-heading">
-                <div className="mb-6 flex flex-col gap-3 border-t border-[#e8eaef] pt-9 sm:flex-row sm:items-end sm:justify-between">
+              <section className="mt-20" aria-labelledby="sample-reading-heading">
+                <div className="mb-7 flex flex-col gap-3 border-t border-[rgba(184,199,220,0.14)] pt-9 sm:flex-row sm:items-end sm:justify-between">
                   <div>
                     <span className="eyebrow">Reading examples</span>
-                    <h2 id="sample-reading-heading" className="mt-3 text-[1.3rem] font-bold tracking-[-0.03em] text-[#0f172a]">해석 예시로 먼저 살펴보기</h2>
+                    <h2 id="sample-reading-heading" className="mt-3 font-display text-[1.5rem] tracking-[-0.015em] text-[#f6f9fd]">해석 예시로 먼저 살펴보기</h2>
                   </div>
-                  <p className="max-w-md text-[0.78rem] leading-6 text-[#64748b] text-keep-all">
+                  <p className="max-w-md text-[0.78rem] leading-6 text-[#9aa3b2] text-keep-all">
                     생년월일을 입력하기 전에 아래 세 가지 예시로 해석의 결을 먼저 볼 수 있습니다. 입력하면 같은 항목이 내 별자리와 오늘 날짜에 맞춰 채워집니다.
                   </p>
                 </div>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                   {SAMPLE_READINGS.map((sample, index) => (
-                    <article key={sample.title} className="rounded-2xl border border-[#e8eaef] bg-[#f8f9fb] p-6">
-                      <span className="text-[0.66rem] font-semibold tabular-nums tracking-[0.12em] text-[#64748b]">0{index + 1}</span>
-                      <h3 className="mt-2 text-[0.9rem] font-semibold tracking-[-0.02em] text-[#0f172a]">{sample.title}</h3>
-                      <p className="mt-2 text-[0.78rem] leading-7 text-[#64748b] text-keep-all">{sample.body}</p>
+                    <article key={sample.title} className="rounded-[20px] border border-[rgba(184,199,220,0.14)] bg-[rgba(12,16,24,0.6)] p-6">
+                      <span className="font-display text-[0.72rem] tracking-[0.24em] text-[#8fa2bb]">0{index + 1}</span>
+                      <h3 className="mt-2 font-display text-[1.02rem] tracking-[-0.01em] text-[#f2f0ea]">{sample.title}</h3>
+                      <p className="mt-2 text-[0.78rem] leading-7 text-[#9aa3b2] text-keep-all">{sample.body}</p>
                     </article>
                   ))}
                 </div>
@@ -380,8 +390,8 @@ export default function HomeClient() {
                 <div
                   className={`mb-5 w-full max-w-2xl rounded-xl border px-4 py-3 text-[0.8rem] leading-6 ${
                     error?.scope === 'refresh'
-                      ? 'border-amber-200 bg-amber-50 text-amber-900'
-                      : 'border-[#e0e6ff] bg-[#f5f7ff] text-[#2741b3]'
+                      ? 'border-[rgba(216,195,154,0.35)] bg-[rgba(216,195,154,0.10)] text-[#e8dcc0]'
+                      : 'border-[rgba(184,199,220,0.28)] bg-[rgba(184,199,220,0.08)] text-[#dbe6f4]'
                   }`}
                   role={error?.scope === 'refresh' ? 'alert' : 'status'}
                 >
@@ -398,7 +408,7 @@ export default function HomeClient() {
           {fortune && (
             <>
               <div className="mt-8 text-center">
-                <p className="text-[0.76rem] text-[#64748b]">{t(lang).retryHint}</p>
+                <p className="text-[0.76rem] text-[#9aa3b2]">{t(lang).retryHint}</p>
               </div>
               <div className="mx-auto mt-8 w-full max-w-lg">
                 <AdUnit slot="4511932122" format="auto" />

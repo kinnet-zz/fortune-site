@@ -74,15 +74,15 @@ export default function TermsPage() {
   }, [lang, c.title]);
 
   return (
-    <div style={{ background: '#ffffff', minHeight: '100vh' }}>
-      <div className="max-w-3xl mx-auto px-6 py-16 text-[#0f172a]/80">
-        <Link href="/" className="text-[#3b5bdb] hover:text-[#3b5bdb] text-sm mb-8 inline-block">{c.back}</Link>
-        <h1 className="text-3xl font-bold text-[#0f172a] mb-2">{c.title}</h1>
-        <p className="text-[#64748b] text-sm mb-10">{c.lastUpdated}</p>
+    <div style={{ background: '#101620', minHeight: '100vh' }}>
+      <div className="max-w-3xl mx-auto px-6 py-16 text-[#f2f0ea]/80">
+        <Link href="/" className="text-[#e6ecf5] hover:text-[#e6ecf5] text-sm mb-8 inline-block">{c.back}</Link>
+        <h1 className="text-3xl font-bold text-[#f2f0ea] mb-2">{c.title}</h1>
+        <p className="text-[#9aa3b2] text-sm mb-10">{c.lastUpdated}</p>
         <div className="space-y-10 text-sm leading-relaxed">
           {c.sections.map((section, i) => (
             <section key={i}>
-              <h2 className="text-lg font-semibold text-[#0f172a] mb-3">{section.title}</h2>
+              <h2 className="text-lg font-semibold text-[#f2f0ea] mb-3">{section.title}</h2>
               <p>{section.body}</p>
             </section>
           ))}

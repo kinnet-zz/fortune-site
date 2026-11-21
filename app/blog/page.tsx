@@ -240,10 +240,10 @@ const CATEGORY_ART: { match: string; variant: ArtworkVariant }[] = [
   { match: '달', variant: 'moon' },
   { match: '행성', variant: 'orbit' },
   { match: '심리', variant: 'journal' },
-  { match: '역사', variant: 'history' },
+  { match: '역사', variant: 'scroll' },
   { match: '문화', variant: 'zodiac' },
   { match: '커리어', variant: 'numbers' },
-  { match: '점성술', variant: 'orbit' },
+  { match: '점성술', variant: 'astrology' },
   { match: '운세', variant: 'yearly' },
 ];
 
@@ -256,32 +256,32 @@ export default function BlogIndexPage() {
   const rest = ARTICLES.slice(0, -1).slice().reverse();
 
   return (
-    <div className="relative min-h-screen bg-white">
-      <section className="relative overflow-hidden border-b border-[#e8eaef]">
+    <div className="relative min-h-screen bg-[#101620]">
+      <section className="relative overflow-hidden border-b border-[rgba(184,199,220,0.14)]">
         <div
           className="pointer-events-none absolute inset-0"
-          style={{ background: 'radial-gradient(ellipse 46% 70% at 88% -20%, rgba(59,91,219,0.07) 0%, transparent 64%)' }}
+          style={{ background: 'radial-gradient(ellipse 46% 70% at 88% -20%, rgba(206,220,238,0.07) 0%, transparent 64%)' }}
           aria-hidden="true"
         />
         <div className="relative mx-auto max-w-6xl px-5 pb-12 pt-10 sm:px-6 sm:pt-16">
-          <nav className="flex items-center gap-2 text-[0.76rem] text-[#64748b]" aria-label="위치">
-            <Link href="/" className="transition-colors hover:text-[#3b5bdb]">홈</Link>
+          <nav className="flex items-center gap-2 text-[0.76rem] text-[#9aa3b2]" aria-label="위치">
+            <Link href="/" className="transition-colors hover:text-[#e6ecf5]">홈</Link>
             <span aria-hidden="true">/</span>
-            <span className="text-[#475569]">가이드 블로그</span>
+            <span className="text-[#bdc5d1]">가이드 블로그</span>
           </nav>
           <div className="mt-8 flex flex-wrap items-end justify-between gap-6">
             <div>
               <span className="eyebrow">The journal</span>
-              <h1 className="mt-4 text-[2.4rem] font-bold leading-[1.08] tracking-[-0.04em] text-[#0f172a] sm:text-[3.2rem]">
-                별자리 &amp; <span className="font-display font-semibold italic text-[#3b5bdb]">운세 가이드</span>
+              <h1 className="mt-4 text-[2.4rem] font-bold leading-[1.08] tracking-[-0.04em] text-[#f2f0ea] sm:text-[3.2rem]">
+                별자리 &amp; <span className="font-display font-semibold italic text-[#e6ecf5]">운세 가이드</span>
               </h1>
-              <p className="mt-4 max-w-xl text-[0.92rem] leading-8 text-[#64748b] text-keep-all">
+              <p className="mt-4 max-w-xl text-[0.92rem] leading-8 text-[#9aa3b2] text-keep-all">
                 점성술의 역사, 별자리 궁합, 운세 해석법까지 — 깊이 있는 아스트롤로지 지식을 쌓아보세요.
               </p>
             </div>
-            <div className="flex items-center gap-2 rounded-full border border-[#e8eaef] bg-white px-3.5 py-2">
-              <span className="text-[0.95rem] font-bold tabular-nums text-[#0f172a]">{ARTICLES.length}</span>
-              <span className="text-[0.66rem] uppercase tracking-[0.1em] text-[#64748b]">Articles</span>
+            <div className="flex items-center gap-2 rounded-full border border-[rgba(184,199,220,0.14)] bg-[#101620] px-3.5 py-2">
+              <span className="text-[0.95rem] font-bold tabular-nums text-[#f2f0ea]">{ARTICLES.length}</span>
+              <span className="text-[0.66rem] uppercase tracking-[0.1em] text-[#9aa3b2]">Articles</span>
             </div>
           </div>
         </div>
@@ -290,30 +290,30 @@ export default function BlogIndexPage() {
       <div className="mx-auto max-w-6xl px-5 py-12 sm:px-6">
         <Link
           href="/blog/daily"
-          className="group mb-10 flex flex-col gap-4 rounded-2xl border border-[#e8eaef] bg-[#f8f9fb] p-5 transition-all duration-300 hover:border-[#dcdfe6] hover:bg-white hover:shadow-[0_18px_40px_-26px_rgba(15,23,42,0.25)] sm:flex-row sm:items-center sm:p-6"
+          className="group mb-10 flex flex-col gap-4 rounded-2xl border border-[rgba(184,199,220,0.14)] bg-[#121722] p-5 transition-all duration-300 hover:border-[rgba(184,199,220,0.28)] hover:bg-[#101620] hover:shadow-[0_18px_40px_-26px_rgba(0,0,0,0.25)] sm:flex-row sm:items-center sm:p-6"
         >
-          <div className="grid h-12 w-12 flex-shrink-0 place-items-center rounded-xl border border-[#e8eaef] bg-white text-[#3b5bdb]">
+          <div className="grid h-12 w-12 flex-shrink-0 place-items-center rounded-xl border border-[rgba(184,199,220,0.14)] bg-[#101620] text-[#e6ecf5]">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <circle cx="12" cy="12" r="4" fill="currentColor" fillOpacity="0.16" stroke="currentColor" strokeWidth="1.3" />
               <path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4L17 7M7 17l-1.6 1.6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
             </svg>
           </div>
           <div className="flex-1">
-            <span className="text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-[#3b5bdb]">
+            <span className="text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-[#e6ecf5]">
               Updated every midnight
             </span>
-            <h2 className="mt-1.5 text-[1.15rem] font-bold tracking-[-0.03em] text-[#0f172a] sm:text-[1.35rem]">오늘의 12별자리 일일 운세</h2>
-            <p className="mt-1 text-[0.8rem] text-[#64748b]">
+            <h2 className="mt-1.5 text-[1.15rem] font-bold tracking-[-0.03em] text-[#f2f0ea] sm:text-[1.35rem]">오늘의 12별자리 일일 운세</h2>
+            <p className="mt-1 text-[0.8rem] text-[#9aa3b2]">
               종합·사랑·금전·건강 운세와 행운 아이템까지 매일 새롭게 업데이트됩니다.
             </p>
           </div>
-          <span className="inline-flex items-center gap-2 text-[0.8rem] font-semibold text-[#3b5bdb] transition-transform duration-300 group-hover:translate-x-1">
+          <span className="inline-flex items-center gap-2 text-[0.8rem] font-semibold text-[#e6ecf5] transition-transform duration-300 group-hover:translate-x-1">
             바로 보기 <span aria-hidden="true">→</span>
           </span>
         </Link>
 
         <div className="mb-8 flex flex-wrap items-center gap-2">
-          <span className="mr-1 text-[0.66rem] uppercase tracking-[0.12em] text-[#64748b]">Topics</span>
+          <span className="mr-1 text-[0.66rem] uppercase tracking-[0.12em] text-[#9aa3b2]">Topics</span>
           {CATEGORIES.map((cat) => (
             <span key={cat} className="tag-quiet">{cat}</span>
           ))}
@@ -321,25 +321,25 @@ export default function BlogIndexPage() {
 
         <Link
           href={`/blog/${featured.slug}`}
-          className="group mb-6 grid gap-6 overflow-hidden rounded-2xl border border-[#e8eaef] bg-white p-2 transition-all duration-300 hover:-translate-y-1 hover:border-[#dcdfe6] hover:shadow-[0_24px_50px_-30px_rgba(15,23,42,0.28)] lg:grid-cols-[1.05fr_1fr] lg:items-stretch"
+          className="group mb-6 grid gap-6 overflow-hidden rounded-2xl border border-[rgba(184,199,220,0.14)] bg-[#101620] p-2 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(184,199,220,0.28)] hover:shadow-[0_24px_50px_-30px_rgba(0,0,0,0.28)] lg:grid-cols-[1.05fr_1fr] lg:items-stretch"
         >
           <CardArtwork variant={artworkFor(featured.category)} className="!aspect-auto min-h-[13rem] lg:h-full" />
           <div className="flex flex-col justify-between px-4 pb-4 pt-2 lg:px-6 lg:py-6">
             <div>
               <div className="flex flex-wrap items-center gap-2">
                 <span className="tag">Featured</span>
-                <span className="text-[0.7rem] text-[#64748b]">{featured.date} · {featured.readTime} 읽기</span>
+                <span className="text-[0.7rem] text-[#9aa3b2]">{featured.date} · {featured.readTime} 읽기</span>
               </div>
-              <h2 className="mt-4 text-[1.4rem] font-bold leading-snug tracking-[-0.03em] text-[#0f172a] text-keep-all sm:text-[1.75rem]">
+              <h2 className="mt-4 text-[1.4rem] font-bold leading-snug tracking-[-0.03em] text-[#f2f0ea] text-keep-all sm:text-[1.75rem]">
                 {featured.title}
               </h2>
-              <p className="mt-3 text-[0.84rem] leading-7 text-[#64748b] text-keep-all">
+              <p className="mt-3 text-[0.84rem] leading-7 text-[#9aa3b2] text-keep-all">
                 {featured.description}
               </p>
             </div>
-            <div className="mt-5 flex items-center gap-3 border-t border-[#eef0f4] pt-4">
-              <span className="text-[0.7rem] font-medium uppercase tracking-[0.08em] text-[#64748b]">{featured.category}</span>
-              <span className="ml-auto inline-flex items-center gap-2 text-[0.8rem] font-semibold text-[#3b5bdb]">
+            <div className="mt-5 flex items-center gap-3 border-t border-[rgba(184,199,220,0.10)] pt-4">
+              <span className="text-[0.7rem] font-medium uppercase tracking-[0.08em] text-[#9aa3b2]">{featured.category}</span>
+              <span className="ml-auto inline-flex items-center gap-2 text-[0.8rem] font-semibold text-[#e6ecf5]">
                 읽기 <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
               </span>
             </div>
@@ -351,21 +351,21 @@ export default function BlogIndexPage() {
             <Link
               key={article.slug}
               href={`/blog/${article.slug}`}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-[#e8eaef] bg-white p-2 transition-all duration-300 hover:-translate-y-1 hover:border-[#dcdfe6] hover:shadow-[0_18px_40px_-26px_rgba(15,23,42,0.28)]"
+              className="group flex flex-col overflow-hidden rounded-2xl border border-[rgba(184,199,220,0.14)] bg-[#101620] p-2 transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(184,199,220,0.28)] hover:shadow-[0_18px_40px_-26px_rgba(0,0,0,0.28)]"
             >
               <CardArtwork variant={artworkFor(article.category)} />
               <div className="flex flex-1 flex-col px-2.5 pb-2 pt-3.5">
                 <div className="mb-2 flex items-center justify-between gap-2">
                   <span className="tag">{article.category}</span>
-                  <span className="text-[0.64rem] text-[#64748b]">{article.readTime}</span>
+                  <span className="text-[0.64rem] text-[#9aa3b2]">{article.readTime}</span>
                 </div>
-                <h2 className="text-[0.98rem] font-semibold leading-snug tracking-[-0.02em] text-[#0f172a] text-keep-all transition-colors group-hover:text-[#3b5bdb]">
+                <h2 className="text-[0.98rem] font-semibold leading-snug tracking-[-0.02em] text-[#f2f0ea] text-keep-all transition-colors group-hover:text-[#e6ecf5]">
                   {article.title}
                 </h2>
-                <p className="mt-2 line-clamp-2 text-[0.76rem] leading-5 text-[#64748b] text-keep-all">
+                <p className="mt-2 line-clamp-2 text-[0.76rem] leading-5 text-[#9aa3b2] text-keep-all">
                   {article.description}
                 </p>
-                <div className="mt-auto flex items-center justify-between border-t border-[#eef0f4] pt-3 text-[0.68rem] text-[#64748b]">
+                <div className="mt-auto flex items-center justify-between border-t border-[rgba(184,199,220,0.10)] pt-3 text-[0.68rem] text-[#9aa3b2]">
                   <span>{article.date}</span>
                   <span>{article.readTime} 읽기</span>
                 </div>
@@ -374,9 +374,9 @@ export default function BlogIndexPage() {
           ))}
         </div>
 
-        <div className="mt-14 flex flex-col items-center gap-4 rounded-[24px] border border-[#e8eaef] bg-[#f8f9fb] px-6 py-10 text-center">
+        <div className="mt-14 flex flex-col items-center gap-4 rounded-[24px] border border-[rgba(184,199,220,0.14)] bg-[#121722] px-6 py-10 text-center">
           <span className="eyebrow eyebrow-center">Daily reading</span>
-          <p className="text-[1.2rem] font-bold tracking-[-0.03em] text-[#0f172a]">가이드를 읽었다면, 오늘의 운세도 확인해보세요</p>
+          <p className="text-[1.2rem] font-bold tracking-[-0.03em] text-[#f2f0ea]">가이드를 읽었다면, 오늘의 운세도 확인해보세요</p>
           <Link href="/" className="btn-primary mt-1 text-[0.88rem]">
             오늘의 운세 무료로 보기 <span aria-hidden="true">→</span>
           </Link>

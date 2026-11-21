@@ -61,10 +61,14 @@ export default function FortuneForm({ onSubmit, isLoading, lang, error }: Fortun
 
   return (
     <div className="mx-auto w-full max-w-md">
-      <div className="rounded-[22px] border border-[#e8eaef] bg-white p-5 shadow-[0_24px_60px_-32px_rgba(15,23,42,0.25)] sm:p-7">
+      <div className="relative overflow-hidden rounded-[26px] border border-[rgba(230,236,245,0.18)] bg-[rgba(9,12,18,0.72)] p-5 shadow-[0_40px_90px_-42px_rgba(0,0,0,0.95)] backdrop-blur-md sm:p-7">
+        <div
+          className="pointer-events-none absolute inset-x-0 -top-24 h-40 bg-[radial-gradient(ellipse_at_center,rgba(230,236,245,0.16),transparent_70%)]"
+          aria-hidden="true"
+        />
         <form onSubmit={handleSubmit}>
-          <div className="mb-6 flex items-start gap-3">
-            <span className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-xl bg-[#eef2ff] text-[#3b5bdb]">
+          <div className="relative mb-6 flex items-start gap-3">
+            <span className="grid h-11 w-11 flex-shrink-0 place-items-center rounded-full border border-[rgba(230,236,245,0.28)] bg-[rgba(230,236,245,0.06)] text-[#e6ecf5]">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <circle cx="12" cy="12" r="8.2" stroke="currentColor" strokeWidth="1.4" />
                 <path d="M12 7.4v9.2M7.4 12h9.2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" opacity="0.45" />
@@ -72,10 +76,10 @@ export default function FortuneForm({ onSubmit, isLoading, lang, error }: Fortun
               </svg>
             </span>
             <div>
-              <p className="text-[1.02rem] font-semibold leading-snug tracking-[-0.02em] text-[#0f172a] text-keep-all">
+              <p className="font-display text-[1.16rem] leading-snug tracking-[-0.01em] text-[#f6f9fd] text-keep-all">
                 {tr.formSubtitle}
               </p>
-              <p className="mt-1.5 text-[0.78rem] leading-5 text-[#64748b] text-keep-all">
+              <p className="mt-1.5 text-[0.78rem] leading-5 text-[#9aa3b2] text-keep-all">
                 {tr.formHint}
               </p>
             </div>
@@ -83,10 +87,10 @@ export default function FortuneForm({ onSubmit, isLoading, lang, error }: Fortun
 
           {/* 성별 선택 */}
           <div className="mb-5">
-            <label className="mb-2 block text-[0.7rem] font-semibold tracking-[0.04em] text-[#475569]">
+            <label className="mb-2 block text-[0.64rem] font-medium uppercase tracking-[0.18em] text-[#b8c7dc]">
               {stripEmoji(tr.genderLabel)}
             </label>
-            <div className="grid grid-cols-2 gap-1 rounded-full border border-[#e8eaef] bg-[#f8f9fb] p-1">
+            <div className="grid grid-cols-2 gap-1 rounded-full border border-[rgba(184,199,220,0.16)] bg-[rgba(7,9,14,0.55)] p-1">
               {[{ value: '남자', type: 'male' as const, label: tr.male }, { value: '여자', type: 'female' as const, label: tr.female }].map(({ value, type, label }) => {
                 const selected = gender === value;
                 return (
@@ -98,8 +102,8 @@ export default function FortuneForm({ onSubmit, isLoading, lang, error }: Fortun
                     aria-pressed={selected}
                     className={`flex min-h-11 items-center justify-center gap-2 rounded-full text-[0.86rem] font-medium transition-all duration-200 ${
                       selected
-                        ? 'bg-white text-[#0f172a] shadow-[0_1px_6px_rgba(15,23,42,0.12)]'
-                        : 'text-[#64748b] hover:text-[#0f172a]'
+                        ? 'bg-[#e6ecf5] text-[#0a0e14] shadow-[0_6px_18px_-8px_rgba(230,236,245,0.6)]'
+                        : 'text-[#9aa3b2] hover:text-[#f2f0ea]'
                     }`}
                   >
                     <GenderMark type={type} />
@@ -114,11 +118,11 @@ export default function FortuneForm({ onSubmit, isLoading, lang, error }: Fortun
           <div className="mb-6">
             <label
               htmlFor="birthDate"
-              className="mb-2 block text-[0.7rem] font-semibold tracking-[0.04em] text-[#475569]"
+              className="mb-2 block text-[0.64rem] font-medium uppercase tracking-[0.18em] text-[#b8c7dc]"
             >
               {stripEmoji(tr.dateLabel)}
             </label>
-            <div className="rounded-xl border border-[#e8eaef] bg-[#f8f9fb] transition-colors focus-within:border-[#3b5bdb] focus-within:bg-white">
+            <div className="rounded-xl border border-[rgba(184,199,220,0.16)] bg-[rgba(7,9,14,0.55)] transition-colors focus-within:border-[rgba(230,236,245,0.55)]">
               <input
                 id="birthDate"
                 type="date"
@@ -128,8 +132,8 @@ export default function FortuneForm({ onSubmit, isLoading, lang, error }: Fortun
                 max={today}
                 required
                 disabled={isLoading}
-                className="min-h-12 w-full rounded-xl bg-transparent px-4 py-3 text-base font-medium text-[#0f172a] outline-none [color-scheme:light] disabled:cursor-not-allowed disabled:opacity-50"
-                style={{ colorScheme: 'light' }}
+                className="min-h-12 w-full rounded-xl bg-transparent px-4 py-3 text-base font-normal tracking-[0.04em] text-[#f6f9fd] outline-none [color-scheme:dark] disabled:cursor-not-allowed disabled:opacity-50"
+                style={{ colorScheme: 'dark' }}
               />
             </div>
           </div>
@@ -142,7 +146,7 @@ export default function FortuneForm({ onSubmit, isLoading, lang, error }: Fortun
           >
             {isLoading ? (
               <>
-                <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white/35 border-t-white" />
+                <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-[#0a0e14]/25 border-t-[#0a0e14]" />
                 <span>{tr.loadingBtn}</span>
               </>
             ) : (
@@ -153,7 +157,7 @@ export default function FortuneForm({ onSubmit, isLoading, lang, error }: Fortun
             )}
           </button>
 
-          <p className="mt-3.5 flex items-center justify-center gap-1.5 text-[0.7rem] text-[#64748b]">
+          <p className="mt-3.5 flex items-center justify-center gap-1.5 text-[0.68rem] tracking-[0.02em] text-[#8b94a3]">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <rect x="5" y="10.5" width="14" height="9" rx="2.4" stroke="currentColor" strokeWidth="1.5" />
               <path d="M8.5 10.5V8a3.5 3.5 0 017 0v2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -162,7 +166,7 @@ export default function FortuneForm({ onSubmit, isLoading, lang, error }: Fortun
           </p>
 
           {isLoading && (
-            <p className="mt-4 text-center text-[0.8rem] leading-6 text-[#3b5bdb]" role="status" aria-live="polite">
+            <p className="mt-4 text-center text-[0.78rem] leading-6 tracking-[0.02em] text-[#b8c7dc]" role="status" aria-live="polite">
               {tr.loadingTitle} · {tr.loadingMessages[0]}
             </p>
           )}
@@ -172,8 +176,8 @@ export default function FortuneForm({ onSubmit, isLoading, lang, error }: Fortun
               aria-live="assertive"
               className={`mt-4 rounded-xl border px-4 py-3 text-[0.82rem] leading-6 ${
                 error.code === 'QUOTA_EXCEEDED'
-                  ? 'border-amber-200 bg-amber-50 text-amber-900'
-                  : 'border-rose-200 bg-rose-50 text-rose-900'
+                  ? 'border-[rgba(216,195,154,0.35)] bg-[rgba(216,195,154,0.10)] text-[#e8dcc0]'
+                  : 'border-[rgba(220,140,140,0.35)] bg-[rgba(220,140,140,0.10)] text-[#f0c9c9]'
               }`}
             >
               <p className="font-semibold">{error.code === 'QUOTA_EXCEEDED' ? tr.quotaTitle : tr.errorTitle}</p>

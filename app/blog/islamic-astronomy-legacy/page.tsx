@@ -13,29 +13,29 @@ export const metadata: Metadata = {
 };
 
 const bgStyle = {
-  background: '#ffffff',
+  background: '#101620',
   minHeight: '100vh',
 };
 
 export default function IslamicAstronomyLegacyPage() {
   return (
     <div style={bgStyle}>
-      <article className="max-w-3xl mx-auto px-6 py-16 text-[#0f172a]/80">
-        <Link href="/blog" className="text-[#3b5bdb] hover:text-[#3b5bdb] text-sm mb-8 inline-block">
+      <article className="max-w-3xl mx-auto px-6 py-16 text-[#f2f0ea]/80">
+        <Link href="/blog" className="text-[#e6ecf5] hover:text-[#e6ecf5] text-sm mb-8 inline-block">
           ← 블로그 목록으로 돌아가기
         </Link>
 
         <header className="mb-10">
           <div className="flex items-center gap-2 mb-4 flex-wrap">
-            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(59,91,219,0.14)', color: '#3b5bdb' }}>
+            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(206,220,238,0.14)', color: '#e6ecf5' }}>
               별자리 역사
             </span>
-            <span className="text-[#64748b] text-xs">2026년 11월 19일 · 12분 읽기</span>
+            <span className="text-[#9aa3b2] text-xs">2026년 11월 19일 · 12분 읽기</span>
           </div>
-          <h1 className="text-3xl font-bold text-[#0f172a] mb-4 leading-tight">
+          <h1 className="text-3xl font-bold text-[#f2f0ea] mb-4 leading-tight">
             마라가 천문대에서 코페르니쿠스까지 — 이슬람 천문학이 유럽에 넘긴 것
           </h1>
-          <p className="text-[#475569] text-base leading-relaxed">
+          <p className="text-[#bdc5d1] text-base leading-relaxed">
             오늘날 별자리 앱의 좌표 체계와 망원경의 각도 표기에는 중세 이슬람 세계의 계산 기술이 겹겹이 쌓여 있습니다. 8세기 바그다드의 번역 사업에서 15세기 사마르칸트의 관측소까지, 그 계보를 따라가 봅니다.
           </p>
         </header>
@@ -50,7 +50,7 @@ export default function IslamicAstronomyLegacyPage() {
         <div className="space-y-8 text-sm leading-relaxed">
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">번역이 먼저였다 — 9세기 바그다드</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">번역이 먼저였다 — 9세기 바그다드</h2>
             <p className="mb-3">
               아바스 왕조의 칼리프 알마문은 9세기 초 바그다드에 대규모 번역 사업을 두었습니다. 흔히 &lsquo;지혜의 집&rsquo;이라 불리는 이 기관에서 그리스어, 페르시아어, 인도어 문헌이 아랍어로 옮겨졌습니다. 프톨레마이오스의 <em>알마게스트</em>도 이때 아랍어로 번역되었고, 제목은 <em>알마지스티</em>로 줄어 불렸습니다.
             </p>
@@ -63,7 +63,7 @@ export default function IslamicAstronomyLegacyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">1259년 마라가 — 관측소라는 조직</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">1259년 마라가 — 관측소라는 조직</h2>
             <p className="mb-3">
               1259년, 몽골의 훌라구 칸은 지금의 이란 북서부 마라가에 대형 천문대를 세웠고 나시르 앗딘 투시가 이를 이끌었습니다. 이 관측소는 개인의 취미가 아니라 국가가 운영하는 연구 시설에 가까웠습니다. 상시 관측 인력, 기기 제작자, 계산 담당자가 함께 있었고, 관측 결과는 <em>일한조 천문표</em>로 정리되었습니다.
             </p>
@@ -76,7 +76,7 @@ export default function IslamicAstronomyLegacyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">사마르칸트의 왕 — 울루그베그</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">사마르칸트의 왕 — 울루그베그</h2>
             <p className="mb-3">
               15세기 초 사마르칸트에서는 티무르 제국의 왕자 울루그베그가 직접 천문학을 연구했습니다. 그는 1420년대에 거대한 사분의(높이 약 40미터로 전해지는 벽면 관측기)를 갖춘 관측소를 세우고, 별의 위치를 다시 측정했습니다.
             </p>
@@ -86,7 +86,7 @@ export default function IslamicAstronomyLegacyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">톨레도에서 유럽으로 — 알폰시안 표</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">톨레도에서 유럽으로 — 알폰시안 표</h2>
             <p className="mb-3">
               12세기 스페인의 톨레도는 기독교, 유대교, 이슬람 문화가 겹치는 도시였고, 여기서 대규모 번역이 이루어졌습니다. 제라르도는 12세기 후반에 <em>알마게스트</em>를 아랍어에서 라틴어로 옮겼습니다. 별 이름의 아랍어 흔적은 대부분 이 경로를 거쳐 유럽에 남았습니다.
             </p>
@@ -99,7 +99,7 @@ export default function IslamicAstronomyLegacyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">코페르니쿠스는 무엇을 이어받았나</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">코페르니쿠스는 무엇을 이어받았나</h2>
             <p className="mb-3">
               1543년 <em>천구의 회전에 관하여</em>에서 코페르니쿠스는 지구가 움직인다는 결론을 내놓았습니다. 이 결론은 관측 정밀도가 아니라 계산 구조의 단순함에서 나왔습니다. 행성의 역행 운동을 설명하기 위해 프톨레마이오스 체계가 동원해야 했던 복잡한 장치들을 줄일 수 있었기 때문입니다.
             </p>
@@ -112,7 +112,7 @@ export default function IslamicAstronomyLegacyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">하늘을 가리키는 말들</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">하늘을 가리키는 말들</h2>
             <p className="mb-3">
               우리가 천문학에서 쓰는 단어에도 흔적이 남아 있습니다. 천정(zenith)은 아랍어로 &lsquo;머리 위의 방향&rsquo;을 뜻하는 말에서, 방위각(azimuth)은 &lsquo;방향&rsquo;을 뜻하는 말에서 왔습니다. 천저(nadir)는 그 반대 방향입니다. 연감(almanac)도 아랍어 어원을 가집니다.
             </p>
@@ -123,27 +123,27 @@ export default function IslamicAstronomyLegacyPage() {
 
         </div>
 
-        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(59,91,219,0.1)', border: '1px solid rgba(59,91,219,0.14)' }}>
-          <p className="text-[#475569] mb-4 text-sm">오늘의 별자리 흐름 보기</p>
+        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(206,220,238,0.1)', border: '1px solid rgba(206,220,238,0.14)' }}>
+          <p className="text-[#bdc5d1] mb-4 text-sm">오늘의 별자리 흐름 보기</p>
           <Link
             href="/"
-            className="inline-block px-6 py-3 rounded-full font-bold text-[#ffffff] text-sm"
-            style={{ background: 'linear-gradient(135deg, #3b5bdb 0%, #2f4bc7 100%)' }}
+            className="inline-block px-6 py-3 rounded-full font-bold text-[#101620] text-sm"
+            style={{ background: 'linear-gradient(135deg, #e6ecf5 0%, #f4f8fd 100%)' }}
           >
             오늘의 운세 무료로 보기 →
           </Link>
         </div>
 
         <nav className="mt-10">
-          <h3 className="text-sm text-[#64748b] mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
+          <h3 className="text-sm text-[#9aa3b2] mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <Link href="/blog/ancient-egypt-astronomy" className="p-4 rounded-xl text-sm hover:border-[#c7d0f7] transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-              <div className="text-[#0f172a]/72 font-medium">천문학과 점성술이 갈라지기 전</div>
-              <div className="text-[#64748b] text-xs mt-1">시리우스, 덴데라 조디악, 케플러</div>
+            <Link href="/blog/ancient-egypt-astronomy" className="p-4 rounded-xl text-sm hover:border-[#3a4a61] transition-colors" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+              <div className="text-[#f2f0ea]/72 font-medium">천문학과 점성술이 갈라지기 전</div>
+              <div className="text-[#9aa3b2] text-xs mt-1">시리우스, 덴데라 조디악, 케플러</div>
             </Link>
-            <Link href="/blog/star-name-etymology" className="p-4 rounded-xl text-sm hover:border-[#c7d0f7] transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-              <div className="text-[#0f172a]/72 font-medium">별 이름은 누가 지었나</div>
-              <div className="text-[#64748b] text-xs mt-1">아랍어 어원과 28수</div>
+            <Link href="/blog/star-name-etymology" className="p-4 rounded-xl text-sm hover:border-[#3a4a61] transition-colors" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+              <div className="text-[#f2f0ea]/72 font-medium">별 이름은 누가 지었나</div>
+              <div className="text-[#9aa3b2] text-xs mt-1">아랍어 어원과 28수</div>
             </Link>
           </div>
         </nav>

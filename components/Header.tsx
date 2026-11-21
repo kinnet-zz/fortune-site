@@ -85,12 +85,12 @@ export default function Header() {
   const triggerClass = (active: boolean, open: boolean) =>
     `relative flex min-h-10 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[0.82rem] font-medium tracking-[-0.01em] transition-colors ${
       active || open
-        ? 'bg-[#eef2ff] text-[#3b5bdb]'
-        : 'text-[#475569] hover:bg-[#f4f5f8] hover:text-[#0f172a]'
+        ? 'bg-[rgba(230,236,245,0.08)] text-[#f6f9fd]'
+        : 'text-[#b6bec9] hover:bg-[rgba(230,236,245,0.05)] hover:text-[#f6f9fd]'
     }`;
 
   const menuPanel =
-    'absolute top-full left-1/2 -translate-x-1/2 mt-3 w-60 rounded-2xl border border-[#e8eaef] bg-white p-1.5 shadow-[0_20px_50px_-24px_rgba(15,23,42,0.28)]';
+    'absolute top-full left-1/2 -translate-x-1/2 mt-3 w-60 rounded-2xl border border-[rgba(184,199,220,0.16)] bg-[#0b0f17] p-1.5 shadow-[0_30px_60px_-24px_rgba(0,0,0,0.9)]';
 
   const renderMenu = (
     id: string,
@@ -107,10 +107,10 @@ export default function Header() {
             href={href}
             onClick={close}
             className={`flex min-h-10 items-center gap-3 rounded-xl px-3 py-2 text-[0.82rem] transition-colors ${
-              active ? 'bg-[#eef2ff] text-[#3b5bdb]' : 'text-[#475569] hover:bg-[#f4f5f8] hover:text-[#0f172a]'
+              active ? 'bg-[rgba(230,236,245,0.08)] text-[#f6f9fd]' : 'text-[#b6bec9] hover:bg-[rgba(230,236,245,0.05)] hover:text-[#f6f9fd]'
             }`}
           >
-            <span className="w-5 text-[0.62rem] tabular-nums tracking-[0.08em] text-[#64748b]">
+            <span className="w-5 text-[0.62rem] tabular-nums tracking-[0.08em] text-[#9aa3b2]">
               {String(index + 1).padStart(2, '0')}
             </span>
             <span className="font-medium">{label}</span>
@@ -121,7 +121,7 @@ export default function Header() {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[#e8eaef] bg-white/85 backdrop-blur-xl backdrop-saturate-150">
+    <header className="sticky top-0 z-50 w-full border-b border-[rgba(184,199,220,0.12)] bg-[#07090e]/75 backdrop-blur-2xl backdrop-saturate-150">
       <div className="mx-auto flex h-[4.5rem] max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
 
         {/* 로고 */}
@@ -130,14 +130,14 @@ export default function Header() {
           className="group flex min-h-11 flex-shrink-0 items-center gap-2.5"
           aria-label={`StarFate ${homeLabel}`}
         >
-          <span className="grid h-9 w-9 place-items-center rounded-xl border border-[#e8eaef] bg-white shadow-[0_2px_10px_rgba(15,23,42,0.05)] transition-transform duration-300 group-hover:-translate-y-0.5">
+          <span className="grid h-9 w-9 place-items-center rounded-xl border border-[rgba(184,199,220,0.22)] bg-[rgba(230,236,245,0.04)] shadow-[0_0_24px_-12px_rgba(230,236,245,0.55)] transition-transform duration-300 group-hover:-translate-y-0.5">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M12 2.6c.7 4.9 3.5 7.7 8.4 8.4-4.9.7-7.7 3.5-8.4 8.4-.7-4.9-3.5-7.7-8.4-8.4 4.9-.7 7.7-3.5 8.4-8.4z" fill="#3b5bdb" />
+              <path d="M12 2.6c.7 4.9 3.5 7.7 8.4 8.4-4.9.7-7.7 3.5-8.4 8.4-.7-4.9-3.5-7.7-8.4-8.4 4.9-.7 7.7-3.5 8.4-8.4z" fill="#e6ecf5" />
             </svg>
           </span>
           <span className="flex flex-col leading-none">
-            <span className="text-[1.02rem] font-bold tracking-[-0.02em] text-[#0f172a]">StarFate</span>
-            <span className="mt-1 text-[0.58rem] font-medium tracking-[0.08em] text-[#64748b]">
+            <span className="text-[1.02rem] font-bold tracking-[-0.02em] text-[#f2f0ea]">StarFate</span>
+            <span className="mt-1 text-[0.58rem] font-medium tracking-[0.08em] text-[#9aa3b2]">
               별자리 · 운세
             </span>
           </span>
@@ -213,7 +213,7 @@ export default function Header() {
 
         {/* 언어 선택 + 모바일 메뉴 */}
         <div className="flex flex-shrink-0 items-center gap-2">
-          <div className="hidden items-center gap-0.5 rounded-full border border-[#e8eaef] bg-[#f8f9fb] p-1 md:flex">
+          <div className="hidden items-center gap-0.5 rounded-full border border-[rgba(184,199,220,0.16)] bg-[rgba(7,9,14,0.6)] p-1 md:flex">
             {(Object.entries(LANG_LABELS) as [Lang, string][]).map(([code, label]) => {
               const selected = lang === code;
               return (
@@ -223,8 +223,8 @@ export default function Header() {
                   aria-pressed={selected}
                   className={`min-h-8 rounded-full px-2.5 py-1 text-[0.68rem] font-medium transition-all ${
                     selected
-                      ? 'bg-white text-[#0f172a] shadow-[0_1px_4px_rgba(15,23,42,0.1)]'
-                      : 'text-[#64748b] hover:text-[#475569]'
+                      ? 'bg-[#e6ecf5] text-[#0a0e14]'
+                      : 'text-[#9aa3b2] hover:text-[#f2f0ea]'
                   }`}
                 >
                   {label}
@@ -234,7 +234,7 @@ export default function Header() {
           </div>
 
           <button
-            className="grid min-h-11 min-w-11 place-items-center rounded-full text-[#475569] transition-colors hover:bg-[#f4f5f8] hover:text-[#0f172a] lg:hidden"
+            className="grid min-h-11 min-w-11 place-items-center rounded-full text-[#bdc5d1] transition-colors hover:bg-[rgba(230,236,245,0.06)] hover:text-[#f2f0ea] lg:hidden"
             onClick={(event) => {
               const nextOpen = !mobileOpen;
               setMobileOpen(nextOpen);
@@ -259,7 +259,7 @@ export default function Header() {
       {mobileOpen && (
         <div
           id="mobile-navigation"
-          className="max-h-[calc(100vh-4.5rem)] overflow-y-auto border-t border-[#e8eaef] bg-white lg:hidden"
+          className="max-h-[calc(100vh-4.5rem)] overflow-y-auto border-t border-[rgba(184,199,220,0.12)] bg-[#080b11] lg:hidden"
         >
           {[
             { title: fortuneLabel, items: FORTUNE_ITEMS },
@@ -267,7 +267,7 @@ export default function Header() {
             { title: gameLabel, items: GAME_ITEMS },
           ].map((section) => (
             <div key={section.title} className="px-5 pt-6">
-              <p className="mb-2.5 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[#64748b]">
+              <p className="mb-2.5 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[#9aa3b2]">
                 {section.title}
               </p>
               <div className="grid gap-0.5">
@@ -278,20 +278,20 @@ export default function Header() {
                     onClick={() => setMobileOpen(false)}
                     className={`flex min-h-11 items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-[0.92rem] transition-colors ${
                       pathname === href
-                        ? 'bg-[#eef2ff] font-medium text-[#3b5bdb]'
-                        : 'text-[#334155] hover:bg-[#f4f5f8]'
+                        ? 'bg-[rgba(230,236,245,0.08)] font-medium text-[#f6f9fd]'
+                        : 'text-[#ccd2dc] hover:bg-[rgba(230,236,245,0.05)]'
                     }`}
                   >
                     <span>{label}</span>
-                    <span className="text-[#64748b]">→</span>
+                    <span className="text-[#9aa3b2]">→</span>
                   </Link>
                 ))}
               </div>
             </div>
           ))}
 
-          <div className="mt-6 border-t border-[#e8eaef] px-5 py-5">
-            <div className="flex items-center gap-1 rounded-full border border-[#e8eaef] bg-[#f8f9fb] p-1">
+          <div className="mt-6 border-t border-[rgba(184,199,220,0.14)] px-5 py-5">
+            <div className="flex items-center gap-1 rounded-full border border-[rgba(184,199,220,0.16)] bg-[rgba(7,9,14,0.6)] p-1">
               {(Object.entries(LANG_LABELS) as [Lang, string][]).map(([code, label]) => {
                 const selected = lang === code;
                 return (
@@ -300,7 +300,7 @@ export default function Header() {
                     onClick={() => { setLang(code); setMobileOpen(false); }}
                     aria-pressed={selected}
                     className={`min-h-9 flex-1 rounded-full px-3 py-1.5 text-xs font-medium transition-all ${
-                      selected ? 'bg-white text-[#0f172a] shadow-[0_1px_4px_rgba(15,23,42,0.1)]' : 'text-[#64748b]'
+                      selected ? 'bg-[#e6ecf5] text-[#0a0e14]' : 'text-[#9aa3b2]'
                     }`}
                   >
                     {label}

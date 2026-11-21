@@ -198,7 +198,7 @@ const ZODIAC_SIGNS = [
     period: '11월 23일 ~ 12월 21일',
     element: '불 🔥',
     planet: '목성',
-    color: '#6366f1',
+    color: '#a5b4cf',
     traits: ['모험적이고 자유로운 영혼', '낙관적이고 유머감각 풍부', '철학적이고 지혜로움', '직설적이고 솔직함'],
     personality: '사수자리는 목성의 지배를 받는 불의 별자리로, 황도대에서 가장 자유롭고 낙관적인 별자리입니다. 세상을 탐험하고 다양한 문화와 철학을 배우는 것을 즐기며, 경계와 제약을 싫어합니다. 항상 새로운 지평을 향해 나아가는 진취적인 성격으로, 삶의 더 큰 의미와 진리를 탐구합니다. 솔직하고 직설적인 성격으로 때로는 상처를 주기도 하지만, 악의 없는 순수한 표현입니다. 낙관적인 세계관과 유머 감각으로 주변 사람들에게 활기와 기쁨을 전파하는 존재입니다.',
     love: '연애에서 사수자리는 자유롭고 부담 없는 관계를 원합니다. 상대방의 독립성을 존중하며, 함께 모험을 즐기고 세상을 탐험할 수 있는 파트너에게 매력을 느낍니다. 구속당하는 것을 싫어하기 때문에 서로의 개인 공간과 자유를 존중하는 관계가 필요합니다. 장기적 헌신이 어려울 수 있지만, 진정한 사랑을 만나면 삶 전체를 함께하는 든든한 파트너가 됩니다. 지적으로 자극하고 함께 성장할 수 있는 파트너와 가장 잘 맞습니다.',
@@ -221,7 +221,7 @@ const ZODIAC_SIGNS = [
     period: '12월 22일 ~ 1월 19일',
     element: '땅 🌍',
     planet: '토성',
-    color: '#94a3b8',
+    color: '#8b94a3',
     traits: ['야망이 크고 목표지향적', '책임감이 강함', '인내심과 자기 절제력', '현실적이고 실용적'],
     personality: '염소자리는 토성의 지배를 받는 대지의 별자리로, 황도대에서 가장 성실하고 야망 있는 별자리입니다. 높은 목표를 향해 천천히 하지만 확실하게 나아가며, 어떠한 어려움도 포기하지 않는 강인한 의지를 가집니다. 사회적 지위와 직업적 성공에 대한 강한 욕구가 있으며, 이를 위해 남들보다 몇 배 더 노력하는 것을 당연하게 여깁니다. 나이가 들수록 더 젊어지고 여유로워지는 역행 성장의 별자리로도 유명합니다. 책임감과 신뢰성은 업계에서 인정받는 강점이 되며, 오랜 시간을 두고 쌓아온 명성이 가장 큰 자산입니다.',
     love: '연애에서 염소자리는 신중하고 진지한 접근을 합니다. 가벼운 만남보다는 진지하고 안정적인 관계를 원하며, 파트너에게 신뢰와 안정을 제공하는 믿음직한 동반자가 됩니다. 감정 표현에 서투른 편이지만, 행동으로 헌신을 증명하는 실질적인 사랑꾼입니다. 커리어와 가정 모두 성공시키려는 욕구가 강해, 이를 이해해주는 파트너가 필요합니다. 전통적인 가치를 중시하며 장기적인 파트너십과 가정을 꾸리는 것을 삶의 중요한 목표로 여깁니다.',
@@ -320,11 +320,11 @@ export default async function ZodiacSignPage({
       <section className="relative overflow-hidden border-b border-[var(--line)]">
         <div
           className="pointer-events-none absolute inset-0"
-          style={{ background: 'radial-gradient(ellipse 55% 80% at 20% -10%, rgba(15,23,42,0.09) 0%, transparent 62%), radial-gradient(ellipse 40% 60% at 90% 110%, rgba(59,91,219,0.12) 0%, transparent 70%)' }}
+          style={{ background: 'radial-gradient(ellipse 55% 80% at 20% -10%, rgba(0,0,0,0.09) 0%, transparent 62%), radial-gradient(ellipse 40% 60% at 90% 110%, rgba(206,220,238,0.12) 0%, transparent 70%)' }}
           aria-hidden="true"
         />
         <div className="relative mx-auto max-w-4xl px-5 pb-12 pt-10 sm:pt-14">
-          <Link href="/zodiac" className="inline-flex min-h-11 items-center gap-2 text-[0.78rem] text-[var(--muted)] transition-colors hover:text-[#3b5bdb]">
+          <Link href="/zodiac" className="inline-flex min-h-11 items-center gap-2 text-[0.78rem] text-[var(--muted)] transition-colors hover:text-[#e6ecf5]">
             <span aria-hidden="true">←</span> 별자리 목록으로
           </Link>
 
@@ -352,7 +352,7 @@ export default async function ZodiacSignPage({
         <section className="mb-10">
           <div className="mb-4 flex flex-wrap gap-2">
             {data.traits.map((trait) => (
-              <span key={trait} className="rounded-full border border-[rgba(59,91,219,0.28)] bg-[rgba(59,91,219,0.08)] px-3 py-1.5 text-[0.74rem] text-[#3b5bdb]">
+              <span key={trait} className="rounded-full border border-[rgba(206,220,238,0.28)] bg-[rgba(206,220,238,0.08)] px-3 py-1.5 text-[0.74rem] text-[#e6ecf5]">
                 {trait}
               </span>
             ))}
@@ -362,7 +362,7 @@ export default async function ZodiacSignPage({
           </p>
         </section>
 
-        <div className="mb-10 h-px bg-[linear-gradient(90deg,transparent,rgba(59,91,219,0.4),transparent)]" />
+        <div className="mb-10 h-px bg-[linear-gradient(90deg,transparent,rgba(206,220,238,0.4),transparent)]" />
 
         {/* 강점 & 약점 */}
         <div className="mb-10 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -419,7 +419,7 @@ export default async function ZodiacSignPage({
         </div>
 
         {/* 궁합 */}
-        <section className="mt-10 rounded-[0.4rem] border border-[var(--line)] bg-[#ffffff] p-6">
+        <section className="mt-10 rounded-[0.4rem] border border-[var(--line)] bg-[#101620] p-6">
           <h2 className="mb-4 border-0 pt-0 font-display text-[1.1rem] font-semibold text-[var(--ink)]">궁합</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="rounded-xl border border-[rgba(47,107,74,0.28)] bg-[rgba(47,107,74,0.06)] p-4">
@@ -434,7 +434,7 @@ export default async function ZodiacSignPage({
         </section>
 
         {/* 행운 & 유명인 */}
-        <section className="mt-4 rounded-[0.4rem] border border-[rgba(59,91,219,0.35)] bg-[rgba(59,91,219,0.08)] p-6">
+        <section className="mt-4 rounded-[0.4rem] border border-[rgba(206,220,238,0.35)] bg-[rgba(206,220,238,0.08)] p-6">
           <h2 className="mb-3 border-0 pt-0 font-display text-[1.1rem] font-semibold text-[var(--ink)]">행운의 상징</h2>
           <p className="mb-4 text-[0.86rem] text-[var(--ink-soft)]">{data.lucky}</p>
           <p className="text-[0.62rem] font-semibold uppercase tracking-[0.24em] text-[var(--gold)]">유명한 {data.name}</p>
@@ -442,9 +442,9 @@ export default async function ZodiacSignPage({
         </section>
 
         {/* CTA */}
-        <div className="mt-10 flex flex-col items-center gap-4 rounded-2xl border border-[#e8eaef] bg-[#f8f9fb] px-6 py-10 text-center">
+        <div className="mt-10 flex flex-col items-center gap-4 rounded-2xl border border-[rgba(184,199,220,0.14)] bg-[#121722] px-6 py-10 text-center">
           <span className="eyebrow eyebrow-light eyebrow-center">Today</span>
-          <p className="text-[1.2rem] font-bold tracking-[-0.03em] text-[#0f172a]">오늘 {data.name}의 운세가 궁금하다면?</p>
+          <p className="text-[1.2rem] font-bold tracking-[-0.03em] text-[#f2f0ea]">오늘 {data.name}의 운세가 궁금하다면?</p>
           <Link href="/" className="btn-gold-warm text-[0.88rem]">
             오늘의 운세 무료로 보기 <span aria-hidden="true">→</span>
           </Link>
@@ -458,12 +458,12 @@ export default async function ZodiacSignPage({
               <Link
                 key={s.slug}
                 href={`/zodiac/${s.slug}`}
-                className="group flex items-center gap-2 rounded-xl border border-[var(--line)] bg-[#ffffff] px-3 py-2.5 transition-all hover:border-[rgba(59,91,219,0.45)] hover:bg-[rgba(59,91,219,0.06)]"
+                className="group flex items-center gap-2 rounded-xl border border-[var(--line)] bg-[#101620] px-3 py-2.5 transition-all hover:border-[rgba(206,220,238,0.45)] hover:bg-[rgba(206,220,238,0.06)]"
               >
                 <span className="text-[var(--ink)]">
                   <ConstellationIcon slug={s.slug} size={22} strokeWidth={1.4} />
                 </span>
-                <span className="text-[0.78rem] text-[var(--ink-soft)] transition-colors group-hover:text-[#3b5bdb]">{s.name}</span>
+                <span className="text-[0.78rem] text-[var(--ink-soft)] transition-colors group-hover:text-[#e6ecf5]">{s.name}</span>
               </Link>
             ))}
           </div>

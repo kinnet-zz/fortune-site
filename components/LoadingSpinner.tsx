@@ -45,7 +45,7 @@ export default function LoadingSpinner() {
       <div
         className="relative w-64 h-64 flex items-center justify-center rounded-full"
         style={{
-          background: 'radial-gradient(circle, rgba(59,91,219,0.15) 0%, rgba(99,102,241,0.05) 60%, transparent 100%)',
+          background: 'radial-gradient(circle, rgba(206,220,238,0.15) 0%, rgba(99,102,241,0.05) 60%, transparent 100%)',
         }}
       >
         {/* 흩어진 별들 */}
@@ -106,7 +106,7 @@ export default function LoadingSpinner() {
         <div
           className="absolute w-24 h-24 rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(59,91,219,0.12), rgba(99,102,241,0.1))',
+            background: 'radial-gradient(circle, rgba(206,220,238,0.12), rgba(99,102,241,0.1))',
             border: '1px solid rgba(167,139,250,0.2)',
             animation: 'pulse-glow 2s ease-in-out infinite',
           }}
@@ -148,12 +148,12 @@ export default function LoadingSpinner() {
 
       {/* 텍스트 */}
       <div className="text-center min-h-[3.5rem] flex flex-col items-center justify-center">
-        <h2 className="text-xl font-bold text-[#0f172a]/90 mb-2">
+        <h2 className="text-xl font-bold text-[#f2f0ea]/90 mb-2">
           {tr.loadingTitle}
         </h2>
         <p
           key={messageIndex}
-          className="text-[#3b5bdb]/70 text-sm font-medium animate-fade-in-up"
+          className="text-[#e6ecf5]/70 text-sm font-medium animate-fade-in-up"
         >
           {tr.loadingMessages[messageIndex]}
         </p>

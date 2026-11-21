@@ -13,29 +13,29 @@ export const metadata: Metadata = {
 };
 
 const bgStyle = {
-  background: '#ffffff',
+  background: '#101620',
   minHeight: '100vh',
 };
 
 export default function AncientEgyptAstronomyPage() {
   return (
     <div style={bgStyle}>
-      <article className="max-w-3xl mx-auto px-6 py-16 text-[#0f172a]/80">
-        <Link href="/blog" className="text-[#3b5bdb] hover:text-[#3b5bdb] text-sm mb-8 inline-block">
+      <article className="max-w-3xl mx-auto px-6 py-16 text-[#f2f0ea]/80">
+        <Link href="/blog" className="text-[#e6ecf5] hover:text-[#e6ecf5] text-sm mb-8 inline-block">
           ← 블로그 목록으로 돌아가기
         </Link>
 
         <header className="mb-10">
           <div className="flex items-center gap-2 mb-4 flex-wrap">
-            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(59,91,219,0.14)', color: '#3b5bdb' }}>
+            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(206,220,238,0.14)', color: '#e6ecf5' }}>
               별자리 역사
             </span>
-            <span className="text-[#64748b] text-xs">2025년 8월 12일 · 12분 읽기</span>
+            <span className="text-[#9aa3b2] text-xs">2025년 8월 12일 · 12분 읽기</span>
           </div>
-          <h1 className="text-3xl font-bold text-[#0f172a] mb-4 leading-tight">
+          <h1 className="text-3xl font-bold text-[#f2f0ea] mb-4 leading-tight">
             고대 이집트는 왜 별자리로 나일강 범람을 예측했나 — 천문학과 점성술이 갈라지기 전의 역사
           </h1>
-          <p className="text-[#475569] text-base leading-relaxed">
+          <p className="text-[#bdc5d1] text-base leading-relaxed">
             별자리를 보고 강이 언제 넘칠지 예측했다는 것이 미신처럼 들립니까? 5,000년 전 이집트인들에게 그것은 과학이었습니다. 그리고 그 관찰의 정밀함은 현대 천문학자들도 인정합니다. 천문학과 점성술이 하나였던 시대, 그 지식의 계보를 추적합니다.
           </p>
         </header>
@@ -50,7 +50,7 @@ export default function AncientEgyptAstronomyPage() {
         <div className="space-y-8 text-sm leading-relaxed">
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">시리우스와 나일강 — 별이 강을 깨우는 날</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">시리우스와 나일강 — 별이 강을 깨우는 날</h2>
             <p className="mb-3">
               고대 이집트 문명의 근간은 나일강이었습니다. 나일강은 매년 범람하면서 상류에서 운반한 비옥한 퇴적물을 강 유역에 쌓았습니다. 이 범람이 없으면 이집트의 농업은 존재할 수 없었고, 이집트 문명 자체가 불가능했습니다. 따라서 범람 시기를 미리 아는 것은 국가의 존립과 직결된 문제였습니다.
             </p>
@@ -69,7 +69,7 @@ export default function AncientEgyptAstronomyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">데칸 시스템 — 서양 점성술 분야법의 뿌리</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">데칸 시스템 — 서양 점성술 분야법의 뿌리</h2>
             <p className="mb-3">
               이집트 천문학이 서양 점성술에 남긴 가장 구체적인 유산 중 하나가 데칸(Decan) 시스템입니다.
             </p>
@@ -82,7 +82,7 @@ export default function AncientEgyptAstronomyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">덴데라 조디악 — 루브르에 있는 가장 오래된 황도대 지도</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">덴데라 조디악 — 루브르에 있는 가장 오래된 황도대 지도</h2>
             <p className="mb-3">
               파리 루브르 박물관 1층, 이집트 고대 유물 전시실에는 특별한 돌 부조가 있습니다. 직경 약 2.5미터의 원형 천장 부조로, '덴데라 조디악(Dendera Zodiac)'이라고 불립니다. 기원전 50년경, 이집트 남부 덴데라 지방의 하토르(Hathor) 신전 천장에 새겨진 것입니다.
             </p>
@@ -98,7 +98,7 @@ export default function AncientEgyptAstronomyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">바빌로니아 → 이집트 → 그리스 — 황도 체계의 전파 경로</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">바빌로니아 → 이집트 → 그리스 — 황도 체계의 전파 경로</h2>
             <p className="mb-3">
               현대 서양 점성술의 황도 12궁 체계는 어디서 왔을까요? 그 계보를 추적하면 메소포타미아의 바빌로니아 문명으로 거슬러 올라갑니다.
             </p>
@@ -114,7 +114,7 @@ export default function AncientEgyptAstronomyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">케플러도 점성술 차트를 그렸다 — 17세기 과학혁명까지의 공존</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">케플러도 점성술 차트를 그렸다 — 17세기 과학혁명까지의 공존</h2>
             <p className="mb-3">
               현대인들은 "과학을 한다는 것"과 "점성술을 믿는다는 것"이 서로 모순된다고 생각합니다. 그러나 17세기 과학혁명 이전까지, 이 두 가지는 같은 학문의 두 면이었습니다.
             </p>
@@ -137,7 +137,7 @@ export default function AncientEgyptAstronomyPage() {
           />
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">뉴턴의 중력과 두 학문의 이별 — 왜 분리되었나</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">뉴턴의 중력과 두 학문의 이별 — 왜 분리되었나</h2>
             <p className="mb-3">
               아이작 뉴턴(Isaac Newton, 1643~1727)의 <em>프린키피아(Principia Mathematica)</em> 출판(1687년)은 천문학과 점성술의 결별을 상징하는 분기점입니다.
             </p>
@@ -153,7 +153,7 @@ export default function AncientEgyptAstronomyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">독창적 분석 — 분리는 완성인가, 상실인가</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">독창적 분석 — 분리는 완성인가, 상실인가</h2>
             <p className="mb-3">
               천문학과 점성술의 분리를 "과학이 미신을 몰아낸 진보"로만 보는 시각은 역사의 일부를 무시합니다.
             </p>
@@ -173,27 +173,27 @@ export default function AncientEgyptAstronomyPage() {
 
         </div>
 
-        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(59,91,219,0.1)', border: '1px solid rgba(59,91,219,0.14)' }}>
-          <p className="text-[#475569] mb-4 text-sm">나의 별자리 운세가 궁금하다면?</p>
+        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(206,220,238,0.1)', border: '1px solid rgba(206,220,238,0.14)' }}>
+          <p className="text-[#bdc5d1] mb-4 text-sm">나의 별자리 운세가 궁금하다면?</p>
           <Link
             href="/"
-            className="inline-block px-6 py-3 rounded-full font-bold text-[#ffffff] text-sm"
-            style={{ background: 'linear-gradient(135deg, #3b5bdb 0%, #2f4bc7 100%)' }}
+            className="inline-block px-6 py-3 rounded-full font-bold text-[#101620] text-sm"
+            style={{ background: 'linear-gradient(135deg, #e6ecf5 0%, #f4f8fd 100%)' }}
           >
             오늘의 운세 무료로 보기 →
           </Link>
         </div>
 
         <nav className="mt-10">
-          <h3 className="text-sm text-[#64748b] mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
+          <h3 className="text-sm text-[#9aa3b2] mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <Link href="/blog/nasa-ophiuchus-13th-zodiac" className="p-4 rounded-xl text-sm hover:border-[#c7d0f7] transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-              <div className="text-[#0f172a]/72 font-medium">뱀주인자리와 황도 12궁 논쟁</div>
-              <div className="text-[#64748b] text-xs mt-1">천문학과 점성술의 별자리 체계가 다른 이유</div>
+            <Link href="/blog/nasa-ophiuchus-13th-zodiac" className="p-4 rounded-xl text-sm hover:border-[#3a4a61] transition-colors" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+              <div className="text-[#f2f0ea]/72 font-medium">뱀주인자리와 황도 12궁 논쟁</div>
+              <div className="text-[#9aa3b2] text-xs mt-1">천문학과 점성술의 별자리 체계가 다른 이유</div>
             </Link>
-            <Link href="/blog/twin-study-astrology" className="p-4 rounded-xl text-sm hover:border-[#c7d0f7] transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-              <div className="text-[#0f172a]/72 font-medium">같은 날 태어난 2,000명을 추적했다</div>
-              <div className="text-[#64748b] text-xs mt-1">쌍둥이 연구가 별자리에 던진 질문</div>
+            <Link href="/blog/twin-study-astrology" className="p-4 rounded-xl text-sm hover:border-[#3a4a61] transition-colors" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+              <div className="text-[#f2f0ea]/72 font-medium">같은 날 태어난 2,000명을 추적했다</div>
+              <div className="text-[#9aa3b2] text-xs mt-1">쌍둥이 연구가 별자리에 던진 질문</div>
             </Link>
           </div>
         </nav>

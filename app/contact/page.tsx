@@ -82,32 +82,32 @@ export default function ContactPage() {
   }, [lang, c.title]);
 
   return (
-    <div style={{ background: '#ffffff', minHeight: '100vh' }}>
-      <div className="max-w-2xl mx-auto px-6 py-16 text-[#0f172a]/80">
-        <Link href="/" className="text-[#3b5bdb] hover:text-[#3b5bdb] text-sm mb-8 inline-block">{c.back}</Link>
-        <h1 className="text-3xl font-bold text-[#0f172a] mb-2">{c.title}</h1>
-        <p className="text-[#64748b] text-sm mb-10">{c.subtitle}</p>
+    <div style={{ background: '#101620', minHeight: '100vh' }}>
+      <div className="max-w-2xl mx-auto px-6 py-16 text-[#f2f0ea]/80">
+        <Link href="/" className="text-[#e6ecf5] hover:text-[#e6ecf5] text-sm mb-8 inline-block">{c.back}</Link>
+        <h1 className="text-3xl font-bold text-[#f2f0ea] mb-2">{c.title}</h1>
+        <p className="text-[#9aa3b2] text-sm mb-10">{c.subtitle}</p>
         <div className="space-y-6">
-          <div className="bg-[#0f172a]/[0.035] border border-[#0f172a]/12 rounded-2xl p-6">
-            <h2 className="text-[#0f172a] font-semibold mb-4">{c.emailTitle}</h2>
+          <div className="bg-[#101620]/[0.04] border border-white/10 rounded-2xl p-6">
+            <h2 className="text-[#f2f0ea] font-semibold mb-4">{c.emailTitle}</h2>
             <p className="text-sm mb-2">{c.emailDesc}</p>
-            <a href="mailto:dhcho0607@gmail.com" className="text-[#3b5bdb] hover:text-[#3b5bdb] font-medium text-lg">
+            <a href="mailto:dhcho0607@gmail.com" className="text-[#e6ecf5] hover:text-[#e6ecf5] font-medium text-lg">
               dhcho0607@gmail.com
             </a>
           </div>
-          <div className="bg-[#0f172a]/[0.035] border border-[#0f172a]/12 rounded-2xl p-6">
-            <h2 className="text-[#0f172a] font-semibold mb-4">{c.faqTitle}</h2>
+          <div className="bg-[#101620]/[0.04] border border-white/10 rounded-2xl p-6">
+            <h2 className="text-[#f2f0ea] font-semibold mb-4">{c.faqTitle}</h2>
             <div className="space-y-4 text-sm">
               {c.faq.map((item, i) => (
                 <div key={i}>
-                  <p className="text-[#0f172a] font-medium">Q. {item.q}</p>
+                  <p className="text-[#f2f0ea] font-medium">Q. {item.q}</p>
                   <p className="mt-1">A. {item.a}</p>
                 </div>
               ))}
             </div>
           </div>
-          <div className="bg-[#0f172a]/[0.035] border border-[#0f172a]/12 rounded-2xl p-6">
-            <h2 className="text-[#0f172a] font-semibold mb-2">{c.privacyTitle}</h2>
+          <div className="bg-[#101620]/[0.04] border border-white/10 rounded-2xl p-6">
+            <h2 className="text-[#f2f0ea] font-semibold mb-2">{c.privacyTitle}</h2>
             <p className="text-sm">{c.privacyDesc}</p>
             <p className="text-sm mt-1">{c.privacyManager}</p>
           </div>

@@ -178,30 +178,30 @@ export default function PrivacyPage() {
   }, [lang, c.title]);
 
   return (
-    <div style={{ background: '#ffffff', minHeight: '100vh' }}>
-      <div className="max-w-3xl mx-auto px-6 py-16 text-[#0f172a]/80">
-        <Link href="/" className="text-[#3b5bdb] hover:text-[#3b5bdb] text-sm mb-8 inline-block">{c.back}</Link>
-        <h1 className="text-3xl font-bold text-[#0f172a] mb-2">{c.title}</h1>
-        <p className="text-[#64748b] text-sm mb-10">{c.lastUpdated}</p>
+    <div style={{ background: '#101620', minHeight: '100vh' }}>
+      <div className="max-w-3xl mx-auto px-6 py-16 text-[#f2f0ea]/80">
+        <Link href="/" className="text-[#e6ecf5] hover:text-[#e6ecf5] text-sm mb-8 inline-block">{c.back}</Link>
+        <h1 className="text-3xl font-bold text-[#f2f0ea] mb-2">{c.title}</h1>
+        <p className="text-[#9aa3b2] text-sm mb-10">{c.lastUpdated}</p>
 
         <div className="space-y-10 text-sm leading-relaxed">
           <section>
-            <h2 className="text-lg font-semibold text-[#0f172a] mb-3">{c.s1Title}</h2>
+            <h2 className="text-lg font-semibold text-[#f2f0ea] mb-3">{c.s1Title}</h2>
             <p>{c.s1Intro}</p>
             <ul className="mt-3 space-y-2 pl-4 list-disc">
               {c.s1Items.map((item, i) => (
-                <li key={i}><strong className="text-[#0f172a]">{item.label}</strong>{item.desc}</li>
+                <li key={i}><strong className="text-[#f2f0ea]">{item.label}</strong>{item.desc}</li>
               ))}
             </ul>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-[#0f172a] mb-3">{c.s2Title}</h2>
+            <h2 className="text-lg font-semibold text-[#f2f0ea] mb-3">{c.s2Title}</h2>
             <p>{c.s2Body}</p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-[#0f172a] mb-3">{c.s3Title}</h2>
+            <h2 className="text-lg font-semibold text-[#f2f0ea] mb-3">{c.s3Title}</h2>
             <p>{c.s3Intro}</p>
             <ul className="mt-3 space-y-2 pl-4 list-disc">
               {c.s3Items.map((item, i) => <li key={i}>{item}</li>)}
@@ -209,17 +209,17 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-[#0f172a] mb-3">{c.s4Title}</h2>
-            <table className="w-full text-sm border border-[#0f172a]/12 rounded-lg overflow-hidden mt-3">
+            <h2 className="text-lg font-semibold text-[#f2f0ea] mb-3">{c.s4Title}</h2>
+            <table className="w-full text-sm border border-white/10 rounded-lg overflow-hidden mt-3">
               <thead>
-                <tr className="bg-[#0f172a]/[0.035]">
-                  <th className="px-4 py-2 text-left text-[#0f172a]">{c.s4ColA}</th>
-                  <th className="px-4 py-2 text-left text-[#0f172a]">{c.s4ColB}</th>
+                <tr className="bg-[#101620]/[0.04]">
+                  <th className="px-4 py-2 text-left text-[#f2f0ea]">{c.s4ColA}</th>
+                  <th className="px-4 py-2 text-left text-[#f2f0ea]">{c.s4ColB}</th>
                 </tr>
               </thead>
               <tbody>
                 {c.s4Rows.map(([a, b], i) => (
-                  <tr key={i} className="border-t border-[#0f172a]/12">
+                  <tr key={i} className="border-t border-white/10">
                     <td className="px-4 py-2">{a}</td>
                     <td className="px-4 py-2">{b}</td>
                   </tr>
@@ -229,17 +229,17 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-[#0f172a] mb-3">{c.s5Title}</h2>
+            <h2 className="text-lg font-semibold text-[#f2f0ea] mb-3">{c.s5Title}</h2>
             <p>{c.s5Body}</p>
             <p className="mt-2">
               {c.s5LinkPrefix}
-              <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer" className="text-[#3b5bdb] underline">{c.s5LinkText}</a>
+              <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer" className="text-[#e6ecf5] underline">{c.s5LinkText}</a>
               {c.s5LinkSuffix}
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-[#0f172a] mb-3">{c.s6Title}</h2>
+            <h2 className="text-lg font-semibold text-[#f2f0ea] mb-3">{c.s6Title}</h2>
             <p>{c.s6Intro}</p>
             <ul className="mt-3 space-y-2 pl-4 list-disc">
               {c.s6Items.map((item, i) => <li key={i}>{item}</li>)}
@@ -248,15 +248,15 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-[#0f172a] mb-3">{c.s7Title}</h2>
-            <div className="bg-[#0f172a]/[0.035] rounded-xl p-4 border border-[#0f172a]/12">
-              <p><strong className="text-[#0f172a]">{c.s7ManagerLabel}</strong>: {c.s7ManagerValue}</p>
-              <p className="mt-1"><strong className="text-[#0f172a]">{c.s7EmailLabel}</strong>: <a href="mailto:dhcho0607@gmail.com" className="text-[#3b5bdb]">dhcho0607@gmail.com</a></p>
+            <h2 className="text-lg font-semibold text-[#f2f0ea] mb-3">{c.s7Title}</h2>
+            <div className="bg-[#101620]/[0.04] rounded-xl p-4 border border-white/10">
+              <p><strong className="text-[#f2f0ea]">{c.s7ManagerLabel}</strong>: {c.s7ManagerValue}</p>
+              <p className="mt-1"><strong className="text-[#f2f0ea]">{c.s7EmailLabel}</strong>: <a href="mailto:dhcho0607@gmail.com" className="text-[#e6ecf5]">dhcho0607@gmail.com</a></p>
             </div>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-[#0f172a] mb-3">{c.s8Title}</h2>
+            <h2 className="text-lg font-semibold text-[#f2f0ea] mb-3">{c.s8Title}</h2>
             <p>{c.s8Body}</p>
           </section>
         </div>

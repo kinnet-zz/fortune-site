@@ -16,7 +16,7 @@ const ZODIACS = [
   { id: 'libra',       symbol: '♎', ko: '천칭자리',   en: 'Libra',       zh: '天秤座', ja: '天秤座',  color: '#38bdf8' },
   { id: 'scorpio',     symbol: '♏', ko: '전갈자리',   en: 'Scorpio',     zh: '天蝎座', ja: '蠍座',    color: '#818cf8' },
   { id: 'sagittarius', symbol: '♐', ko: '사수자리',   en: 'Sagittarius', zh: '射手座', ja: '射手座',  color: '#e879f9' },
-  { id: 'capricorn',   symbol: '♑', ko: '염소자리',   en: 'Capricorn',   zh: '摩羯座', ja: '山羊座',  color: '#94a3b8' },
+  { id: 'capricorn',   symbol: '♑', ko: '염소자리',   en: 'Capricorn',   zh: '摩羯座', ja: '山羊座',  color: '#8b94a3' },
   { id: 'aquarius',    symbol: '♒', ko: '물병자리',   en: 'Aquarius',    zh: '水瓶座', ja: '水瓶座',  color: '#60a5fa' },
   { id: 'pisces',      symbol: '♓', ko: '물고기자리', en: 'Pisces',      zh: '双鱼座', ja: '魚座',    color: '#c084fc' },
 ] as const;
@@ -390,13 +390,13 @@ export default function ZodiacMemoryClient() {
   return (
     <div
       className="min-h-screen flex flex-col items-center"
-      style={{ background: '#ffffff' }}
+      style={{ background: '#101620' }}
     >
       <div className="w-full max-w-lg px-4 pt-6 pb-12">
 
         {/* Back link */}
         <div className="mb-6">
-          <Link href="/" className="text-[#64748b] hover:text-[#334155] text-sm transition-colors">
+          <Link href="/" className="text-[#9aa3b2] hover:text-[#ccd2dc] text-sm transition-colors">
             {t.back}
           </Link>
         </div>
@@ -406,8 +406,8 @@ export default function ZodiacMemoryClient() {
           <div>
             <div className="text-center mb-8">
               <div className="text-5xl mb-3">🌟</div>
-              <h1 className="text-2xl font-bold text-[#0f172a]">{t.title}</h1>
-              <p className="text-[#64748b] text-sm mt-1">{t.subtitle}</p>
+              <h1 className="text-2xl font-bold text-[#f2f0ea]">{t.title}</h1>
+              <p className="text-[#9aa3b2] text-sm mt-1">{t.subtitle}</p>
             </div>
 
             <div className="grid grid-cols-2 gap-3 mb-6">
@@ -419,16 +419,16 @@ export default function ZodiacMemoryClient() {
                     key={lv}
                     onClick={() => startLevel(lv)}
                     className="flex flex-col items-start gap-1.5 p-4 rounded-2xl text-left transition-all active:scale-95 hover:opacity-90"
-                    style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}
+                    style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}
                   >
                     <div className="flex items-center justify-between w-full">
-                      <span className="text-[#3b5bdb] font-bold text-sm">{t.levelLabel(lv)}</span>
+                      <span className="text-[#e6ecf5] font-bold text-sm">{t.levelLabel(lv)}</span>
                       {best && (
-                        <span className="text-[#64748b] text-xs">⭐ {best.score}pt</span>
+                        <span className="text-[#9aa3b2] text-xs">⭐ {best.score}pt</span>
                       )}
                     </div>
-                    <span className="text-[#334155] text-sm">{t.pairsLabel(lcfg.pairs)}</span>
-                    <span className="text-[#64748b] text-xs">
+                    <span className="text-[#ccd2dc] text-sm">{t.pairsLabel(lcfg.pairs)}</span>
+                    <span className="text-[#9aa3b2] text-xs">
                       {lcfg.timeLimit ? t.timeLimitLabel(lcfg.timeLimit) : t.noLimit}
                     </span>
                   </button>
@@ -438,8 +438,8 @@ export default function ZodiacMemoryClient() {
 
             <button
               onClick={() => startLevel(1)}
-              className="w-full py-3 rounded-full font-semibold text-white transition-all hover:opacity-95 active:scale-[0.99]"
-              style={{ background: 'linear-gradient(135deg, #3b5bdb, #2f4bc7)', boxShadow: '0 4px 20px rgba(59,91,219,0.35)' }}
+              className="w-full py-3 rounded-full font-semibold text-[#0a0e14] transition-all hover:opacity-95 active:scale-[0.99]"
+              style={{ background: 'linear-gradient(135deg, #f4f8fd, #c9d8ea)', boxShadow: '0 4px 20px rgba(206,220,238,0.35)' }}
             >
               {t.startLv1}
             </button>
@@ -453,21 +453,21 @@ export default function ZodiacMemoryClient() {
             <div className="flex items-center justify-between mb-4">
               <div
                 className="px-3 py-1 rounded-full text-sm font-bold"
-                style={{ background: 'rgba(59,91,219,0.14)', color: '#c084fc', border: '1px solid rgba(59,91,219,0.4)' }}
+                style={{ background: 'rgba(206,220,238,0.14)', color: '#c084fc', border: '1px solid rgba(206,220,238,0.4)' }}
               >
                 {t.levelLabel(level)}
               </div>
               <div className="flex items-center gap-5">
                 <div className="text-center">
-                  <p className="text-[#64748b] text-xs">{t.pairs}</p>
-                  <p className="text-[#0f172a] font-bold">{remainingPairs}</p>
+                  <p className="text-[#9aa3b2] text-xs">{t.pairs}</p>
+                  <p className="text-[#f2f0ea] font-bold">{remainingPairs}</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-[#64748b] text-xs">{t.mistakes}</p>
-                  <p className="font-bold" style={{ color: mistakes > 0 ? '#f87171' : 'rgba(15,23,42,0.4)' }}>{mistakes}</p>
+                  <p className="text-[#9aa3b2] text-xs">{t.mistakes}</p>
+                  <p className="font-bold" style={{ color: mistakes > 0 ? '#f87171' : 'rgba(0,0,0,0.4)' }}>{mistakes}</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-[#64748b] text-xs">{isCountdown ? t.timeLeft : t.timeElapsed}</p>
+                  <p className="text-[#9aa3b2] text-xs">{isCountdown ? t.timeLeft : t.timeElapsed}</p>
                   <p className="font-bold text-lg" style={{ color: timerColor }}>{displayTime}{t.sec}</p>
                 </div>
               </div>
@@ -513,12 +513,12 @@ export default function ZodiacMemoryClient() {
                         ? `${z.color}20`
                         : card.flipped
                           ? `${z.color}15`
-                          : 'rgba(15,23,42,0.04)',
+                          : 'rgba(0,0,0,0.04)',
                       border: card.matched
                         ? `1px solid ${z.color}50`
                         : card.flipped
                           ? `1px solid ${z.color}40`
-                          : '1px solid rgba(15,23,42,0.05)',
+                          : '1px solid rgba(0,0,0,0.05)',
                       cursor: isVisible ? 'default' : 'pointer',
                     }}
                   >
@@ -529,7 +529,7 @@ export default function ZodiacMemoryClient() {
                         </span>
                         <span
                           className="text-center leading-tight mt-1"
-                          style={{ fontSize: nameFontSize, color: 'rgba(15,23,42,0.45)' }}
+                          style={{ fontSize: nameFontSize, color: 'rgba(0,0,0,0.45)' }}
                         >
                           {getZodiacName(z, lang)}
                         </span>
@@ -543,12 +543,12 @@ export default function ZodiacMemoryClient() {
             </div>
 
             {/* Progress bar */}
-            <div className="mt-4 w-full h-1 rounded-full overflow-hidden" style={{ background: 'rgba(15,23,42,0.05)' }}>
+            <div className="mt-4 w-full h-1 rounded-full overflow-hidden" style={{ background: 'rgba(0,0,0,0.05)' }}>
               <div
                 className="h-full rounded-full transition-all"
                 style={{
                   width: `${(matched.size / cfg.pairs) * 100}%`,
-                  background: 'linear-gradient(90deg, #3b5bdb, #8fa3f2)',
+                  background: 'linear-gradient(90deg, #e6ecf5, #8fa3f2)',
                 }}
               />
             </div>
@@ -559,26 +559,26 @@ export default function ZodiacMemoryClient() {
         {phase === 'levelClear' && (
           <div className="text-center">
             <div className="text-5xl mb-4">✅</div>
-            <h2 className="text-2xl font-bold text-[#0f172a] mb-1">{t.levelClear}</h2>
-            <p className="text-[#64748b] text-sm mb-8">
+            <h2 className="text-2xl font-bold text-[#f2f0ea] mb-1">{t.levelClear}</h2>
+            <p className="text-[#9aa3b2] text-sm mb-8">
               {t.levelLabel(level)} → {t.levelLabel(level + 1)}
             </p>
             <div className="flex justify-center gap-8 mb-8">
               <div>
-                <p className="text-[#64748b] text-xs mb-1">{t.timeTaken}</p>
-                <p className="text-[#0f172a] font-bold text-2xl">{timeUsedForResult}<span className="text-sm text-[#64748b]">{t.sec}</span></p>
+                <p className="text-[#9aa3b2] text-xs mb-1">{t.timeTaken}</p>
+                <p className="text-[#f2f0ea] font-bold text-2xl">{timeUsedForResult}<span className="text-sm text-[#9aa3b2]">{t.sec}</span></p>
               </div>
               <div>
-                <p className="text-[#64748b] text-xs mb-1">{t.mistakesCount}</p>
+                <p className="text-[#9aa3b2] text-xs mb-1">{t.mistakesCount}</p>
                 <p className="font-bold text-2xl" style={{ color: mistakes > 0 ? '#f87171' : '#4ade80' }}>
-                  {mistakes}<span className="text-sm text-[#64748b]">{t.times}</span>
+                  {mistakes}<span className="text-sm text-[#9aa3b2]">{t.times}</span>
                 </p>
               </div>
             </div>
             <button
               onClick={() => startLevel(level + 1)}
-              className="w-full py-3 rounded-full font-semibold text-white transition-all hover:opacity-95 active:scale-[0.99]"
-              style={{ background: 'linear-gradient(135deg, #3b5bdb, #2f4bc7)', boxShadow: '0 4px 20px rgba(59,91,219,0.35)' }}
+              className="w-full py-3 rounded-full font-semibold text-[#0a0e14] transition-all hover:opacity-95 active:scale-[0.99]"
+              style={{ background: 'linear-gradient(135deg, #f4f8fd, #c9d8ea)', boxShadow: '0 4px 20px rgba(206,220,238,0.35)' }}
             >
               {t.nextLevel}
             </button>
@@ -589,22 +589,22 @@ export default function ZodiacMemoryClient() {
         {phase === 'gameOver' && (
           <div className="text-center">
             <div className="text-5xl mb-4">⏰</div>
-            <h2 className="text-2xl font-bold text-[#0f172a] mb-1">{t.gameOver}</h2>
-            <p className="text-[#64748b] text-sm mb-8">
+            <h2 className="text-2xl font-bold text-[#f2f0ea] mb-1">{t.gameOver}</h2>
+            <p className="text-[#9aa3b2] text-sm mb-8">
               {t.levelLabel(level)} · {matched.size}/{cfg.pairs} {t.matched}
             </p>
             <div className="flex gap-3">
               <button
                 onClick={() => startLevel(level)}
-                className="flex-1 py-3 rounded-full font-semibold text-white transition-all hover:opacity-95 active:scale-[0.99]"
-                style={{ background: 'linear-gradient(135deg, #3b5bdb, #2f4bc7)', boxShadow: '0 4px 20px rgba(59,91,219,0.35)' }}
+                className="flex-1 py-3 rounded-full font-semibold text-[#0a0e14] transition-all hover:opacity-95 active:scale-[0.99]"
+                style={{ background: 'linear-gradient(135deg, #f4f8fd, #c9d8ea)', boxShadow: '0 4px 20px rgba(206,220,238,0.35)' }}
               >
                 {t.tryAgain}
               </button>
               <button
                 onClick={() => setPhase('idle')}
                 className="flex-1 py-3 rounded-2xl font-bold transition-all active:scale-95"
-                style={{ background: 'rgba(15,23,42,0.05)', color: 'rgba(15,23,42,0.45)', border: '1px solid rgba(15,23,42,0.08)' }}
+                style={{ background: 'rgba(0,0,0,0.05)', color: 'rgba(0,0,0,0.45)', border: '1px solid rgba(0,0,0,0.08)' }}
               >
                 {t.home}
               </button>
@@ -616,8 +616,8 @@ export default function ZodiacMemoryClient() {
         {phase === 'allClear' && (
           <div className="text-center">
             <div className="text-6xl mb-4">👑</div>
-            <h2 className="text-2xl font-bold text-[#0f172a] mb-2">{t.allClear}</h2>
-            <p className="text-[#64748b] text-sm mb-8">{t.levelLabel(MAX_LEVEL)} 완료!</p>
+            <h2 className="text-2xl font-bold text-[#f2f0ea] mb-2">{t.allClear}</h2>
+            <p className="text-[#9aa3b2] text-sm mb-8">{t.levelLabel(MAX_LEVEL)} 완료!</p>
 
             {/* Best scores summary */}
             <div className="space-y-2 mb-8">
@@ -625,19 +625,19 @@ export default function ZodiacMemoryClient() {
                 <div
                   key={lv}
                   className="flex items-center justify-between px-4 py-2 rounded-xl"
-                  style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.05)' }}
+                  style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.05)' }}
                 >
-                  <span className="text-[#3b5bdb] font-bold text-sm">{t.levelLabel(Number(lv))}</span>
-                  <span className="text-[#475569] text-sm">{entry.time}{t.sec} · {entry.mistakes}{t.times}</span>
-                  <span className="text-[#64748b] text-xs">⭐ {entry.score}pt</span>
+                  <span className="text-[#e6ecf5] font-bold text-sm">{t.levelLabel(Number(lv))}</span>
+                  <span className="text-[#bdc5d1] text-sm">{entry.time}{t.sec} · {entry.mistakes}{t.times}</span>
+                  <span className="text-[#9aa3b2] text-xs">⭐ {entry.score}pt</span>
                 </div>
               ))}
             </div>
 
             <button
               onClick={() => setPhase('idle')}
-              className="w-full py-3 rounded-full font-semibold text-white transition-all hover:opacity-95 active:scale-[0.99]"
-              style={{ background: 'linear-gradient(135deg, #3b5bdb, #2f4bc7)', boxShadow: '0 4px 20px rgba(59,91,219,0.35)' }}
+              className="w-full py-3 rounded-full font-semibold text-[#0a0e14] transition-all hover:opacity-95 active:scale-[0.99]"
+              style={{ background: 'linear-gradient(135deg, #f4f8fd, #c9d8ea)', boxShadow: '0 4px 20px rgba(206,220,238,0.35)' }}
             >
               {t.playAgain}
             </button>

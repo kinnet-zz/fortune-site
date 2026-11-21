@@ -61,7 +61,7 @@ export async function generateMetadata({
 }
 
 const bgStyle = {
-  background: '#ffffff',
+  background: '#101620',
 };
 
 const MAJOR_ARCANA = [
@@ -100,16 +100,16 @@ export default function CardDrawPage() {
         {/* 타로란? */}
         <div
           className="rounded-2xl p-6"
-          style={{ background: '#ffffff', border: '1px solid #e8eaef' }}
+          style={{ background: '#101620', border: '1px solid rgba(184,199,220,0.14)' }}
         >
-          <h2 className="text-[#0f172a] font-bold text-base mb-3">🃏 타로 카드란?</h2>
-          <p className="text-[#64748b] text-sm leading-relaxed mb-3">
+          <h2 className="text-[#f2f0ea] font-bold text-base mb-3">🃏 타로 카드란?</h2>
+          <p className="text-[#9aa3b2] text-sm leading-relaxed mb-3">
             타로(Tarot)는 78장의 카드로 이루어진 상징 체계로, 14~15세기 유럽에서 카드 게임용으로 시작되어 18세기 이후 점술과 자기 성찰의 도구로 발전했습니다. 현재 가장 널리 사용되는 라이더-웨이트 타로(Rider-Waite Tarot, 1909)는 아서 에드워드 웨이트와 파멜라 콜먼 스미스가 제작한 것으로, 상징적 이미지로 가득한 삽화가 특징입니다.
           </p>
-          <p className="text-[#64748b] text-sm leading-relaxed mb-3">
-            타로 78장은 크게 두 부분으로 나뉩니다. <strong className="text-[#334155]">메이저 아르카나(Major Arcana)</strong> 22장은 &ldquo;큰 비밀&rdquo;을 의미하며, 인생의 중요한 전환점과 보편적 원형을 상징합니다. <strong className="text-[#334155]">마이너 아르카나(Minor Arcana)</strong> 56장은 일상적인 사건과 감정을 나타냅니다.
+          <p className="text-[#9aa3b2] text-sm leading-relaxed mb-3">
+            타로 78장은 크게 두 부분으로 나뉩니다. <strong className="text-[#ccd2dc]">메이저 아르카나(Major Arcana)</strong> 22장은 &ldquo;큰 비밀&rdquo;을 의미하며, 인생의 중요한 전환점과 보편적 원형을 상징합니다. <strong className="text-[#ccd2dc]">마이너 아르카나(Minor Arcana)</strong> 56장은 일상적인 사건과 감정을 나타냅니다.
           </p>
-          <p className="text-[#64748b] text-sm leading-relaxed">
+          <p className="text-[#9aa3b2] text-sm leading-relaxed">
             심리학자 카를 융(Carl Jung)은 타로의 상징이 인간의 집단 무의식에 존재하는 원형(Archetype)을 반영한다고 보았습니다. 현대에는 미래 예언보다 자기 이해와 내면 탐색의 도구로 활용되는 경향이 강합니다. StarFate의 카드 뽑기는 오락 목적으로 제공되며, 카드의 메시지를 하루의 의도를 설정하는 계기로 활용해보세요.
           </p>
         </div>
@@ -117,22 +117,22 @@ export default function CardDrawPage() {
         {/* 메이저 아르카나 22장 가이드 */}
         <div
           className="rounded-2xl p-6"
-          style={{ background: 'rgba(59,91,219,0.07)', border: '1px solid rgba(59,91,219,0.15)' }}
+          style={{ background: 'rgba(206,220,238,0.07)', border: '1px solid rgba(206,220,238,0.15)' }}
         >
-          <h2 className="text-[#0f172a] font-bold text-base mb-5">✨ 메이저 아르카나 22장 완전 가이드</h2>
+          <h2 className="text-[#f2f0ea] font-bold text-base mb-5">✨ 메이저 아르카나 22장 완전 가이드</h2>
           <div className="space-y-3">
             {MAJOR_ARCANA.map((card) => (
               <div
                 key={card.id}
                 className="flex gap-3 items-start rounded-xl p-3"
-                style={{ background: 'rgba(15,23,42,0.02)', border: '1px solid rgba(15,23,42,0.04)' }}
+                style={{ background: 'rgba(0,0,0,0.02)', border: '1px solid rgba(0,0,0,0.04)' }}
               >
                 <div className="flex-shrink-0 w-12 text-center">
-                  <div className="text-[0.66rem] font-semibold text-[#64748b]">{card.id}</div>
-                  <div className="mt-0.5 text-[0.72rem] font-semibold text-[#0f172a]">{card.ko}</div>
-                  <div className="truncate text-[0.56rem] text-[#64748b]">{card.en}</div>
+                  <div className="text-[0.66rem] font-semibold text-[#9aa3b2]">{card.id}</div>
+                  <div className="mt-0.5 text-[0.72rem] font-semibold text-[#f2f0ea]">{card.ko}</div>
+                  <div className="truncate text-[0.56rem] text-[#9aa3b2]">{card.en}</div>
                 </div>
-                <p className="text-[#64748b] text-xs leading-relaxed pt-0.5">{card.meaning}</p>
+                <p className="text-[#9aa3b2] text-xs leading-relaxed pt-0.5">{card.meaning}</p>
               </div>
             ))}
           </div>
@@ -141,10 +141,10 @@ export default function CardDrawPage() {
         {/* 카드 활용 팁 */}
         <div
           className="rounded-2xl p-6"
-          style={{ background: 'rgba(15,23,42,0.02)', border: '1px solid rgba(15,23,42,0.05)' }}
+          style={{ background: 'rgba(0,0,0,0.02)', border: '1px solid rgba(0,0,0,0.05)' }}
         >
-          <h2 className="text-[#0f172a] font-bold text-base mb-3">💡 타로 카드 활용 팁</h2>
-          <div className="space-y-2 text-sm text-[#64748b]">
+          <h2 className="text-[#f2f0ea] font-bold text-base mb-3">💡 타로 카드 활용 팁</h2>
+          <div className="space-y-2 text-sm text-[#9aa3b2]">
             {[
               { t: '마음을 비우고 뽑기', d: '카드를 선택하기 전 잠시 눈을 감고 오늘 가장 신경 쓰이는 것이나 질문을 떠올리세요. 무의식이 끌리는 카드를 선택합니다.' },
               { t: '메시지를 일상에 적용하기', d: '카드의 메시지를 문자 그대로 해석하기보다, 오늘 하루 자신의 상황에 빗대어 어떤 의미인지 생각해보세요.' },
@@ -153,7 +153,7 @@ export default function CardDrawPage() {
             ].map((item) => (
               <div key={item.t} className="flex gap-2">
                 <span className="text-indigo-400 flex-shrink-0">▸</span>
-                <span><strong className="text-[#334155]">{item.t}:</strong> {item.d}</span>
+                <span><strong className="text-[#ccd2dc]">{item.t}:</strong> {item.d}</span>
               </div>
             ))}
           </div>

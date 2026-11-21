@@ -13,29 +13,29 @@ export const metadata: Metadata = {
 };
 
 const bgStyle = {
-  background: '#ffffff',
+  background: '#101620',
   minHeight: '100vh',
 };
 
 export default function RisingSignGuidePage() {
   return (
     <div style={bgStyle}>
-      <article className="max-w-3xl mx-auto px-6 py-16 text-[#0f172a]/80">
-        <Link href="/blog" className="text-[#3b5bdb] hover:text-[#3b5bdb] text-sm mb-8 inline-block">
+      <article className="max-w-3xl mx-auto px-6 py-16 text-[#f2f0ea]/80">
+        <Link href="/blog" className="text-[#e6ecf5] hover:text-[#e6ecf5] text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
 
         <header className="mb-10">
           <div className="flex items-center gap-2 mb-4 flex-wrap">
-            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(59,91,219,0.14)', color: '#3b5bdb' }}>
+            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(206,220,238,0.14)', color: '#e6ecf5' }}>
               점성술 심화
             </span>
-            <span className="text-[#64748b] text-xs">2025년 3월 20일 · 8분 읽기</span>
+            <span className="text-[#9aa3b2] text-xs">2025년 3월 20일 · 8분 읽기</span>
           </div>
-          <h1 className="text-3xl font-bold text-[#0f172a] mb-4 leading-tight">
+          <h1 className="text-3xl font-bold text-[#f2f0ea] mb-4 leading-tight">
             상승 별자리(어센던트) 완벽 가이드 — 타인이 보는 나
           </h1>
-          <p className="text-[#475569] text-base leading-relaxed">
+          <p className="text-[#bdc5d1] text-base leading-relaxed">
             "왜 나는 내 별자리답지 않다는 말을 자주 들을까?" 그 답은 상승 별자리에 있을 수 있습니다. 출생 시간이 만드는 나의 사회적 가면, 상승 별자리의 모든 것을 탐구합니다.
           </p>
         </header>
@@ -43,7 +43,7 @@ export default function RisingSignGuidePage() {
         <div className="space-y-8 text-sm leading-relaxed">
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">상승 별자리란? — 출생 시간의 동쪽 지평선</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">상승 별자리란? — 출생 시간의 동쪽 지평선</h2>
             <p className="mb-3">
               상승 별자리(Rising Sign), 또는 어센던트(Ascendant)는 출생 당시 동쪽 지평선에서 떠오르고 있던 황도대의 별자리입니다. 지구는 24시간에 한 바퀴 자전하므로, 지평선 위로 떠오르는 별자리는 매 2시간마다 바뀝니다. 따라서 12개의 별자리가 하루 동안 모두 동쪽 지평선에서 떠오르게 됩니다.
             </p>
@@ -59,33 +59,33 @@ export default function RisingSignGuidePage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">상승 별자리가 결정하는 것들</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">상승 별자리가 결정하는 것들</h2>
             <p className="mb-3">
               상승 별자리는 크게 세 가지 영역에서 우리의 삶에 영향을 미칩니다.
             </p>
 
             <div className="space-y-4">
-              <div className="rounded-2xl p-5" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-                <h3 className="text-[#0f172a] font-semibold mb-2">1. 외모와 신체적 특징</h3>
+              <div className="rounded-2xl p-5" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+                <h3 className="text-[#f2f0ea] font-semibold mb-2">1. 외모와 신체적 특징</h3>
                 <p className="mb-2">전통 점성술에서는 상승 별자리가 신체적 외모와 건강 경향성에 영향을 준다고 보았습니다. 예를 들어 사자자리 상승은 풍성한 머리카락과 당당한 자세, 처녀자리 상승은 날씬하고 섬세한 체형, 황소자리 상승은 안정적이고 감각적인 외모 등으로 묘사됩니다.</p>
-                <p className="text-[#475569] text-xs">현대 심리 점성술에서는 이보다 외모보다 신체 언어, 제스처, 걸음걸이와 같은 비언어적 소통 방식에 더 초점을 둡니다.</p>
+                <p className="text-[#bdc5d1] text-xs">현대 심리 점성술에서는 이보다 외모보다 신체 언어, 제스처, 걸음걸이와 같은 비언어적 소통 방식에 더 초점을 둡니다.</p>
               </div>
 
-              <div className="rounded-2xl p-5" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-                <h3 className="text-[#0f172a] font-semibold mb-2">2. 첫인상과 사회적 이미지</h3>
+              <div className="rounded-2xl p-5" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+                <h3 className="text-[#f2f0ea] font-semibold mb-2">2. 첫인상과 사회적 이미지</h3>
                 <p className="mb-2">처음 만나는 사람이 느끼는 당신의 인상, 즉 "이 사람은 어떤 사람일까?"라는 첫 번째 감각이 바로 상승 별자리의 영역입니다. 양자리 상승은 에너지 넘치고 직접적인 첫인상을 주고, 천칭자리 상승은 우아하고 친근한 분위기, 전갈자리 상승은 강렬하고 신비로운 존재감을 드러냅니다.</p>
-                <p className="text-[#475569] text-xs">때로 사람들이 "나는 사수자리인데 왜 진지하다는 말을 자주 들을까?"라고 의아해하는 경우가 있습니다. 상승 별자리가 염소자리라면 처음 만나는 사람에게는 진지하고 신뢰감 있는 첫인상을 주기 때문입니다.</p>
+                <p className="text-[#bdc5d1] text-xs">때로 사람들이 "나는 사수자리인데 왜 진지하다는 말을 자주 들을까?"라고 의아해하는 경우가 있습니다. 상승 별자리가 염소자리라면 처음 만나는 사람에게는 진지하고 신뢰감 있는 첫인상을 주기 때문입니다.</p>
               </div>
 
-              <div className="rounded-2xl p-5" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-                <h3 className="text-[#0f172a] font-semibold mb-2">3. 삶에 대한 본능적 접근 방식</h3>
+              <div className="rounded-2xl p-5" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+                <h3 className="text-[#f2f0ea] font-semibold mb-2">3. 삶에 대한 본능적 접근 방식</h3>
                 <p className="mb-2">상승 별자리는 새로운 상황에 처음 반응하는 방식, 즉 삶의 기본 모드를 나타냅니다. 게자리 상승은 새로운 환경에서 본능적으로 조심스럽고 관찰적인 태도를 취하지만, 쌍둥이자리 상승은 호기심 있게 말을 걸고 정보를 수집하려 합니다. 이 반응은 깊이 생각하기 전의 첫 번째 본능에서 나옵니다.</p>
               </div>
             </div>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">12개 상승 별자리별 특징</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">12개 상승 별자리별 특징</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {[
@@ -102,33 +102,33 @@ export default function RisingSignGuidePage() {
                 { sign: '물병자리 상승', emoji: '♒', desc: '독특하고 개성 있는 분위기. 예측할 수 없는 매력이 있으며 남들과 다른 독자적인 스타일이 인상적입니다.' },
                 { sign: '물고기자리 상승', emoji: '♓', desc: '몽환적이고 부드러운 분위기. 예술적 감수성이 느껴지며 공감 능력이 높아 대화하면 이해받는 느낌이 듭니다.' },
               ].map(({ sign, emoji, desc }) => (
-                <div key={sign} className="p-4 rounded-xl" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-                  <p className="text-[#0f172a] font-medium mb-1">{emoji} {sign}</p>
-                  <p className="text-[#475569] text-xs leading-relaxed">{desc}</p>
+                <div key={sign} className="p-4 rounded-xl" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+                  <p className="text-[#f2f0ea] font-medium mb-1">{emoji} {sign}</p>
+                  <p className="text-[#bdc5d1] text-xs leading-relaxed">{desc}</p>
                 </div>
               ))}
             </div>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">태양 별자리 vs 달 별자리 vs 상승 별자리의 차이</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">태양 별자리 vs 달 별자리 vs 상승 별자리의 차이</h2>
             <p className="mb-3">
               세 가지 핵심 별자리는 서로 다른 측면의 자아를 표현합니다. 쉬운 비유로 설명하자면 이렇습니다.
             </p>
 
-            <div className="rounded-2xl p-5 mb-4" style={{ background: 'rgba(59,91,219,0.08)', border: '1px solid rgba(59,91,219,0.14)' }}>
+            <div className="rounded-2xl p-5 mb-4" style={{ background: 'rgba(206,220,238,0.08)', border: '1px solid rgba(206,220,238,0.14)' }}>
               <div className="space-y-3">
                 <div>
                   <span className="text-yellow-300 font-semibold">☀️ 태양 별자리 — 나의 영혼, 진짜 목적</span>
-                  <p className="text-[#475569] mt-1 text-xs">에너지가 충전된 상태에서 자연스럽게 드러나는 핵심 자아. 삶의 방향, 의식적인 목표, 자아정체성의 근간. "나는 궁극적으로 어떤 사람인가?"</p>
+                  <p className="text-[#bdc5d1] mt-1 text-xs">에너지가 충전된 상태에서 자연스럽게 드러나는 핵심 자아. 삶의 방향, 의식적인 목표, 자아정체성의 근간. "나는 궁극적으로 어떤 사람인가?"</p>
                 </div>
                 <div>
                   <span className="text-blue-300 font-semibold">🌙 달 별자리 — 나의 내면, 감정의 언어</span>
-                  <p className="text-[#475569] mt-1 text-xs">혼자 있을 때, 감정이 솔직할 때 드러나는 내면의 자아. 안전함과 위로를 찾는 방식. "혼자일 때 나는 어떤 사람인가?"</p>
+                  <p className="text-[#bdc5d1] mt-1 text-xs">혼자 있을 때, 감정이 솔직할 때 드러나는 내면의 자아. 안전함과 위로를 찾는 방식. "혼자일 때 나는 어떤 사람인가?"</p>
                 </div>
                 <div>
-                  <span className="text-[#3b5bdb] font-semibold">⬆️ 상승 별자리 — 나의 가면, 사회적 표현</span>
-                  <p className="text-[#475569] mt-1 text-xs">새로운 사람과 상황에서 본능적으로 드러나는 외적 자아. 첫인상, 외모, 접근 방식. "처음 만나는 사람에게 나는 어떻게 보이는가?"</p>
+                  <span className="text-[#e6ecf5] font-semibold">⬆️ 상승 별자리 — 나의 가면, 사회적 표현</span>
+                  <p className="text-[#bdc5d1] mt-1 text-xs">새로운 사람과 상황에서 본능적으로 드러나는 외적 자아. 첫인상, 외모, 접근 방식. "처음 만나는 사람에게 나는 어떻게 보이는가?"</p>
                 </div>
               </div>
             </div>
@@ -139,31 +139,31 @@ export default function RisingSignGuidePage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">&ldquo;빅 3&rdquo;의 조합 예시 분석</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">&ldquo;빅 3&rdquo;의 조합 예시 분석</h2>
             <p className="mb-3">
               점성술에서 태양·달·상승 별자리를 합쳐 "빅 3(Big Three)"라고 부릅니다. 이 세 가지의 조합이 한 사람의 성격을 가장 핵심적으로 표현한다고 봅니다. 몇 가지 흥미로운 조합을 살펴보겠습니다.
             </p>
 
             <div className="space-y-4">
-              <div className="rounded-2xl p-5" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-                <p className="text-[#0f172a] font-semibold mb-2">☀️ 물병자리 + 🌙 사자자리 + ⬆️ 전갈자리</p>
-                <p className="text-[#475569] text-xs leading-relaxed">이 조합의 사람은 내면에서는 인류를 위한 혁신을 꿈꾸는 이상주의자(물병)이면서, 감정적으로는 인정과 사랑을 깊이 원하는 사람(달 사자)입니다. 하지만 처음 만나는 사람에게는 강렬하고 신비로운 첫인상(전갈 상승)을 주어 접근하기 어려워 보일 수 있습니다. 실제로는 따뜻하지만 겉으로는 차갑게 보이는 갭이 매력이 될 수 있습니다.</p>
+              <div className="rounded-2xl p-5" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+                <p className="text-[#f2f0ea] font-semibold mb-2">☀️ 물병자리 + 🌙 사자자리 + ⬆️ 전갈자리</p>
+                <p className="text-[#bdc5d1] text-xs leading-relaxed">이 조합의 사람은 내면에서는 인류를 위한 혁신을 꿈꾸는 이상주의자(물병)이면서, 감정적으로는 인정과 사랑을 깊이 원하는 사람(달 사자)입니다. 하지만 처음 만나는 사람에게는 강렬하고 신비로운 첫인상(전갈 상승)을 주어 접근하기 어려워 보일 수 있습니다. 실제로는 따뜻하지만 겉으로는 차갑게 보이는 갭이 매력이 될 수 있습니다.</p>
               </div>
 
-              <div className="rounded-2xl p-5" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-                <p className="text-[#0f172a] font-semibold mb-2">☀️ 게자리 + 🌙 처녀자리 + ⬆️ 사수자리</p>
-                <p className="text-[#475569] text-xs leading-relaxed">내면에서는 가족과 안전함을 가장 중시(게자리)하고, 감정적으로는 섬세하고 분석적(달 처녀)인 사람이지만, 겉으로는 밝고 낙관적이며 자유로운 사람처럼 보입니다(사수 상승). 처음 만나면 외향적이고 활달해 보이지만, 실제로는 깊은 내면에 집착하는 면이 있는 복합적인 성격의 소유자입니다.</p>
+              <div className="rounded-2xl p-5" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+                <p className="text-[#f2f0ea] font-semibold mb-2">☀️ 게자리 + 🌙 처녀자리 + ⬆️ 사수자리</p>
+                <p className="text-[#bdc5d1] text-xs leading-relaxed">내면에서는 가족과 안전함을 가장 중시(게자리)하고, 감정적으로는 섬세하고 분석적(달 처녀)인 사람이지만, 겉으로는 밝고 낙관적이며 자유로운 사람처럼 보입니다(사수 상승). 처음 만나면 외향적이고 활달해 보이지만, 실제로는 깊은 내면에 집착하는 면이 있는 복합적인 성격의 소유자입니다.</p>
               </div>
 
-              <div className="rounded-2xl p-5" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-                <p className="text-[#0f172a] font-semibold mb-2">☀️ 양자리 + 🌙 황소자리 + ⬆️ 천칭자리</p>
-                <p className="text-[#475569] text-xs leading-relaxed">내면에서는 뜨거운 추진력과 도전 정신(양자리)이 넘치지만, 감정적으로는 안정과 편안함을 원하고(달 황소), 겉으로는 우아하고 조화로운 인상(천칭 상승)을 줍니다. 외부에서는 부드럽고 외교적인 사람처럼 보이지만, 막상 결정을 내리면 매우 빠르고 단호합니다.</p>
+              <div className="rounded-2xl p-5" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+                <p className="text-[#f2f0ea] font-semibold mb-2">☀️ 양자리 + 🌙 황소자리 + ⬆️ 천칭자리</p>
+                <p className="text-[#bdc5d1] text-xs leading-relaxed">내면에서는 뜨거운 추진력과 도전 정신(양자리)이 넘치지만, 감정적으로는 안정과 편안함을 원하고(달 황소), 겉으로는 우아하고 조화로운 인상(천칭 상승)을 줍니다. 외부에서는 부드럽고 외교적인 사람처럼 보이지만, 막상 결정을 내리면 매우 빠르고 단호합니다.</p>
               </div>
             </div>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">상승 별자리 찾는 방법</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">상승 별자리 찾는 방법</h2>
             <p className="mb-3">
               상승 별자리를 정확하게 계산하려면 세 가지 정보가 필요합니다. 첫째는 출생 날짜(연·월·일), 둘째는 출생 시각(시·분), 셋째는 출생 지역(도시명)입니다. 이 중 출생 시각이 가장 중요합니다. 상승 별자리는 약 2시간마다 바뀌기 때문에 시간이 잘못되면 전혀 다른 별자리가 나올 수 있습니다.
             </p>
@@ -180,27 +180,27 @@ export default function RisingSignGuidePage() {
 
         </div>
 
-        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(59,91,219,0.1)', border: '1px solid rgba(59,91,219,0.14)' }}>
-          <p className="text-[#475569] mb-4 text-sm">나의 별자리 운세가 궁금하다면?</p>
+        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(206,220,238,0.1)', border: '1px solid rgba(206,220,238,0.14)' }}>
+          <p className="text-[#bdc5d1] mb-4 text-sm">나의 별자리 운세가 궁금하다면?</p>
           <Link
             href="/"
-            className="inline-block px-6 py-3 rounded-full font-bold text-[#ffffff] text-sm"
-            style={{ background: 'linear-gradient(135deg, #3b5bdb 0%, #2f4bc7 100%)' }}
+            className="inline-block px-6 py-3 rounded-full font-bold text-[#101620] text-sm"
+            style={{ background: 'linear-gradient(135deg, #e6ecf5 0%, #f4f8fd 100%)' }}
           >
             🔮 오늘의 운세 무료로 보기 →
           </Link>
         </div>
 
         <nav className="mt-10">
-          <h3 className="text-sm text-[#64748b] mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
+          <h3 className="text-sm text-[#9aa3b2] mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <Link href="/blog/what-is-astrology" className="p-4 rounded-xl text-sm hover:border-[#c7d0f7] transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-              <div className="text-[#0f172a]/72 font-medium">✨ 점성술이란 무엇인가?</div>
-              <div className="text-[#64748b] text-xs mt-1">서양 별자리의 역사와 기초 완벽 가이드</div>
+            <Link href="/blog/what-is-astrology" className="p-4 rounded-xl text-sm hover:border-[#3a4a61] transition-colors" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+              <div className="text-[#f2f0ea]/72 font-medium">✨ 점성술이란 무엇인가?</div>
+              <div className="text-[#9aa3b2] text-xs mt-1">서양 별자리의 역사와 기초 완벽 가이드</div>
             </Link>
-            <Link href="/blog/moon-sign-guide" className="p-4 rounded-xl text-sm hover:border-[#c7d0f7] transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-              <div className="text-[#0f172a]/72 font-medium">🌙 달 별자리 완벽 가이드</div>
-              <div className="text-[#64748b] text-xs mt-1">숨겨진 나의 내면을 찾아서</div>
+            <Link href="/blog/moon-sign-guide" className="p-4 rounded-xl text-sm hover:border-[#3a4a61] transition-colors" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+              <div className="text-[#f2f0ea]/72 font-medium">🌙 달 별자리 완벽 가이드</div>
+              <div className="text-[#9aa3b2] text-xs mt-1">숨겨진 나의 내면을 찾아서</div>
             </Link>
           </div>
         </nav>

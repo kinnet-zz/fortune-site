@@ -128,19 +128,19 @@ export default function PastLifeClient() {
   const isValid = name.trim().length > 0 && birthDate.length > 0;
 
   return (
-    <div className="min-h-screen" style={{ background: '#ffffff' }}>
+    <div className="min-h-screen" style={{ background: '#101620' }}>
 
       {/* 히어로 */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0" style={{
-          background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(59,91,219,0.07) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(206,220,238,0.07) 0%, transparent 70%)',
         }} />
         <div className="relative z-10 max-w-md mx-auto px-4 pt-12 pb-6 text-center">
           <div className="text-6xl mb-4 animate-pulse">🌀</div>
-          <h1 className="text-3xl sm:text-4xl font-black text-[#0f172a] leading-tight mb-3">
+          <h1 className="text-3xl sm:text-4xl font-black text-[#f2f0ea] leading-tight mb-3">
             {t.pageTitle}
           </h1>
-          <p className="text-[#64748b] text-sm max-w-xs mx-auto">{t.pageSubtitle}</p>
+          <p className="text-[#9aa3b2] text-sm max-w-xs mx-auto">{t.pageSubtitle}</p>
         </div>
       </div>
 
@@ -163,15 +163,15 @@ export default function PastLifeClient() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div
               className="rounded-3xl p-[1px]"
-              style={{ background: 'linear-gradient(135deg, rgba(59,91,219,0.5), rgba(59,91,219,0.2), rgba(99,132,255,0.5))' }}
+              style={{ background: 'linear-gradient(135deg, rgba(206,220,238,0.5), rgba(206,220,238,0.2), rgba(99,132,255,0.5))' }}
             >
               <div
                 className="rounded-3xl p-7 space-y-5"
-                style={{ background: '#ffffff' }}
+                style={{ background: '#101620' }}
               >
                 {/* 이름 */}
                 <div>
-                  <label className="block text-[#3b5bdb] text-sm font-semibold mb-2 tracking-wide">
+                  <label className="block text-[#e6ecf5] text-sm font-semibold mb-2 tracking-wide">
                     {t.nameLabel}
                   </label>
                   <input
@@ -180,17 +180,17 @@ export default function PastLifeClient() {
                     onChange={(e) => setName(e.target.value)}
                     placeholder={t.namePlaceholder}
                     maxLength={30}
-                    className="w-full rounded-2xl px-4 py-4 text-[#0f172a] text-base font-medium outline-none transition-all"
+                    className="w-full rounded-2xl px-4 py-4 text-[#f2f0ea] text-base font-medium outline-none transition-all"
                     style={{
-                      background: 'rgba(15,23,42,0.04)',
-                      border: '1.5px solid rgba(59,91,219,0.25)',
+                      background: 'rgba(0,0,0,0.04)',
+                      border: '1.5px solid rgba(206,220,238,0.25)',
                     }}
                   />
                 </div>
 
                 {/* 생년월일 */}
                 <div>
-                  <label className="block text-[#3b5bdb] text-sm font-semibold mb-2 tracking-wide">
+                  <label className="block text-[#e6ecf5] text-sm font-semibold mb-2 tracking-wide">
                     {t.dateLabel}
                   </label>
                   <input
@@ -199,10 +199,10 @@ export default function PastLifeClient() {
                     onChange={(e) => setBirthDate(e.target.value)}
                     min="1900-01-01"
                     max={today}
-                    className="w-full rounded-2xl px-4 py-4 text-[#0f172a] text-base font-medium outline-none [color-scheme:dark]"
+                    className="w-full rounded-2xl px-4 py-4 text-[#f2f0ea] text-base font-medium outline-none [color-scheme:dark]"
                     style={{
-                      background: 'rgba(15,23,42,0.04)',
-                      border: '1.5px solid rgba(59,91,219,0.25)',
+                      background: 'rgba(0,0,0,0.04)',
+                      border: '1.5px solid rgba(206,220,238,0.25)',
                       colorScheme: 'light',
                     }}
                   />
@@ -212,7 +212,7 @@ export default function PastLifeClient() {
                 <button
                   type="submit"
                   disabled={!isValid}
-                  className={`w-full rounded-full py-4 text-base font-semibold transition-all duration-200 ${isValid ? 'bg-[#3b5bdb] text-white shadow-[0_16px_34px_-18px_rgba(59,91,219,0.8)] hover:bg-[#2f4bc7]' : 'bg-[#eef2ff] text-[#3b5bdb] opacity-70'}`}
+                  className={`w-full rounded-full py-4 text-base font-semibold transition-all duration-200 ${isValid ? 'bg-[#e6ecf5] text-[#0a0e14] shadow-[0_16px_34px_-18px_rgba(206,220,238,0.8)] hover:bg-[#f4f8fd]' : 'bg-[#1b2231] text-[#e6ecf5] opacity-70'}`}
                 >
                   🌀 {t.submitBtn}
                 </button>
@@ -224,45 +224,45 @@ export default function PastLifeClient() {
           </form>
         )}
 
-        <p className="text-center text-[#64748b] text-xs mt-6">{t.footerText}</p>
+        <p className="text-center text-[#9aa3b2] text-xs mt-6">{t.footerText}</p>
 
         {/* Educational content */}
         <div className="space-y-5 mt-10">
           <div
             className="rounded-2xl p-6"
-            style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.05)' }}
+            style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.05)' }}
           >
-            <h2 className="text-[#0f172a] font-bold text-base mb-3">🌀 전생이란 무엇인가?</h2>
-            <p className="text-[#64748b] text-sm leading-relaxed mb-3">
+            <h2 className="text-[#f2f0ea] font-bold text-base mb-3">🌀 전생이란 무엇인가?</h2>
+            <p className="text-[#9aa3b2] text-sm leading-relaxed mb-3">
               전생(前生, Past Life)은 현재 삶 이전에 다른 형태로 존재했던 생을 의미합니다. 윤회(輪廻, Reincarnation) 개념은 수천 년의 역사를 가지며, 힌두교·불교·자이나교 등 동양 종교는 물론 고대 그리스 철학과 켈트 문화에도 깊이 뿌리내리고 있습니다.
             </p>
-            <p className="text-[#64748b] text-sm leading-relaxed mb-3">
+            <p className="text-[#9aa3b2] text-sm leading-relaxed mb-3">
               불교에서는 삶과 죽음이 반복되는 윤회의 수레바퀴를 '삼사라(Samsara)'라고 부르며, 업(業, Karma)에 따라 다음 생의 형태가 결정된다고 봅니다. 힌두교에서는 불멸의 영혼 '아트만(Atman)'이 육체를 옮겨 다닌다고 설명합니다.
             </p>
-            <p className="text-[#64748b] text-sm leading-relaxed">
+            <p className="text-[#9aa3b2] text-sm leading-relaxed">
               서양에서는 고대 그리스 철학자 피타고라스와 플라톤이 영혼의 윤회를 언급했습니다. 현대 심리학에서도 최면 치료를 통한 전생 퇴행(Past Life Regression) 연구가 이루어지고 있으며, 일부 심리치료사들은 이를 트라우마 치유의 도구로 활용하기도 합니다.
             </p>
           </div>
 
           <div
             className="rounded-2xl p-6"
-            style={{ background: 'rgba(59,91,219,0.07)', border: '1px solid rgba(59,91,219,0.15)' }}
+            style={{ background: 'rgba(206,220,238,0.07)', border: '1px solid rgba(206,220,238,0.15)' }}
           >
-            <h2 className="text-[#0f172a] font-bold text-base mb-3">⭐ 전생과 별자리의 연결</h2>
-            <p className="text-[#64748b] text-sm leading-relaxed mb-3">
+            <h2 className="text-[#f2f0ea] font-bold text-base mb-3">⭐ 전생과 별자리의 연결</h2>
+            <p className="text-[#9aa3b2] text-sm leading-relaxed mb-3">
               점성술에서 출생 차트(Birth Chart)는 현생뿐 아니라 전생의 카르마를 반영한다고 해석하기도 합니다. 특히 달의 노드(South Node)는 전생에서 이어온 패턴과 재능을, 북쪽 노드(North Node)는 이번 생에서 발전시켜야 할 방향을 나타낸다고 봅니다.
             </p>
-            <p className="text-[#64748b] text-sm leading-relaxed">
+            <p className="text-[#9aa3b2] text-sm leading-relaxed">
               생년월일과 이름에 담긴 수비학적 에너지 역시 전생의 흔적을 담고 있다는 관점이 있습니다. 본 테스트는 이러한 점성술·수비학·동서양 신화의 상징을 결합하여 흥미로운 전생 이야기를 들려드립니다. 오락 목적의 콘텐츠로, 진지하게 받아들이기보다 자기 이해의 계기로 즐겨주세요.
             </p>
           </div>
 
           <div
             className="rounded-2xl p-5"
-            style={{ background: 'rgba(15,23,42,0.02)', border: '1px solid rgba(15,23,42,0.05)' }}
+            style={{ background: 'rgba(0,0,0,0.02)', border: '1px solid rgba(0,0,0,0.05)' }}
           >
-            <h2 className="text-[#0f172a] font-bold text-sm mb-3">📚 전생 테스트 결과 유형 안내</h2>
-            <div className="grid grid-cols-2 gap-3 text-xs text-[#64748b]">
+            <h2 className="text-[#f2f0ea] font-bold text-sm mb-3">📚 전생 테스트 결과 유형 안내</h2>
+            <div className="grid grid-cols-2 gap-3 text-xs text-[#9aa3b2]">
               {[
                 { e: '🎨', t: '예술가 계열', d: '화원, 음유시인, 조각가 등 감수성과 창의력이 뛰어났던 전생' },
                 { e: '🏛️', t: '성직자·학자 계열', d: '신관, 철학자, 점성가 등 지식과 영성을 추구했던 전생' },
@@ -272,10 +272,10 @@ export default function PastLifeClient() {
                 <div
                   key={item.t}
                   className="rounded-xl p-3"
-                  style={{ background: 'rgba(59,91,219,0.08)', border: '1px solid rgba(59,91,219,0.12)' }}
+                  style={{ background: 'rgba(206,220,238,0.08)', border: '1px solid rgba(206,220,238,0.12)' }}
                 >
                   <div className="text-xl mb-1">{item.e}</div>
-                  <div className="text-[#475569] font-medium mb-1">{item.t}</div>
+                  <div className="text-[#bdc5d1] font-medium mb-1">{item.t}</div>
                   <div className="leading-relaxed">{item.d}</div>
                 </div>
               ))}
@@ -314,7 +314,7 @@ function RevealLoader({ step, lang }: { step: number; lang: string }) {
         ))}
         <div className="absolute inset-0 flex items-center justify-center text-2xl">🌀</div>
       </div>
-      <p className="text-[#3b5bdb]/70 text-sm text-center animate-pulse px-4">{msg}</p>
+      <p className="text-[#e6ecf5]/70 text-sm text-center animate-pulse px-4">{msg}</p>
     </div>
   );
 }
@@ -340,16 +340,16 @@ function ResultCard({
     >
       <div
         className="rounded-3xl p-[1.5px]"
-        style={{ background: 'linear-gradient(135deg, rgba(99,132,255,0.8), rgba(59,91,219,0.4), rgba(236,72,153,0.6))' }}
+        style={{ background: 'linear-gradient(135deg, rgba(99,132,255,0.8), rgba(206,220,238,0.4), rgba(236,72,153,0.6))' }}
       >
         <div
           className="rounded-3xl overflow-hidden"
-          style={{ background: '#ffffff' }}
+          style={{ background: '#101620' }}
         >
           {/* 상단 배너 */}
           <div
             className="relative px-6 py-8 text-center overflow-hidden"
-            style={{ background: 'linear-gradient(135deg, rgba(59,91,219,0.2) 0%, rgba(59,91,219,0.1) 100%)' }}
+            style={{ background: 'linear-gradient(135deg, rgba(206,220,238,0.2) 0%, rgba(206,220,238,0.1) 100%)' }}
           >
             <div className="absolute inset-0 opacity-10"
               style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(99,132,255,0.8), transparent 70%)' }} />
@@ -358,10 +358,10 @@ function ResultCard({
               <div className="text-7xl mb-4" style={{ filter: 'drop-shadow(0 0 20px rgba(99,132,255,0.6))' }}>
                 {result.emoji}
               </div>
-              <div className="text-[#3b5bdb]/60 text-xs font-semibold tracking-widest uppercase mb-2">
+              <div className="text-[#e6ecf5]/60 text-xs font-semibold tracking-widest uppercase mb-2">
                 {t.eraLabel} · {result.era[l]}
               </div>
-              <h2 className="text-2xl font-black text-[#0f172a] leading-tight">
+              <h2 className="text-2xl font-black text-[#f2f0ea] leading-tight">
                 {result.title[l]}
               </h2>
             </div>
@@ -369,13 +369,13 @@ function ResultCard({
 
           {/* 내용 */}
           <div className="px-6 pb-6 space-y-5">
-            <p className="text-[#334155] text-sm leading-relaxed pt-2 text-center">
+            <p className="text-[#ccd2dc] text-sm leading-relaxed pt-2 text-center">
               {result.desc[l]}
             </p>
 
             {/* 특성 뱃지 */}
             <div>
-              <div className="text-[#3b5bdb]/50 text-xs font-semibold tracking-widest uppercase mb-3 text-center">
+              <div className="text-[#e6ecf5]/50 text-xs font-semibold tracking-widest uppercase mb-3 text-center">
                 {t.traitsLabel}
               </div>
               <div className="flex flex-wrap justify-center gap-2">
@@ -384,9 +384,9 @@ function ResultCard({
                     key={trait}
                     className="px-4 py-1.5 rounded-full text-sm font-bold"
                     style={{
-                      background: 'rgba(59,91,219,0.2)',
-                      border: '1px solid rgba(59,91,219,0.4)',
-                      color: '#3b5bdb',
+                      background: 'rgba(206,220,238,0.2)',
+                      border: '1px solid rgba(206,220,238,0.4)',
+                      color: '#e6ecf5',
                     }}
                   >
                     {trait}
@@ -401,9 +401,9 @@ function ResultCard({
                 onClick={onRetry}
                 className="flex-1 py-3 rounded-2xl text-sm font-bold transition-all"
                 style={{
-                  background: 'rgba(15,23,42,0.04)',
-                  border: '1px solid rgba(15,23,42,0.08)',
-                  color: 'rgba(15,23,42,0.4)',
+                  background: 'rgba(0,0,0,0.04)',
+                  border: '1px solid rgba(0,0,0,0.08)',
+                  color: 'rgba(0,0,0,0.4)',
                 }}
               >
                 {t.retryBtn}
@@ -412,8 +412,8 @@ function ResultCard({
                 onClick={onShare}
                 className="flex-1 py-3 rounded-2xl text-sm font-bold transition-all"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(59,91,219,0.6), rgba(59,91,219,0.6))',
-                  border: '1px solid rgba(59,91,219,0.4)',
+                  background: 'linear-gradient(135deg, rgba(206,220,238,0.6), rgba(206,220,238,0.6))',
+                  border: '1px solid rgba(206,220,238,0.4)',
                   color: '#e9d5ff',
                 }}
               >
@@ -443,12 +443,12 @@ function PastLifePreview({ lang }: { lang: string }) {
           key={life.emoji}
           className="rounded-2xl p-4 text-center"
           style={{
-            background: 'rgba(59,91,219,0.07)',
-            border: '1px solid rgba(59,91,219,0.15)',
+            background: 'rgba(206,220,238,0.07)',
+            border: '1px solid rgba(206,220,238,0.15)',
           }}
         >
           <div className="text-3xl mb-1">{life.emoji}</div>
-          <div className="text-[#64748b] text-xs">{life[l] ?? life.ko}</div>
+          <div className="text-[#9aa3b2] text-xs">{life[l] ?? life.ko}</div>
         </div>
       ))}
     </div>

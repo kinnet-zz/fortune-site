@@ -16,8 +16,8 @@ const ZODIAC_BASE = [
   { english: 'Virgo', symbol: '♍', period: '8/23 ~ 9/22', elementKey: '땅 🌍', color: '#84cc16' },
   { english: 'Libra', symbol: '♎', period: '9/23 ~ 10/23', elementKey: '공기 💨', color: '#ec4899' },
   { english: 'Scorpio', symbol: '♏', period: '10/24 ~ 11/22', elementKey: '물 💧', color: '#7c3aed' },
-  { english: 'Sagittarius', symbol: '♐', period: '11/23 ~ 12/21', elementKey: '불 🔥', color: '#6366f1' },
-  { english: 'Capricorn', symbol: '♑', period: '12/22 ~ 1/19', elementKey: '땅 🌍', color: '#94a3b8' },
+  { english: 'Sagittarius', symbol: '♐', period: '11/23 ~ 12/21', elementKey: '불 🔥', color: '#a5b4cf' },
+  { english: 'Capricorn', symbol: '♑', period: '12/22 ~ 1/19', elementKey: '땅 🌍', color: '#8b94a3' },
   { english: 'Aquarius', symbol: '♒', period: '1/20 ~ 2/18', elementKey: '공기 💨', color: '#38bdf8' },
   { english: 'Pisces', symbol: '♓', period: '2/19 ~ 3/20', elementKey: '물 💧', color: '#a78bfa' },
 ];
@@ -34,10 +34,10 @@ const ELEMENT_THEME: Record<string, { color: string; border: string; label: stri
   'Earth 🌍': { color: 'rgba(34,197,94,0.10)', border: 'rgba(34,197,94,0.26)', label: '#2f6b4a' },
   '土 🌍': { color: 'rgba(34,197,94,0.10)', border: 'rgba(34,197,94,0.26)', label: '#2f6b4a' },
   '地 🌍': { color: 'rgba(34,197,94,0.10)', border: 'rgba(34,197,94,0.26)', label: '#2f6b4a' },
-  '공기 💨': { color: 'rgba(234,179,8,0.10)', border: 'rgba(234,179,8,0.26)', label: '#3b5bdb' },
-  'Air 💨': { color: 'rgba(234,179,8,0.10)', border: 'rgba(234,179,8,0.26)', label: '#3b5bdb' },
-  '风 💨': { color: 'rgba(234,179,8,0.10)', border: 'rgba(234,179,8,0.26)', label: '#3b5bdb' },
-  '風 💨': { color: 'rgba(234,179,8,0.10)', border: 'rgba(234,179,8,0.26)', label: '#3b5bdb' },
+  '공기 💨': { color: 'rgba(234,179,8,0.10)', border: 'rgba(234,179,8,0.26)', label: '#e6ecf5' },
+  'Air 💨': { color: 'rgba(234,179,8,0.10)', border: 'rgba(234,179,8,0.26)', label: '#e6ecf5' },
+  '风 💨': { color: 'rgba(234,179,8,0.10)', border: 'rgba(234,179,8,0.26)', label: '#e6ecf5' },
+  '風 💨': { color: 'rgba(234,179,8,0.10)', border: 'rgba(234,179,8,0.26)', label: '#e6ecf5' },
   '물 💧': { color: 'rgba(56,189,248,0.10)', border: 'rgba(56,189,248,0.26)', label: '#33507f' },
   'Water 💧': { color: 'rgba(56,189,248,0.10)', border: 'rgba(56,189,248,0.26)', label: '#33507f' },
   '水 💧': { color: 'rgba(56,189,248,0.10)', border: 'rgba(56,189,248,0.26)', label: '#33507f' },
@@ -68,11 +68,11 @@ export default function ZodiacContent() {
       <section className="relative overflow-hidden border-b border-[var(--line)]">
         <div
           className="pointer-events-none absolute inset-0 opacity-70"
-          style={{ background: 'radial-gradient(ellipse 60% 80% at 78% -10%, rgba(15,23,42,0.10) 0%, transparent 62%), radial-gradient(ellipse 40% 60% at 12% 110%, rgba(59,91,219,0.12) 0%, transparent 70%)' }}
+          style={{ background: 'radial-gradient(ellipse 60% 80% at 78% -10%, rgba(0,0,0,0.10) 0%, transparent 62%), radial-gradient(ellipse 40% 60% at 12% 110%, rgba(206,220,238,0.12) 0%, transparent 70%)' }}
           aria-hidden="true"
         />
         <div className="relative mx-auto max-w-6xl px-5 pb-14 pt-10 sm:pt-16">
-          <Link href="/" className="inline-flex min-h-11 items-center gap-2 text-[0.78rem] text-[var(--muted)] transition-colors hover:text-[#3b5bdb]">
+          <Link href="/" className="inline-flex min-h-11 items-center gap-2 text-[0.78rem] text-[var(--muted)] transition-colors hover:text-[#e6ecf5]">
             <span aria-hidden="true">←</span> 홈으로
           </Link>
           <div className="mt-8 grid grid-cols-1 items-end gap-10 lg:grid-cols-[1.1fr_0.9fr]">
@@ -121,7 +121,7 @@ export default function ZodiacContent() {
               <Link
                 key={english}
                 href={`/zodiac/${english.toLowerCase()}`}
-                className="zodiac-card group rounded-2xl border border-[var(--line)] bg-[#ffffff] p-3.5 text-center transition-all duration-500 hover:-translate-y-0.5 hover:border-[rgba(59,91,219,0.45)] hover:bg-[rgba(59,91,219,0.06)]"
+                className="zodiac-card group rounded-2xl border border-[var(--line)] bg-[#101620] p-3.5 text-center transition-all duration-500 hover:-translate-y-0.5 hover:border-[rgba(206,220,238,0.45)] hover:bg-[rgba(206,220,238,0.06)]"
               >
                 <span className="mx-auto block w-fit text-[var(--ink)]">
                   <ConstellationIcon slug={ZODIAC_SLUGS[index]} size={44} strokeWidth={1.2} />
@@ -143,7 +143,7 @@ export default function ZodiacContent() {
             {tr.elementItems.map(({ element, signs, desc }) => {
               const signLinks = ELEMENT_SIGN_MAP[element] ?? [];
               const signNames = signs.split(/[,，、]/).map(s => s.trim());
-              const theme = ELEMENT_THEME[element] ?? { color: 'rgba(15,23,42,0.03)', border: 'rgba(15,23,42,0.08)', label: '#f7eeda' };
+              const theme = ELEMENT_THEME[element] ?? { color: 'rgba(0,0,0,0.03)', border: 'rgba(0,0,0,0.08)', label: '#f7eeda' };
               return (
                 <div key={element} className="rounded-2xl p-5" style={{ background: theme.color, border: `1px solid ${theme.border}` }}>
                   <div className="mb-3 text-[0.95rem] font-semibold" style={{ color: theme.label }}>{element}</div>
@@ -152,7 +152,7 @@ export default function ZodiacContent() {
                       <Link
                         key={name}
                         href={`/zodiac/${signLinks[i] ?? name.toLowerCase()}`}
-                        className="text-[0.74rem] text-[var(--ink-soft)] underline-offset-4 transition-colors hover:text-[#0f172a] hover:underline"
+                        className="text-[0.74rem] text-[var(--ink-soft)] underline-offset-4 transition-colors hover:text-[#f2f0ea] hover:underline"
                       >
                         {name}
                       </Link>
@@ -204,7 +204,7 @@ export default function ZodiacContent() {
                   <div className="p-6 sm:p-7">
                     <div className="mb-5 flex flex-wrap gap-1.5">
                       {traits.map((trait) => (
-                        <span key={trait} className="rounded-full border border-[rgba(59,91,219,0.28)] bg-[rgba(59,91,219,0.08)] px-2.5 py-1 text-[0.68rem] text-[#3b5bdb]">
+                        <span key={trait} className="rounded-full border border-[rgba(206,220,238,0.28)] bg-[rgba(206,220,238,0.08)] px-2.5 py-1 text-[0.68rem] text-[#e6ecf5]">
                           {trait}
                         </span>
                       ))}
@@ -229,7 +229,7 @@ export default function ZodiacContent() {
                       </div>
                       <Link
                         href={`/zodiac/${english.toLowerCase()}`}
-                        className="group inline-flex min-h-9 items-center gap-1.5 text-[0.74rem] font-semibold text-[var(--ink)] transition-colors hover:text-[#0f172a]"
+                        className="group inline-flex min-h-9 items-center gap-1.5 text-[0.74rem] font-semibold text-[var(--ink)] transition-colors hover:text-[#f2f0ea]"
                       >
                         상세 가이드
                         <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
@@ -242,9 +242,9 @@ export default function ZodiacContent() {
           </div>
         </section>
 
-        <div className="mt-14 flex flex-col items-center gap-4 rounded-2xl border border-[#e8eaef] bg-[#f8f9fb] px-6 py-10 text-center">
+        <div className="mt-14 flex flex-col items-center gap-4 rounded-2xl border border-[rgba(184,199,220,0.14)] bg-[#121722] px-6 py-10 text-center">
           <span className="eyebrow eyebrow-light eyebrow-center">Your reading</span>
-          <p className="text-[1.3rem] font-bold tracking-[-0.03em] text-[#0f172a]">오늘 내 별자리의 운세가 궁금하다면</p>
+          <p className="text-[1.3rem] font-bold tracking-[-0.03em] text-[#f2f0ea]">오늘 내 별자리의 운세가 궁금하다면</p>
           <Link href="/" className="btn-gold-warm mt-1 text-[0.9rem]">
             오늘의 운세 무료로 보기 <span aria-hidden="true">→</span>
           </Link>

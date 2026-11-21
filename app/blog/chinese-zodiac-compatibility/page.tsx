@@ -13,29 +13,29 @@ export const metadata: Metadata = {
 };
 
 const bgStyle = {
-  background: '#ffffff',
+  background: '#101620',
   minHeight: '100vh',
 };
 
 export default function ChineseZodiacCompatibilityPage() {
   return (
     <div style={bgStyle}>
-      <article className="max-w-3xl mx-auto px-6 py-16 text-[#0f172a]/80">
-        <Link href="/blog" className="text-[#3b5bdb] hover:text-[#3b5bdb] text-sm mb-8 inline-block">
+      <article className="max-w-3xl mx-auto px-6 py-16 text-[#f2f0ea]/80">
+        <Link href="/blog" className="text-[#e6ecf5] hover:text-[#e6ecf5] text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
 
         <header className="mb-10">
           <div className="flex items-center gap-2 mb-4 flex-wrap">
-            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(59,91,219,0.14)', color: '#3b5bdb' }}>
+            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(206,220,238,0.14)', color: '#e6ecf5' }}>
               동양 점성술
             </span>
-            <span className="text-[#64748b] text-xs">2025년 3월 12일 · 10분 읽기</span>
+            <span className="text-[#9aa3b2] text-xs">2025년 3월 12일 · 10분 읽기</span>
           </div>
-          <h1 className="text-3xl font-bold text-[#0f172a] mb-4 leading-tight">
+          <h1 className="text-3xl font-bold text-[#f2f0ea] mb-4 leading-tight">
             12띠 궁합 완벽 가이드 — 나와 잘 맞는 띠는?
           </h1>
-          <p className="text-[#475569] text-base leading-relaxed">
+          <p className="text-[#bdc5d1] text-base leading-relaxed">
             수천 년 동양 철학의 정수인 12띠 궁합. 삼합·육합·상충의 원리를 이해하면 연애, 결혼, 우정, 비즈니스 파트너 관계를 보다 깊이 이해할 수 있습니다.
           </p>
         </header>
@@ -43,7 +43,7 @@ export default function ChineseZodiacCompatibilityPage() {
         <div className="space-y-8 text-sm leading-relaxed">
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">12띠 궁합의 원리 — 음양오행의 세계</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">12띠 궁합의 원리 — 음양오행의 세계</h2>
             <p className="mb-3">
               동양의 12띠(十二支) 체계는 단순한 동물 상징이 아닙니다. 그 배후에는 음양(陰陽)과 오행(五行, 목·화·토·금·수)이라는 방대한 우주론적 철학이 자리하고 있습니다. 기원전 중국 주나라 시대부터 체계화되기 시작한 이 12지지 체계는 시간, 방위, 계절, 그리고 인간의 기질을 하나의 통합된 언어로 설명하려는 시도였습니다.
             </p>
@@ -59,73 +59,73 @@ export default function ChineseZodiacCompatibilityPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">삼합(三合) — 최상의 궁합 조합</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">삼합(三合) — 최상의 궁합 조합</h2>
             <p className="mb-3">
               삼합은 세 개의 띠가 서로를 완성시키는 황금 삼각형 관계입니다. 같은 오행 에너지를 공유하며 서로의 부족한 면을 채워주는 이상적인 조화를 이룹니다. 연애와 결혼은 물론 사업 파트너, 친구 관계에서도 자연스럽고 편안한 시너지를 만들어냅니다.
             </p>
 
-            <div className="rounded-2xl p-5 mb-4" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-              <h3 className="text-[#0f172a] font-semibold mb-3">4가지 삼합 그룹</h3>
+            <div className="rounded-2xl p-5 mb-4" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+              <h3 className="text-[#f2f0ea] font-semibold mb-3">4가지 삼합 그룹</h3>
               <div className="space-y-3">
                 <div>
                   <span className="text-blue-300 font-medium">수(水)의 삼합 — 🐭쥐 + 🐉용 + 🐒원숭이</span>
-                  <p className="text-[#475569] mt-1">지혜롭고 창의적인 에너지를 공유합니다. 쥐의 영리함, 용의 카리스마, 원숭이의 재치가 어우러져 어떤 도전도 극복하는 강력한 팀을 이룹니다. 특히 지적 교류와 사업에서 빛을 발하는 조합.</p>
+                  <p className="text-[#bdc5d1] mt-1">지혜롭고 창의적인 에너지를 공유합니다. 쥐의 영리함, 용의 카리스마, 원숭이의 재치가 어우러져 어떤 도전도 극복하는 강력한 팀을 이룹니다. 특히 지적 교류와 사업에서 빛을 발하는 조합.</p>
                 </div>
                 <div>
                   <span className="text-yellow-300 font-medium">금(金)의 삼합 — 🐂소 + 🐍뱀 + 🐓닭</span>
-                  <p className="text-[#475569] mt-1">신중하고 인내심 강한 에너지로 뭉칩니다. 소의 성실함, 뱀의 지혜, 닭의 꼼꼼함이 결합되어 장기적인 목표를 향해 묵묵히 나아가는 힘을 발휘합니다. 결혼 상대로서 안정감이 최고.</p>
+                  <p className="text-[#bdc5d1] mt-1">신중하고 인내심 강한 에너지로 뭉칩니다. 소의 성실함, 뱀의 지혜, 닭의 꼼꼼함이 결합되어 장기적인 목표를 향해 묵묵히 나아가는 힘을 발휘합니다. 결혼 상대로서 안정감이 최고.</p>
                 </div>
                 <div>
                   <span className="text-[#9b3a3a] font-medium">화(火)의 삼합 — 🐯호랑이 + 🐎말 + 🐕개</span>
-                  <p className="text-[#475569] mt-1">열정과 자유를 사랑하는 동지들. 호랑이의 용맹함, 말의 활달함, 개의 충직함이 만나 의리 있고 역동적인 관계를 만듭니다. 모험과 도전을 함께 즐기는 최고의 파트너.</p>
+                  <p className="text-[#bdc5d1] mt-1">열정과 자유를 사랑하는 동지들. 호랑이의 용맹함, 말의 활달함, 개의 충직함이 만나 의리 있고 역동적인 관계를 만듭니다. 모험과 도전을 함께 즐기는 최고의 파트너.</p>
                 </div>
                 <div>
                   <span className="text-[#2f6b4a] font-medium">목(木)의 삼합 — 🐰토끼 + 🐏양 + 🐷돼지</span>
-                  <p className="text-[#475569] mt-1">따뜻하고 예술적인 감성을 나누는 조합. 토끼의 우아함, 양의 온화함, 돼지의 넉넉함이 조화를 이루어 서로를 편안하게 해주는 특별한 유대감을 형성합니다.</p>
+                  <p className="text-[#bdc5d1] mt-1">따뜻하고 예술적인 감성을 나누는 조합. 토끼의 우아함, 양의 온화함, 돼지의 넉넉함이 조화를 이루어 서로를 편안하게 해주는 특별한 유대감을 형성합니다.</p>
                 </div>
               </div>
             </div>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">육합(六合) — 좋은 궁합 조합</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">육합(六合) — 좋은 궁합 조합</h2>
             <p className="mb-3">
               육합은 서로 다른 두 띠가 상호 보완적으로 맞물리는 관계입니다. 삼합만큼 강렬하지는 않지만, 오히려 차이가 있기에 서로에게 배우고 성장하는 관계를 만듭니다. 연애에서는 끌림과 설렘이 오래 지속되는 편입니다.
             </p>
 
-            <div className="rounded-2xl p-5" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-              <h3 className="text-[#0f172a] font-semibold mb-3">6가지 육합 쌍</h3>
+            <div className="rounded-2xl p-5" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+              <h3 className="text-[#f2f0ea] font-semibold mb-3">6가지 육합 쌍</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="p-3 rounded-xl" style={{ background: 'rgba(15,23,42,0.03)' }}>
-                  <p className="text-[#0f172a] font-medium">🐭쥐 + 🐂소</p>
-                  <p className="text-[#475569] text-xs mt-1">영리함과 성실함의 조합. 쥐가 아이디어를 내면 소가 실현합니다.</p>
+                <div className="p-3 rounded-xl" style={{ background: 'rgba(0,0,0,0.03)' }}>
+                  <p className="text-[#f2f0ea] font-medium">🐭쥐 + 🐂소</p>
+                  <p className="text-[#bdc5d1] text-xs mt-1">영리함과 성실함의 조합. 쥐가 아이디어를 내면 소가 실현합니다.</p>
                 </div>
-                <div className="p-3 rounded-xl" style={{ background: 'rgba(15,23,42,0.03)' }}>
-                  <p className="text-[#0f172a] font-medium">🐯호랑이 + 🐷돼지</p>
-                  <p className="text-[#475569] text-xs mt-1">열정과 포용의 만남. 호랑이의 강함을 돼지가 부드럽게 감쌉니다.</p>
+                <div className="p-3 rounded-xl" style={{ background: 'rgba(0,0,0,0.03)' }}>
+                  <p className="text-[#f2f0ea] font-medium">🐯호랑이 + 🐷돼지</p>
+                  <p className="text-[#bdc5d1] text-xs mt-1">열정과 포용의 만남. 호랑이의 강함을 돼지가 부드럽게 감쌉니다.</p>
                 </div>
-                <div className="p-3 rounded-xl" style={{ background: 'rgba(15,23,42,0.03)' }}>
-                  <p className="text-[#0f172a] font-medium">🐰토끼 + 🐕개</p>
-                  <p className="text-[#475569] text-xs mt-1">감성과 충직함의 조화. 서로를 아끼고 배려하는 안정적인 관계.</p>
+                <div className="p-3 rounded-xl" style={{ background: 'rgba(0,0,0,0.03)' }}>
+                  <p className="text-[#f2f0ea] font-medium">🐰토끼 + 🐕개</p>
+                  <p className="text-[#bdc5d1] text-xs mt-1">감성과 충직함의 조화. 서로를 아끼고 배려하는 안정적인 관계.</p>
                 </div>
-                <div className="p-3 rounded-xl" style={{ background: 'rgba(15,23,42,0.03)' }}>
-                  <p className="text-[#0f172a] font-medium">🐉용 + 🐓닭</p>
-                  <p className="text-[#475569] text-xs mt-1">스케일과 완벽함의 결합. 용의 큰 꿈을 닭이 세밀하게 완성합니다.</p>
+                <div className="p-3 rounded-xl" style={{ background: 'rgba(0,0,0,0.03)' }}>
+                  <p className="text-[#f2f0ea] font-medium">🐉용 + 🐓닭</p>
+                  <p className="text-[#bdc5d1] text-xs mt-1">스케일과 완벽함의 결합. 용의 큰 꿈을 닭이 세밀하게 완성합니다.</p>
                 </div>
-                <div className="p-3 rounded-xl" style={{ background: 'rgba(15,23,42,0.03)' }}>
-                  <p className="text-[#0f172a] font-medium">🐍뱀 + 🐒원숭이</p>
-                  <p className="text-[#475569] text-xs mt-1">지혜와 재치의 최강 조합. 두 사람 모두 총명하여 대화가 끊이지 않습니다.</p>
+                <div className="p-3 rounded-xl" style={{ background: 'rgba(0,0,0,0.03)' }}>
+                  <p className="text-[#f2f0ea] font-medium">🐍뱀 + 🐒원숭이</p>
+                  <p className="text-[#bdc5d1] text-xs mt-1">지혜와 재치의 최강 조합. 두 사람 모두 총명하여 대화가 끊이지 않습니다.</p>
                 </div>
-                <div className="p-3 rounded-xl" style={{ background: 'rgba(15,23,42,0.03)' }}>
-                  <p className="text-[#0f172a] font-medium">🐎말 + 🐏양</p>
-                  <p className="text-[#475569] text-xs mt-1">자유와 여유의 동행. 서로의 독립성을 존중하며 편안하게 함께합니다.</p>
+                <div className="p-3 rounded-xl" style={{ background: 'rgba(0,0,0,0.03)' }}>
+                  <p className="text-[#f2f0ea] font-medium">🐎말 + 🐏양</p>
+                  <p className="text-[#bdc5d1] text-xs mt-1">자유와 여유의 동행. 서로의 독립성을 존중하며 편안하게 함께합니다.</p>
                 </div>
               </div>
             </div>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">상충(相沖) — 주의가 필요한 궁합</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">상충(相沖) — 주의가 필요한 궁합</h2>
             <p className="mb-3">
               상충은 12지지에서 정반대 위치에 있는 두 띠가 만나는 관계입니다. 에너지의 방향이 정면으로 충돌하기 때문에 긴장감과 갈등이 생기기 쉽습니다. 그러나 "상충"이 반드시 나쁜 관계만을 의미하지는 않습니다. 강한 자극과 도전을 통해 서로를 성장시키는 면도 있습니다.
             </p>
@@ -133,22 +133,22 @@ export default function ChineseZodiacCompatibilityPage() {
             <div className="rounded-2xl p-5 mb-4" style={{ background: 'rgba(255,100,100,0.06)', border: '1px solid rgba(255,100,100,0.2)' }}>
               <h3 className="text-[#9b3a3a] font-semibold mb-3">6가지 상충 쌍</h3>
               <ul className="space-y-2">
-                <li><strong className="text-[#0f172a]">🐭쥐 ↔ 🐎말:</strong> 물(水)과 불(火)의 충돌. 사고방식과 생활 패턴이 달라 갈등이 잦을 수 있습니다.</li>
-                <li><strong className="text-[#0f172a]">🐂소 ↔ 🐏양:</strong> 고집과 온화함의 충돌. 소의 고집스러움이 양의 감성을 상처 입힐 수 있습니다.</li>
-                <li><strong className="text-[#0f172a]">🐯호랑이 ↔ 🐒원숭이:</strong> 직진과 우회의 충돌. 호랑이의 직선적 방식이 원숭이의 유연한 전략과 부딪힙니다.</li>
-                <li><strong className="text-[#0f172a]">🐰토끼 ↔ 🐓닭:</strong> 감성과 논리의 충돌. 섬세한 토끼가 비판적인 닭에게 상처받기 쉬운 관계.</li>
-                <li><strong className="text-[#0f172a]">🐉용 ↔ 🐕개:</strong> 카리스마와 의리의 충돌. 용의 자유분방함이 개의 충직한 기대와 어긋나곤 합니다.</li>
-                <li><strong className="text-[#0f172a]">🐍뱀 ↔ 🐷돼지:</strong> 신중함과 솔직함의 충돌. 뱀의 복잡한 내면을 돼지가 이해하기 어려울 수 있습니다.</li>
+                <li><strong className="text-[#f2f0ea]">🐭쥐 ↔ 🐎말:</strong> 물(水)과 불(火)의 충돌. 사고방식과 생활 패턴이 달라 갈등이 잦을 수 있습니다.</li>
+                <li><strong className="text-[#f2f0ea]">🐂소 ↔ 🐏양:</strong> 고집과 온화함의 충돌. 소의 고집스러움이 양의 감성을 상처 입힐 수 있습니다.</li>
+                <li><strong className="text-[#f2f0ea]">🐯호랑이 ↔ 🐒원숭이:</strong> 직진과 우회의 충돌. 호랑이의 직선적 방식이 원숭이의 유연한 전략과 부딪힙니다.</li>
+                <li><strong className="text-[#f2f0ea]">🐰토끼 ↔ 🐓닭:</strong> 감성과 논리의 충돌. 섬세한 토끼가 비판적인 닭에게 상처받기 쉬운 관계.</li>
+                <li><strong className="text-[#f2f0ea]">🐉용 ↔ 🐕개:</strong> 카리스마와 의리의 충돌. 용의 자유분방함이 개의 충직한 기대와 어긋나곤 합니다.</li>
+                <li><strong className="text-[#f2f0ea]">🐍뱀 ↔ 🐷돼지:</strong> 신중함과 솔직함의 충돌. 뱀의 복잡한 내면을 돼지가 이해하기 어려울 수 있습니다.</li>
               </ul>
             </div>
 
-            <p className="text-[#475569] text-xs p-3 rounded-xl" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.05)' }}>
+            <p className="text-[#bdc5d1] text-xs p-3 rounded-xl" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.05)' }}>
               ※ 상충 관계라도 실제 사주 전체(년·월·일·시)를 보면 다른 합(合)의 기운이 충돌을 완화하는 경우가 많습니다. 띠만으로 관계의 전부를 판단하지 않는 것이 좋습니다.
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">연애 궁합 vs 직업 궁합의 차이</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">연애 궁합 vs 직업 궁합의 차이</h2>
             <p className="mb-3">
               같은 띠 조합이라도 어떤 관계에서 보느냐에 따라 궁합의 해석이 달라집니다. 연애와 결혼 궁합에서는 감정적 조화와 생활 방식의 호환성이 핵심이지만, 직업이나 사업 궁합에서는 목표 달성을 위한 역할 분담과 에너지 시너지가 더 중요합니다.
             </p>
@@ -161,7 +161,7 @@ export default function ChineseZodiacCompatibilityPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">나쁜 궁합도 극복하는 방법</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">나쁜 궁합도 극복하는 방법</h2>
             <p className="mb-3">
               상충 관계의 띠를 가진 파트너와 함께하고 있다고 해서 관계가 반드시 실패하는 것은 아닙니다. 동양 철학에서는 "충(沖)을 합(合)으로 화(化)한다"는 개념이 있습니다. 충돌하는 에너지도 올바른 방식으로 다루면 강한 결합으로 전환될 수 있다는 뜻입니다.
             </p>
@@ -178,27 +178,27 @@ export default function ChineseZodiacCompatibilityPage() {
 
         </div>
 
-        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(59,91,219,0.1)', border: '1px solid rgba(59,91,219,0.14)' }}>
-          <p className="text-[#475569] mb-4 text-sm">나의 별자리 운세가 궁금하다면?</p>
+        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(206,220,238,0.1)', border: '1px solid rgba(206,220,238,0.14)' }}>
+          <p className="text-[#bdc5d1] mb-4 text-sm">나의 별자리 운세가 궁금하다면?</p>
           <Link
             href="/"
-            className="inline-block px-6 py-3 rounded-full font-bold text-[#ffffff] text-sm"
-            style={{ background: 'linear-gradient(135deg, #3b5bdb 0%, #2f4bc7 100%)' }}
+            className="inline-block px-6 py-3 rounded-full font-bold text-[#101620] text-sm"
+            style={{ background: 'linear-gradient(135deg, #e6ecf5 0%, #f4f8fd 100%)' }}
           >
             🔮 오늘의 운세 무료로 보기 →
           </Link>
         </div>
 
         <nav className="mt-10">
-          <h3 className="text-sm text-[#64748b] mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
+          <h3 className="text-sm text-[#9aa3b2] mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <Link href="/blog/chinese-vs-western-zodiac" className="p-4 rounded-xl text-sm hover:border-[#c7d0f7] transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-              <div className="text-[#0f172a]/72 font-medium">🌏 동양 vs 서양 점성술 비교</div>
-              <div className="text-[#64748b] text-xs mt-1">12띠와 12별자리, 무엇이 다를까?</div>
+            <Link href="/blog/chinese-vs-western-zodiac" className="p-4 rounded-xl text-sm hover:border-[#3a4a61] transition-colors" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+              <div className="text-[#f2f0ea]/72 font-medium">🌏 동양 vs 서양 점성술 비교</div>
+              <div className="text-[#9aa3b2] text-xs mt-1">12띠와 12별자리, 무엇이 다를까?</div>
             </Link>
-            <Link href="/blog/zodiac-compatibility-guide" className="p-4 rounded-xl text-sm hover:border-[#c7d0f7] transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-              <div className="text-[#0f172a]/72 font-medium">💞 12 별자리 궁합 완벽 분석</div>
-              <div className="text-[#64748b] text-xs mt-1">나와 가장 잘 맞는 별자리는?</div>
+            <Link href="/blog/zodiac-compatibility-guide" className="p-4 rounded-xl text-sm hover:border-[#3a4a61] transition-colors" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+              <div className="text-[#f2f0ea]/72 font-medium">💞 12 별자리 궁합 완벽 분석</div>
+              <div className="text-[#9aa3b2] text-xs mt-1">나와 가장 잘 맞는 별자리는?</div>
             </Link>
           </div>
         </nav>

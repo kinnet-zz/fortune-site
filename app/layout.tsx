@@ -7,8 +7,8 @@ import Footer from '../components/Footer';
 import { LangProvider } from '@/lib/LangContext';
 
 export const viewport: Viewport = {
-  themeColor: '#ffffff',
-  colorScheme: 'light',
+  themeColor: '#07090e',
+  colorScheme: 'dark',
 };
 
 export const metadata: Metadata = {
@@ -79,9 +79,9 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Noto+Sans+KR:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@300;400;500;600&display=swap"
         />
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%23ffffff%22/><rect x=%220.5%22 y=%220.5%22 width=%2263%22 height=%2263%22 rx=%2215.5%22 fill=%22none%22 stroke=%22%23e8eaef%22/><path d=%22M32 13l4.4 14.6L51 32l-14.6 4.4L32 51l-4.4-14.6L13 32l14.6-4.4L32 13z%22 fill=%22%233b5bdb%22/></svg>" />
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%23070a0f%22/><circle cx=%2232%22 cy=%2232%22 r=%2213%22 fill=%22%23e6ecf5%22 opacity=%220.92%22/><circle cx=%2236%22 cy=%2229%22 r=%2211%22 fill=%22%23070a0f%22 opacity=%220.65%22/><path d=%22M32 8l1.8 5.6L39.4 15l-5.6 1.8L32 22.4l-1.8-5.6L24.6 15l5.6-1.4L32 8z%22 fill=%22%23e6ecf5%22/></svg>" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

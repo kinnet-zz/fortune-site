@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 const bgStyle = {
-  background: '#ffffff',
+  background: '#101620',
   minHeight: '100vh',
 };
 
@@ -31,7 +31,7 @@ const PLANETS = [
     name: '달 (Moon)',
     symbol: '🌙',
     rules: '게자리',
-    color: '#94a3b8',
+    color: '#8b94a3',
     mythology: '그리스 신화의 달의 여신 셀레네 또는 아르테미스. 달의 변화처럼 감정의 순환을 나타냄.',
     meaning: '감정, 직관, 무의식, 어머니 원형, 가정, 과거와 추억',
     personality: '달이 강한 사람은 감수성이 풍부하고 직관력이 뛰어납니다. 가족과 안전한 환경을 중시하며, 타인의 감정에 깊이 공감합니다.',
@@ -76,7 +76,7 @@ const PLANETS = [
     name: '토성 (Saturn)',
     symbol: '♄',
     rules: '염소자리, (물병자리 공동)',
-    color: '#94a3b8',
+    color: '#8b94a3',
     mythology: '그리스의 크로노스(시간의 신). 로마의 농업신 사투르누스. 제약과 시간, 카르마의 상징.',
     meaning: '규율, 책임, 한계, 인내, 시간, 구조, 카르마, 노력의 결실',
     personality: '토성이 강한 사람은 책임감이 강하고 성실합니다. 어려운 상황에서도 포기하지 않으며, 시간이 걸리더라도 착실하게 목표를 달성합니다.',
@@ -94,7 +94,7 @@ const PLANETS = [
     name: '해왕성 (Neptune)',
     symbol: '♆',
     rules: '물고기자리',
-    color: '#6366f1',
+    color: '#a5b4cf',
     mythology: '그리스의 바다신 포세이돈. 1846년 발견. 신비로운 꿈과 환상의 세계를 상징.',
     meaning: '꿈, 환상, 직관, 영성, 예술, 이상주의, 혼란, 희생',
     personality: '해왕성이 강한 사람은 상상력이 풍부하고 영적인 감수성이 높습니다. 예술적 재능이 있으며 이상적인 세계를 꿈꿉니다.',
@@ -113,22 +113,22 @@ const PLANETS = [
 export default function PlanetsAndZodiacPage() {
   return (
     <div style={bgStyle}>
-      <article className="max-w-3xl mx-auto px-6 py-16 text-[#0f172a]/80">
-        <Link href="/blog" className="text-[#3b5bdb] hover:text-[#3b5bdb] text-sm mb-8 inline-block">
+      <article className="max-w-3xl mx-auto px-6 py-16 text-[#f2f0ea]/80">
+        <Link href="/blog" className="text-[#e6ecf5] hover:text-[#e6ecf5] text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
 
         <header className="mb-10">
           <div className="flex items-center gap-2 mb-4 flex-wrap">
-            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(59,91,219,0.14)', color: '#3b5bdb' }}>
+            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(206,220,238,0.14)', color: '#e6ecf5' }}>
               행성과 별자리
             </span>
-            <span className="text-[#64748b] text-xs">2025년 3월 20일 · 11분 읽기</span>
+            <span className="text-[#9aa3b2] text-xs">2025년 3월 20일 · 11분 읽기</span>
           </div>
-          <h1 className="text-3xl font-bold text-[#0f172a] mb-4 leading-tight">
+          <h1 className="text-3xl font-bold text-[#f2f0ea] mb-4 leading-tight">
             지배 행성과 별자리의 관계 — 화성, 금성, 목성이 성격에 미치는 영향
           </h1>
-          <p className="text-[#475569] text-base leading-relaxed">
+          <p className="text-[#bdc5d1] text-base leading-relaxed">
             별자리의 에너지는 지배 행성에서 비롯됩니다. 신화에서 탄생한 행성들의 상징이 어떻게 우리의 성격과 삶에 반영되는지 탐구합니다.
           </p>
         </header>
@@ -136,7 +136,7 @@ export default function PlanetsAndZodiacPage() {
         <div className="space-y-8 text-sm leading-relaxed">
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">왜 지배 행성이 중요한가?</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">왜 지배 행성이 중요한가?</h2>
             <p className="mb-3">
               점성술에서 각 별자리는 하나 혹은 두 개의 행성에 의해 "지배(Rulership)"됩니다. 지배 행성은 해당 별자리의 근본적인 에너지와 특성을 결정하는 가장 중요한 요소 중 하나입니다. 쉽게 말하면, 지배 행성은 별자리의 "영혼"과 같습니다.
             </p>
@@ -149,28 +149,28 @@ export default function PlanetsAndZodiacPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">10개 행성의 의미와 지배 별자리</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">10개 행성의 의미와 지배 별자리</h2>
             <div className="space-y-4">
               {PLANETS.map((planet) => (
                 <div
                   key={planet.name}
                   className="rounded-2xl overflow-hidden"
-                  style={{ border: '1px solid rgba(15,23,42,0.06)' }}
+                  style={{ border: '1px solid rgba(0,0,0,0.06)' }}
                 >
                   <div
                     className="px-5 py-4 flex items-center gap-3"
-                    style={{ background: 'rgba(15,23,42,0.03)' }}
+                    style={{ background: 'rgba(0,0,0,0.03)' }}
                   >
                     <span className="text-2xl">{planet.symbol}</span>
                     <div className="flex-1">
-                      <h3 className="text-[#0f172a] font-bold">{planet.name}</h3>
+                      <h3 className="text-[#f2f0ea] font-bold">{planet.name}</h3>
                       <p className="text-xs mt-0.5" style={{ color: planet.color }}>지배: {planet.rules}</p>
                     </div>
                   </div>
-                  <div className="px-5 py-4 space-y-2" style={{ background: 'rgba(15,23,42,0.025)' }}>
-                    <p className="text-[#475569] text-xs"><strong className="text-[#0f172a]/72">신화:</strong> {planet.mythology}</p>
-                    <p className="text-[#475569] text-xs"><strong className="text-[#0f172a]/72">상징:</strong> {planet.meaning}</p>
-                    <p className="text-[#475569] text-xs">{planet.personality}</p>
+                  <div className="px-5 py-4 space-y-2" style={{ background: 'rgba(0,0,0,0.025)' }}>
+                    <p className="text-[#bdc5d1] text-xs"><strong className="text-[#f2f0ea]/72">신화:</strong> {planet.mythology}</p>
+                    <p className="text-[#bdc5d1] text-xs"><strong className="text-[#f2f0ea]/72">상징:</strong> {planet.meaning}</p>
+                    <p className="text-[#bdc5d1] text-xs">{planet.personality}</p>
                   </div>
                 </div>
               ))}
@@ -178,43 +178,43 @@ export default function PlanetsAndZodiacPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">행성의 품위 — 강하거나 약한 위치</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">행성의 품위 — 강하거나 약한 위치</h2>
             <p className="mb-3">
               점성술에서는 각 행성이 특정 별자리에서 더 강하거나 약한 에너지를 발휘한다고 봅니다. 이를 "행성의 품위(Dignities)"라고 합니다.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="rounded-xl p-4" style={{ background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.15)' }}>
                 <h3 className="text-[#2f6b4a] font-semibold mb-3 text-sm">행성이 강한 위치</h3>
-                <ul className="space-y-1 text-xs text-[#0f172a]/72">
-                  <li><strong className="text-[#0f172a]">지배(Domicile):</strong> 행성이 자신의 별자리에 위치. 에너지가 가장 자연스럽게 발휘됨.</li>
-                  <li><strong className="text-[#0f172a]">고양(Exaltation):</strong> 특정 별자리에서 행성 에너지가 특별히 강화됨.</li>
+                <ul className="space-y-1 text-xs text-[#f2f0ea]/72">
+                  <li><strong className="text-[#f2f0ea]">지배(Domicile):</strong> 행성이 자신의 별자리에 위치. 에너지가 가장 자연스럽게 발휘됨.</li>
+                  <li><strong className="text-[#f2f0ea]">고양(Exaltation):</strong> 특정 별자리에서 행성 에너지가 특별히 강화됨.</li>
                 </ul>
               </div>
               <div className="rounded-xl p-4" style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.15)' }}>
                 <h3 className="text-[#9b3a3a] font-semibold mb-3 text-sm">행성이 약한 위치</h3>
-                <ul className="space-y-1 text-xs text-[#0f172a]/72">
-                  <li><strong className="text-[#0f172a]">감쇠(Detriment):</strong> 지배 별자리의 반대 별자리. 에너지 발휘가 어색함.</li>
-                  <li><strong className="text-[#0f172a]">추락(Fall):</strong> 고양의 반대 별자리. 에너지가 가장 약하게 발현됨.</li>
+                <ul className="space-y-1 text-xs text-[#f2f0ea]/72">
+                  <li><strong className="text-[#f2f0ea]">감쇠(Detriment):</strong> 지배 별자리의 반대 별자리. 에너지 발휘가 어색함.</li>
+                  <li><strong className="text-[#f2f0ea]">추락(Fall):</strong> 고양의 반대 별자리. 에너지가 가장 약하게 발현됨.</li>
                 </ul>
               </div>
             </div>
-            <p className="mt-4 text-[#475569] text-xs">
+            <p className="mt-4 text-[#bdc5d1] text-xs">
               예: 화성은 양자리(지배)에서 가장 강하고, 염소자리(고양)에서도 강합니다. 반대로 천칭자리(감쇠)와 게자리(추락)에서는 에너지 발휘에 어려움이 있습니다.
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">행성 에너지를 일상에서 활용하기</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">행성 에너지를 일상에서 활용하기</h2>
             <p className="mb-3">
               요일(曜日)은 실제로 행성의 이름에서 유래했습니다. 월요일(Moon), 화요일(Mars), 수요일(Mercury), 목요일(Jupiter), 금요일(Venus), 토요일(Saturn), 일요일(Sun) — 7개 행성이 각 요일을 지배합니다.
             </p>
             <div className="overflow-x-auto">
-              <table className="w-full text-xs border border-[#0f172a]/12 rounded-xl overflow-hidden">
+              <table className="w-full text-xs border border-white/10 rounded-xl overflow-hidden">
                 <thead>
-                  <tr style={{ background: 'rgba(15,23,42,0.05)' }}>
-                    <th className="px-3 py-2 text-left text-[#0f172a]">요일</th>
-                    <th className="px-3 py-2 text-left text-[#475569]">행성</th>
-                    <th className="px-3 py-2 text-left text-[#475569]">그날 하기 좋은 활동</th>
+                  <tr style={{ background: 'rgba(0,0,0,0.05)' }}>
+                    <th className="px-3 py-2 text-left text-[#f2f0ea]">요일</th>
+                    <th className="px-3 py-2 text-left text-[#bdc5d1]">행성</th>
+                    <th className="px-3 py-2 text-left text-[#bdc5d1]">그날 하기 좋은 활동</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -227,10 +227,10 @@ export default function PlanetsAndZodiacPage() {
                     ['토요일 ♄', '토성', '계획, 정리정돈, 장기 프로젝트 진행'],
                     ['일요일 ☀️', '태양', '창의적 활동, 자기표현, 휴식과 재충전'],
                   ].map(([day, planet, activity]) => (
-                    <tr key={day} className="border-t border-[#0f172a]/12">
-                      <td className="px-3 py-2 text-[#0f172a]">{day}</td>
-                      <td className="px-3 py-2 text-[#475569]">{planet}</td>
-                      <td className="px-3 py-2 text-[#475569]">{activity}</td>
+                    <tr key={day} className="border-t border-white/10">
+                      <td className="px-3 py-2 text-[#f2f0ea]">{day}</td>
+                      <td className="px-3 py-2 text-[#bdc5d1]">{planet}</td>
+                      <td className="px-3 py-2 text-[#bdc5d1]">{activity}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -240,23 +240,23 @@ export default function PlanetsAndZodiacPage() {
 
         </div>
 
-        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(59,91,219,0.1)', border: '1px solid rgba(59,91,219,0.14)' }}>
-          <p className="text-[#475569] mb-4 text-sm">오늘 행성 에너지를 반영한 나의 운세 확인하기</p>
-          <Link href="/" className="inline-block px-6 py-3 rounded-full font-bold text-[#ffffff] text-sm" style={{ background: 'linear-gradient(135deg, #3b5bdb 0%, #2f4bc7 100%)' }}>
+        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(206,220,238,0.1)', border: '1px solid rgba(206,220,238,0.14)' }}>
+          <p className="text-[#bdc5d1] mb-4 text-sm">오늘 행성 에너지를 반영한 나의 운세 확인하기</p>
+          <Link href="/" className="inline-block px-6 py-3 rounded-full font-bold text-[#101620] text-sm" style={{ background: 'linear-gradient(135deg, #e6ecf5 0%, #f4f8fd 100%)' }}>
             🔮 무료 오늘의 운세 보기 →
           </Link>
         </div>
 
         <nav className="mt-10">
-          <h3 className="text-sm text-[#64748b] mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
+          <h3 className="text-sm text-[#9aa3b2] mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <Link href="/blog/what-is-astrology" className="p-4 rounded-xl text-sm transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-              <div className="text-[#0f172a]/72 font-medium">🔮 점성술이란 무엇인가?</div>
-              <div className="text-[#64748b] text-xs mt-1">서양 별자리의 역사와 기초</div>
+            <Link href="/blog/what-is-astrology" className="p-4 rounded-xl text-sm transition-colors" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+              <div className="text-[#f2f0ea]/72 font-medium">🔮 점성술이란 무엇인가?</div>
+              <div className="text-[#9aa3b2] text-xs mt-1">서양 별자리의 역사와 기초</div>
             </Link>
-            <Link href="/blog/zodiac-compatibility-guide" className="p-4 rounded-xl text-sm transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-              <div className="text-[#0f172a]/72 font-medium">💞 12 별자리 궁합 완벽 분석</div>
-              <div className="text-[#64748b] text-xs mt-1">나와 가장 잘 맞는 별자리는?</div>
+            <Link href="/blog/zodiac-compatibility-guide" className="p-4 rounded-xl text-sm transition-colors" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+              <div className="text-[#f2f0ea]/72 font-medium">💞 12 별자리 궁합 완벽 분석</div>
+              <div className="text-[#9aa3b2] text-xs mt-1">나와 가장 잘 맞는 별자리는?</div>
             </Link>
           </div>
         </nav>

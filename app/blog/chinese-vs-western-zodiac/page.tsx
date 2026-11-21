@@ -13,29 +13,29 @@ export const metadata: Metadata = {
 };
 
 const bgStyle = {
-  background: '#ffffff',
+  background: '#101620',
   minHeight: '100vh',
 };
 
 export default function ChineseVsWesternPage() {
   return (
     <div style={bgStyle}>
-      <article className="max-w-3xl mx-auto px-6 py-16 text-[#0f172a]/80">
-        <Link href="/blog" className="text-[#3b5bdb] hover:text-[#3b5bdb] text-sm mb-8 inline-block">
+      <article className="max-w-3xl mx-auto px-6 py-16 text-[#f2f0ea]/80">
+        <Link href="/blog" className="text-[#e6ecf5] hover:text-[#e6ecf5] text-sm mb-8 inline-block">
           ← 블로그 목록으로
         </Link>
 
         <header className="mb-10">
           <div className="flex items-center gap-2 mb-4 flex-wrap">
-            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(59,91,219,0.14)', color: '#3b5bdb' }}>
+            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ background: 'rgba(206,220,238,0.14)', color: '#e6ecf5' }}>
               동서양 비교
             </span>
-            <span className="text-[#64748b] text-xs">2025년 3월 10일 · 9분 읽기</span>
+            <span className="text-[#9aa3b2] text-xs">2025년 3월 10일 · 9분 읽기</span>
           </div>
-          <h1 className="text-3xl font-bold text-[#0f172a] mb-4 leading-tight">
+          <h1 className="text-3xl font-bold text-[#f2f0ea] mb-4 leading-tight">
             동양 12지와 서양 별자리의 차이점 — 두 전통의 지혜를 비교하다
           </h1>
-          <p className="text-[#475569] text-base leading-relaxed">
+          <p className="text-[#bdc5d1] text-base leading-relaxed">
             수천 년 동안 독립적으로 발전해온 동양의 12지지와 서양의 황도대 별자리. 두 체계가 인간과 우주의 관계를 어떻게 다르게, 또 비슷하게 바라보는지 탐구합니다.
           </p>
         </header>
@@ -43,13 +43,13 @@ export default function ChineseVsWesternPage() {
         <div className="space-y-8 text-sm leading-relaxed">
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">두 체계의 기본 구조 비교</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">두 체계의 기본 구조 비교</h2>
             <div className="overflow-x-auto">
-              <table className="w-full text-xs border border-[#0f172a]/12 rounded-xl overflow-hidden mb-4">
+              <table className="w-full text-xs border border-white/10 rounded-xl overflow-hidden mb-4">
                 <thead>
-                  <tr style={{ background: 'rgba(15,23,42,0.05)' }}>
-                    <th className="px-3 py-2 text-left text-[#0f172a]">항목</th>
-                    <th className="px-3 py-2 text-left text-[#3b5bdb]">서양 별자리</th>
+                  <tr style={{ background: 'rgba(0,0,0,0.05)' }}>
+                    <th className="px-3 py-2 text-left text-[#f2f0ea]">항목</th>
+                    <th className="px-3 py-2 text-left text-[#e6ecf5]">서양 별자리</th>
                     <th className="px-3 py-2 text-left text-orange-300">동양 12지</th>
                   </tr>
                 </thead>
@@ -63,9 +63,9 @@ export default function ChineseVsWesternPage() {
                     ['적용', '생일(월)로 결정', '태어난 해로 결정'],
                     ['해석 초점', '개성, 행동 방식, 심리', '기질, 운명, 대인 관계'],
                   ].map(([item, western, eastern]) => (
-                    <tr key={item} className="border-t border-[#0f172a]/12">
-                      <td className="px-3 py-2 text-[#475569]">{item}</td>
-                      <td className="px-3 py-2 text-[#3b5bdb]/80">{western}</td>
+                    <tr key={item} className="border-t border-white/10">
+                      <td className="px-3 py-2 text-[#bdc5d1]">{item}</td>
+                      <td className="px-3 py-2 text-[#e6ecf5]/80">{western}</td>
                       <td className="px-3 py-2 text-orange-200/80">{eastern}</td>
                     </tr>
                   ))}
@@ -75,7 +75,7 @@ export default function ChineseVsWesternPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">서양 별자리 — 태양의 언어</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">서양 별자리 — 태양의 언어</h2>
             <p className="mb-3">
               서양 점성술의 핵심은 태양입니다. 지구에서 보았을 때 태양이 1년 동안 지나가는 하늘의 경로(황도)를 12개 구역으로 나눈 것이 황도대 별자리입니다. 생일을 기준으로 태양이 어느 별자리에 있었는지가 "나의 별자리"가 됩니다.
             </p>
@@ -88,7 +88,7 @@ export default function ChineseVsWesternPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">동양 12지 — 달과 목성의 리듬</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">동양 12지 — 달과 목성의 리듬</h2>
             <p className="mb-3">
               동양의 12지지(十二支)는 음력을 기반으로 발전했습니다. 12가지 동물(쥐·소·범·토끼·용·뱀·말·양·원숭이·닭·개·돼지)이 각각 1년을 대표하며, 12년을 한 주기로 순환합니다.
             </p>
@@ -104,32 +104,32 @@ export default function ChineseVsWesternPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">음양오행 vs 4원소 — 에너지를 바라보는 두 가지 방식</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">음양오행 vs 4원소 — 에너지를 바라보는 두 가지 방식</h2>
             <p className="mb-3">
               두 체계에서 가장 흥미로운 비교 지점은 에너지를 분류하는 방식입니다.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-              <div className="rounded-xl p-4" style={{ background: 'rgba(59,91,219,0.1)', border: '1px solid rgba(59,91,219,0.12)' }}>
-                <h3 className="text-[#3b5bdb] font-semibold mb-3">서양: 4원소</h3>
+              <div className="rounded-xl p-4" style={{ background: 'rgba(206,220,238,0.1)', border: '1px solid rgba(206,220,238,0.12)' }}>
+                <h3 className="text-[#e6ecf5] font-semibold mb-3">서양: 4원소</h3>
                 <ul className="space-y-1 text-xs">
-                  <li>🔥 <strong className="text-[#0f172a]">불(Fire):</strong> 열정, 창의성, 행동</li>
-                  <li>🌍 <strong className="text-[#0f172a]">땅(Earth):</strong> 안정, 실용, 물질</li>
-                  <li>💨 <strong className="text-[#0f172a]">공기(Air):</strong> 지성, 소통, 변화</li>
-                  <li>💧 <strong className="text-[#0f172a]">물(Water):</strong> 감성, 직관, 무의식</li>
+                  <li>🔥 <strong className="text-[#f2f0ea]">불(Fire):</strong> 열정, 창의성, 행동</li>
+                  <li>🌍 <strong className="text-[#f2f0ea]">땅(Earth):</strong> 안정, 실용, 물질</li>
+                  <li>💨 <strong className="text-[#f2f0ea]">공기(Air):</strong> 지성, 소통, 변화</li>
+                  <li>💧 <strong className="text-[#f2f0ea]">물(Water):</strong> 감성, 직관, 무의식</li>
                 </ul>
-                <p className="text-[#64748b] text-xs mt-3">그리스 철학에서 유래한 4원소는 물질의 근본 상태를 나타내며 각 별자리의 기질을 결정합니다.</p>
+                <p className="text-[#9aa3b2] text-xs mt-3">그리스 철학에서 유래한 4원소는 물질의 근본 상태를 나타내며 각 별자리의 기질을 결정합니다.</p>
               </div>
               <div className="rounded-xl p-4" style={{ background: 'rgba(234,179,8,0.08)', border: '1px solid rgba(234,179,8,0.2)' }}>
                 <h3 className="text-yellow-300 font-semibold mb-3">동양: 음양오행</h3>
                 <ul className="space-y-1 text-xs">
-                  <li>🌿 <strong className="text-[#0f172a]">木(목):</strong> 성장, 창의, 봄의 에너지</li>
-                  <li>🔥 <strong className="text-[#0f172a]">火(화):</strong> 열정, 표현, 여름의 에너지</li>
-                  <li>🌏 <strong className="text-[#0f172a]">土(토):</strong> 균형, 안정, 중앙</li>
-                  <li>⚙️ <strong className="text-[#0f172a]">金(금):</strong> 결단, 수확, 가을의 에너지</li>
-                  <li>💧 <strong className="text-[#0f172a]">水(수):</strong> 지혜, 유연, 겨울의 에너지</li>
+                  <li>🌿 <strong className="text-[#f2f0ea]">木(목):</strong> 성장, 창의, 봄의 에너지</li>
+                  <li>🔥 <strong className="text-[#f2f0ea]">火(화):</strong> 열정, 표현, 여름의 에너지</li>
+                  <li>🌏 <strong className="text-[#f2f0ea]">土(토):</strong> 균형, 안정, 중앙</li>
+                  <li>⚙️ <strong className="text-[#f2f0ea]">金(금):</strong> 결단, 수확, 가을의 에너지</li>
+                  <li>💧 <strong className="text-[#f2f0ea]">水(수):</strong> 지혜, 유연, 겨울의 에너지</li>
                 </ul>
-                <p className="text-[#64748b] text-xs mt-3">오행은 서로를 생성(상생)하고 억제(상극)하는 역동적인 관계로 연결되어 있습니다.</p>
+                <p className="text-[#9aa3b2] text-xs mt-3">오행은 서로를 생성(상생)하고 억제(상극)하는 역동적인 관계로 연결되어 있습니다.</p>
               </div>
             </div>
             <p>
@@ -138,17 +138,17 @@ export default function ChineseVsWesternPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">동양 12지와 서양 별자리의 대응 관계</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">동양 12지와 서양 별자리의 대응 관계</h2>
             <p className="mb-3">
               두 체계 사이에 공식적인 일대일 대응은 없지만, 에너지와 성격의 유사성으로 비교하는 경우가 있습니다.
             </p>
             <div className="overflow-x-auto">
-              <table className="w-full text-xs border border-[#0f172a]/12 rounded-xl overflow-hidden">
+              <table className="w-full text-xs border border-white/10 rounded-xl overflow-hidden">
                 <thead>
-                  <tr style={{ background: 'rgba(15,23,42,0.05)' }}>
+                  <tr style={{ background: 'rgba(0,0,0,0.05)' }}>
                     <th className="px-3 py-2 text-left text-orange-300">동양 12지</th>
-                    <th className="px-3 py-2 text-left text-[#3b5bdb]">유사한 서양 별자리</th>
-                    <th className="px-3 py-2 text-left text-[#475569]">공통 특성</th>
+                    <th className="px-3 py-2 text-left text-[#e6ecf5]">유사한 서양 별자리</th>
+                    <th className="px-3 py-2 text-left text-[#bdc5d1]">공통 특성</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -166,10 +166,10 @@ export default function ChineseVsWesternPage() {
                     ['🐕 개(Dog)', '사수자리·게자리', '충성심, 정직함, 보호본능'],
                     ['🐷 돼지(Pig)', '물고기자리·황소자리', '관대함, 솔직함, 삶의 즐거움'],
                   ].map(([eastern, western, traits]) => (
-                    <tr key={eastern} className="border-t border-[#0f172a]/12">
+                    <tr key={eastern} className="border-t border-white/10">
                       <td className="px-3 py-2 text-orange-200/80">{eastern}</td>
-                      <td className="px-3 py-2 text-[#3b5bdb]/80">{western}</td>
-                      <td className="px-3 py-2 text-[#475569]">{traits}</td>
+                      <td className="px-3 py-2 text-[#e6ecf5]/80">{western}</td>
+                      <td className="px-3 py-2 text-[#bdc5d1]">{traits}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -178,7 +178,7 @@ export default function ChineseVsWesternPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-[#0f172a] mb-4">두 체계를 함께 활용하는 방법</h2>
+            <h2 className="text-xl font-bold text-[#f2f0ea] mb-4">두 체계를 함께 활용하는 방법</h2>
             <p className="mb-3">
               서양 별자리와 동양 12지를 함께 분석하면 훨씬 더 풍부한 자기 이해가 가능합니다. 예를 들어, 서양 별자리로 "나의 월간 성향"을 이해하고, 동양 12지로 "나의 연간 기질과 운의 흐름"을 파악하는 방식입니다.
             </p>
@@ -192,23 +192,23 @@ export default function ChineseVsWesternPage() {
 
         </div>
 
-        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(59,91,219,0.1)', border: '1px solid rgba(59,91,219,0.14)' }}>
-          <p className="text-[#475569] mb-4 text-sm">나의 별자리와 띠를 함께 분석한 오늘의 운세</p>
-          <Link href="/" className="inline-block px-6 py-3 rounded-full font-bold text-[#ffffff] text-sm" style={{ background: 'linear-gradient(135deg, #3b5bdb 0%, #2f4bc7 100%)' }}>
+        <div className="mt-12 p-6 rounded-2xl text-center" style={{ background: 'rgba(206,220,238,0.1)', border: '1px solid rgba(206,220,238,0.14)' }}>
+          <p className="text-[#bdc5d1] mb-4 text-sm">나의 별자리와 띠를 함께 분석한 오늘의 운세</p>
+          <Link href="/" className="inline-block px-6 py-3 rounded-full font-bold text-[#101620] text-sm" style={{ background: 'linear-gradient(135deg, #e6ecf5 0%, #f4f8fd 100%)' }}>
             🔮 무료 오늘의 운세 보기 →
           </Link>
         </div>
 
         <nav className="mt-10">
-          <h3 className="text-sm text-[#64748b] mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
+          <h3 className="text-sm text-[#9aa3b2] mb-3 font-semibold uppercase tracking-widest">관련 글</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <Link href="/blog/what-is-astrology" className="p-4 rounded-xl text-sm transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-              <div className="text-[#0f172a]/72 font-medium">🔮 점성술이란 무엇인가?</div>
-              <div className="text-[#64748b] text-xs mt-1">서양 별자리의 역사와 기초</div>
+            <Link href="/blog/what-is-astrology" className="p-4 rounded-xl text-sm transition-colors" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+              <div className="text-[#f2f0ea]/72 font-medium">🔮 점성술이란 무엇인가?</div>
+              <div className="text-[#9aa3b2] text-xs mt-1">서양 별자리의 역사와 기초</div>
             </Link>
-            <Link href="/blog/how-to-read-daily-fortune" className="p-4 rounded-xl text-sm transition-colors" style={{ background: 'rgba(15,23,42,0.03)', border: '1px solid rgba(15,23,42,0.06)' }}>
-              <div className="text-[#0f172a]/72 font-medium">📅 오늘의 운세를 제대로 읽는 방법</div>
-              <div className="text-[#64748b] text-xs mt-1">운세 해석의 현명한 활용법</div>
+            <Link href="/blog/how-to-read-daily-fortune" className="p-4 rounded-xl text-sm transition-colors" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
+              <div className="text-[#f2f0ea]/72 font-medium">📅 오늘의 운세를 제대로 읽는 방법</div>
+              <div className="text-[#9aa3b2] text-xs mt-1">운세 해석의 현명한 활용법</div>
             </Link>
           </div>
         </nav>
