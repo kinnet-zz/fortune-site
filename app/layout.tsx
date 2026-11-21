@@ -79,7 +79,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Noto+Serif+KR:wght@400;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Noto+Sans+KR:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;600;700&display=swap"
         />
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%23ffffff%22/><rect x=%220.5%22 y=%220.5%22 width=%2263%22 height=%2263%22 rx=%2215.5%22 fill=%22none%22 stroke=%22%23e8eaef%22/><path d=%22M32 13l4.4 14.6L51 32l-14.6 4.4L32 51l-4.4-14.6L13 32l14.6-4.4L32 13z%22 fill=%22%233b5bdb%22/></svg>" />
         <script

@@ -27,6 +27,8 @@ const COPY: Record<Lang, {
   relatedDescription: string;
   formKicker: string;
   browse: string;
+  viewAll: string;
+  cardCta: string;
   statLabels: string[];
   trust: string[];
 }> = {
@@ -42,6 +44,8 @@ const COPY: Record<Lang, {
     relatedDescription: '한 번의 운세 확인으로 끝내지 말고, 궁합과 타로까지 이어서 확인해보세요.',
     formKicker: 'Birth chart reading',
     browse: '둘러보기',
+    viewAll: '전체 보기',
+    cardCta: '보기',
     statLabels: ['12개 별자리 해석', '4개 언어 지원', '매일 갱신'],
     trust: ['무료', '입력정보 저장 안 함', '매일 갱신'],
   },
@@ -57,6 +61,8 @@ const COPY: Record<Lang, {
     relatedDescription: 'Explore compatibility, tarot, and today’s zodiac readings next.',
     formKicker: 'Birth chart reading',
     browse: 'Browse all',
+    viewAll: 'View all',
+    cardCta: 'Open',
     statLabels: ['12 sign guides', '4 languages', 'Updated daily'],
     trust: ['Free', 'No profile storage', 'Updated daily'],
   },
@@ -72,6 +78,8 @@ const COPY: Record<Lang, {
     relatedDescription: '接着查看星座配对、塔罗牌和今日星座运势。',
     formKicker: 'Birth chart reading',
     browse: '浏览全部',
+    viewAll: '查看全部',
+    cardCta: '查看',
     statLabels: ['12星座解读', '4种语言', '每日更新'],
     trust: ['免费', '不保存输入信息', '每日更新'],
   },
@@ -87,6 +95,8 @@ const COPY: Record<Lang, {
     relatedDescription: '星座相性、タロット、今日の星座運勢も続けて確認できます。',
     formKicker: 'Birth chart reading',
     browse: 'すべて見る',
+    viewAll: 'すべて見る',
+    cardCta: '見る',
     statLabels: ['12星座の解説', '4言語対応', '毎日更新'],
     trust: ['無料', '入力情報を保存しない', '毎日更新'],
   },
@@ -183,7 +193,7 @@ function RelatedCard({
         </h3>
         <p className="mt-1.5 line-clamp-2 text-[0.76rem] leading-5 text-[#64748b] text-keep-all">{description}</p>
         <span className="mt-3 flex items-center gap-1.5 text-[0.72rem] font-medium text-[#3b5bdb] opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          보기
+          {COPY[lang].cardCta}
           <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
         </span>
       </div>
@@ -291,7 +301,7 @@ export function HomeConversionHero({ onSubmit, isLoading, lang, error }: Convers
             </h2>
           </div>
           <Link href="/blog" className="hidden min-h-9 items-center gap-1.5 text-[0.78rem] font-medium text-[#3b5bdb] hover:text-[#2741b3] sm:inline-flex">
-            전체 보기
+            {copy.viewAll}
             <span aria-hidden="true">→</span>
           </Link>
         </div>
