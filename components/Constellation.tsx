@@ -1,4 +1,8 @@
+'use client';
+
 import type { CSSProperties } from 'react';
+import { useLang } from '@/lib/useLang';
+import { t } from '@/lib/i18n';
 
 export type ZodiacSlug =
   | 'aries'
@@ -381,6 +385,7 @@ export default function ConstellationIcon({
   animated = false,
   style,
 }: ConstellationIconProps) {
+  const { lang } = useLang();
   const shape = slug && slug in CONSTELLATIONS ? CONSTELLATIONS[slug as ZodiacSlug] : null;
   if (!shape) return null;
 
@@ -397,7 +402,7 @@ export default function ConstellationIcon({
       className={className}
       style={style}
       role="img"
-      aria-label={`${shape.ko} 별자리`}
+      aria-label={t(lang).zodiacSigns[ZODIAC_SLUGS.indexOf(slug as ZodiacSlug)] ?? shape.en}
       fill="none"
     >
       <path
