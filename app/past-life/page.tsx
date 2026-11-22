@@ -1,13 +1,11 @@
 export const runtime = 'edge';
 
 import type { Metadata } from 'next';
-import type { Lang } from '@/lib/i18n';
+import { normalizeLang, type Lang } from '@/lib/i18n';
 import PastLifeClient from '@/components/PastLifeClient';
 
-const VALID_LANGS: Lang[] = ['ko', 'en', 'zh', 'ja'];
-function getLang(p?: string): Lang {
-  return VALID_LANGS.includes(p as Lang) ? (p as Lang) : 'ko';
-}
+// A retired `?lang=zh` link resolves to English, the same as everywhere else.
+const getLang = (p?: string): Lang => normalizeLang(p);
 
 const ogData: Record<Lang, { title: string; description: string }> = {
   ko: {
@@ -53,7 +51,6 @@ export async function generateMetadata({
       languages: {
         ko: 'https://starfate.day/past-life',
         en: 'https://starfate.day/past-life?lang=en',
-        zh: 'https://starfate.day/past-life?lang=zh',
         ja: 'https://starfate.day/past-life?lang=ja',
       },
     },

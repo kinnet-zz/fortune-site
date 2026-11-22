@@ -1,14 +1,12 @@
 export const runtime = 'edge';
 
 import type { Metadata } from 'next';
-import type { Lang } from '@/lib/i18n';
+import { normalizeLang, type Lang } from '@/lib/i18n';
 import CardDrawClient from '@/components/CardDrawClient';
 import { TarotInfo } from '@/components/InfoSections';
 
-const VALID_LANGS: Lang[] = ['ko', 'en', 'zh', 'ja'];
-function getLang(p?: string): Lang {
-  return VALID_LANGS.includes(p as Lang) ? (p as Lang) : 'ko';
-}
+// A retired `?lang=zh` link resolves to English, the same as everywhere else.
+const getLang = (p?: string): Lang => normalizeLang(p);
 
 const ogData: Record<Lang, { title: string; description: string }> = {
   ko: {
@@ -54,7 +52,6 @@ export async function generateMetadata({
       languages: {
         ko: 'https://starfate.day/card-draw',
         en: 'https://starfate.day/card-draw?lang=en',
-        zh: 'https://starfate.day/card-draw?lang=zh',
         ja: 'https://starfate.day/card-draw?lang=ja',
       },
     },
