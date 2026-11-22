@@ -7,6 +7,12 @@ import { LANG_LABELS, type Lang } from '@/lib/i18n';
 import { useLang } from '@/lib/useLang';
 import { siteCopy } from '@/lib/site-copy';
 
+const ARIA: Record<'menu' | 'openMenu' | 'closeMenu', Record<Lang, string>> = {
+  menu: { ko: '주요 메뉴', en: 'Main menu', zh: '主菜单', ja: 'メインメニュー' },
+  openMenu: { ko: '메뉴 열기', en: 'Open menu', zh: '打开菜单', ja: 'メニューを開く' },
+  closeMenu: { ko: '메뉴 닫기', en: 'Close menu', zh: '关闭菜单', ja: 'メニューを閉じる' },
+};
+
 interface NavItem {
   href: string;
   label: string;
@@ -146,7 +152,7 @@ export default function Header() {
         </Link>
 
         {/* 데스크탑 메뉴 */}
-        <nav className="hidden flex-1 items-center justify-center gap-1 lg:flex" aria-label="주요 메뉴">
+        <nav className="hidden flex-1 items-center justify-center gap-1 lg:flex" aria-label={ARIA.menu[lang]}>
 
           <div ref={fortuneRef} className="relative">
             <button
@@ -242,7 +248,7 @@ export default function Header() {
               setMobileOpen(nextOpen);
               if (nextOpen) lastMenuTriggerRef.current = event.currentTarget;
             }}
-            aria-label={mobileOpen ? '메뉴 닫기' : '메뉴 열기'}
+            aria-label={mobileOpen ? ARIA.closeMenu[lang] : ARIA.openMenu[lang]}
             aria-expanded={mobileOpen}
             aria-controls="mobile-navigation"
           >

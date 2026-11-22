@@ -42,7 +42,7 @@ export default function BlogIndex() {
           aria-hidden="true"
         />
         <div className="relative mx-auto max-w-6xl px-5 pb-12 pt-10 sm:px-6 sm:pt-16">
-          <nav className="flex items-center gap-2 text-[0.76rem] text-[#9aa3b2]" aria-label={copy.brandTagline}>
+          <nav className="flex items-center gap-2 text-[0.76rem] text-[#9aa3b2]">
             <Link href="/" className="transition-colors hover:text-[#e6ecf5]">
               {HOME_LABEL[lang]}
             </Link>
