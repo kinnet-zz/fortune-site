@@ -1,8 +1,10 @@
 export const runtime = 'edge';
 
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import ChineseZodiacDetailView from '@/components/ChineseZodiacDetailView';
+import { CHINESE_ZODIAC_CONTENT } from '@/lib/chinese-zodiac-data';
+import { t, VALID_LANGS, type Lang } from '@/lib/i18n';
 
 const CHINESE_ZODIAC = [
   {
@@ -249,142 +251,27 @@ const bgStyle = {
   minHeight: '100vh',
 };
 
+const OTHER_ANIMALS = CHINESE_ZODIAC.map((animal, index) => ({
+  slug: animal.slug,
+  emoji: animal.emoji,
+  name: Object.fromEntries(VALID_LANGS.map((lang) => [lang, t(lang).chineseZodiacAnimals[index]])) as Record<Lang, string>,
+}));
+
 export default async function ChineseZodiacAnimalPage({
   params,
 }: {
   params: Promise<{ animal: string }>;
 }) {
   const { animal } = await params;
-  const data = CHINESE_ZODIAC.find((a) => a.slug === animal);
-  if (!data) notFound();
+  const index = CHINESE_ZODIAC.findIndex((a) => a.slug === animal);
+  if (index < 0) notFound();
+  const data = CHINESE_ZODIAC[index];
+
+  const localized = Object.fromEntries(
+    VALID_LANGS.map((lang) => [lang, CHINESE_ZODIAC_CONTENT[lang][index]]),
+  ) as Record<Lang, (typeof CHINESE_ZODIAC_CONTENT)['ko'][number]>;
 
   return (
-    <div style={bgStyle}>
-      <div className="max-w-3xl mx-auto px-6 py-16 text-[#f2f0ea]/80">
-        <Link href="/chinese-zodiac" className="text-[#e6ecf5] hover:text-[#e6ecf5] text-sm mb-8 inline-block">
-          ← 띠 목록으로
-        </Link>
-
-        {/* 헤더 */}
-        <header className="mb-10 text-center">
-          <div className="text-7xl mb-4">{data.emoji}</div>
-          <h1 className="text-4xl font-bold text-[#f2f0ea] mb-2">{data.name}</h1>
-          <div className="flex justify-center gap-3 mt-4 flex-wrap">
-            <span className="px-3 py-1 rounded-full text-sm bg-[#101620]/[0.04] border border-white/10 text-[#bdc5d1]">
-              🔥 원소: {data.element}
-            </span>
-            <span className="px-3 py-1 rounded-full text-sm bg-[#101620]/[0.04] border border-white/10 text-[#bdc5d1]">
-              📅 다음 {data.name} 해: {data.nextYear}년
-            </span>
-          </div>
-        </header>
-
-        {/* 해당 연도 */}
-        <section className="mb-8 p-6 rounded-2xl bg-[#101620]/[0.04] border border-white/10">
-          <h2 className="text-base font-bold text-[#f2f0ea] mb-2">📅 {data.name} 해당 연도</h2>
-          <p className="text-[#bdc5d1] text-sm leading-relaxed">{data.years}</p>
-        </section>
-
-        {/* 핵심 특성 */}
-        <section className="mb-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="p-5 rounded-2xl bg-green-500/10 border border-green-500/20">
-              <h3 className="text-base font-bold text-[#2f6b4a] mb-3">💪 강점</h3>
-              <ul className="space-y-1">
-                {data.traits.map((t) => (
-                  <li key={t} className="text-sm text-[#f2f0ea]/72 flex items-center gap-2">
-                    <span className="text-[#2f6b4a]">·</span> {t}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="p-5 rounded-2xl bg-red-500/10 border border-red-500/20">
-              <h3 className="text-base font-bold text-[#9b3a3a] mb-3">⚠️ 약점</h3>
-              <ul className="space-y-1">
-                {data.weaknesses.map((w) => (
-                  <li key={w} className="text-sm text-[#f2f0ea]/72 flex items-center gap-2">
-                    <span className="text-[#9b3a3a]">·</span> {w}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* 성격 / 연애 / 금전 / 직업 */}
-        {[
-          { icon: '🌟', title: '성격 & 특징', content: data.personality },
-          { icon: '💕', title: '연애운', content: data.love },
-          { icon: '💰', title: '금전운', content: data.money },
-          { icon: '💼', title: '직업운', content: data.career },
-        ].map(({ icon, title, content }) => (
-          <section key={title} className="mb-6 p-6 rounded-2xl bg-[#101620]/[0.04] border border-white/10">
-            <h2 className="text-lg font-bold text-[#f2f0ea] mb-3">{icon} {title}</h2>
-            <p className="leading-relaxed text-[#f2f0ea]/72">{content}</p>
-          </section>
-        ))}
-
-        {/* 궁합 */}
-        <section className="mb-8 p-6 rounded-2xl bg-[#101620]/[0.04] border border-white/10">
-          <h2 className="text-lg font-bold text-[#f2f0ea] mb-4">💞 궁합</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="text-sm text-[#2f6b4a] font-semibold mb-1">✅ 잘 맞는 띠</p>
-              <p className="text-[#f2f0ea]/72 text-sm">{data.compatible}</p>
-            </div>
-            <div>
-              <p className="text-sm text-[#9b3a3a] font-semibold mb-1">⚠️ 주의할 띠</p>
-              <p className="text-[#f2f0ea]/72 text-sm">{data.incompatible}</p>
-            </div>
-          </div>
-        </section>
-
-        {/* 행운 */}
-        <section className="mb-10 p-6 rounded-2xl bg-[#e6ecf5]/10 border border-[#e6ecf5]/25">
-          <h2 className="text-lg font-bold text-[#f2f0ea] mb-4">🍀 행운의 상징</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
-            <div>
-              <p className="text-[#e6ecf5] font-semibold mb-1">행운의 색</p>
-              <p className="text-[#bdc5d1]">{data.lucky.color}</p>
-            </div>
-            <div>
-              <p className="text-[#e6ecf5] font-semibold mb-1">행운의 숫자</p>
-              <p className="text-[#bdc5d1]">{data.lucky.number}</p>
-            </div>
-            <div>
-              <p className="text-[#e6ecf5] font-semibold mb-1">행운의 방향</p>
-              <p className="text-[#bdc5d1]">{data.lucky.direction}</p>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <div className="text-center p-8 rounded-2xl border border-[rgba(184,199,220,0.14)] bg-[#121722]">
-          <p className="text-[#bdc5d1] mb-4 text-sm">오늘 {data.name}의 운세가 궁금하다면?</p>
-          <Link
-            href="/"
-            className="btn-primary text-sm"
-          >
-            오늘의 운세 무료로 보기 →
-          </Link>
-        </div>
-
-        {/* 다른 띠 보기 */}
-        <nav className="mt-10">
-          <h3 className="text-sm text-[#9aa3b2] mb-3 font-semibold uppercase tracking-widest">다른 띠 보기</h3>
-          <div className="flex flex-wrap gap-2">
-            {CHINESE_ZODIAC.filter((a) => a.slug !== animal).map((a) => (
-              <Link
-                key={a.slug}
-                href={`/chinese-zodiac/${a.slug}`}
-                className="px-3 py-1 rounded-full text-xs border border-white/10 text-[#bdc5d1] hover:border-[#3a4a61] hover:text-[#e6ecf5] transition-colors"
-              >
-                {a.emoji} {a.name}
-              </Link>
-            ))}
-          </div>
-        </nav>
-      </div>
-    </div>
+    <ChineseZodiacDetailView data={data} localized={localized} index={index} otherAnimals={OTHER_ANIMALS} />
   );
 }

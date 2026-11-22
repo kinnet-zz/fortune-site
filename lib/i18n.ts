@@ -43,6 +43,7 @@ export interface Translations {
   imageShareBtn: string;
   imageSharing: string;
   imageSaved: string;
+  imageFailed: string;
   imageShareText: string;
   disclaimer: string;
   scoreLevel: (score: number) => string;
@@ -157,6 +158,7 @@ const translations: Record<Lang, Translations> = {
     imageShareBtn: '이미지로 공유',
     imageSharing: '이미지 생성 중...',
     imageSaved: '공유 완료!',
+    imageFailed: '이미지 생성에 실패했습니다. 다시 시도해주세요.',
     imageShareText: '🔮 오늘의 운세를 확인해보세요!',
     disclaimer: '✦ 운세는 참고용입니다. 당신의 노력이 가장 중요합니다 ✦',
     scoreLevel: (s) => s >= 80 ? '최고의 날' : s >= 60 ? '좋은 날' : s >= 40 ? '보통의 날' : '주의가 필요한 날',
@@ -287,6 +289,7 @@ const translations: Record<Lang, Translations> = {
     imageShareBtn: 'Share as Image',
     imageSharing: 'Generating...',
     imageSaved: 'Shared!',
+    imageFailed: 'Could not create the image. Please try again.',
     imageShareText: '🔮 Check out your fortune today!',
     disclaimer: '✦ Fortune is for reference only. Your efforts matter most ✦',
     scoreLevel: (s) => s >= 80 ? 'Amazing Day' : s >= 60 ? 'Good Day' : s >= 40 ? 'Ordinary Day' : 'Day to be Careful',
@@ -417,6 +420,7 @@ const translations: Record<Lang, Translations> = {
     imageShareBtn: '分享图片',
     imageSharing: '生成中...',
     imageSaved: '分享成功！',
+    imageFailed: '图片生成失败，请重试。',
     imageShareText: '🔮 快来查看今日运势！',
     disclaimer: '✦ 运势仅供参考，努力才是关键 ✦',
     scoreLevel: (s) => s >= 80 ? '最佳之日' : s >= 60 ? '吉日' : s >= 40 ? '普通之日' : '需谨慎之日',
@@ -547,6 +551,7 @@ const translations: Record<Lang, Translations> = {
     imageShareBtn: '画像でシェア',
     imageSharing: '生成中...',
     imageSaved: 'シェア完了！',
+    imageFailed: '画像の生成に失敗しました。もう一度お試しください。',
     imageShareText: '🔮 今日の運勢をチェックしてみてください！',
     disclaimer: '✦ 運勢は参考程度に。あなたの努力が最も大切です ✦',
     scoreLevel: (s) => s >= 80 ? '最高の一日' : s >= 60 ? '良い一日' : s >= 40 ? '普通の一日' : '注意が必要な一日',

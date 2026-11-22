@@ -92,7 +92,7 @@ export default function IdolUpload({ onImageReady, lang }: IdolUploadProps) {
             <img src={preview} alt="preview" className="w-full object-cover" style={{ maxHeight: '320px' }} />
             <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity"
               style={{ background: 'rgba(0,0,0,0.6)' }}>
-              <p className="text-[#0a0e14] text-sm font-semibold">사진 변경</p>
+              <p className="text-[#0a0e14] text-sm font-semibold">{tr.uploadBtn}</p>
             </div>
           </div>
         ) : (
@@ -100,7 +100,7 @@ export default function IdolUpload({ onImageReady, lang }: IdolUploadProps) {
             <div className="text-5xl mb-3">🤳</div>
             <p className="text-[#bdc5d1] font-bold mb-1">{tr.uploadTitle}</p>
             <p className="text-[#9aa3b2] text-xs">{tr.uploadDesc}</p>
-            {processing && <p className="text-[#9aa3b2] text-xs mt-3 animate-pulse">처리 중...</p>}
+            {processing && <p className="text-[#9aa3b2] text-xs mt-3 animate-pulse">{tr.analyzing}</p>}
           </div>
         )}
       </div>
