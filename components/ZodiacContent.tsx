@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useLang } from '@/lib/useLang';
 import { t } from '@/lib/i18n';
+import { siteCopy } from '@/lib/site-copy';
 import { ZODIAC_CONTENT } from '@/lib/zodiac-data';
 import ConstellationIcon, { ZODIAC_SLUGS, type ZodiacSlug } from '@/components/Constellation';
 import { stripLeadingEmoji } from '@/lib/text';
@@ -53,6 +54,7 @@ const ELEMENT_SIGN_MAP: Record<string, string[]> = {
 export default function ZodiacContent() {
   const { lang } = useLang();
   const tr = t(lang);
+  const copy = siteCopy(lang);
   const zodiacContent = ZODIAC_CONTENT[lang];
   const ZODIAC_DATA = ZODIAC_BASE.map((base, i) => ({
     ...base,
@@ -73,15 +75,15 @@ export default function ZodiacContent() {
         />
         <div className="relative mx-auto max-w-6xl px-5 pb-14 pt-10 sm:pt-16">
           <Link href="/" className="inline-flex min-h-11 items-center gap-2 text-[0.78rem] text-[var(--muted)] transition-colors hover:text-[#e6ecf5]">
-            <span aria-hidden="true">←</span> 홈으로
+            {tr.backHome}
           </Link>
           <div className="mt-8 grid grid-cols-1 items-end gap-10 lg:grid-cols-[1.1fr_0.9fr]">
             <div>
               <span className="eyebrow">The zodiac encyclopedia</span>
               <h1 className="mt-5 font-display text-[2.4rem] font-semibold leading-[1.12] text-[var(--ink)] sm:text-[3.4rem]">
-                열두 개의 별자리,
+                {copy.zodiac.heroLead}
                 <br />
-                <span className="gold-ink italic">열두 가지 삶의 결</span>
+                <span className="gold-ink italic">{copy.zodiac.heroAccent}</span>
               </h1>
               <p className="mt-6 max-w-xl text-[0.92rem] leading-8 text-[var(--muted)] text-keep-all">
                 {tr.zodiacPageSubtitle}
@@ -112,9 +114,9 @@ export default function ZodiacContent() {
           <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
             <div>
               <span className="eyebrow">Find yours</span>
-              <h2 id="find-zodiac" className="mt-3 font-display text-[1.5rem] font-semibold text-[var(--ink)]">내 별자리 확인하기</h2>
+              <h2 id="find-zodiac" className="mt-3 font-display text-[1.5rem] font-semibold text-[var(--ink)]">{copy.zodiac.findTitle}</h2>
             </div>
-            <p className="text-[0.74rem] text-[var(--muted-2)]">생일을 눌러 상세 가이드로 이동하세요</p>
+            <p className="text-[0.74rem] text-[var(--muted-2)]">{copy.zodiac.findHint}</p>
           </div>
           <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-4 lg:grid-cols-6">
             {ZODIAC_DATA.map(({ sign, english, period }, index) => (
@@ -224,8 +226,8 @@ export default function ZodiacContent() {
 
                     <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[var(--line)] pt-4">
                       <div className="flex flex-wrap gap-x-5 gap-y-1 text-[0.72rem] text-[var(--muted-2)]">
-                        <span>잘 맞는 별자리 · <strong className="font-medium text-[var(--ink)]">{compatible}</strong></span>
-                        <span>행운 · <strong className="font-medium text-[var(--ink)]">{lucky}</strong></span>
+                        <span>{tr.compatibleSignsLabel} · <strong className="font-medium text-[var(--ink)]">{compatible}</strong></span>
+                        <span>{tr.luckyLabel} · <strong className="font-medium text-[var(--ink)]">{lucky}</strong></span>
                       </div>
                       <Link
                         href={`/zodiac/${english.toLowerCase()}`}
@@ -244,9 +246,9 @@ export default function ZodiacContent() {
 
         <div className="mt-14 flex flex-col items-center gap-4 rounded-2xl border border-[rgba(184,199,220,0.14)] bg-[#121722] px-6 py-10 text-center">
           <span className="eyebrow eyebrow-light eyebrow-center">Your reading</span>
-          <p className="text-[1.3rem] font-bold tracking-[-0.03em] text-[#f2f0ea]">오늘 내 별자리의 운세가 궁금하다면</p>
+          <p className="text-[1.3rem] font-bold tracking-[-0.03em] text-[#f2f0ea]">{copy.zodiac.ctaTitle}</p>
           <Link href="/" className="btn-gold-warm mt-1 text-[0.9rem]">
-            오늘의 운세 무료로 보기 <span aria-hidden="true">→</span>
+            {tr.zodiacCTA} <span aria-hidden="true">→</span>
           </Link>
         </div>
       </div>

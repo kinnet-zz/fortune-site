@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 import { LANG_LABELS, type Lang } from '@/lib/i18n';
 import { useLang } from '@/lib/useLang';
+import { siteCopy } from '@/lib/site-copy';
 
 interface NavItem {
   href: string;
@@ -15,6 +16,7 @@ interface NavItem {
 export default function Header() {
   const pathname = usePathname();
   const { lang, setLang } = useLang();
+  const copy = siteCopy(lang);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [fortuneOpen, setFortuneOpen] = useState(false);
   const [gameOpen, setGameOpen] = useState(false);
@@ -138,7 +140,7 @@ export default function Header() {
           <span className="flex flex-col leading-none">
             <span className="text-[1.02rem] font-bold tracking-[-0.02em] text-[#f2f0ea]">StarFate</span>
             <span className="mt-1 text-[0.58rem] font-medium tracking-[0.08em] text-[#9aa3b2]">
-              별자리 · 운세
+              {copy.brandTagline}
             </span>
           </span>
         </Link>

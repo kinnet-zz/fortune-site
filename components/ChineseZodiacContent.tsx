@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useLang } from '@/lib/useLang';
 import { t } from '@/lib/i18n';
+import { siteCopy } from '@/lib/site-copy';
 import { CHINESE_ZODIAC_CONTENT } from '@/lib/chinese-zodiac-data';
 import { stripLeadingEmoji } from '@/lib/text';
 
@@ -34,6 +35,7 @@ const WUXING_ELEMENT: Record<string, Record<string, string>> = {
 export default function ChineseZodiacContent() {
   const { lang } = useLang();
   const tr = t(lang);
+  const copy = siteCopy(lang);
   const chineseContent = CHINESE_ZODIAC_CONTENT[lang];
   const CHINESE_ZODIAC_DATA = CHINESE_ZODIAC_BASE.map((base, i) => ({
     ...base,
@@ -66,7 +68,7 @@ export default function ChineseZodiacContent() {
               </p>
               <div className="mt-6 flex flex-wrap gap-2">
                 <span className="chip-gold">12 ANIMALS</span>
-                <span className="chip-quiet">음양오행</span>
+                <span className="chip-quiet">{copy.chineseZodiac.elementChip}</span>
               </div>
             </div>
             <div className="grid grid-cols-6 gap-2" aria-hidden="true">

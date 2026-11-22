@@ -11,6 +11,7 @@ import { trackEvent } from '@/lib/analytics';
 import { decodeSharedResult } from '@/lib/sharedFortune';
 import { t } from '@/lib/i18n';
 import { useLang } from '@/lib/useLang';
+import { siteCopy } from '@/lib/site-copy';
 import {
   FortuneRequestError,
   getFortuneErrorCode,
@@ -44,62 +45,16 @@ const REQUEST_STATUS_COPY = {
   ja: { refreshing: '選択した言語で運勢を更新しています。', refreshed: '選択した言語で運勢を更新しました。', refreshError: '元の運勢はそのまま表示しています。しばらくしてから再度お試しください。', ready: '今日の運勢ができました。' },
 } as const;
 
-const EDITORIAL_POINTS = [
-  {
-    title: '문화적 맥락을 먼저 설명합니다',
-    body: '서양 황도대와 동양 12지는 시대와 지역에 따라 다르게 발전했습니다. StarFate는 운세 문장만 보여주기보다 각 상징이 어떤 배경에서 쓰였는지 함께 안내합니다.',
-  },
-  {
-    title: '오락과 사실을 구분합니다',
-    body: '운세는 미래 예측이 아니라 자기성찰을 돕는 가벼운 콘텐츠입니다. 천문학적 사실, 역사 자료, 점성술 해석을 같은 문장 안에서 섞지 않도록 구분합니다.',
-  },
-  {
-    title: '개인정보를 저장하지 않습니다',
-    body: '생년월일은 별자리와 12지를 계산하고 운세 문장을 생성하는 순간에만 사용됩니다. 결과 확인 뒤 서버에 별도 프로필로 저장하지 않습니다.',
-  },
-];
-
-const GUIDE_LINKS: { href: string; label: string; desc: string; tag: string; variant: ArtworkVariant }[] = [
-  {
-    href: '/blog/how-to-read-daily-fortune',
-    label: '운세를 건강하게 읽는 법',
-    desc: '운세를 예언이 아니라 하루의 의도 설정과 자기 점검 도구로 활용하는 방법',
-    tag: '가이드',
-    variant: 'journal',
-  },
-  {
-    href: '/blog/zodiac-myths-facts',
-    label: '별자리, 왜 자꾸 보게 될까?',
-    desc: '밤하늘의 역사와 바넘 효과, 연애의 실제 장면으로 풀어본 별자리 이야기',
-    tag: '별자리',
-    variant: 'zodiac',
-  },
-  {
-    href: '/blog/chinese-vs-western-zodiac',
-    label: '동양 12지와 서양 별자리 비교',
-    desc: '두 전통이 성격과 운명을 설명하는 방식의 차이와 공통점',
-    tag: '비교',
-    variant: 'history',
-  },
-];
-
-const SAMPLE_READINGS = [
-  {
-    title: '별자리 해석 예시',
-    body: '처녀자리는 세부를 정리하는 힘을 상징합니다. 오늘의 조언은 “완벽한 결과”보다 “확인 가능한 다음 단계”를 세우는 쪽에 가깝습니다.',
-  },
-  {
-    title: '12지 해석 예시',
-    body: '용띠는 추진력과 표현력을 상징합니다. 다만 운세 해석에서는 강한 행동력만이 아니라 주변과 속도를 맞추는 균형도 함께 봅니다.',
-  },
-  {
-    title: '자기성찰 질문',
-    body: '오늘의 운세를 읽은 뒤에는 “지금 미루는 결정은 무엇인가”, “감정이 앞선 판단은 없는가”처럼 행동으로 옮길 질문 하나를 남기는 것이 좋습니다.',
-  },
+const GUIDE_LINKS: { href: string; variant: ArtworkVariant }[] = [
+  { href: '/blog/how-to-read-daily-fortune', variant: 'journal' },
+  { href: '/blog/zodiac-myths-facts', variant: 'zodiac' },
+  { href: '/blog/chinese-vs-western-zodiac', variant: 'history' },
 ];
 
 export default function HomeClient() {
   const { lang } = useLang();
+  const copy = siteCopy(lang);
+  const home = copy.home;
   const [birthDate, setBirthDate] = useState('');
   const [fortune, setFortune] = useState<FortuneResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -286,36 +241,35 @@ export default function HomeClient() {
                   <div>
                     <span className="eyebrow">The editorial standard</span>
                     <h2 id="home-guide-heading" className="mt-5 max-w-2xl font-display text-[1.75rem] leading-[1.28] tracking-[-0.015em] text-[#f6f9fd] text-keep-all sm:text-[2.35rem]">
-                      StarFate는 별자리와 12지를 <span className="italic text-[#e6ecf5]">하루의 자기성찰 언어</span>로 풀어 쓰는 운세 가이드입니다.
+                      {home.editorialTitleLead}<span className="italic text-[#e6ecf5]">{home.editorialTitleAccent}</span>{home.editorialTitleTail}
                     </h2>
                     <p className="mt-5 max-w-2xl text-[0.86rem] leading-8 text-[#9aa3b2] text-keep-all">
-                      생년월일 기반 운세 도구는 빠른 확인을 위한 기능이고, 사이트의 핵심은 별자리·동양 12지·수비학·타로를 문화적 배경과 함께 설명하는 해석 콘텐츠입니다. 운세는 예언이 아니라 오늘의 감정, 관계, 선택을 돌아보는 가벼운 참고 자료로 제공합니다.
+                      {home.editorialBody}
                     </p>
                     <div className="mt-7 flex flex-wrap gap-2">
-                      <Link href="/blog" className="btn-ghost">가이드 블로그</Link>
-                      <Link href="/zodiac" className="btn-ghost">12별자리 백과</Link>
-                      <Link href="/chinese-zodiac" className="btn-ghost">12지 띠 백과</Link>
-                      <Link href="/about" className="btn-ghost">편집 기준</Link>
+                      <Link href="/blog" className="btn-ghost">{home.ctas.blog}</Link>
+                      <Link href="/zodiac" className="btn-ghost">{home.ctas.zodiac}</Link>
+                      <Link href="/chinese-zodiac" className="btn-ghost">{home.ctas.chinese}</Link>
+                      <Link href="/about" className="btn-ghost">{home.ctas.about}</Link>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-3 gap-4 lg:border-l lg:border-[rgba(184,199,220,0.16)] lg:pl-9">
-                    {[
-                      ['12', '별자리 해석'],
-                      ['24', '에디토리얼 가이드'],
-                      ['4', '언어 지원'],
-                    ].map(([value, label]) => (
-                      <div key={label} className="border-t border-[rgba(230,236,245,0.28)] pt-3">
-                        <p className="font-display text-[2rem] font-light leading-none tracking-[-0.02em] text-[#f6f9fd]">{value}</p>
-                        <p className="mt-2 text-[0.62rem] leading-4 tracking-[0.06em] text-[#8b94a3]">{label}</p>
-                      </div>
-                    ))}
+                    {['12', '24', '4'].map((value, valueIndex) => {
+                      const label = home.statLabels[valueIndex];
+                      return (
+                        <div key={value} className="border-t border-[rgba(230,236,245,0.28)] pt-3">
+                          <p className="font-display text-[2rem] font-light leading-none tracking-[-0.02em] text-[#f6f9fd]">{value}</p>
+                          <p className="mt-2 text-[0.62rem] leading-4 tracking-[0.06em] text-[#8b94a3]">{label}</p>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
 
               <div className="mt-14 grid grid-cols-1 gap-8 border-t border-[rgba(184,199,220,0.14)] pt-10 md:grid-cols-3 md:gap-10">
-                {EDITORIAL_POINTS.map((item, index) => (
+                {home.points.map((item, index) => (
                   <article key={item.title}>
                     <span className="font-display text-[0.78rem] tracking-[0.24em] text-[#8fa2bb]">
                       0{index + 1}
@@ -331,14 +285,14 @@ export default function HomeClient() {
                 <div className="mb-6 flex flex-col gap-2 border-t border-[rgba(184,199,220,0.14)] pt-9 sm:flex-row sm:items-end sm:justify-between">
                   <div>
                     <span className="eyebrow">Editorial guides</span>
-                    <h2 className="mt-3 font-display text-[1.5rem] tracking-[-0.015em] text-[#f6f9fd]">천천히 읽는 운세 이야기</h2>
+                    <h2 className="mt-3 font-display text-[1.5rem] tracking-[-0.015em] text-[#f6f9fd]">{home.guidesTitle}</h2>
                   </div>
                   <Link href="/blog" className="text-[0.76rem] tracking-[0.04em] text-[#b8c7dc] hover:text-[#f6f9fd]">
-                    전체 보기 →
+                    {home.viewAll} →
                   </Link>
                 </div>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                  {GUIDE_LINKS.map((guide) => (
+                  {GUIDE_LINKS.map((guide, guideIndex) => (
                     <Link
                       key={guide.href}
                       href={guide.href}
@@ -346,13 +300,13 @@ export default function HomeClient() {
                     >
                       <CardArtwork variant={guide.variant} />
                       <div className="flex flex-1 flex-col px-2.5 pb-2 pt-3.5">
-                        <span className="tag mb-2 self-start">{guide.tag}</span>
+                        <span className="tag mb-2 self-start">{home.guideCards[guideIndex].tag}</span>
                         <h3 className="font-display text-[1.02rem] leading-snug text-[#f2f0ea] text-keep-all">
-                          {guide.label}
+                          {home.guideCards[guideIndex].label}
                         </h3>
-                        <p className="mt-1.5 line-clamp-2 text-[0.76rem] leading-5 text-[#9aa3b2] text-keep-all">{guide.desc}</p>
+                        <p className="mt-1.5 line-clamp-2 text-[0.76rem] leading-5 text-[#9aa3b2] text-keep-all">{home.guideCards[guideIndex].desc}</p>
                         <span className="mt-3 flex items-center gap-1.5 text-[0.72rem] tracking-[0.04em] text-[#dbe6f4] opacity-70 transition-opacity duration-300 group-hover:opacity-100">
-                          읽기
+                          {home.read}
                           <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
                         </span>
                       </div>
@@ -365,14 +319,14 @@ export default function HomeClient() {
                 <div className="mb-7 flex flex-col gap-3 border-t border-[rgba(184,199,220,0.14)] pt-9 sm:flex-row sm:items-end sm:justify-between">
                   <div>
                     <span className="eyebrow">Reading examples</span>
-                    <h2 id="sample-reading-heading" className="mt-3 font-display text-[1.5rem] tracking-[-0.015em] text-[#f6f9fd]">해석 예시로 먼저 살펴보기</h2>
+                    <h2 id="sample-reading-heading" className="mt-3 font-display text-[1.5rem] tracking-[-0.015em] text-[#f6f9fd]">{home.samplesTitle}</h2>
                   </div>
                   <p className="max-w-md text-[0.78rem] leading-6 text-[#9aa3b2] text-keep-all">
-                    생년월일을 입력하기 전에 아래 세 가지 예시로 해석의 결을 먼저 볼 수 있습니다. 입력하면 같은 항목이 내 별자리와 오늘 날짜에 맞춰 채워집니다.
+                    {home.samplesIntro}
                   </p>
                 </div>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                  {SAMPLE_READINGS.map((sample, index) => (
+                  {home.samples.map((sample, index) => (
                     <article key={sample.title} className="rounded-[20px] border border-[rgba(184,199,220,0.14)] bg-[rgba(12,16,24,0.6)] p-6">
                       <span className="font-display text-[0.72rem] tracking-[0.24em] text-[#8fa2bb]">0{index + 1}</span>
                       <h3 className="mt-2 font-display text-[1.02rem] tracking-[-0.01em] text-[#f2f0ea]">{sample.title}</h3>

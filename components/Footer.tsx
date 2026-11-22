@@ -3,11 +3,13 @@
 import Link from 'next/link';
 import { useLang } from '@/lib/useLang';
 import { t } from '@/lib/i18n';
+import { siteCopy } from '@/lib/site-copy';
 import { clearCookieConsent, CONSENT_CHANGED_EVENT } from '@/lib/adConsent';
 
 export default function Footer() {
   const { lang } = useLang();
   const tr = t(lang);
+  const copy = siteCopy(lang);
 
   const SITE_LINKS = [
     { href: '/', label: tr.navFortune },
@@ -43,7 +45,7 @@ export default function Footer() {
               </span>
               <span className="flex flex-col leading-none">
                 <span className="text-[0.98rem] font-bold tracking-[-0.02em] text-[#f2f0ea]">StarFate</span>
-                <span className="mt-1 text-[0.56rem] font-medium tracking-[0.08em] text-[#9aa3b2]">별자리 · 운세</span>
+                <span className="mt-1 text-[0.56rem] font-medium tracking-[0.08em] text-[#9aa3b2]">{copy.brandTagline}</span>
               </span>
             </div>
             <p className="max-w-xs text-[0.78rem] leading-6 text-[#9aa3b2] text-keep-all">

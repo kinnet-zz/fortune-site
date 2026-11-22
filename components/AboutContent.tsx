@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useLang } from '@/lib/useLang';
 import { t } from '@/lib/i18n';
+import { siteCopy } from '@/lib/site-copy';
 
 const bgStyle = {
   background: 'linear-gradient(160deg, #0a0d14 0%, #07090e 100%)',
@@ -12,6 +13,7 @@ const bgStyle = {
 export default function AboutContent() {
   const { lang } = useLang();
   const tr = t(lang);
+  const copy = siteCopy(lang);
 
   return (
     <div style={bgStyle}>
@@ -85,7 +87,7 @@ export default function AboutContent() {
         <section className="mb-12" aria-labelledby="faq-heading">
           <h2 id="faq-heading" className="text-xl font-bold text-[#f2f0ea] mb-6">{tr.faqTitle}</h2>
           <div className="space-y-4">
-            {tr.faqItems.map(({ q, a }) => (
+            {copy.info.faq.map(({ q, a }) => (
               <div
                 key={q}
                 className="rounded-2xl p-5"
@@ -103,7 +105,7 @@ export default function AboutContent() {
 
         {/* 콘텐츠 운영 및 편집 기준 */}
         <section className="mb-12" aria-labelledby="team-heading">
-          <h2 id="team-heading" className="text-xl font-bold text-[#f2f0ea] mb-4">콘텐츠 운영 및 편집 기준</h2>
+          <h2 id="team-heading" className="text-xl font-bold text-[#f2f0ea] mb-4">{copy.about.editorialTitle}</h2>
           <div
             className="rounded-2xl p-6"
             style={{ background: 'rgba(206,220,238,0.08)', border: '1px solid rgba(206,220,238,0.12)' }}
@@ -112,26 +114,22 @@ export default function AboutContent() {
               <div className="text-4xl flex-shrink-0">🔮</div>
               <div className="text-sm leading-relaxed space-y-3">
                 <div>
-                  <h3 className="text-[#f2f0ea] font-bold text-base mb-1">StarFate 운영자</h3>
+                  <h3 className="text-[#f2f0ea] font-bold text-base mb-1">{copy.about.operatorName}</h3>
                   <p
                     className="inline-block px-2 py-0.5 rounded-full text-xs mb-2"
                     style={{ background: 'rgba(206,220,238,0.14)', color: '#e6ecf5' }}
                   >
-                    작성·검수 책임
+                    {copy.about.operatorRole}
                   </p>
                 </div>
-                <p className="text-[#bdc5d1]">
-                  StarFate는 별자리와 동양 12지, 수비학과 타로를 문화적 배경과 자기성찰의 관점에서 소개하는 개인 운영 콘텐츠 서비스입니다. 운영자가 주제를 선정하고 글의 작성과 최종 검수를 담당합니다.
-                </p>
-                <p className="text-[#bdc5d1]">
-                  사실을 다루는 글은 가능한 한 원 논문·공식기관·학술 자료를 확인하고, 출처를 확인할 수 없는 단정적 표현은 사용하지 않는 것을 원칙으로 합니다. 점성술 해석과 일일 운세는 과학적 예측이 아닌 오락 및 자기성찰용 참고 콘텐츠로 구분합니다. 오류나 수정 요청은 아래 이메일로 접수합니다.
-                </p>
+                <p className="text-[#bdc5d1]">{copy.about.body1}</p>
+                <p className="text-[#bdc5d1]">{copy.about.body2}</p>
                 <div className="flex gap-4 pt-1">
                   <a href="mailto:dhcho0607@gmail.com" className="text-[#e6ecf5] hover:text-[#e6ecf5] text-xs transition-colors">
-                    ✉ 문의하기
+                    {copy.about.emailCta}
                   </a>
                   <Link href="/contact" className="text-[#e6ecf5] hover:text-[#e6ecf5] text-xs transition-colors">
-                    📝 문의 페이지
+                    {copy.about.contactCta}
                   </Link>
                 </div>
               </div>
