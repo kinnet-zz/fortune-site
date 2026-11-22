@@ -229,7 +229,7 @@ export default function Header() {
                   key={code}
                   onClick={() => setLang(code)}
                   aria-pressed={selected}
-                  className={`min-h-8 rounded-full px-2.5 py-1 text-[0.68rem] font-medium transition-all ${
+                  className={`min-h-8 whitespace-nowrap rounded-full px-2.5 py-1 text-[0.68rem] font-medium transition-all ${
                     selected
                       ? 'bg-[#e6ecf5] text-[#0a0e14]'
                       : 'text-[#9aa3b2] hover:text-[#f2f0ea]'
@@ -307,7 +307,7 @@ export default function Header() {
                     key={code}
                     onClick={() => { setLang(code); setMobileOpen(false); }}
                     aria-pressed={selected}
-                    className={`min-h-9 flex-1 rounded-full px-3 py-1.5 text-xs font-medium transition-all ${
+                    className={`min-h-9 flex-1 whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium transition-all ${
                       selected ? 'bg-[#e6ecf5] text-[#0a0e14]' : 'text-[#9aa3b2]'
                     }`}
                   >
