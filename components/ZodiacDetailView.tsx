@@ -32,6 +32,13 @@ export interface ZodiacDetailKo {
   famous: string;
 }
 
+const OTHER_SIGNS_LABEL: Record<Lang, string> = {
+  ko: '다른 별자리 보기',
+  en: 'Other signs',
+  zh: '其他星座',
+  ja: '他の星座',
+};
+
 const PERIODS = [
   '3/21 – 4/19',
   '4/20 – 5/20',
@@ -233,7 +240,7 @@ export default function ZodiacDetailView({
         {/* 다른 별자리 링크 */}
         <nav className="mt-12">
           <h3 className="mb-4 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-[var(--muted-2)]">
-            {isKo ? '다른 별자리 보기' : copy.zodiac.findTitle}
+            {OTHER_SIGNS_LABEL[lang]}
           </h3>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {otherSigns
@@ -244,7 +251,7 @@ export default function ZodiacDetailView({
                   href={`/zodiac/${s.slug}`}
                   className="group flex items-center gap-2 rounded-xl border border-[var(--line)] bg-[#101620] px-3 py-2.5 transition-all hover:border-[rgba(206,220,238,0.45)] hover:bg-[rgba(206,220,238,0.06)]"
                 >
-                  <span className="text-[var(--ink)]">
+                  <span className="text-[var(--ink)]" aria-hidden="true">
                     <ConstellationIcon slug={s.slug} size={22} strokeWidth={1.4} />
                   </span>
                   <span className="text-[0.78rem] text-[var(--ink-soft)] transition-colors group-hover:text-[#e6ecf5]">{s.name[lang]}</span>

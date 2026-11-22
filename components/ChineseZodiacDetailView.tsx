@@ -36,6 +36,13 @@ const ELEMENT_NAMES: Record<string, Record<Exclude<Lang, 'ko'>, string>> = {
   '나무/흙': { en: 'Wood/Earth', zh: '木/土', ja: '木/土' },
 };
 
+const OTHER_ANIMALS_LABEL: Record<Lang, string> = {
+  ko: '다른 띠 보기',
+  en: 'Other animals',
+  zh: '其他生肖',
+  ja: '他の干支',
+};
+
 const bgStyle = {
   background: '#101620',
   minHeight: '100vh',
@@ -186,7 +193,7 @@ export default function ChineseZodiacDetailView({
         {/* 다른 띠 보기 */}
         <nav className="mt-10">
           <h3 className="text-sm text-[#9aa3b2] mb-3 font-semibold uppercase tracking-widest">
-            {isKo ? '다른 띠 보기' : tr.findMyZodiacTitle}
+            {OTHER_ANIMALS_LABEL[lang]}
           </h3>
           <div className="flex flex-wrap gap-2">
             {otherAnimals
