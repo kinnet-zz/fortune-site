@@ -2,10 +2,18 @@ export const runtime = 'edge';
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getRequestContext } from '@cloudflare/next-on-pages';
-import { DAILY_ZODIACS, getTodayKST, isValidDailyDate } from '@/lib/dailyHoroscope';
+import {
+  DAILY_ZODIACS,
+  HOROSCOPE_LANGS,
+  getTodayKST,
+  isHoroscopeLang,
+  isValidDailyDate,
+  type HoroscopeLang,
+} from '@/lib/dailyHoroscope';
 import { getDailyHoroscope } from '@/lib/dailyHoroscopeServer';
 
 interface GenerationResult {
+  lang: HoroscopeLang;
   zodiac: string;
   status: 'ok' | 'error';
   cached?: boolean;
@@ -17,7 +25,10 @@ const GENERATION_CONCURRENCY = 4;
 
 // POST /api/daily-horoscope/generate-all
 // Authorization: Bearer {CRON_SECRET}
-// body: { date?: "2026-03-28", force?: true }  (force bypasses KV cache and regenerates)
+// body: { date?: "2026-03-28", force?: true, lang?: "ko" | "en" | "ja" | [...], langs?: [...] }
+//   lang/langs restrict the run; omitting both generates every offered language.
+//   The daily workflow calls this once per language so each request stays
+//   within the edge request budget.
 export async function POST(request: NextRequest) {
   let secret: string;
   try {
@@ -34,10 +45,12 @@ export async function POST(request: NextRequest) {
 
   let date: string;
   let force = false;
+  let requestedLangs: unknown;
   try {
-    const body = await request.json() as { date?: string; force?: boolean };
+    const body = await request.json() as { date?: string; force?: boolean; lang?: unknown; langs?: unknown };
     date = body.date ?? getTodayKST();
     force = body.force === true;
+    requestedLangs = body.langs ?? body.lang;
   } catch {
     date = getTodayKST();
   }
@@ -46,23 +59,35 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid date' }, { status: 400 });
   }
 
-  const results: (GenerationResult | null)[] = DAILY_ZODIACS.map(() => null);
+  const list = requestedLangs === undefined
+    ? [...HOROSCOPE_LANGS]
+    : (Array.isArray(requestedLangs) ? requestedLangs : [requestedLangs]);
+
+  if (list.length === 0 || !list.every(isHoroscopeLang)) {
+    return NextResponse.json({ error: 'Invalid language' }, { status: 400 });
+  }
+
+  const langs = Array.from(new Set(list as HoroscopeLang[]));
+  const jobs = langs.flatMap((lang) => DAILY_ZODIACS.map((zodiac) => ({ lang, zodiac: zodiac.slug })));
+  const results: (GenerationResult | null)[] = jobs.map(() => null);
 
   // Twelve sequential model calls at the full timeout would outlast the
   // request budget, so a few signs are generated at a time and the answers are
   // placed back in zodiac order.
   let cursor = 0;
   const worker = async () => {
-    while (cursor < DAILY_ZODIACS.length) {
+    while (cursor < jobs.length) {
       const index = cursor;
       cursor += 1;
-      const zodiac = DAILY_ZODIACS[index].slug;
+      const { lang, zodiac } = jobs[index];
       try {
         const result = await getDailyHoroscope(zodiac, date, {
           force,
           generate: true,
+          lang,
         });
         results[index] = {
+          lang,
           zodiac,
           status: result.source === 'ai' ? 'ok' : 'error',
           cached: result.cacheStatus === 'HIT',
@@ -70,17 +95,18 @@ export async function POST(request: NextRequest) {
           ...(result.generationError ? { error: result.generationError } : {}),
         };
       } catch {
-        results[index] = { zodiac, status: 'error', error: 'internal' };
+        results[index] = { lang, zodiac, status: 'error', error: 'internal' };
       }
     }
   };
 
   await Promise.all(
-    Array.from({ length: Math.min(GENERATION_CONCURRENCY, DAILY_ZODIACS.length) }, worker),
+    Array.from({ length: Math.min(GENERATION_CONCURRENCY, jobs.length) }, worker),
   );
 
   const settled = results.map((result, index) => result ?? {
-    zodiac: DAILY_ZODIACS[index].slug,
+    lang: jobs[index].lang,
+    zodiac: jobs[index].zodiac,
     status: 'error' as const,
     error: 'internal',
   });
@@ -88,9 +114,10 @@ export async function POST(request: NextRequest) {
   return NextResponse.json({
     date,
     force,
-    total: DAILY_ZODIACS.length,
+    langs,
+    total: jobs.length,
     generated: ok,
-    failed: DAILY_ZODIACS.length - ok,
+    failed: jobs.length - ok,
     results: settled,
   });
 }

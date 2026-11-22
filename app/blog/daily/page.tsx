@@ -159,14 +159,18 @@ export default function DailyHoroscopePage() {
   };
 
   useEffect(() => {
-    // 12개 동시 fetch
+    // 12개 동시 fetch. Each language is cached and served separately, so a
+    // language switch refetches instead of showing Korean summaries.
+    let cancelled = false;
+    setLoading(true);
     Promise.allSettled(
       DAILY_ZODIACS.map((z) =>
-        fetch(`/api/daily-horoscope?zodiac=${z.slug}&date=${today}`)
+        fetch(`/api/daily-horoscope?zodiac=${z.slug}&date=${today}&lang=${lang}`)
           .then((r) => r.json() as Promise<{ score: number; summary: string; luckyColor: string; zodiac: string }>)
           .then((data) => ({ slug: z.slug, score: data.score, summary: data.summary, luckyColor: data.luckyColor }))
       )
     ).then((results) => {
+      if (cancelled) return;
       const map: ScoreMap = {};
       for (const r of results) {
         if (r.status === 'fulfilled') {
@@ -176,7 +180,10 @@ export default function DailyHoroscopePage() {
       setScores(map);
       setLoading(false);
     });
-  }, [today]);
+    return () => {
+      cancelled = true;
+    };
+  }, [today, lang]);
 
   return (
     <div className="relative min-h-screen">

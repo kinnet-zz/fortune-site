@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import type { IdolLang } from '@/lib/idol-i18n';
+import { SUPPORTED_LANGS, normalizeLang } from '@/lib/i18n';
 
 export default function IdolHeader() {
   const pathname = usePathname();
@@ -12,8 +13,8 @@ export default function IdolHeader() {
   useEffect(() => {
     const sync = () => {
       const p = new URLSearchParams(window.location.search);
-      const l = p.get('lang') as IdolLang;
-      setLang(['ko', 'en', 'zh', 'ja'].includes(l) ? l : 'ko');
+      const l = p.get('lang');
+      setLang(normalizeLang(l));
     };
     sync();
     window.addEventListener('idol-lang-change', sync);
@@ -55,7 +56,7 @@ export default function IdolHeader() {
 
           {/* 언어 토글 */}
           <div className="flex overflow-hidden rounded-full border border-[rgba(184,199,220,0.14)] bg-[#121722] p-0.5">
-            {(['ko', 'en', 'zh', 'ja'] as IdolLang[]).map((l) => (
+            {SUPPORTED_LANGS.map((l) => (
               <button
                 key={l}
                 onClick={() => switchLang(l)}
@@ -66,7 +67,7 @@ export default function IdolHeader() {
                   boxShadow: lang === l ? '0 1px 4px rgba(0,0,0,0.1)' : 'none',
                 }}
               >
-                {l === 'ko' ? '한국어' : l === 'en' ? 'EN' : l === 'zh' ? '中文' : '日本語'}
+                {l === 'ko' ? '한국어' : l === 'en' ? 'EN' : '日本語'}
               </button>
             ))}
           </div>

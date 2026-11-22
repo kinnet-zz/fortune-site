@@ -6,6 +6,7 @@ import {
   getDailyZodiac,
   getTodayKST,
   isValidDailyDate,
+  normalizeHoroscopeLang,
   type DailyZodiacSlug,
 } from '@/lib/dailyHoroscope';
 import { getDailyHoroscope } from '@/lib/dailyHoroscopeServer';
@@ -30,6 +31,8 @@ export async function GET(request: NextRequest) {
   const today = getTodayKST();
   const date = searchParams.get('date') ?? today;
   const force = searchParams.get('force') === 'true';
+  // ko | en | ja. A retired value such as zh serves English rather than failing.
+  const lang = normalizeHoroscopeLang(searchParams.get('lang'));
   const secret = getCronSecret();
   const auth = request.headers.get('Authorization') ?? '';
   const authorized = Boolean(secret) && auth === `Bearer ${secret}`;
@@ -53,11 +56,13 @@ export async function GET(request: NextRequest) {
   const result = await getDailyHoroscope(zodiac as DailyZodiacSlug, date, {
     force,
     generate: authorized,
+    lang,
   });
   const headers: Record<string, string> = {
     'Cache-Control': 'no-store',
     'X-Cache': result.cacheStatus,
     'X-Content-Source': result.source,
+    'X-Content-Language': lang,
   };
   if (result.generationError) {
     headers['X-Generation-Error'] = result.generationError;

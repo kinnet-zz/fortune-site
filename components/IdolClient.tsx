@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { tIdol, AGENCY_COLORS, type IdolLang, type Agency, type Gender } from '@/lib/idol-i18n';
+import { normalizeLang } from '@/lib/i18n';
 import IdolUpload from './IdolUpload';
 import IdolResultCard from './IdolResultCard';
 
@@ -47,8 +48,7 @@ export default function IdolClient() {
   useEffect(() => {
     const sync = () => {
       const p = new URLSearchParams(window.location.search);
-      const l = p.get('lang') as IdolLang;
-      setLang(['ko', 'en', 'zh', 'ja'].includes(l) ? l : 'ko');
+      setLang(normalizeLang(p.get('lang')));
     };
     sync();
     window.addEventListener('idol-lang-change', sync);

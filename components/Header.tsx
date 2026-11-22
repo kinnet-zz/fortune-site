@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
-import { LANG_LABELS, type Lang } from '@/lib/i18n';
+import { LANG_LABELS, SUPPORTED_LANGS, type Lang } from '@/lib/i18n';
 import { useLang } from '@/lib/useLang';
 import { siteCopy } from '@/lib/site-copy';
 
@@ -222,7 +222,8 @@ export default function Header() {
         {/* 언어 선택 + 모바일 메뉴 */}
         <div className="flex flex-shrink-0 items-center gap-2">
           <div className="hidden items-center gap-0.5 rounded-full border border-[rgba(184,199,220,0.16)] bg-[rgba(7,9,14,0.6)] p-1 md:flex">
-            {(Object.entries(LANG_LABELS) as [Lang, string][]).map(([code, label]) => {
+            {SUPPORTED_LANGS.map((code) => {
+              const label = LANG_LABELS[code];
               const selected = lang === code;
               return (
                 <button
@@ -300,7 +301,8 @@ export default function Header() {
 
           <div className="mt-6 border-t border-[rgba(184,199,220,0.14)] px-5 py-5">
             <div className="flex items-center gap-1 rounded-full border border-[rgba(184,199,220,0.16)] bg-[rgba(7,9,14,0.6)] p-1">
-              {(Object.entries(LANG_LABELS) as [Lang, string][]).map(([code, label]) => {
+              {SUPPORTED_LANGS.map((code) => {
+                const label = LANG_LABELS[code];
                 const selected = lang === code;
                 return (
                   <button

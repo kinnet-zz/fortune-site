@@ -64,7 +64,7 @@ describe('daily horoscope server orchestration', () => {
     expect(result.cacheStatus).toBe('MISS');
     expect(fetchMock).not.toHaveBeenCalled();
     expect(kv.put).toHaveBeenCalledWith(
-      'horoscope:fallback:v3:2026-07-20:taurus',
+      'horoscope:fallback:v4:ko:2026-07-20:taurus',
       expect.any(String),
       { expirationTtl: 300 },
     );
@@ -106,7 +106,7 @@ describe('daily horoscope server orchestration', () => {
     );
     expect(kv.get).toHaveBeenCalledTimes(1);
     expect(kv.put).toHaveBeenCalledWith(
-      'horoscope:v3:2026-07-20:aries',
+      'horoscope:v4:ko:2026-07-20:aries',
       expect.any(String),
       { expirationTtl: 86400 },
     );
@@ -130,9 +130,74 @@ describe('daily horoscope server orchestration', () => {
     expect(result.generationError).toBe('upstream');
     expect(kv.get).not.toHaveBeenCalled();
     expect(kv.put).toHaveBeenCalledWith(
-      'horoscope:fallback:v3:2026-07-20:pisces',
+      'horoscope:fallback:v4:ko:2026-07-20:pisces',
       expect.any(String),
       { expirationTtl: 300 },
+    );
+  });
+
+  it('keeps each language in its own cache entry', async () => {
+    const kv = createKV();
+    kv.get.mockResolvedValue(null);
+    setCloudflareEnv(kv);
+    vi.stubGlobal('fetch', vi.fn());
+
+    const result = await getDailyHoroscope('leo', '2026-07-20', { lang: 'ja' });
+
+    expect(kv.get).toHaveBeenCalledWith('horoscope:v4:ja:2026-07-20:leo');
+    expect(kv.put).toHaveBeenCalledWith(
+      'horoscope:fallback:v4:ja:2026-07-20:leo',
+      expect.any(String),
+      { expirationTtl: 300 },
+    );
+    expect(result.horoscope.lang).toBe('ja');
+    expect(result.horoscope.zodiacName).toBe('しし座');
+    expect(result.horoscope.summary).toMatch(/[\u3040-\u30ff]/);
+  });
+
+  it('asks Gemini for content in the requested language', async () => {
+    const kv = createKV();
+    kv.get.mockResolvedValue(null);
+    setCloudflareEnv(kv);
+    const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify({
+      candidates: [{
+        content: {
+          parts: [{ text: JSON.stringify({
+            score: 71,
+            summary: 'A steady day for sorting priorities.',
+            overall: 'Narrow the list before you start.',
+            love: 'Listen first.',
+            money: 'Check the budget.',
+            work: 'Finish one task.',
+            health: 'Take a short walk.',
+            luckyColor: 'blue',
+            luckyNumber: 21,
+            luckyItem: 'notebook',
+            advice: 'Choose one next step.',
+          }) }],
+        },
+      }],
+    }), { status: 200 }));
+    vi.stubGlobal('fetch', fetchMock);
+
+    const result = await getDailyHoroscope('gemini', '2026-07-20', {
+      generate: true,
+      lang: 'en',
+    });
+
+    expect(result.source).toBe('ai');
+    expect(result.horoscope.lang).toBe('en');
+    expect(result.horoscope.zodiacName).toBe('Gemini');
+    expect(result.horoscope.summary).toBe('A steady day for sorting priorities.');
+    const body = JSON.parse(fetchMock.mock.calls[0][1].body as string) as {
+      contents: { parts: { text: string }[] }[];
+    };
+    expect(body.contents[0].parts[0].text).toContain('Write every sentence in English');
+    expect(body.contents[0].parts[0].text).toContain('Gemini');
+    expect(kv.put).toHaveBeenCalledWith(
+      'horoscope:v4:en:2026-07-20:gemini',
+      expect.any(String),
+      { expirationTtl: 86400 },
     );
   });
 

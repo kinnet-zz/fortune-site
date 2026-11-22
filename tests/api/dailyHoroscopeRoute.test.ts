@@ -73,6 +73,7 @@ describe('daily horoscope API', () => {
     expect(getDailyHoroscopeMock).toHaveBeenCalledWith('aries', getTodayKST(), {
       force: false,
       generate: false,
+      lang: 'ko',
     });
   });
 
@@ -96,6 +97,38 @@ describe('daily horoscope API', () => {
     expect(getDailyHoroscopeMock).toHaveBeenCalledWith('aries', getTodayKST(), {
       force: true,
       generate: true,
+      lang: 'ko',
+    });
+  });
+
+  it('serves the requested language and falls back from a retired one', async () => {
+    const horoscope = buildFallbackHoroscope('aries', getTodayKST(), 'ja');
+    getDailyHoroscopeMock.mockResolvedValue({
+      horoscope,
+      cacheStatus: 'HIT',
+      source: 'ai',
+    });
+
+    const japanese = await GET(new NextRequest(
+      'https://starfate.day/api/daily-horoscope?zodiac=aries&lang=ja',
+    ));
+    const chinese = await GET(new NextRequest(
+      'https://starfate.day/api/daily-horoscope?zodiac=aries&lang=zh',
+    ));
+
+    expect(japanese.status).toBe(200);
+    expect(japanese.headers.get('X-Content-Language')).toBe('ja');
+    expect(chinese.status).toBe(200);
+    expect(chinese.headers.get('X-Content-Language')).toBe('en');
+    expect(getDailyHoroscopeMock).toHaveBeenNthCalledWith(1, 'aries', getTodayKST(), {
+      force: false,
+      generate: false,
+      lang: 'ja',
+    });
+    expect(getDailyHoroscopeMock).toHaveBeenNthCalledWith(2, 'aries', getTodayKST(), {
+      force: false,
+      generate: false,
+      lang: 'en',
     });
   });
 
@@ -119,6 +152,7 @@ describe('daily horoscope API', () => {
     expect(getDailyHoroscopeMock).toHaveBeenCalledWith('taurus', getTodayKST(), {
       force: false,
       generate: true,
+      lang: 'ko',
     });
   });
 });

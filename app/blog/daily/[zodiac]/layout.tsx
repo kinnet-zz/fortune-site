@@ -13,8 +13,8 @@ export async function generateMetadata({
   if (!info) return { robots: { index: false, follow: false } };
 
   const date = formatKoreanDate(getTodayKST()).replace(/ \(.+\)$/, '');
-  const title = `${date} ${info.ko} 오늘의 운세 | StarFate`;
-  const description = `${date} ${info.ko}의 종합운, 연애운, 금전운, 직업운과 오늘 실천할 자기성찰 조언을 무료로 확인하세요.`;
+  const title = `${date} ${info.name.ko} 오늘의 운세 | StarFate`;
+  const description = `${date} ${info.name.ko}의 종합운, 연애운, 금전운, 직업운과 오늘 실천할 자기성찰 조언을 무료로 확인하세요.`;
   const url = `/blog/daily/${zodiac}`;
 
   return {

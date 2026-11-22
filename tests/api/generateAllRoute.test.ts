@@ -16,6 +16,20 @@ vi.mock('@/lib/dailyHoroscopeServer', () => ({
 
 import { POST } from '../../app/api/daily-horoscope/generate-all/route';
 
+function post(body: Record<string, unknown>) {
+  return POST(new NextRequest(
+    'https://starfate.day/api/daily-horoscope/generate-all',
+    {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer cron-secret',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    },
+  ));
+}
+
 afterEach(() => {
   getRequestContextMock.mockReset();
   getDailyHoroscopeMock.mockReset();
@@ -31,43 +45,60 @@ describe('daily horoscope generation job', () => {
       source: 'ai',
     });
 
-    const response = await POST(new NextRequest(
-      'https://starfate.day/api/daily-horoscope/generate-all',
-      {
-        method: 'POST',
-        headers: {
-          Authorization: 'Bearer cron-secret',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ date: '2026-07-20' }),
-      },
-    ));
-    const body = await response.json() as { generated: number; failed: number };
+    const response = await post({ date: '2026-07-20', lang: 'ko' });
+    const body = await response.json() as { generated: number; failed: number; langs: string[] };
 
     expect(response.status).toBe(200);
-    expect(body).toMatchObject({ generated: 12, failed: 0 });
+    expect(body).toMatchObject({ generated: 12, failed: 0, langs: ['ko'] });
     expect(getDailyHoroscopeMock).toHaveBeenCalledTimes(12);
     for (const [zodiac, date, options] of getDailyHoroscopeMock.mock.calls) {
       expect(typeof zodiac).toBe('string');
       expect(date).toBe('2026-07-20');
-      expect(options).toEqual({ force: false, generate: true });
+      expect(options).toEqual({ force: false, generate: true, lang: 'ko' });
     }
+  });
+
+  it('generates every offered language when none is requested', async () => {
+    getRequestContextMock.mockReturnValue({ env: { CRON_SECRET: 'cron-secret' } });
+    getDailyHoroscopeMock.mockResolvedValue({
+      horoscope: {},
+      cacheStatus: 'MISS',
+      source: 'ai',
+    });
+
+    const response = await post({ date: '2026-07-20' });
+    const body = await response.json() as { generated: number; failed: number; langs: string[] };
+
+    expect(body).toMatchObject({ generated: 36, failed: 0, langs: ['ko', 'en', 'ja'] });
+    expect(getDailyHoroscopeMock).toHaveBeenCalledTimes(36);
+    for (const lang of ['ko', 'en', 'ja']) {
+      const calls = getDailyHoroscopeMock.mock.calls.filter(([, , options]) => options.lang === lang);
+      expect(calls).toHaveLength(12);
+    }
+  });
+
+  it('accepts a list of languages and rejects unknown ones', async () => {
+    getRequestContextMock.mockReturnValue({ env: { CRON_SECRET: 'cron-secret' } });
+    getDailyHoroscopeMock.mockResolvedValue({
+      horoscope: {},
+      cacheStatus: 'MISS',
+      source: 'ai',
+    });
+
+    const partial = await post({ date: '2026-07-20', langs: ['ja', 'ja'] });
+    const partialBody = await partial.json() as { generated: number; langs: string[] };
+    expect(partialBody).toMatchObject({ generated: 12, langs: ['ja'] });
+
+    getDailyHoroscopeMock.mockClear();
+    const invalid = await post({ date: '2026-07-20', lang: 'zh' });
+    expect(invalid.status).toBe(400);
+    expect(getDailyHoroscopeMock).not.toHaveBeenCalled();
   });
 
   it('rejects invalid generation dates', async () => {
     getRequestContextMock.mockReturnValue({ env: { CRON_SECRET: 'cron-secret' } });
 
-    const response = await POST(new NextRequest(
-      'https://starfate.day/api/daily-horoscope/generate-all',
-      {
-        method: 'POST',
-        headers: {
-          Authorization: 'Bearer cron-secret',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ date: '2026-02-30' }),
-      },
-    ));
+    const response = await post({ date: '2026-02-30' });
 
     expect(response.status).toBe(400);
     expect(getDailyHoroscopeMock).not.toHaveBeenCalled();
@@ -82,24 +113,15 @@ describe('daily horoscope generation job', () => {
       generationError: 'missing-api-key',
     });
 
-    const response = await POST(new NextRequest(
-      'https://starfate.day/api/daily-horoscope/generate-all',
-      {
-        method: 'POST',
-        headers: {
-          Authorization: 'Bearer cron-secret',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ date: '2026-07-20' }),
-      },
-    ));
+    const response = await post({ date: '2026-07-20', lang: 'en' });
     const body = await response.json() as {
       generated: number;
       failed: number;
-      results: { error?: string }[];
+      results: { error?: string; lang: string }[];
     };
 
     expect(body).toMatchObject({ generated: 0, failed: 12 });
     expect(body.results.every((result) => result.error === 'missing-api-key')).toBe(true);
+    expect(body.results.every((result) => result.lang === 'en')).toBe(true);
   });
 });

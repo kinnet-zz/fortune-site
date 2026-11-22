@@ -1,11 +1,11 @@
 'use client';
 
 import { useSyncExternalStore, useEffect } from 'react';
-import { type Lang, VALID_LANGS } from './i18n';
+import { type Lang, DEFAULT_LANG, normalizeLang } from './i18n';
 
 // Singleton store — works across all React roots / context boundaries
 let listeners: Array<() => void> = [];
-let _lang: Lang = 'ko';
+let _lang: Lang = DEFAULT_LANG;
 
 function subscribe(listener: () => void) {
   listeners = [...listeners, listener];
@@ -19,12 +19,12 @@ function getSnapshot(): Lang {
 }
 
 export function setLang(newLang: Lang) {
-  if (!VALID_LANGS.includes(newLang)) return;
-  _lang = newLang;
+  const next = normalizeLang(newLang);
+  _lang = next;
   if (typeof window !== 'undefined') {
-    document.documentElement.lang = newLang;
+    document.documentElement.lang = next;
     try {
-      localStorage.setItem('lang', newLang);
+      localStorage.setItem('lang', next);
     } catch {
       // QuotaExceededError 등 저장 실패 시 무시 (메모리 상태는 유지됨)
     }
@@ -33,18 +33,21 @@ export function setLang(newLang: Lang) {
 }
 
 export function useLang() {
-  const lang = useSyncExternalStore(subscribe, getSnapshot, () => 'ko' as Lang);
+  const lang = useSyncExternalStore(subscribe, getSnapshot, () => DEFAULT_LANG as Lang);
 
   useEffect(() => {
-    const requested = new URLSearchParams(window.location.search).get('lang') as Lang | null;
-    const stored = localStorage.getItem('lang') as Lang | null;
-    const initial = requested && VALID_LANGS.includes(requested) ? requested : stored;
-
-    if (initial && VALID_LANGS.includes(initial)) {
-      setLang(initial);
-    } else {
-      document.documentElement.lang = 'ko';
+    const requested = new URLSearchParams(window.location.search).get('lang');
+    let stored: string | null = null;
+    try {
+      stored = localStorage.getItem('lang');
+    } catch {
+      // Storage may be blocked; the query string or the default still applies.
     }
+
+    // A saved `zh` (or any retired value) resolves to a supported language
+    // before it reaches the renderer, so no view ever asks for a missing key.
+    const initial = normalizeLang(requested ?? stored ?? DEFAULT_LANG);
+    setLang(initial);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return { lang, setLang };

@@ -1,5 +1,36 @@
 export type Lang = 'ko' | 'en' | 'zh' | 'ja';
+
+// Languages the site actually offers. `zh` is kept in the dictionaries so the
+// translation can be switched back on later, but it is no longer shown in the
+// language switcher and is never generated for daily content.
+export const SUPPORTED_LANGS = ['ko', 'en', 'ja'] as const;
+export type SupportedLang = (typeof SUPPORTED_LANGS)[number];
+
+// Every language that still has dictionary data (used by completeness tests).
 export const VALID_LANGS: Lang[] = ['ko', 'en', 'zh', 'ja'];
+
+export const DEFAULT_LANG: SupportedLang = 'ko';
+// A visitor whose browser or saved setting asks for `zh` gets English rather
+// than an error or a silent Korean page.
+export const UNSUPPORTED_FALLBACK_LANG: SupportedLang = 'en';
+
+/**
+ * Maps any stored/queried language value onto a language the site serves.
+ * Unknown values fall back to Korean; legacy Chinese values fall back to English.
+ */
+export function normalizeLang(value: unknown): SupportedLang {
+  if (typeof value !== 'string') return DEFAULT_LANG;
+  const code = value.trim().toLowerCase();
+  if ((SUPPORTED_LANGS as readonly string[]).includes(code)) return code as SupportedLang;
+  if (code === 'zh' || code.startsWith('zh-') || code.startsWith('zh_')) {
+    return UNSUPPORTED_FALLBACK_LANG;
+  }
+  return DEFAULT_LANG;
+}
+
+export function isSupportedLang(value: unknown): value is SupportedLang {
+  return typeof value === 'string' && (SUPPORTED_LANGS as readonly string[]).includes(value);
+}
 
 export const LANG_LABELS: Record<Lang, string> = {
   ko: '한국어',

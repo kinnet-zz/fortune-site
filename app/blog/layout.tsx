@@ -11,7 +11,9 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const copy = siteCopy(lang);
   const isIndex = pathname === '/blog';
-  const showNotice = !isIndex && lang !== 'ko';
+  // Article bodies are written in every offered language now, so the
+  // "Korean original" notice is only shown if a notice text is defined again.
+  const showNotice = !isIndex && Boolean(copy.articleNotice.trim());
 
   return (
     <>

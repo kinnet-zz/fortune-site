@@ -509,6 +509,10 @@ export const BLOG_ARTICLES: BlogArticle[] = [
   ),
 ];
 
+export function getBlogArticle(slug: string): BlogArticle | undefined {
+  return BLOG_ARTICLES.find((article) => article.slug === slug);
+}
+
 export function formatArticleDate(iso: string, lang: Lang): string {
   const [year, month, day] = iso.split('-').map((part) => Number(part));
   if (lang === 'ko') return `${year}년 ${month}월 ${day}일`;

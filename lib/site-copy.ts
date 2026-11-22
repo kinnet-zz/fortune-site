@@ -172,7 +172,7 @@ export const SITE_COPY: Record<Lang, SiteCopy> = {
         },
       ],
       aboutExtra:
-        'starfate.day는 별자리와 동양 12지를 함께 읽는 무료 운세 가이드입니다. 한국어·영어·일본어·중국어를 지원하고, 타로와 별자리 궁합 등 가볍게 즐길 콘텐츠를 제공합니다. 모든 운세는 오락과 자기성찰을 위한 참고 자료입니다.',
+        'starfate.day는 별자리와 동양 12지를 함께 읽는 무료 운세 가이드입니다. 한국어·영어·일본어를 지원하고, 타로와 별자리 궁합 등 가볍게 즐길 콘텐츠를 제공합니다. 모든 운세는 오락과 자기성찰을 위한 참고 자료입니다.',
     },
     about: {
       editorialTitle: '콘텐츠 운영 및 편집 기준',
@@ -316,7 +316,7 @@ export const SITE_COPY: Record<Lang, SiteCopy> = {
         },
       ],
       aboutExtra:
-        'starfate.day is a free fortune guide that reads the Western zodiac and the Eastern twelve animals together. It supports Korean, English, Japanese and Chinese, and offers light content such as tarot and zodiac compatibility. All fortunes are reference material for entertainment and self-reflection.',
+        'starfate.day is a free fortune guide that reads the Western zodiac and the Eastern twelve animals together. It supports Korean, English and Japanese, and offers light content such as tarot and zodiac compatibility. All fortunes are reference material for entertainment and self-reflection.',
     },
     about: {
       editorialTitle: 'Content operations and editorial standards',
@@ -364,8 +364,7 @@ export const SITE_COPY: Record<Lang, SiteCopy> = {
     contactLink: 'Contact',
     },
     baseCompatible: 'Compatibility',
-    articleNotice:
-      'This article is provided in its original Korean. The tools and navigation of the site follow the language you selected.',
+    articleNotice: '',
     minutesRead: (m) => `${m} min read`,
   },
 
@@ -460,7 +459,7 @@ export const SITE_COPY: Record<Lang, SiteCopy> = {
         },
       ],
       aboutExtra:
-        'starfate.day 是一份把西方星座与东方十二生肖放在一起阅读的免费运势指南。支持韩语、英语、日语和中文，并提供塔罗、星座配对等轻松内容。所有运势仅供娱乐与自省参考。',
+        'starfate.day 是一份把西方星座与东方十二生肖放在一起阅读的免费运势指南。支持韩语、英语和日语，并提供塔罗、星座配对等轻松内容。所有运势仅供娱乐与自省参考。',
     },
     about: {
       editorialTitle: '内容运营与编辑标准',
@@ -508,7 +507,7 @@ export const SITE_COPY: Record<Lang, SiteCopy> = {
     contactLink: '联系我们',
     },
     baseCompatible: '配对',
-    articleNotice: '本文以韩语原文提供。网站的工具与导航会跟随您选择的语言。',
+    articleNotice: '',
     minutesRead: (m) => `${m}分钟阅读`,
   },
 
@@ -604,7 +603,7 @@ export const SITE_COPY: Record<Lang, SiteCopy> = {
         },
       ],
       aboutExtra:
-        'starfate.dayは西洋の星座と東洋の十二支をあわせて読む無料の運勢ガイドです。韓国語・英語・日本語・中国語に対応し、タロットや星座相性など気軽に楽しめるコンテンツを提供しています。すべての運勢は娯楽と自己省察のための参考資料です。',
+        'starfate.dayは西洋の星座と東洋の十二支をあわせて読む無料の運勢ガイドです。韓国語・英語・日本語に対応し、タロットや星座相性など気軽に楽しめるコンテンツを提供しています。すべての運勢は娯楽と自己省察のための参考資料です。',
     },
     about: {
       editorialTitle: 'コンテンツ運営と編集基準',
@@ -652,7 +651,7 @@ export const SITE_COPY: Record<Lang, SiteCopy> = {
     contactLink: 'お問い合わせ',
     },
     baseCompatible: '相性',
-    articleNotice: 'この記事は韓国語の原文で提供しています。サイトのツールとナビゲーションは選択した言語に切り替わります。',
+    articleNotice: '',
     minutesRead: (m) => `${m}分で読めます`,
   },
 };
