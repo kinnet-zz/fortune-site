@@ -255,7 +255,7 @@ export default function HomeClient() {
                   </div>
 
                   <div className="grid grid-cols-3 gap-4 lg:border-l lg:border-[rgba(184,199,220,0.16)] lg:pl-9">
-                    {['12', '24', '4'].map((value, valueIndex) => {
+                    {['12', '24', '3'].map((value, valueIndex) => {
                       const label = home.statLabels[valueIndex];
                       return (
                         <div key={value} className="border-t border-[rgba(230,236,245,0.28)] pt-3">

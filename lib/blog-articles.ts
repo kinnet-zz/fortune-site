@@ -1,8 +1,9 @@
 import type { Lang } from './i18n';
 
 // Editorial index used by /blog and the home "guide" cards. Titles and
-// summaries are provided in all four languages so the language switch also
-// applies to the article index (the article bodies themselves are Korean).
+// summaries are provided in every stored language so the language switch also
+// applies to the article index. The article bodies live in lib/blog-content as
+// ko/en/ja block data; the Chinese entries are kept for a possible revival.
 
 export interface BlogArticle {
   slug: string;
