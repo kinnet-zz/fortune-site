@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import type { BlogArticle } from '@/lib/blog-articles';
 import { formatArticleDate } from '@/lib/blog-articles';
 import {
@@ -169,13 +169,6 @@ export default function BlogArticleView({ article, content, related = [] }: Blog
   const copy = siteCopy(lang);
   const ui = ARTICLE_UI[lang];
   const body: ArticleBody = content[lang] ?? content.ko;
-
-  // The page metadata is written once at build time, so the tab title follows
-  // the reader's language here.
-  useEffect(() => {
-    document.title = `${article.title[lang]} | StarFate`;
-  }, [article, lang]);
-
   const pageUrl = `https://starfate.day/blog/${article.slug}`;
   const inLanguage = lang === 'ko' ? 'ko-KR' : lang === 'ja' ? 'ja-JP' : 'en-US';
   const structuredData = {
