@@ -5,6 +5,7 @@ import { TAROT_CARDS } from '@/lib/tarot-data';
 import { ZODIAC_CONTENT } from '@/lib/zodiac-data';
 import { CHINESE_ZODIAC_CONTENT } from '@/lib/chinese-zodiac-data';
 import { tIdol } from '@/lib/idol-i18n';
+import { INFO_COPY } from '@/lib/info-copy';
 
 // Regression coverage for the language switch: the editorial/tool data that
 // backs each page must not silently fall back to Korean for en/zh/ja.
@@ -58,7 +59,6 @@ describe('multilingual content data', () => {
             name: card.name[lang],
             keyword: card.keyword[lang],
             message: card.message[lang],
-            reversed: card.reversed?.[lang],
           },
           `tarot ${card.name.ko} ${lang}`,
         );
@@ -76,6 +76,12 @@ describe('multilingual content data', () => {
   it('translates the idol test copy', () => {
     for (const lang of NON_KO) {
       expectNoKorean(tIdol(lang), `idol ${lang}`);
+    }
+  });
+
+  it('translates the educational sections under the tool pages', () => {
+    for (const lang of NON_KO) {
+      expectNoKorean(INFO_COPY[lang], `tool info ${lang}`);
     }
   });
 });
