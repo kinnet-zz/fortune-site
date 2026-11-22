@@ -278,8 +278,22 @@ export function buildFallbackHoroscope(
 
 function cleanText(value: unknown, fallback: string, maxLength: number): string {
   if (typeof value !== 'string') return fallback;
-  const cleaned = Array.from(value.trim()).slice(0, maxLength).join('');
-  return cleaned || fallback;
+  const chars = Array.from(value.trim());
+  if (chars.length <= maxLength) return chars.join('') || fallback;
+  // An over-long answer is cut at the last finished sentence, so a short sign
+  // or a long English sentence never leaves the reader with half a word.
+  const sliced = chars.slice(0, maxLength).join('');
+  const lastStop = Math.max(
+    sliced.lastIndexOf('. '),
+    sliced.lastIndexOf('。'),
+    sliced.lastIndexOf('! '),
+    sliced.lastIndexOf('? '),
+    sliced.lastIndexOf('다. '),
+    sliced.lastIndexOf('요. '),
+  );
+  if (lastStop > maxLength * 0.5) return sliced.slice(0, lastStop + 1).trim();
+  const lastSpace = sliced.lastIndexOf(' ');
+  return (lastSpace > maxLength * 0.6 ? sliced.slice(0, lastSpace) : sliced).trim() || fallback;
 }
 
 function parseFiniteNumber(value: unknown): number | undefined {
@@ -304,6 +318,11 @@ export function normalizeDailyHoroscope(
   options: { preserveGeneratedAt?: boolean; lang?: HoroscopeLang } = {},
 ): DailyHoroscope {
   const lang = options.lang ?? DEFAULT_HOROSCOPE_LANG;
+  // The caps keep a card readable. Korean and Japanese say the same thing in
+  // far fewer characters than English, so the English limits are wider.
+  const limits = lang === 'en'
+    ? { summary: 180, overall: 900, section: 700, advice: 220 }
+    : { summary: 90, overall: 500, section: 350, advice: 120 };
   const fallback = buildFallbackHoroscope(zodiacSlug, date, lang);
   if (typeof value !== 'object' || value === null) return fallback;
 
@@ -314,18 +333,18 @@ export function normalizeDailyHoroscope(
   return {
     ...fallback,
     score: score !== undefined ? Math.max(55, Math.min(95, Math.round(score))) : fallback.score,
-    summary: cleanText(candidate.summary, fallback.summary, 90),
-    overall: cleanText(candidate.overall, fallback.overall, 500),
-    love: cleanText(candidate.love, fallback.love, 350),
-    money: cleanText(candidate.money, fallback.money, 350),
-    work: cleanText(candidate.work, fallback.work, 350),
-    health: cleanText(candidate.health, fallback.health, 300),
+    summary: cleanText(candidate.summary, fallback.summary, limits.summary),
+    overall: cleanText(candidate.overall, fallback.overall, limits.overall),
+    love: cleanText(candidate.love, fallback.love, limits.section),
+    money: cleanText(candidate.money, fallback.money, limits.section),
+    work: cleanText(candidate.work, fallback.work, limits.section),
+    health: cleanText(candidate.health, fallback.health, limits.section),
     luckyColor: cleanText(candidate.luckyColor, fallback.luckyColor, 20),
     luckyNumber: luckyNumber !== undefined
       ? Math.max(1, Math.min(99, Math.round(luckyNumber)))
       : fallback.luckyNumber,
     luckyItem: cleanText(candidate.luckyItem, fallback.luckyItem, 30),
-    advice: cleanText(candidate.advice, fallback.advice, 120),
+    advice: cleanText(candidate.advice, fallback.advice, limits.advice),
     generatedAt: options.preserveGeneratedAt
       ? cleanGeneratedAt(candidate.generatedAt, fallback.generatedAt)
       : fallback.generatedAt,

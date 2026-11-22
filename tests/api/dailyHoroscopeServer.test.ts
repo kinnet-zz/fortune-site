@@ -64,7 +64,7 @@ describe('daily horoscope server orchestration', () => {
     expect(result.cacheStatus).toBe('MISS');
     expect(fetchMock).not.toHaveBeenCalled();
     expect(kv.put).toHaveBeenCalledWith(
-      'horoscope:fallback:v4:ko:2026-07-20:taurus',
+      'horoscope:fallback:v5:ko:2026-07-20:taurus',
       expect.any(String),
       { expirationTtl: 300 },
     );
@@ -106,7 +106,7 @@ describe('daily horoscope server orchestration', () => {
     );
     expect(kv.get).toHaveBeenCalledTimes(1);
     expect(kv.put).toHaveBeenCalledWith(
-      'horoscope:v4:ko:2026-07-20:aries',
+      'horoscope:v5:ko:2026-07-20:aries',
       expect.any(String),
       { expirationTtl: 86400 },
     );
@@ -130,7 +130,7 @@ describe('daily horoscope server orchestration', () => {
     expect(result.generationError).toBe('upstream');
     expect(kv.get).not.toHaveBeenCalled();
     expect(kv.put).toHaveBeenCalledWith(
-      'horoscope:fallback:v4:ko:2026-07-20:pisces',
+      'horoscope:fallback:v5:ko:2026-07-20:pisces',
       expect.any(String),
       { expirationTtl: 300 },
     );
@@ -144,9 +144,9 @@ describe('daily horoscope server orchestration', () => {
 
     const result = await getDailyHoroscope('leo', '2026-07-20', { lang: 'ja' });
 
-    expect(kv.get).toHaveBeenCalledWith('horoscope:v4:ja:2026-07-20:leo');
+    expect(kv.get).toHaveBeenCalledWith('horoscope:v5:ja:2026-07-20:leo');
     expect(kv.put).toHaveBeenCalledWith(
-      'horoscope:fallback:v4:ja:2026-07-20:leo',
+      'horoscope:fallback:v5:ja:2026-07-20:leo',
       expect.any(String),
       { expirationTtl: 300 },
     );
@@ -195,7 +195,7 @@ describe('daily horoscope server orchestration', () => {
     expect(body.contents[0].parts[0].text).toContain('Write every sentence in English');
     expect(body.contents[0].parts[0].text).toContain('Gemini');
     expect(kv.put).toHaveBeenCalledWith(
-      'horoscope:v4:en:2026-07-20:gemini',
+      'horoscope:v5:en:2026-07-20:gemini',
       expect.any(String),
       { expirationTtl: 86400 },
     );

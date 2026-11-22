@@ -65,7 +65,7 @@ export function horoscopeCacheKey(
   zodiacSlug: string,
   lang: HoroscopeLang,
 ): string {
-  return `horoscope:v4:${lang}:${date}:${zodiacSlug}`;
+  return `horoscope:v5:${lang}:${date}:${zodiacSlug}`;
 }
 
 export function horoscopeFallbackCacheKey(
@@ -73,7 +73,7 @@ export function horoscopeFallbackCacheKey(
   zodiacSlug: string,
   lang: HoroscopeLang,
 ): string {
-  return `horoscope:fallback:v4:${lang}:${date}:${zodiacSlug}`;
+  return `horoscope:fallback:v5:${lang}:${date}:${zodiacSlug}`;
 }
 
 function buildPrompt(zodiacSlug: DailyZodiacSlug, date: string, lang: HoroscopeLang): string {
@@ -146,10 +146,10 @@ function buildPrompt(zodiacSlug: DailyZodiacSlug, date: string, lang: HoroscopeL
 {
   "score": integer from 55 to 95,
   "summary": "one-sentence gist, 12-20 words",
-  "overall": "overall reading, 60-90 words",
-  "love": "love and relationships reading, 40-70 words",
-  "money": "money reading, 40-70 words",
-  "work": "work and study reading, 40-70 words",
+  "overall": "overall reading, 55-80 words",
+  "love": "love and relationships reading, 35-55 words",
+  "money": "money reading, 35-55 words",
+  "work": "work and study reading, 35-55 words",
   "health": "everyday health advice, 30-55 words",
   "luckyColor": "a single colour word",
   "luckyNumber": integer from 1 to 99,
