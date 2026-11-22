@@ -75,6 +75,7 @@ export interface SiteCopy {
     contactLink: string;
   };
   articleNotice: string;
+  baseCompatible: string;
   minutesRead: (minutes: number) => string;
 }
 
@@ -218,6 +219,7 @@ export const SITE_COPY: Record<Lang, SiteCopy> = {
     aboutLink: '사이트 소개',
     contactLink: '문의하기',
     },
+    baseCompatible: '궁합',
     articleNotice: '',
     minutesRead: (m) => `${m}분 읽기`,
   },
@@ -361,6 +363,7 @@ export const SITE_COPY: Record<Lang, SiteCopy> = {
     aboutLink: 'About the site',
     contactLink: 'Contact',
     },
+    baseCompatible: 'Compatibility',
     articleNotice:
       'This article is provided in its original Korean. The tools and navigation of the site follow the language you selected.',
     minutesRead: (m) => `${m} min read`,
@@ -504,6 +507,7 @@ export const SITE_COPY: Record<Lang, SiteCopy> = {
     aboutLink: '关于本站',
     contactLink: '联系我们',
     },
+    baseCompatible: '配对',
     articleNotice: '本文以韩语原文提供。网站的工具与导航会跟随您选择的语言。',
     minutesRead: (m) => `${m}分钟阅读`,
   },
@@ -647,6 +651,7 @@ export const SITE_COPY: Record<Lang, SiteCopy> = {
     aboutLink: 'サイトについて',
     contactLink: 'お問い合わせ',
     },
+    baseCompatible: '相性',
     articleNotice: 'この記事は韓国語の原文で提供しています。サイトのツールとナビゲーションは選択した言語に切り替わります。',
     minutesRead: (m) => `${m}分で読めます`,
   },

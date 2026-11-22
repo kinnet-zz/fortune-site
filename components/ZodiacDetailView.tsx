@@ -187,13 +187,13 @@ export default function ZodiacDetailView({
         {/* 궁합 */}
         <section className="mt-10 rounded-[0.4rem] border border-[var(--line)] bg-[#101620] p-6">
           <h2 className="mb-4 border-0 pt-0 font-display text-[1.1rem] font-semibold text-[var(--ink)]">
-            {isKo ? '궁합' : tr.compatibleSignsLabel}
+            {isKo ? '궁합' : copy.baseCompatible}
           </h2>
           <div className={`grid grid-cols-1 gap-4 ${isKo ? 'sm:grid-cols-2' : ''}`}>
             <div className="rounded-xl border border-[rgba(47,107,74,0.28)] bg-[rgba(47,107,74,0.06)] p-4">
-              <p className="mb-1 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[#2f6b4a]">
-                {isKo ? '잘 맞는 별자리' : tr.compatibleSignsLabel}
-              </p>
+              {isKo && (
+                <p className="mb-1 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[#2f6b4a]">잘 맞는 별자리</p>
+              )}
               <p className="text-[0.86rem] text-[var(--ink)]">{compatible}</p>
             </div>
             {isKo && (

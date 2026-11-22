@@ -134,7 +134,7 @@ export default function BlogIndex() {
               <div className="flex flex-1 flex-col px-2.5 pb-2 pt-3.5">
                 <div className="mb-2 flex items-center justify-between gap-2">
                   <span className="tag">{article.category[lang]}</span>
-                  <span className="text-[0.64rem] text-[#9aa3b2]">{readLabel(article.minutes)}</span>
+                  <span className="text-[0.64rem] text-[#9aa3b2]">{article.emoji}</span>
                 </div>
                 <h2 className="text-[0.98rem] font-semibold leading-snug tracking-[-0.02em] text-[#f2f0ea] text-keep-all transition-colors group-hover:text-[#e6ecf5]">
                   {article.title[lang]}

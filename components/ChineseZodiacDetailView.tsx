@@ -135,10 +135,14 @@ export default function ChineseZodiacDetailView({
 
         {/* 궁합 & 직업 적성 */}
         <section className="mb-8 p-6 rounded-2xl bg-[#101620]/[0.04] border border-white/10">
-          <h2 className="text-lg font-bold text-[#f2f0ea] mb-4">{isKo ? '💞 궁합' : tr.compatibleAnimalsLabel}</h2>
+          <h2 className="text-lg font-bold text-[#f2f0ea] mb-4">{isKo ? '💞 궁합' : copy.baseCompatible}</h2>
           <div className={`grid gap-4 ${isKo ? 'grid-cols-2' : 'grid-cols-1 sm:grid-cols-2'}`}>
             <div>
-              <p className="text-sm text-[#2f6b4a] font-semibold mb-1">{isKo ? '✅ 잘 맞는 띠' : tr.compatibleAnimalsLabel}</p>
+              {isKo ? (
+                <p className="text-sm text-[#2f6b4a] font-semibold mb-1">✅ 잘 맞는 띠</p>
+              ) : (
+                <p className="text-sm text-[#2f6b4a] font-semibold mb-1">{tr.compatibleAnimalsLabel}</p>
+              )}
               <p className="text-[#f2f0ea]/72 text-sm">{isKo ? data.compatible : entry.compatible}</p>
             </div>
             <div>
@@ -193,7 +197,7 @@ export default function ChineseZodiacDetailView({
                   href={`/chinese-zodiac/${a.slug}`}
                   className="px-3 py-1 rounded-full text-xs border border-white/10 text-[#bdc5d1] hover:border-[#3a4a61] hover:text-[#e6ecf5] transition-colors"
                 >
-                  {a.emoji} {a.name[lang]}
+                  {a.emoji} {a.name[lang]}{unit}
                 </Link>
               ))}
           </div>

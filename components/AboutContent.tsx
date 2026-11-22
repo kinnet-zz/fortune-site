@@ -10,6 +10,13 @@ const bgStyle = {
   minHeight: '100vh',
 };
 
+const SERVICE_NAME: Record<string, string> = {
+  ko: '오늘의 운세 (Fortune Teller)',
+  en: "Today's Fortune (Fortune Teller)",
+  zh: '今日运势 (Fortune Teller)',
+  ja: '今日の運勢 (Fortune Teller)',
+};
+
 export default function AboutContent() {
   const { lang } = useLang();
   const tr = t(lang);
@@ -147,7 +154,7 @@ export default function AboutContent() {
             <dl className="space-y-3">
               <div className="flex gap-4">
                 <dt className="text-[#9aa3b2] w-24 flex-shrink-0">{tr.opLabels.serviceName}</dt>
-                <dd className="text-[#f2f0ea]/72">오늘의 운세 (Fortune Teller)</dd>
+                <dd className="text-[#f2f0ea]/72">{SERVICE_NAME[lang]}</dd>
               </div>
               <div className="flex gap-4">
                 <dt className="text-[#9aa3b2] w-24 flex-shrink-0">{tr.opLabels.serviceUrl}</dt>
