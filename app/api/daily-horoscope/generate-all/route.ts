@@ -71,38 +71,58 @@ export async function POST(request: NextRequest) {
   const jobs = langs.flatMap((lang) => DAILY_ZODIACS.map((zodiac) => ({ lang, zodiac: zodiac.slug })));
   const results: (GenerationResult | null)[] = jobs.map(() => null);
 
-  // Twelve sequential model calls at the full timeout would outlast the
-  // request budget, so a few signs are generated at a time and the answers are
-  // placed back in zodiac order.
-  let cursor = 0;
-  const worker = async () => {
-    while (cursor < jobs.length) {
-      const index = cursor;
-      cursor += 1;
-      const { lang, zodiac } = jobs[index];
-      try {
-        const result = await getDailyHoroscope(zodiac, date, {
-          force,
-          generate: true,
-          lang,
-        });
-        results[index] = {
-          lang,
-          zodiac,
-          status: result.source === 'ai' ? 'ok' : 'error',
-          cached: result.cacheStatus === 'HIT',
-          ai: result.source === 'ai',
-          ...(result.generationError ? { error: result.generationError } : {}),
-        };
-      } catch {
-        results[index] = { lang, zodiac, status: 'error', error: 'internal' };
-      }
+  const generateAt = async (index: number) => {
+    const { lang, zodiac } = jobs[index];
+    try {
+      const result = await getDailyHoroscope(zodiac, date, {
+        force,
+        generate: true,
+        lang,
+      });
+      results[index] = {
+        lang,
+        zodiac,
+        status: result.source === 'ai' ? 'ok' : 'error',
+        cached: result.cacheStatus === 'HIT',
+        ai: result.source === 'ai',
+        ...(result.generationError ? { error: result.generationError } : {}),
+      };
+    } catch {
+      results[index] = { lang, zodiac, status: 'error', error: 'internal' };
     }
   };
 
-  await Promise.all(
-    Array.from({ length: Math.min(GENERATION_CONCURRENCY, jobs.length) }, worker),
-  );
+  // A few signs at a time: twelve model calls at the full timeout would
+  // outlast the request budget, and bursts larger than a dozen a minute start
+  // coming back as upstream errors. Languages therefore run one after another
+  // rather than all at once, and any sign that failed gets one more try.
+  const runBatch = async (indexes: number[]) => {
+    let cursor = 0;
+    const worker = async () => {
+      while (cursor < indexes.length) {
+        const position = cursor;
+        cursor += 1;
+        await generateAt(indexes[position]);
+      }
+    };
+    await Promise.all(
+      Array.from({ length: Math.min(GENERATION_CONCURRENCY, indexes.length) }, worker),
+    );
+  };
+
+  for (const lang of langs) {
+    const indexes = jobs
+      .map((job, index) => (job.lang === lang ? index : -1))
+      .filter((index) => index >= 0);
+    await runBatch(indexes);
+  }
+
+  const failedIndexes = results
+    .map((result, index) => (result?.status === 'error' ? index : -1))
+    .filter((index) => index >= 0);
+  if (failedIndexes.length > 0) {
+    await runBatch(failedIndexes);
+  }
 
   const settled = results.map((result, index) => result ?? {
     lang: jobs[index].lang,
