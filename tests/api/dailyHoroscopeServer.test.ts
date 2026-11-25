@@ -156,6 +156,7 @@ describe('daily horoscope server orchestration', () => {
     expect(result.generationError).toBe('upstream');
     expect(result.upstreamStatus).toBe(429);
     expect(result.upstreamCode).toBe('RESOURCE_EXHAUSTED');
+    expect(result.upstreamMessage).toBe('Quota exceeded');
   });
 
   it('reports a network failure as upstream without a provider status', async () => {
@@ -173,6 +174,7 @@ describe('daily horoscope server orchestration', () => {
     expect(result.generationError).toBe('upstream');
     expect(result.upstreamStatus).toBeUndefined();
     expect(result.upstreamCode).toBeUndefined();
+    expect(result.upstreamMessage).toBe('fetch failed');
   });
 
   it('keeps each language in its own cache entry', async () => {

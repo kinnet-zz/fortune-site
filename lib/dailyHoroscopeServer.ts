@@ -26,6 +26,7 @@ export interface DailyHoroscopeResult {
   // nothing about whether it was a quota (429) or an overload (503).
   upstreamStatus?: number;
   upstreamCode?: string;
+  upstreamMessage?: string;
 }
 
 export type DailyHoroscopeGenerationError =
@@ -39,9 +40,27 @@ class DailyHoroscopeGenerationFailure extends Error {
     readonly code: DailyHoroscopeGenerationError,
     readonly upstreamStatus?: number,
     readonly upstreamCode?: string,
+    readonly upstreamMessage?: string,
   ) {
     super(code);
   }
+}
+
+const UPSTREAM_MESSAGE_LIMIT = 300;
+
+function truncateMessage(message: string | undefined): string | undefined {
+  if (!message) return undefined;
+  return message.length > UPSTREAM_MESSAGE_LIMIT
+    ? `${message.slice(0, UPSTREAM_MESSAGE_LIMIT)}…`
+    : message;
+}
+
+// The request URL carries the API key, so a provider or runtime message that
+// happens to quote it must not travel into the job log.
+function sanitizeMessage(message: string | undefined, apiKey: string): string | undefined {
+  const truncated = truncateMessage(message);
+  if (!truncated) return undefined;
+  return apiKey ? truncated.split(apiKey).join('[redacted]') : truncated;
 }
 
 const AI_CACHE_TTL_SECONDS = 86400;
@@ -205,7 +224,14 @@ async function generateWithGemini(
     if (error instanceof Error && error.name === 'AbortError') {
       throw new DailyHoroscopeGenerationFailure('timeout');
     }
-    throw new DailyHoroscopeGenerationFailure('upstream');
+    // A thrown fetch carries the only trace of a dropped connection or an
+    // exhausted subrequest budget, so keep its message for the batch report.
+    throw new DailyHoroscopeGenerationFailure(
+      'upstream',
+      undefined,
+      undefined,
+      sanitizeMessage(error instanceof Error ? error.message : String(error), apiKey),
+    );
   } finally {
     clearTimeout(timeout);
   }
@@ -222,7 +248,12 @@ async function generateWithGemini(
   if (!response.ok || json.error) {
     // 429 RESOURCE_EXHAUSTED (quota) and 503 UNAVAILABLE (overload) need
     // different handling, so keep the provider status on the failure.
-    throw new DailyHoroscopeGenerationFailure('upstream', response.status, json.error?.status);
+    throw new DailyHoroscopeGenerationFailure(
+      'upstream',
+      response.status,
+      json.error?.status,
+      sanitizeMessage(json.error?.message, apiKey),
+    );
   }
 
   const text = json.candidates?.[0]?.content?.parts?.[0]?.text?.trim() ?? '';
@@ -282,6 +313,7 @@ export async function getDailyHoroscope(
   let generationError: DailyHoroscopeGenerationError | undefined;
   let upstreamStatus: number | undefined;
   let upstreamCode: string | undefined;
+  let upstreamMessage: string | undefined;
   if (options.generate) {
     try {
       const horoscope = await generateWithGemini(zodiacSlug, date, lang);
@@ -300,6 +332,7 @@ export async function getDailyHoroscope(
         generationError = error.code;
         upstreamStatus = error.upstreamStatus;
         upstreamCode = error.upstreamCode;
+        upstreamMessage = error.upstreamMessage;
       } else {
         generationError = 'invalid-response';
       }
@@ -325,5 +358,6 @@ export async function getDailyHoroscope(
     generationError,
     upstreamStatus,
     upstreamCode,
+    upstreamMessage,
   };
 }

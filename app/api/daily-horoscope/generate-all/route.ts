@@ -21,6 +21,7 @@ interface GenerationResult {
   error?: string;
   upstreamStatus?: number;
   upstreamCode?: string;
+  upstreamMessage?: string;
 }
 
 const GENERATION_CONCURRENCY = 4;
@@ -103,6 +104,7 @@ export async function POST(request: NextRequest) {
         ...(result.generationError ? { error: result.generationError } : {}),
         ...(result.upstreamStatus ? { upstreamStatus: result.upstreamStatus } : {}),
         ...(result.upstreamCode ? { upstreamCode: result.upstreamCode } : {}),
+        ...(result.upstreamMessage ? { upstreamMessage: result.upstreamMessage } : {}),
       };
     } catch {
       results[index] = { lang, zodiac, status: 'error', error: 'internal' };
