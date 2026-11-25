@@ -123,5 +123,54 @@ describe('daily horoscope generation job', () => {
     expect(body).toMatchObject({ generated: 0, failed: 12 });
     expect(body.results.every((result) => result.error === 'missing-api-key')).toBe(true);
     expect(body.results.every((result) => result.lang === 'en')).toBe(true);
-  });
+  }, 30000);
+
+  it('passes the provider status through to the job response', async () => {
+    getRequestContextMock.mockReturnValue({ env: { CRON_SECRET: 'cron-secret' } });
+    getDailyHoroscopeMock.mockResolvedValue({
+      horoscope: {},
+      cacheStatus: 'MISS',
+      source: 'fallback',
+      generationError: 'upstream',
+      upstreamStatus: 503,
+      upstreamCode: 'UNAVAILABLE',
+    });
+
+    const response = await post({ date: '2026-07-20', lang: 'ko' });
+    const body = await response.json() as {
+      failed: number;
+      results: { error?: string; upstreamStatus?: number; upstreamCode?: string }[];
+    };
+
+    expect(body.failed).toBe(12);
+    expect(body.results.every((result) => (
+      result.error === 'upstream'
+      && result.upstreamStatus === 503
+      && result.upstreamCode === 'UNAVAILABLE'
+    ))).toBe(true);
+  }, 30000);
+
+  it('retries the signs that failed once more', async () => {
+    getRequestContextMock.mockReturnValue({ env: { CRON_SECRET: 'cron-secret' } });
+    let calls = 0;
+    getDailyHoroscopeMock.mockImplementation(async () => {
+      calls += 1;
+      if (calls <= 12) {
+        return {
+          horoscope: {},
+          cacheStatus: 'MISS',
+          source: 'fallback',
+          generationError: 'upstream',
+          upstreamStatus: 503,
+        };
+      }
+      return { horoscope: {}, cacheStatus: 'MISS', source: 'ai' };
+    });
+
+    const response = await post({ date: '2026-07-20', lang: 'en' });
+    const body = await response.json() as { generated: number; failed: number };
+
+    expect(getDailyHoroscopeMock).toHaveBeenCalledTimes(24);
+    expect(body).toMatchObject({ generated: 12, failed: 0 });
+  }, 30000);
 });

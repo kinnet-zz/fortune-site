@@ -19,16 +19,31 @@ interface GenerationResult {
   cached?: boolean;
   ai?: boolean;
   error?: string;
+  upstreamStatus?: number;
+  upstreamCode?: string;
 }
 
 const GENERATION_CONCURRENCY = 4;
+// Small gap between the jobs of one run: the provider starts answering with
+// upstream errors when a dozen requests land in the same breath, and the gap
+// costs a couple of seconds for a whole language.
+const JOB_GAP_MS = 300;
+// Signs that failed get another try after a pause, then one more later. The
+// provider is usually back within seconds; a longer outage still surfaces as a
+// failed run, which is the signal worth keeping.
+const RETRY_DELAYS_MS = [2000, 8000];
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 // POST /api/daily-horoscope/generate-all
 // Authorization: Bearer {CRON_SECRET}
 // body: { date?: "2026-03-28", force?: true, lang?: "ko" | "en" | "ja" | [...], langs?: [...] }
 //   lang/langs restrict the run; omitting both generates every offered language.
 //   The daily workflow calls this once per language so each request stays
-//   within the edge request budget.
+//   within the edge request budget and a sign that fails can be retried later
+//   without regenerating the languages that already succeeded.
 export async function POST(request: NextRequest) {
   let secret: string;
   try {
@@ -86,6 +101,8 @@ export async function POST(request: NextRequest) {
         cached: result.cacheStatus === 'HIT',
         ai: result.source === 'ai',
         ...(result.generationError ? { error: result.generationError } : {}),
+        ...(result.upstreamStatus ? { upstreamStatus: result.upstreamStatus } : {}),
+        ...(result.upstreamCode ? { upstreamCode: result.upstreamCode } : {}),
       };
     } catch {
       results[index] = { lang, zodiac, status: 'error', error: 'internal' };
@@ -94,14 +111,17 @@ export async function POST(request: NextRequest) {
 
   // A few signs at a time: twelve model calls at the full timeout would
   // outlast the request budget, and bursts larger than a dozen a minute start
-  // coming back as upstream errors. Languages therefore run one after another
-  // rather than all at once, and any sign that failed gets one more try.
+  // coming back as upstream errors. Languages run one after another rather
+  // than all at once, with a short gap between the signs of each language.
   const runBatch = async (indexes: number[]) => {
     let cursor = 0;
     const worker = async () => {
       while (cursor < indexes.length) {
         const position = cursor;
         cursor += 1;
+        if (position > 0) {
+          await sleep(JOB_GAP_MS);
+        }
         await generateAt(indexes[position]);
       }
     };
@@ -117,11 +137,22 @@ export async function POST(request: NextRequest) {
     await runBatch(indexes);
   }
 
-  const failedIndexes = results
-    .map((result, index) => (result?.status === 'error' ? index : -1))
+  // Only an upstream hiccup (or a timeout) is worth asking for again; a missing
+  // key or a malformed answer will fail the same way a second later.
+  const retryableIndexes = () => results
+    .map((result, index) => (
+      result?.status === 'error' && (result.error === 'upstream' || result.error === 'timeout')
+        ? index
+        : -1
+    ))
     .filter((index) => index >= 0);
-  if (failedIndexes.length > 0) {
+
+  let failedIndexes = retryableIndexes();
+  for (const delay of RETRY_DELAYS_MS) {
+    if (failedIndexes.length === 0) break;
+    await sleep(delay);
     await runBatch(failedIndexes);
+    failedIndexes = retryableIndexes();
   }
 
   const settled = results.map((result, index) => result ?? {

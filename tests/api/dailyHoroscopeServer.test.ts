@@ -136,6 +136,45 @@ describe('daily horoscope server orchestration', () => {
     );
   });
 
+  it('keeps the provider status on an upstream failure', async () => {
+    const kv = createKV();
+    kv.get.mockResolvedValue(null);
+    setCloudflareEnv(kv);
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(
+      JSON.stringify({
+        error: { code: 429, message: 'Quota exceeded', status: 'RESOURCE_EXHAUSTED' },
+      }),
+      { status: 429 },
+    )));
+
+    const result = await getDailyHoroscope('virgo', '2026-07-20', {
+      force: true,
+      generate: true,
+    });
+
+    expect(result.source).toBe('fallback');
+    expect(result.generationError).toBe('upstream');
+    expect(result.upstreamStatus).toBe(429);
+    expect(result.upstreamCode).toBe('RESOURCE_EXHAUSTED');
+  });
+
+  it('reports a network failure as upstream without a provider status', async () => {
+    const kv = createKV();
+    kv.get.mockResolvedValue(null);
+    setCloudflareEnv(kv);
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new TypeError('fetch failed')));
+
+    const result = await getDailyHoroscope('libra', '2026-07-20', {
+      force: true,
+      generate: true,
+    });
+
+    expect(result.source).toBe('fallback');
+    expect(result.generationError).toBe('upstream');
+    expect(result.upstreamStatus).toBeUndefined();
+    expect(result.upstreamCode).toBeUndefined();
+  });
+
   it('keeps each language in its own cache entry', async () => {
     const kv = createKV();
     kv.get.mockResolvedValue(null);

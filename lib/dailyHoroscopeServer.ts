@@ -21,6 +21,11 @@ export interface DailyHoroscopeResult {
   cacheStatus: 'HIT' | 'MISS';
   source: 'ai' | 'fallback';
   generationError?: DailyHoroscopeGenerationError;
+  // What the model provider actually answered. Without these the batch job
+  // could only report the vague 'upstream' and a repeatedly failing run said
+  // nothing about whether it was a quota (429) or an overload (503).
+  upstreamStatus?: number;
+  upstreamCode?: string;
 }
 
 export type DailyHoroscopeGenerationError =
@@ -30,7 +35,11 @@ export type DailyHoroscopeGenerationError =
   | 'invalid-response';
 
 class DailyHoroscopeGenerationFailure extends Error {
-  constructor(readonly code: DailyHoroscopeGenerationError) {
+  constructor(
+    readonly code: DailyHoroscopeGenerationError,
+    readonly upstreamStatus?: number,
+    readonly upstreamCode?: string,
+  ) {
     super(code);
   }
 }
@@ -202,7 +211,7 @@ async function generateWithGemini(
   }
   let json: {
     candidates?: { content?: { parts?: { text?: string }[] } }[];
-    error?: { message?: string };
+    error?: { message?: string; status?: string };
   };
   try {
     json = await response.json() as typeof json;
@@ -211,7 +220,9 @@ async function generateWithGemini(
   }
 
   if (!response.ok || json.error) {
-    throw new DailyHoroscopeGenerationFailure('upstream');
+    // 429 RESOURCE_EXHAUSTED (quota) and 503 UNAVAILABLE (overload) need
+    // different handling, so keep the provider status on the failure.
+    throw new DailyHoroscopeGenerationFailure('upstream', response.status, json.error?.status);
   }
 
   const text = json.candidates?.[0]?.content?.parts?.[0]?.text?.trim() ?? '';
@@ -269,6 +280,8 @@ export async function getDailyHoroscope(
   }
 
   let generationError: DailyHoroscopeGenerationError | undefined;
+  let upstreamStatus: number | undefined;
+  let upstreamCode: string | undefined;
   if (options.generate) {
     try {
       const horoscope = await generateWithGemini(zodiacSlug, date, lang);
@@ -283,9 +296,13 @@ export async function getDailyHoroscope(
       }
       return { horoscope, cacheStatus: 'MISS', source: 'ai' };
     } catch (error) {
-      generationError = error instanceof DailyHoroscopeGenerationFailure
-        ? error.code
-        : 'invalid-response';
+      if (error instanceof DailyHoroscopeGenerationFailure) {
+        generationError = error.code;
+        upstreamStatus = error.upstreamStatus;
+        upstreamCode = error.upstreamCode;
+      } else {
+        generationError = 'invalid-response';
+      }
       // Public pages still receive deterministic content when generation fails.
     }
   }
@@ -301,5 +318,12 @@ export async function getDailyHoroscope(
     }
   }
 
-  return { horoscope, cacheStatus: 'MISS', source: 'fallback', generationError };
+  return {
+    horoscope,
+    cacheStatus: 'MISS',
+    source: 'fallback',
+    generationError,
+    upstreamStatus,
+    upstreamCode,
+  };
 }
