@@ -150,6 +150,27 @@ describe('daily horoscope generation job', () => {
     ))).toBe(true);
   }, 30000);
 
+  it('stops the run once the Worker subrequest budget is gone', async () => {
+    getRequestContextMock.mockReturnValue({ env: { CRON_SECRET: 'cron-secret' } });
+    getDailyHoroscopeMock.mockResolvedValue({
+      horoscope: {},
+      cacheStatus: 'MISS',
+      source: 'fallback',
+      generationError: 'upstream',
+      upstreamMessage: 'Too many subrequests by single Worker invocation.',
+    });
+
+    const response = await post({ date: '2026-07-20', lang: 'ko' });
+    const body = await response.json() as {
+      failed: number;
+      results: { error?: string }[];
+    };
+
+    expect(body.failed).toBe(12);
+    expect(getDailyHoroscopeMock.mock.calls.length).toBeLessThan(12);
+    expect(body.results.some((result) => result.error === 'deferred')).toBe(true);
+  });
+
   it('retries the signs that failed once more', async () => {
     getRequestContextMock.mockReturnValue({ env: { CRON_SECRET: 'cron-secret' } });
     let calls = 0;

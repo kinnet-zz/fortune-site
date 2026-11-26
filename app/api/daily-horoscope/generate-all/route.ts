@@ -33,6 +33,11 @@ const JOB_GAP_MS = 300;
 // provider is usually back within seconds; a longer outage still surfaces as a
 // failed run, which is the signal worth keeping.
 const RETRY_DELAYS_MS = [2000, 8000];
+// Cloudflare allows a fixed number of subrequests per Worker invocation, and a
+// sign needs three (KV read, model call, KV write). Once the runtime says the
+// budget is gone, every further sign and every retry fails the same way, so the
+// rest of the run is reported as deferred instead of burning the invocation.
+const SUBREQUEST_LIMIT_MARKER = 'Too many subrequests';
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -86,6 +91,7 @@ export async function POST(request: NextRequest) {
   const langs = Array.from(new Set(list as HoroscopeLang[]));
   const jobs = langs.flatMap((lang) => DAILY_ZODIACS.map((zodiac) => ({ lang, zodiac: zodiac.slug })));
   const results: (GenerationResult | null)[] = jobs.map(() => null);
+  let budgetExhausted = false;
 
   const generateAt = async (index: number) => {
     const { lang, zodiac } = jobs[index];
@@ -95,6 +101,9 @@ export async function POST(request: NextRequest) {
         generate: true,
         lang,
       });
+      if (result.upstreamMessage && result.upstreamMessage.includes(SUBREQUEST_LIMIT_MARKER)) {
+        budgetExhausted = true;
+      }
       results[index] = {
         lang,
         zodiac,
@@ -124,6 +133,16 @@ export async function POST(request: NextRequest) {
         if (position > 0) {
           await sleep(JOB_GAP_MS);
         }
+        if (budgetExhausted) {
+          const job = jobs[indexes[position]];
+          results[indexes[position]] = {
+            lang: job.lang,
+            zodiac: job.zodiac,
+            status: 'error',
+            error: 'deferred',
+          };
+          continue;
+        }
         await generateAt(indexes[position]);
       }
     };
@@ -151,7 +170,7 @@ export async function POST(request: NextRequest) {
 
   let failedIndexes = retryableIndexes();
   for (const delay of RETRY_DELAYS_MS) {
-    if (failedIndexes.length === 0) break;
+    if (failedIndexes.length === 0 || budgetExhausted) break;
     await sleep(delay);
     await runBatch(failedIndexes);
     failedIndexes = retryableIndexes();
