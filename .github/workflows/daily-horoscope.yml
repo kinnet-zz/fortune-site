@@ -11,45 +11,85 @@ on:
         description: '생성할 날짜 (YYYY-MM-DD, 비워두면 오늘 KST)'
         required: false
         default: ''
+      lang:
+        description: '언어 (ko / en / ja, 비워두면 전체)'
+        required: false
+        default: ''
 
 jobs:
   generate:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - name: Generate daily horoscopes
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          INPUT_DATE: ${{ github.event.inputs.date }}
+          INPUT_LANG: ${{ github.event.inputs.lang }}
         run: |
-          DATE="${{ github.event.inputs.date }}"
-          if [ -z "$DATE" ]; then
-            DATE=$(TZ=Asia/Seoul date '+%Y-%m-%d')
-          fi
+          set -u
+          DATE="${INPUT_DATE:-$(TZ=Asia/Seoul date '+%Y-%m-%d')}"
           echo "Generating horoscopes for $DATE"
 
-          BODY="{}"
-          if [ -n "$DATE" ]; then
-            BODY="{\"date\":\"$DATE\"}"
-          fi
-
-          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
-            "https://fortune-site-6dg.pages.dev/api/daily-horoscope/generate-all" \
-            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
-            -H "Content-Type: application/json" \
-            -d "$BODY")
-
-          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
-          BODY_RESP=$(echo "$RESPONSE" | head -n-1)
-
-          echo "HTTP Status: $HTTP_CODE"
-          echo "Response: $BODY_RESP"
-
-          if [ "$HTTP_CODE" != "200" ]; then
-            echo "::error::생성 실패 (HTTP $HTTP_CODE)"
-            exit 1
-          fi
-
-          FAILED=$(echo "$BODY_RESP" | grep -o '"failed":[0-9]*' | grep -o '[0-9]*')
-          if [ "$FAILED" -gt "0" ]; then
-            echo "::error::$FAILED개 별자리 생성 실패"
-            exit 1
+          if [ -n "${INPUT_LANG:-}" ]; then
+            LANGS="$INPUT_LANG"
           else
-            echo "12개 별자리 운세 생성 완료 ✅"
+            LANGS="ko en ja"
           fi
+
+          # 언어마다 따로 요청한다. 별자리 하나에 KV 읽기·모델 호출·KV 쓰기로 하위
+          # 요청이 3개씩 나가는데, Cloudflare는 Worker 호출 1회의 하위 요청 수에
+          # 한도가 있어 36개(3개 언어)를 한 번에 보내면 17번째 부근에서
+          # 'Too many subrequests by single Worker invocation.' 으로 끊긴다.
+          # 언어별 12개(하위 요청 약 36개)로 나누면 한도 안에서 끝난다.
+          # 이미 생성된 별자리는 서버 캐시에서 그대로 돌아오므로 재시도는 실패한
+          # 별자리만 다시 만들고, 실패분은 1분 간격으로 최대 3번까지 다시 시도한다.
+          MAX_TRIES=3
+          FAILED_LANGS=""
+
+          for LANG in $LANGS; do
+            LANG_RESULT=""
+            ATTEMPT=1
+            while [ "$ATTEMPT" -le "$MAX_TRIES" ]; do
+              FAILED=""
+              BODY="{\"date\":\"$DATE\",\"langs\":[\"$LANG\"]}"
+              RESPONSE=$(curl -s --max-time 120 -w "\n%{http_code}" -X POST \
+                "https://fortune-site-6dg.pages.dev/api/daily-horoscope/generate-all" \
+                -H "Authorization: Bearer $CRON_SECRET" \
+                -H "Content-Type: application/json" \
+                -d "$BODY")
+              HTTP_CODE=$(printf '%s\n' "$RESPONSE" | tail -n1)
+              BODY_RESP=$(printf '%s\n' "$RESPONSE" | sed '$d')
+
+              echo "[$LANG / 시도 $ATTEMPT] HTTP Status: $HTTP_CODE"
+              echo "Response: $BODY_RESP"
+
+              if [ "$HTTP_CODE" = "200" ]; then
+                FAILED=$(printf '%s' "$BODY_RESP" | grep -o '"failed":[0-9]*' | head -n1 | grep -o '[0-9]*$')
+                if [ "${FAILED:-1}" = "0" ]; then
+                  echo "$LANG 12개 별자리 운세 생성 완료 ✅"
+                  LANG_RESULT=""
+                  break
+                fi
+                LANG_RESULT="${FAILED:-?}개 실패"
+              else
+                LANG_RESULT="HTTP $HTTP_CODE"
+              fi
+
+              if [ "$ATTEMPT" -lt "$MAX_TRIES" ]; then
+                echo "::warning::$LANG 운세 생성 실패 ($LANG_RESULT) — 60초 뒤 다시 시도합니다"
+                sleep 60
+              fi
+              ATTEMPT=$((ATTEMPT + 1))
+            done
+
+            if [ -n "$LANG_RESULT" ]; then
+              FAILED_LANGS="$FAILED_LANGS $LANG($LANG_RESULT)"
+            fi
+          done
+
+          if [ -n "$FAILED_LANGS" ]; then
+            echo "::error::재시도 후에도 생성하지 못한 운세:$FAILED_LANGS"
+            exit 1
+          fi
+          echo "모든 언어의 별자리 운세를 생성했습니다 ✅"
