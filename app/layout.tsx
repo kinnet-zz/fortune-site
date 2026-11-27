@@ -60,7 +60,7 @@ export const metadata: Metadata = {
   verification: {
     google: 'Bv9szp96EG1AT604rsMXtTo29qr45XyUlZGPWRpDsks',
     other: {
-      'naver-site-verification': '',
+      'naver-site-verification': 'bd789aca00a70305c6b35c0308a95b41bf291a0b',
       'msvalidate.01': '0AF7E4CE188D36AC9712DD2AD536A04A',
     },
   },
